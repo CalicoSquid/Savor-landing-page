@@ -52,6 +52,8 @@ export default function Savor() {
         setActiveSlide(index)
     }
 
+    console.log('Active theme:', activeTheme)
+
     return (
         <main className="page savor-page">
 
@@ -136,6 +138,7 @@ export default function Savor() {
             <section className="beta-cta" id="beta">
                 <div className="beta-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
                 <div className="container beta-cta-inner">
+                    <img src={getIcon(activeTheme.name)} alt="Savor" className="beta-cta-icon" />
                     <p className="beta-cta-overline">You're early</p>
                     <h2 className="beta-cta-title">That's a good thing.</h2>
                     <p className="beta-cta-sub">
