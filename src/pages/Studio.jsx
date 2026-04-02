@@ -59,12 +59,11 @@ export default function Studio() {
                     </div>
                     <div className="story-body">
                         <p className="story-overline">The story</p>
-                        <p className="story-text">I spent over a decade as a professional chef before making the jump to software. The discipline, the precision, the obsession with getting every detail right, it all carries over.</p>
+                        <p className="story-text">I spent years as a professional chef before making the jump to software. Turns out the discipline, the precision, and the obsession with every plate carries over to every pixel</p>
                         <p className="story-text">Mise en place doesn't stop at the kitchen. CalicoSquid Code is where I build things I actually want to exist. Solo dev, nights and weekends, full-time cat supervisor.</p>
                         <div className="story-stack">
                             <span className="stack-pill">React Native</span>
                             <span className="stack-pill">Expo</span>
-                            <span className="stack-pill">GraphQL</span>
                             <span className="stack-pill">TypeScript</span>
                             <span className="stack-pill">PostgreSQL</span>
                             <span className="stack-pill">Node.js</span>

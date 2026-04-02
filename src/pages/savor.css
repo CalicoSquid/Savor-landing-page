@@ -4,7 +4,7 @@
 /* ── Hero ──────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  padding: 15px 0 30px;
+  padding: 15px 0 70px;
   background: var(--bg);
   border-bottom: 1px solid rgba(0,0,0,0.06);
   overflow: hidden;
@@ -72,7 +72,7 @@
 
 /* ── Pillars ────────────────────────────────────────────────────── */
 .pillars {
-  padding: 80px 0;
+  padding: 70px 0;
   background: var(--bg);
 }
 
@@ -201,7 +201,7 @@
 .flavors {
   position: relative;
   background: var(--surface-2);
-  padding: 100px 0;
+  padding: 70px 0;
   overflow: hidden;
 }
 
@@ -350,7 +350,7 @@
 /* ── Beta CTA ──────────────────────────────────────────────────── */
 .beta-cta {
   position: relative;
-  padding: 100px 0;
+  padding: 70px 0 140px;
   background: var(--bg);
   border-top: 1px solid rgba(0,0,0,0.06);
   overflow: hidden;
