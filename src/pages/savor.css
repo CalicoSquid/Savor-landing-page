@@ -4,7 +4,7 @@
 /* ── Hero ──────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  padding: 100px 0 80px;
+  padding: 30px 0 30px;
   background: var(--bg);
   border-bottom: 1px solid rgba(0,0,0,0.06);
   overflow: hidden;
@@ -483,16 +483,15 @@
 .access-gate-btn {
   padding: 14px 24px;
   border-radius: var(--radius);
-  background: var(--grad-green);
   color: white;
   font-family: var(--font);
   font-weight: 700;
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(46,125,50,0.3);
-  transition: opacity 0.15s, transform 0.15s;
-  white-space: nowrap;
+ background: var(--grad-fruit);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transition: opacity 0.15s, transform 0.15s;  white-space: nowrap;
 }
 
 .access-gate-btn:hover { opacity: 0.88; transform: translateY(-2px); }

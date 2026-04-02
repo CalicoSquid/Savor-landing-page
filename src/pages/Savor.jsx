@@ -42,7 +42,6 @@ function ThemeCard({ theme, active, onSelect }) {
 
 export default function Savor() {
     const { activeTheme, setActiveTheme, themes } = useTheme()
-    const [betaUnlocked, setBetaUnlocked] = useState(false)
     const featuresRef = useRef(null)
     const [activeSlide, setActiveSlide] = useState(0)
 
@@ -73,14 +72,7 @@ export default function Savor() {
 
                     </p>
                     <div className="action-row fade-up fade-up-4">
-                        <AccessGate unlocked={betaUnlocked} onUnlock={() => setBetaUnlocked(true)}>
-                            <a href="https://github.com/CalicoSquid/SavorAndroid/releases/tag/v0.1.0-beta"
-                                className="btn btn-green shimmer"
-                                target="_blank"
-                                rel="noreferrer">
-                                Download APK
-                            </a>
-                        </AccessGate>
+                        <a href="#beta" className="btn btn-green">Get the App</a>
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzqEdHxV0QKyhhWZ7zWLT5qUZWZAU2QwIt4PWuSoUrjkN-DQ/viewform" className="btn btn-fruit" target="_blank" rel="noreferrer">Leave Feedback</a>                        <a href="#flavors" className="btn btn-tertiary">Pick Your Flavor</a>
                         <a href="/studio" className="btn btn-dark">calicoSquid<span className="footer-csc-code">Code</span></a>
                     </div>
@@ -141,7 +133,7 @@ export default function Savor() {
             </section>
 
             {/* ── Beta CTA ───────────────────────────────────────────── */}
-            <section className="beta-cta">
+            <section className="beta-cta" id="beta">
                 <div className="beta-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
                 <div className="container beta-cta-inner">
                     <p className="beta-cta-overline">You're early</p>
@@ -151,13 +143,14 @@ export default function Savor() {
                         Download the APK, cook something, and tell me what's broken.
                     </p>
                     <div className="action-row">
-                        <AccessGate unlocked={betaUnlocked} onUnlock={() => setBetaUnlocked(true)}>
+                        <AccessGate >
                             <a href="https://github.com/CalicoSquid/SavorAndroid/releases/tag/v0.1.0-beta"
                                 className="btn btn-green shimmer"
                                 target="_blank"
                                 rel="noreferrer">
                                 Download APK
-                            </a>                        </AccessGate>
+                            </a>
+                        </AccessGate>
                     </div>
                 </div>
             </section>

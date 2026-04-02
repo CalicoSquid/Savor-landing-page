@@ -6,13 +6,15 @@ const VALID_CODES = [
   'DRAGONFRUIT', 'BLACKBERRY', 'PLUM', 'COCONUT'
 ]
 
-export default function AccessGate({ unlocked, onUnlock, children }) {
+export default function AccessGate({ children }) {
   const [input, setInput] = useState('')
+  const [unlocked, setUnlocked] = useState(false)
   const [error, setError] = useState(false)
 
   function handleSubmit() {
     if (VALID_CODES.includes(input.trim().toUpperCase())) {
-      onUnlock()
+      setUnlocked(true)
+      setError(false)
     } else {
       setError(true)
       setInput('')
