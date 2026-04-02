@@ -144,7 +144,7 @@ export default function Savor() {
                     <span className="footer-copy">
 
                         <a href="/studio" className="footer-csc-link">
-                            CalicoSquid<span className="footer-csc-code">Code</span>
+                            calicoSquid<span className="footer-csc-code">Code</span>
                         </a>
                     </span>
                 </div>

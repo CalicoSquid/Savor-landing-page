@@ -59,8 +59,8 @@ export default function Studio() {
                     </div>
                     <div className="story-body">
                         <p className="story-overline">The story</p>
-                      <p className="story-text">I spent over a decade as a professional chef before making the jump to software. The discipline, the precision, the obsession with getting every detail right, it all carries over.</p>
-<p className="story-text">Mise en place doesn't stop at the kitchen. CalicoSquid Code is where I build things I actually want to exist. Solo dev, nights and weekends, full-time cat supervisor.</p>
+                        <p className="story-text">I spent over a decade as a professional chef before making the jump to software. The discipline, the precision, the obsession with getting every detail right, it all carries over.</p>
+                        <p className="story-text">Mise en place doesn't stop at the kitchen. CalicoSquid Code is where I build things I actually want to exist. Solo dev, nights and weekends, full-time cat supervisor.</p>
                         <div className="story-stack">
                             <span className="stack-pill">React Native</span>
                             <span className="stack-pill">Expo</span>
@@ -71,7 +71,7 @@ export default function Studio() {
                             <span className="stack-pill">GraphQL</span>
                             <span className="stack-pill">MongoDB</span>
                             <span className="stack-pill">Firebase</span>
-                          
+
                         </div>
                     </div>
                 </div>
@@ -87,13 +87,12 @@ export default function Studio() {
                             {/* Corrected: Using the inverted Savor wordmark */}
                             <img src="/images/Savor_white.png" alt="Savor" className="work-wordmark" />
                             <p className="work-tag">React Native · Android · 2026</p>
-                            <p className="work-desc">A full-stack recipe management app built for people who actually cook. Save recipes from any website, scan physical cookbooks with OCR, build your own from scratch — all in one place. 12 fruit themes, community feed, Pro tier, Railway backend.</p>
-                            <div className="work-links">
+                            <p className="work-desc">A full-stack recipe management app built for people who actually cook. Scrape any recipe URL, scan a physical cookbook with OCR, or type one in yourself — all in one place. 12 fruit themes, community feed, Pro tier, Railway backend.</p>                            <div className="work-links">
                                 <a href="/" className="studio-btn-primary">View app →</a>
                             </div>
                         </div>
                         <div className="work-card-right">
-                            <img src="/images/sss.jpg" alt="Savor app" className="work-screenshot" />
+                            <img src="/images/ssss.png" alt="Savor app" className="work-screenshot" />
                         </div>
                     </div>
                 </div>
@@ -117,7 +116,7 @@ export default function Studio() {
             <footer className="studio-footer">
                 <div className="container studio-footer-inner">
                     <span className="studio-footer-name">
-                        CalicoSquid<span className="studio-footer-orange">Code</span>
+                        calicoSquid<span className="studio-footer-orange">Code</span>
                     </span>
                 </div>
             </footer>
