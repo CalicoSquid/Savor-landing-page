@@ -1,0 +1,239 @@
+/* ── Reset ────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── Savor Design Tokens ──────────────────────────────────────── */
+:root {
+  /* Theme vars — live-swapped by applyTheme() */
+  --primary:       #FF6D00;
+  --secondary:     #FB8500;
+  --tertiary:      #E64A00;
+  --grad-1:        #FF5722;
+  --grad-2:        #FF9800;
+  --green-1:       #2E7D32;
+  --green-2:       #4CAF50;
+  --soil-1:        #E64A00;
+  --soil-2:        #BF360C;
+  --accent:        #FF6D00;
+  --grad-fruit:    linear-gradient(135deg, #FF5722, #FF9800);
+  --grad-header:   linear-gradient(90deg,  #FF5722, #FF9800);
+  --grad-green:    linear-gradient(135deg, #2E7D32, #4CAF50);
+
+  /* Static surfaces — never change with theme */
+  --bg:            #fafaf7;
+  --surface:       #ffffff;
+  --surface-2:     #f3f3ee;
+
+  /* Text */
+  --text-primary:  #1a1a1a;
+  --text-secondary:#555550;
+  --text-muted:    #999990;
+  --text-on-dark:  #ffffff;
+
+  /* Shape */
+  --radius:        16px;
+  --radius-sm:     8px;
+  --radius-lg:     24px;
+  --radius-pill:   999px;
+  --max-width:     1100px;
+
+  /* Shadows */
+  --shadow-sm:     0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md:     0 8px 32px rgba(0,0,0,0.11);
+  --shadow-lg:     0 20px 60px rgba(0,0,0,0.15);
+
+  /* Typography */
+  --font:          'Raleway', sans-serif;
+
+  --grad-header:   linear-gradient(90deg,  #FF5722, #FF9800); /* Only used by Savor side now */
+
+  /* CSC Palette (copy these here for use in Nav logic) */
+  --csc-orange:  #E8650A;
+  --csc-white:   #ffffff;
+}
+
+/* ── Base ─────────────────────────────────────────────────────── */
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ───────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.page { padding-top: 64px; }
+
+/* ── Nav ──────────────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 64px;
+  /* background removed from here, handled below */
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  transition: background 0.3s;
+}
+
+/* ── Conditional Nav Coloring ───────────────────────── */
+/* DEFAULT: Savor side colors (uses dynamic theme) */
+.nav[data-nav-theme="savor"] {
+  background: var(--grad-header);
+}
+
+/* STUDIO side colors (fixed CSC palette) */
+.nav[data-nav-theme="studio"] {
+  background: #121212; /* Very dark background */
+}
+
+.nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-icon {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+  display: block;
+}
+
+/* New clean link structure (no background) */
+.nav-links {
+  display: flex;
+  gap: 32px; /* Standard spaced links */
+  list-style: none;
+  background: none; /* REMOVED: background */
+  padding: 0;       /* REMOVED: padding */
+  border-radius: 0; /* REMOVED: radius */
+}
+
+.nav-links li {
+  position: relative; /* Container for underline */
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem; /* Larger font size */
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.02em;
+  padding: 8px 0; /* Vertical padding only */
+  border-radius: 0; /* REMOVED: radius */
+  transition: color 0.2s;
+  display: block;
+}
+
+/* Conditional ACTIVE Link styling */
+/* Studio side active link is CSC Orange */
+.nav[data-nav-theme="studio"] .nav-links a:hover,
+.nav[data-nav-theme="studio"] .nav-links a.active {
+  color: var(--csc-white);
+}
+
+/* Savor side active link is White */
+.nav[data-nav-theme="savor"] .nav-links a:hover,
+.nav[data-nav-theme="savor"] .nav-links a.active {
+  color: white;
+}
+
+/* ── Underline Active State (for both) ───────────────── */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: currentColor; /* Matches link color */
+  transform: scaleX(0); /* Hidden by default */
+  transition: transform 0.2s;
+}
+
+.nav-links a.active::after {
+  transform: scaleX(1); /* Reveal underline on active */
+}
+
+/* ── Buttons ──────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 28px;
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  width: 100%;
+}
+
+.btn:hover  { transform: translateY(-2px); opacity: 0.92; }
+.btn:active { transform: translateY(0); }
+
+/* Green — primary action, matches app */
+.btn-green {
+  background: var(--grad-green);
+  color: white;
+  box-shadow: 0 4px 16px rgba(46,125,50,0.3);
+}
+
+/* Fruit — secondary action, theme-reactive */
+.btn-fruit {
+  background: var(--grad-fruit);
+  color: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* Dark — community/neutral, matches app */
+.btn-dark {
+  background: #2a2a2a;
+  color: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.btn-tertiary {
+  background: linear-gradient(135deg, var(--soil-1), var(--soil-2));
+  color: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* ── App-style action row ─────────────────────────────────────── */
+.action-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 400px; /* This ensures they stay grouped on desktop */
+}
+
+/* ── Animations ───────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up   { animation: fadeUp 0.5s ease both; }
+.fade-up-1 { animation-delay: 0.05s; }
+.fade-up-2 { animation-delay: 0.15s; }
+.fade-up-3 { animation-delay: 0.25s; }
+.fade-up-4 { animation-delay: 0.35s; }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .container { padding: 0 16px; }
+}
