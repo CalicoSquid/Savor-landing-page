@@ -175,7 +175,7 @@
   display: none;
   justify-content: center;
   gap: 8px;
-  padding: 16px 0 8px;
+  padding: 12px 0 26px;
   background: var(--bg);
 }
 
@@ -565,6 +565,7 @@
   .pillars-grid { grid-template-columns: 1fr; gap: 32px; }
   .flavors-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-inner { flex-direction: column; gap: 10px; text-align: center; }
+  .feature-row-text { display: none; }
 }
 
 @media (max-width: 600px) {
