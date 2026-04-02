@@ -204,7 +204,13 @@ body {
   background: #2a2a2a;
   color: white;
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap; /* Forces everything onto one line */
+  gap: 0; /* Ensures flex doesn't add a gap between the text and span */
 }
+
 
 .btn-tertiary {
   background: linear-gradient(135deg, var(--soil-1), var(--soil-2));

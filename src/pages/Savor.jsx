@@ -76,7 +76,7 @@ export default function Savor() {
                         <AccessGate unlocked={betaUnlocked} onUnlock={() => setBetaUnlocked(true)}>
                             <a href="https://github.com/CalicoSquid/SavorAndroid/releases/download/v0.1.0-beta/Savor_v1.0.0_beta_build12" className="btn btn-green shimmer" target="_blank" rel="noreferrer">Download APK</a>                        </AccessGate>
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzqEdHxV0QKyhhWZ7zWLT5qUZWZAU2QwIt4PWuSoUrjkN-DQ/viewform" className="btn btn-fruit" target="_blank" rel="noreferrer">Leave Feedback</a>                        <a href="#flavors" className="btn btn-tertiary">Pick Your Flavor</a>
-                        <a href="/studio" className="btn btn-dark">CalicoSquid Code</a>
+                        <a href="/studio" className="btn btn-dark">calicoSquid<span className="footer-csc-code">  Code</span></a>
                     </div>
                 </div>
             </section>

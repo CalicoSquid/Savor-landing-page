@@ -437,7 +437,7 @@
 }
 
 .footer-csc-link:hover { opacity: 0.75; }
-.footer-csc-code { color: var(--accent); }
+.footer-csc-code { color: var(--accent);   }
 
 /* ── Access Gate ───────────────────────────────────────────────── */
 .access-gate {
