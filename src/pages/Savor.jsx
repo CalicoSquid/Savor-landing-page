@@ -74,7 +74,13 @@ export default function Savor() {
                     </p>
                     <div className="action-row fade-up fade-up-4">
                         <AccessGate unlocked={betaUnlocked} onUnlock={() => setBetaUnlocked(true)}>
-                            <a href="https://github.com/CalicoSquid/SavorAndroid/releases/download/v0.1.0-beta/Savor_v1.0.0_beta_build12" className="btn btn-green shimmer" target="_blank" rel="noreferrer">Download APK</a>                        </AccessGate>
+                            <a href="https://github.com/CalicoSquid/SavorAndroid/releases/tag/v0.1.0-beta"
+                                className="btn btn-green shimmer"
+                                target="_blank"
+                                rel="noreferrer">
+                                Download APK
+                            </a>
+                        </AccessGate>
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzqEdHxV0QKyhhWZ7zWLT5qUZWZAU2QwIt4PWuSoUrjkN-DQ/viewform" className="btn btn-fruit" target="_blank" rel="noreferrer">Leave Feedback</a>                        <a href="#flavors" className="btn btn-tertiary">Pick Your Flavor</a>
                         <a href="/studio" className="btn btn-dark">calicoSquid<span className="footer-csc-code">Code</span></a>
                     </div>
@@ -146,8 +152,12 @@ export default function Savor() {
                     </p>
                     <div className="action-row">
                         <AccessGate unlocked={betaUnlocked} onUnlock={() => setBetaUnlocked(true)}>
-                            <a href="https://github.com/CalicoSquid/SavorAndroid/releases/download/v0.1.0-beta/Savor_v1.0.0_beta_build12" className="btn btn-green shimmer" target="_blank" rel="noreferrer">Download APK</a>
-                        </AccessGate>
+                            <a href="https://github.com/CalicoSquid/SavorAndroid/releases/tag/v0.1.0-beta"
+                                className="btn btn-green shimmer"
+                                target="_blank"
+                                rel="noreferrer">
+                                Download APK
+                            </a>                        </AccessGate>
                     </div>
                 </div>
             </section>
