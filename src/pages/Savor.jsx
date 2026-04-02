@@ -2,8 +2,7 @@ import './savor.css'
 import { useTheme } from '../context/useTheme'
 import { getIcon } from '../utils/themeUtils'
 import AccessGate from '../components/AccessGate'
-import { useState } from 'react'
-
+import { useState, useRef } from 'react'
 
 const SCREENSHOTS = [
     { file: '/screenshots/watermelon.png', title: 'Snap to Save', sub: 'Point your camera at any cookbook page. Savor reads it, structures it, saves it. No typing.', bg: 'linear-gradient(135deg, #C62828, #FF4081)' },
@@ -44,6 +43,15 @@ function ThemeCard({ theme, active, onSelect }) {
 export default function Savor() {
     const { activeTheme, setActiveTheme, themes } = useTheme()
     const [betaUnlocked, setBetaUnlocked] = useState(false)
+    const featuresRef = useRef(null)
+    const [activeSlide, setActiveSlide] = useState(0)
+
+    function handleFeaturesScroll() {
+        const el = featuresRef.current
+        if (!el) return
+        const index = Math.round(el.scrollLeft / el.offsetWidth)
+        setActiveSlide(index)
+    }
 
     return (
         <main className="page savor-page">
@@ -87,7 +95,8 @@ export default function Savor() {
             </section>
 
             {/* ── Features ───────────────────────────────────────────── */}
-            <section className="features">
+            {/* ── Features ───────────────────────────────────────────── */}
+            <section className="features" ref={featuresRef} onScroll={handleFeaturesScroll}>
                 {SCREENSHOTS.map((s, i) => (
                     <div className={`feature-row ${i % 2 === 1 ? 'feature-row--reverse' : ''}`} key={s.file}>
                         <div className="feature-row-img" style={{ background: s.bg }}>
@@ -101,6 +110,11 @@ export default function Savor() {
                     </div>
                 ))}
             </section>
+            <div className="features-dots">
+                {SCREENSHOTS.map((_, i) => (
+                    <span key={i} className={`features-dot ${i === activeSlide ? 'features-dot--active' : ''}`} />
+                ))}
+            </div>
 
             {/* ── Pick Your Flavor ───────────────────────────────────── */}
             <section className="flavors" id="flavors">

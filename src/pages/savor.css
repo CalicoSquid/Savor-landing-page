@@ -171,6 +171,32 @@
   max-width: 360px;
 }
 
+.features-dots {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0 8px;
+  background: var(--bg);
+}
+
+.features-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.15);
+  transition: background 0.25s, transform 0.25s;
+  display: block;
+}
+
+.features-dot--active {
+  background: var(--primary);
+  transform: scale(1.3);
+}
+
+@media (max-width: 900px) {
+  .features-dots { display: flex; }
+}
+
 /* ── Flavors ────────────────────────────────────────────────────── */
 .flavors {
   position: relative;
