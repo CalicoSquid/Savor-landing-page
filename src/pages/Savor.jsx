@@ -148,7 +148,7 @@ export default function Savor() {
                     <div className="action-row">
                         <AccessGate >
                             <a href="https://github.com/CalicoSquid/SavorAndroid/releases/tag/v0.1.0-beta"
-                                className="btn btn-green shimmer"
+                                className="btn btn-fruit shimmer"
                                 target="_blank"
                                 rel="noreferrer">
                                 Download APK

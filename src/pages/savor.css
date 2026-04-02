@@ -515,14 +515,7 @@
 
 .shimmer {
   background-size: 200% auto;
-  background-image: linear-gradient(
-    90deg,
-    var(--green-1) 0%,
-    var(--green-2) 40%,
-    #a5d6a7 50%,
-    var(--green-2) 60%,
-    var(--green-1) 100%
-  );
+ 
   animation: shimmer 1.8s ease forwards;
 }
 
