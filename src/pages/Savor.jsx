@@ -12,9 +12,18 @@ const SCREENSHOTS = [
 ]
 
 const PILLARS = [
-    { title: 'Save any recipe.', sub: 'URL, photo, text. If it\'s a recipe, Savor can save it.' },
-    { title: 'Skip the blog.', sub: 'We strip the ads, the life story, the pop-ups. Just ingredients and steps.' },
-    { title: 'Cook together.', sub: 'Share to the community feed. Discover what everyone else is making.' },
+  {
+    title: 'Save from anywhere.',
+    sub: 'Paste a URL, scan a page with on-device OCR, or type it in. Any format — parsed into clean, structured data.'
+  },
+  {
+    title: 'We extract the recipe. Nothing else.',
+    sub: 'Savor targets structured recipe data directly — ingredients, steps, timings. The blog post, the ads, the pop-ups stay where they belong.'
+  },
+  {
+    title: 'Cook together.',
+    sub: 'Share to the community feed. See what real people are actually making — not what an algorithm thinks you should.'
+  },
 ]
 
 function ThemeCard({ theme, active, onSelect }) {
