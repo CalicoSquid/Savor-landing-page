@@ -13,22 +13,22 @@ const SCREENSHOTS = [
 
 
 const PILLARS = [
-  {
-    title: 'Capture from anywhere.',
-    sub: 'Paste a URL, scan a photo, or type it out. I built Savor to handle the mess. Headless browser orchestration and on-device OCR strip away the ads and life stories. You get the recipe. The noise stays on the web.'
-  },
-  {
-    title: 'Structured, not generated.',
-    sub: 'Savor doesn\'t write recipes. It reads them. A three-tier extraction stack maps raw text and image data into a clean, consistent schema. Ingredients, quantities, steps, timings — exactly as written.'
-  },
-  {
-    title: 'Browse, tap, done.',
-    sub: 'The built-in browser is a full import pipeline. Find a recipe anywhere on the web, tap once, and watch Savor parse and save it in real time, without ever leaving the app. No copy-paste. No switching tabs.'
-  },
-  {
-  title: 'Cook together.',
-  sub: 'Every recipe in the community feed is a real, structured import — not a photo, not a link, not a vibe. Save anything you find directly to your own box. One tap, fully parsed, yours.'
-}
+    {
+        title: 'Capture from anywhere.',
+        sub: 'Paste a URL, scan a cookbook, or type it out. Savor is built to handle the mess. Headless browser orchestration and on-device OCR strip away the ads and life stories. You get the recipe. The noise stays on the web.'
+    },
+    {
+        title: 'Structured, not generated.',
+        sub: 'Savor doesn\'t write recipes. It reads them. A three-tier extraction stack maps raw text and image data into a clean, consistent schema. Ingredients, quantities, steps, timings — exactly as written.'
+    },
+    {
+        title: 'Browse, tap, done.',
+        sub: 'The built-in browser is a full import pipeline. Find a recipe anywhere on the web, tap once, and watch Savor parse and save it in real time, without ever leaving the app. No copy-paste. No switching tabs.'
+    },
+    {
+        title: 'Built from real kitchens.',
+        sub: 'The feed is built from recipes people actually make and want others to find. No algorithm, no promoted posts, just cooks sharing what works. Save what catches your eye. Share what sticks.'
+    }
 ]
 
 
