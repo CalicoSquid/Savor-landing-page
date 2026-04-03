@@ -11,20 +11,26 @@ const SCREENSHOTS = [
     { file: '/screenshots/lime.png', title: 'Share the Love', sub: 'Post to the community feed. See what the world is cooking. Save anything that looks good.', bg: 'linear-gradient(135deg, #8BC34A, #689F38)' },
 ]
 
+
 const PILLARS = [
   {
-    title: 'Save from anywhere.',
-    sub: 'Paste a URL, scan a page with on-device OCR, or type it in. Any format — parsed into clean, structured data.'
+    title: 'Capture from anywhere.',
+    sub: 'Paste a URL, scan a photo, or type it out. I built Savor to handle the mess. Headless browser orchestration and on-device OCR strip away the ads and life stories. You get the recipe. The noise stays on the web.'
   },
   {
-    title: 'We extract the recipe. Nothing else.',
-    sub: 'Savor targets structured recipe data directly — ingredients, steps, timings. The blog post, the ads, the pop-ups stay where they belong.'
+    title: 'Structured, not generated.',
+    sub: 'Savor doesn\'t write recipes. It reads them. A three-tier extraction stack maps raw text and image data into a clean, consistent schema. Ingredients, quantities, steps, timings — exactly as written.'
   },
   {
-    title: 'Cook together.',
-    sub: 'Share to the community feed. See what real people are actually making — not what an algorithm thinks you should.'
+    title: 'Browse, tap, done.',
+    sub: 'The built-in browser is a full import pipeline. Find a recipe anywhere on the web, tap once, and watch Savor parse and save it in real time, without ever leaving the app. No copy-paste. No switching tabs.'
   },
+  {
+  title: 'Cook together.',
+  sub: 'Every recipe in the community feed is a real, structured import — not a photo, not a link, not a vibe. Save anything you find directly to your own box. One tap, fully parsed, yours.'
+}
 ]
+
 
 function ThemeCard({ theme, active, onSelect }) {
     return (
