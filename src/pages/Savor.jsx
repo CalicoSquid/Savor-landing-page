@@ -36,7 +36,7 @@ function ThemeCard({ theme, active, onSelect }) {
     return (
         <button
             className={`theme-card ${active ? 'theme-card--active' : ''}`}
-            onClick={() => onSelect(theme)}
+            onClick={(e) => onSelect(theme, e)}
             style={active ? { borderColor: theme.primary } : {}}
         >
             <div className="theme-card-swatch" style={{ background: `linear-gradient(135deg, ${theme.gradient[0]}, ${theme.gradient[1]})` }}>
@@ -56,7 +56,7 @@ function ThemeCard({ theme, active, onSelect }) {
 }
 
 export default function Savor() {
-    const { activeTheme, setActiveTheme, themes } = useTheme()
+    const { activeTheme, selectTheme, themes } = useTheme()
     const featuresRef = useRef(null)
     const [activeSlide, setActiveSlide] = useState(0)
 
@@ -66,8 +66,6 @@ export default function Savor() {
         const index = Math.round(el.scrollLeft / el.offsetWidth)
         setActiveSlide(index)
     }
-
-    console.log('Active theme:', activeTheme)
 
     return (
         <main className="page savor-page">
@@ -80,7 +78,7 @@ export default function Savor() {
                     <img src="/images/Savor.png" alt="Savor" className="hero-wordmark fade-up fade-up-2" />
                     <p className="hero-tagline fade-up fade-up-3">
                         <span style={{ color: 'var(--primary)' }}>Cook</span>{' '}
-                        <span style={{ color: 'var(--secondary)' }}>in</span>{' '}
+                        <span style={{ color: 'var(--dark)' }}>in</span>{' '}
                         <span style={{ color: 'var(--tertiary)' }}>Color.</span>
                     </p>
                     <p className="hero-sub fade-up fade-up-3">
@@ -143,7 +141,7 @@ export default function Savor() {
                     </p>
                     <div className="flavors-grid">
                         {themes.map((t) => (
-                            <ThemeCard key={t.name} theme={t} active={activeTheme.name === t.name} onSelect={setActiveTheme} />
+                            <ThemeCard key={t.name} theme={t} active={activeTheme.name === t.name} onSelect={selectTheme} />
                         ))}
                     </div>
                 </div>
