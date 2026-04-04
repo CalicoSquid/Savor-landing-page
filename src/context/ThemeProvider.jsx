@@ -34,7 +34,7 @@ export function ThemeProvider({ children }) {
 
     tl.fromTo(el,
       { clipPath: `circle(0px at ${x}px ${y}px)`, opacity: 1 },
-      { clipPath: `circle(150vmax at ${x}px ${y}px)`, duration: 0.6, ease: 'power3.out' }
+     { clipPath: `circle(150vmax at ${x}px ${y}px)`, duration: 0.8, ease: 'power2.out' }
     )
     .add(() => {
       window.scrollTo({ top: 0, behavior: 'instant' })
