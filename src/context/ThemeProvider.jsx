@@ -34,57 +34,48 @@ export function ThemeProvider({ children }) {
 
     tl.fromTo(el,
       { clipPath: `circle(0px at ${x}px ${y}px)`, opacity: 1 },
-     { clipPath: `circle(150vmax at ${x}px ${y}px)`, duration: 0.8, ease: 'power2.out' }
+      { clipPath: `circle(150vmax at ${x}px ${y}px)`, duration: 0.8, ease: 'power2.out' }
     )
-    .add(() => {
-      window.scrollTo({ top: 0, behavior: 'instant' })
-    })
-    .add(() => {
-      // First sparkle burst
-      confetti({
-        particleCount: 60,
-        spread: 120,
-        origin: { x: ox, y: oy },
-        colors: [c1, c2, '#ffffff', '#ffffffaa'],
-        gravity: 0.3,
-        scalar: 0.7,
-        drift: 1.2,
-        ticks: 300,
+      .add(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' })
       })
-      // Second wave, slightly delayed for layering
-      setTimeout(() => confetti({
-        particleCount: 35,
-        spread: 70,
-        origin: { x: ox, y: 0.3 },
-        colors: [c1, c2, '#ffffff'],
-        gravity: 0.2,
-        scalar: 0.5,
-        drift: 1.5,
-        ticks: 400,
-      }), 180)
-    })
-    .to(el, {
-      opacity: 0,
-      duration: 1.6,
-      ease: 'power1.inOut',
-      onComplete: () => setBurstStyle(null)
-    })
+      .add(() => {
+        confetti({
+          particleCount: 40,
+          spread: 80,
+          origin: { x: ox, y: oy },
+          colors: ['#ffffff', '#ffffffcc', '#ffffffaa'],
+          gravity: 0.8,
+          scalar: 0.4,
+          drift: 0.8,
+          ticks: 180,
+        })
+      })
+      .to(el, {
+        opacity: 0,
+        duration: 1.6,
+        ease: 'power1.inOut',
+        onComplete: () => setBurstStyle(null)
+      })
   }, [burstStyle])
 
   return (
     <ThemeContext.Provider value={{ activeTheme, setActiveTheme, selectTheme, themes }}>
       {children}
       {burstStyle && (
-        <div
-          ref={burstRef}
-          style={{
-            position: 'fixed',
+        <div ref={burstRef} style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 9999,
+          pointerEvents: 'none',
+          background: `linear-gradient(135deg, ${burstStyle.c1}, ${burstStyle.c2})`,
+        }}>
+          <div style={{
+            position: 'absolute',
             inset: 0,
-            zIndex: 9999,
-            pointerEvents: 'none',
-            background: `linear-gradient(135deg, ${burstStyle.c1}, ${burstStyle.c2})`,
-          }}
-        />
+            background: `radial-gradient(circle at ${burstStyle.x}px ${burstStyle.y}px, rgba(255,255,255,0.05) 0%, transparent 60%)`,
+          }} />
+        </div>
       )}
     </ThemeContext.Provider>
   )
