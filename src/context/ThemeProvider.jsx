@@ -22,7 +22,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     if (!burstStyle || !burstRef.current) return
-    const { x, y, c1, c2 } = burstStyle
+    const { x, y} = burstStyle
     const el = burstRef.current
     const ox = x / window.innerWidth
     const oy = y / window.innerHeight
@@ -34,7 +34,7 @@ export function ThemeProvider({ children }) {
 
     tl.fromTo(el,
       { clipPath: `circle(0px at ${x}px ${y}px)`, opacity: 1 },
-      { clipPath: `circle(150vmax at ${x}px ${y}px)`, duration: 0.8, ease: 'power2.out' }
+      { clipPath: `circle(150vmax at ${x}px ${y}px)`, duration: 0.8, ease: 'power4.out' }
     )
       .add(() => {
         window.scrollTo({ top: 0, behavior: 'instant' })

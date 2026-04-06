@@ -64,13 +64,13 @@ export default function Studio() {
                         <div className="story-stack">
                             <span className="stack-pill">React Native</span>
                             <span className="stack-pill">Expo</span>
-                            <span className="stack-pill">TypeScript</span>
-                            <span className="stack-pill">PostgreSQL</span>
-                            <span className="stack-pill">Node.js</span>
+                            <span className="stack-pill">Apollo</span>
                             <span className="stack-pill">GraphQL</span>
+                            <span className="stack-pill">Node.js</span>
                             <span className="stack-pill">MongoDB</span>
                             <span className="stack-pill">Firebase</span>
-
+                            <span className="stack-pill">Railway</span>
+                            <span className="stack-pill">EAS</span>
                         </div>
                     </div>
                 </div>
