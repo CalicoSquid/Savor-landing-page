@@ -160,7 +160,7 @@ export default function Savor() {
                     </p>
                     <div className="action-row">
                         <AccessGate >
-                            <a href="https://github.com/CalicoSquid/SavorAndroid/releases/tag/v0.1.0-beta"
+                            <a href="https://expo.dev/accounts/calicosquid/projects/savor-recipes/builds/7269b010-652c-48f6-8c68-0410bd8d168b"
                                 className="btn btn-fruit shimmer"
                                 target="_blank"
                                 rel="noreferrer">
