@@ -39,11 +39,39 @@ function getDomain(url) {
 
 const PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
+function decode(str) {
+  if (!str) return str
+  const txt = document.createElement('textarea')
+  txt.innerHTML = str
+  return txt.value
+}
+
 export default function RecipePage() {
   const { id } = useParams()
   const [recipe, setRecipe] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  // Screen Wake Lock — keeps screen on while cooking, re-acquires on visibility change
+  useEffect(() => {
+    if (!('wakeLock' in navigator)) return
+    let lock = null
+
+    const acquire = () => {
+      if (document.visibilityState === 'visible') {
+        navigator.wakeLock.request('screen')
+          .then(l => { lock = l })
+          .catch(() => {})
+      }
+    }
+
+    acquire()
+    document.addEventListener('visibilitychange', acquire)
+    return () => {
+      document.removeEventListener('visibilitychange', acquire)
+      lock?.release()
+    }
+  }, [])
 
   useEffect(() => {
     fetch(APOLLO_URI, {
@@ -60,7 +88,6 @@ export default function RecipePage() {
       .finally(() => setLoading(false))
   }, [id])
 
-  // Update page meta for OG/WhatsApp preview
   useEffect(() => {
     if (!recipe) return
     document.title = `${recipe.name} · Savor`
@@ -72,7 +99,7 @@ export default function RecipePage() {
     const desc = recipe.description || `${recipe.cuisine || ''} recipe saved on Savor`.trim()
     setMeta('og:title', recipe.name)
     setMeta('og:description', desc)
-    setMeta('og:image', recipe.image || '/icons/Savor2.png')
+    setMeta('og:image', recipe.image || '/images/savor-final.png')
     setMeta('og:url', window.location.href)
     setMeta('og:type', 'article')
     setMeta('twitter:card', 'summary_large_image', 'name')
@@ -95,7 +122,7 @@ export default function RecipePage() {
   if (error || !recipe) return (
     <div className="rp-state">
       <div className="rp-not-found">
-        <img src="/icons/Savor2.png" alt="Savor" className="rp-nf-logo" />
+        <img src="/images/savor-final.png" alt="Savor" className="rp-nf-logo" />
         <h2>Recipe not found</h2>
         <p>This recipe may have been removed or the link is incorrect.</p>
         <a href={PLAY_STORE} className="rp-store-btn" target="_blank" rel="noopener noreferrer">
@@ -107,28 +134,24 @@ export default function RecipePage() {
 
   return (
     <div className="rp-root">
-      {/* noindex already set via meta, belt-and-suspenders */}
-
-      {/* Hero */}
-      <div className="rp-hero">
-        {recipe.image
-          ? <img src={recipe.image} alt={recipe.name} className="rp-hero-img" />
-          : <div className="rp-hero-placeholder"><span>🍴</span></div>
-        }
-        <div className="rp-hero-overlay" />
-        {recipe.imageCredit?.photographer && (
-          <a
-            className="rp-credit"
-            href={recipe.imageCredit.photographerUrl || '#'}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            📷 {recipe.imageCredit.photographer}
-          </a>
-        )}
-      </div>
-
       <div className="rp-body">
+
+        {/* Hero — padded, rounded, tasteful */}
+        {recipe.image && (
+          <div className="rp-hero-wrap">
+            <img src={recipe.image} alt={recipe.name} className="rp-hero-img" />
+            {recipe.imageCredit?.photographer && (
+              <a
+                className="rp-credit"
+                href={recipe.imageCredit.photographerUrl || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                📷 {recipe.imageCredit.photographer}
+              </a>
+            )}
+          </div>
+        )}
 
         {/* Header */}
         <div className="rp-header">
@@ -136,10 +159,8 @@ export default function RecipePage() {
             {recipe.cuisine && <span className="rp-chip">{recipe.cuisine}</span>}
             {recipe.category && <span className="rp-chip rp-chip--sec">{recipe.category}</span>}
           </div>
-          <h1 className="rp-title">{recipe.name}</h1>
-          {recipe.description && <p className="rp-desc">{recipe.description}</p>}
-
-          {/* Author */}
+          <h1 className="rp-title">{decode(recipe.name)}</h1>
+          {recipe.description && <p className="rp-desc">{decode(recipe.description)}</p>}
           {recipe.user && (
             <div className="rp-author">
               <img
@@ -155,7 +176,7 @@ export default function RecipePage() {
           )}
         </div>
 
-        {/* Stats bar */}
+        {/* Stats */}
         {(prepTime || cookTime || totalTime || recipe.recipeYield) && (
           <div className="rp-stats">
             {prepTime && <div className="rp-stat"><span className="rp-stat-label">Prep</span><span className="rp-stat-val">{prepTime}</span></div>}
@@ -168,7 +189,7 @@ export default function RecipePage() {
         {/* Source */}
         {recipe.sourceUrl && (
           <a className="rp-source" href={recipe.sourceUrl} target="_blank" rel="noopener noreferrer">
-            <span className="rp-source-icon">🔗</span>
+            <span>🔗</span>
             <span>Original recipe · {getDomain(recipe.sourceUrl)}</span>
             <span className="rp-source-arrow">↗</span>
           </a>
@@ -182,7 +203,7 @@ export default function RecipePage() {
               {recipe.ingredients.map((ing, i) => (
                 <li key={i} className="rp-ingredient">
                   <span className="rp-ingredient-dot" />
-                  <span>{typeof ing === 'string' ? ing : `${ing.amount ?? ''} ${ing.unit ?? ''} ${ing.name ?? ''}`.trim()}</span>
+                  <span>{decode(typeof ing === 'string' ? ing : `${ing.amount ?? ''} ${ing.unit ?? ''} ${ing.name ?? ''}`.trim())}</span>
                 </li>
               ))}
             </ul>
@@ -197,7 +218,7 @@ export default function RecipePage() {
               {recipe.instructions.map((step, i) => (
                 <li key={i} className="rp-step">
                   <span className="rp-step-num">{i + 1}</span>
-                  <span>{typeof step === 'string' ? step : step.text || step.instruction || JSON.stringify(step)}</span>
+                  <span>{decode(typeof step === 'string' ? step : step.text || step.instruction || JSON.stringify(step))}</span>
                 </li>
               ))}
             </ol>
@@ -206,7 +227,7 @@ export default function RecipePage() {
 
         {/* CTA */}
         <div className="rp-cta">
-          <img src="/icons/savor-final.png" alt="Savor" className="rp-cta-logo" />
+          <img src="/images/savor-final.png" alt="Savor" className="rp-cta-logo" />
           <p className="rp-cta-text">Save recipes from anywhere. Cook without the clutter.</p>
           <a href={PLAY_STORE} className="rp-store-btn" target="_blank" rel="noopener noreferrer">
             Get Savor on Android

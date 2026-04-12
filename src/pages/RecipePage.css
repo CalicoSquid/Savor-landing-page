@@ -53,7 +53,8 @@
   position: relative;
   background: #f0f0eb;
   margin-bottom: 24px;
-  aspect-ratio: 16 / 9;
+  height: 280px;
+  max-height: 40vh;
   box-shadow: var(--shadow-md);
 }
 .rp-hero-img {
@@ -198,7 +199,7 @@
   background: var(--grad-fruit);
 }
 
-.rp-ingredients { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.rp-ingredients { list-style: none; display: flex; flex-direction: column; }
 .rp-ingredient {
   display: flex;
   align-items: flex-start;
@@ -207,17 +208,16 @@
   font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.5;
-  padding: 8px 12px;
-  border-radius: 10px;
-  background: var(--surface);
-  border: 1px solid #f0f0eb;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0eb;
 }
+.rp-ingredient:last-child { border-bottom: none; }
 .rp-ingredient-dot {
-  width: 7px; height: 7px;
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--primary);
   flex-shrink: 0;
-  margin-top: 6px;
+  margin-top: 7px;
 }
 
 .rp-instructions { list-style: none; display: flex; flex-direction: column; gap: 12px; }
