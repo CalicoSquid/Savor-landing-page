@@ -19,7 +19,7 @@ const QUERY = `
       scrapedWithAI
       imageCredit { photographer photographerUrl }
       times { prep { hours minutes } cook { hours minutes } total { hours minutes } }
-      servings
+      recipeYield
       user { name username theme }
     }
   }
@@ -156,12 +156,12 @@ export default function RecipePage() {
         </div>
 
         {/* Stats bar */}
-        {(prepTime || cookTime || totalTime || recipe.servings) && (
+        {(prepTime || cookTime || totalTime || recipe.recipeYield) && (
           <div className="rp-stats">
             {prepTime && <div className="rp-stat"><span className="rp-stat-label">Prep</span><span className="rp-stat-val">{prepTime}</span></div>}
             {cookTime && <div className="rp-stat"><span className="rp-stat-label">Cook</span><span className="rp-stat-val">{cookTime}</span></div>}
             {totalTime && <div className="rp-stat"><span className="rp-stat-label">Total</span><span className="rp-stat-val">{totalTime}</span></div>}
-            {recipe.servings && <div className="rp-stat"><span className="rp-stat-label">Serves</span><span className="rp-stat-val">{recipe.servings}</span></div>}
+            {recipe.recipeYield && <div className="rp-stat"><span className="rp-stat-label">Serves</span><span className="rp-stat-val">{recipe.recipeYield}</span></div>}
           </div>
         )}
 
