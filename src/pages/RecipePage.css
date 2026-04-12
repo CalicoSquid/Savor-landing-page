@@ -6,7 +6,6 @@
   padding-bottom: 60px;
 }
 
-/* State screens */
 .rp-state {
   min-height: 80vh;
   display: flex;
@@ -36,17 +35,26 @@
   text-align: center;
   padding: 24px;
 }
-.rp-nf-logo { width: 80px; opacity: 0.4; margin-bottom: 8px; }
+.rp-nf-logo { width: 120px; opacity: 0.35; margin-bottom: 8px; }
 .rp-not-found h2 { font-family: var(--font); font-size: 1.4rem; color: var(--text-primary); }
 .rp-not-found p  { font-size: 0.95rem; color: var(--text-muted); }
 
-/* Hero */
-.rp-hero {
+.rp-body {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 20px 0;
+}
+
+/* Hero — padded, rounded, contained */
+.rp-hero-wrap {
   width: 100%;
-  height: min(420px, 55vw);
+  border-radius: 20px;
+  overflow: hidden;
   position: relative;
   background: #f0f0eb;
-  overflow: hidden;
+  margin-bottom: 24px;
+  aspect-ratio: 16 / 9;
+  box-shadow: var(--shadow-md);
 }
 .rp-hero-img {
   width: 100%;
@@ -54,121 +62,88 @@
   object-fit: cover;
   display: block;
 }
-.rp-hero-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
-  font-size: 4rem;
-  opacity: 0.5;
-}
-.rp-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 50%);
-}
 .rp-credit {
   position: absolute;
-  bottom: 12px;
-  left: 14px;
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.75);
+  bottom: 10px;
+  left: 12px;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.8);
   text-decoration: none;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0,0,0,0.38);
   padding: 3px 8px;
   border-radius: 6px;
   font-family: var(--font);
 }
 
-/* Body */
-.rp-body {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 32px 20px 0;
-}
-
-/* Header */
+.rp-header { margin-bottom: 20px; }
 .rp-chips {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .rp-chip {
   font-family: var(--font);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   padding: 4px 10px;
   border-radius: 999px;
   background: var(--grad-fruit);
   color: #fff;
 }
-.rp-chip--sec {
-  background: var(--grad-green);
-}
+.rp-chip--sec { background: var(--grad-green); }
 
 .rp-title {
   font-family: var(--font);
-  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
   font-weight: 800;
   line-height: 1.15;
   color: var(--text-primary);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
-
 .rp-desc {
   font-family: var(--font);
-  font-size: 1rem;
+  font-size: 0.97rem;
   color: var(--text-secondary);
   line-height: 1.65;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
-
-.rp-author {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
+.rp-author { display: flex; align-items: center; gap: 8px; }
 .rp-avatar {
-  width: 28px;
-  height: 28px;
+  width: 26px; height: 26px;
   border-radius: 50%;
   border: 1.5px solid #e8e8e4;
   object-fit: cover;
 }
 .rp-author-name {
   font-family: var(--font);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
 }
 
-/* Stats bar */
 .rp-stats {
   display: flex;
-  gap: 0;
   border: 1px solid #e8e8e4;
-  border-radius: var(--radius);
+  border-radius: 14px;
   overflow: hidden;
-  margin: 24px 0;
+  margin-bottom: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
 .rp-stat {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 14px 8px;
+  padding: 13px 8px;
   border-right: 1px solid #e8e8e4;
-  background: var(--surface);
 }
 .rp-stat:last-child { border-right: none; }
 .rp-stat-label {
   font-family: var(--font);
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -177,18 +152,17 @@
 }
 .rp-stat-val {
   font-family: var(--font);
-  font-size: 1rem;
+  font-size: 0.97rem;
   font-weight: 800;
   color: var(--primary);
 }
 
-/* Source link */
 .rp-source {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  border-radius: var(--radius-sm);
+  border-radius: 10px;
   border: 1px solid #e8e8e4;
   background: var(--surface);
   text-decoration: none;
@@ -199,31 +173,32 @@
   transition: background 0.15s;
 }
 .rp-source:hover { background: #f5f5f0; }
-.rp-source-arrow { margin-left: auto; opacity: 0.5; }
+.rp-source-arrow { margin-left: auto; opacity: 0.45; }
 
-/* Sections */
-.rp-section {
-  margin-bottom: 36px;
-}
+.rp-section { margin-bottom: 36px; }
 .rp-section-title {
   font-family: var(--font);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   color: var(--text-primary);
   margin-bottom: 16px;
   padding-bottom: 10px;
-  border-bottom: 2px solid;
-  border-image: var(--grad-fruit) 1;
+  border-bottom: 2px solid #f0f0eb;
+  position: relative;
+}
+.rp-section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 36px;
+  height: 2px;
+  background: var(--grad-fruit);
 }
 
-/* Ingredients */
-.rp-ingredients {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.rp-ingredients { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .rp-ingredient {
   display: flex;
   align-items: flex-start;
@@ -232,94 +207,88 @@
   font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.5;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid #f0f0eb;
 }
 .rp-ingredient-dot {
-  width: 7px;
-  height: 7px;
+  width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--grad-fruit);
   background: var(--primary);
   flex-shrink: 0;
-  margin-top: 7px;
+  margin-top: 6px;
 }
 
-/* Instructions */
-.rp-instructions {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+.rp-instructions { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .rp-step {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   align-items: flex-start;
   font-family: var(--font);
   font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.7;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid #f0f0eb;
 }
 .rp-step-num {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 26px; height: 26px;
   border-radius: 50%;
   background: var(--grad-fruit);
   color: #fff;
   font-weight: 800;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
-/* CTA */
 .rp-cta {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  padding: 36px 24px;
-  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  border-radius: 20px;
   background: var(--surface);
   border: 1px solid #e8e8e4;
   text-align: center;
-  margin-top: 12px;
+  margin-top: 8px;
+  box-shadow: var(--shadow-sm);
 }
-.rp-cta-logo {
-  width: 60px;
-  opacity: 0.85;
-}
+.rp-cta-logo { width: 140px; opacity: 0.9; }
 .rp-cta-text {
   font-family: var(--font);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: var(--text-muted);
-  max-width: 280px;
+  max-width: 260px;
   line-height: 1.5;
 }
 
-/* Store button */
 .rp-store-btn {
   display: inline-block;
   padding: 12px 28px;
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   background: var(--grad-fruit);
   color: #fff;
   font-family: var(--font);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   text-decoration: none;
   letter-spacing: 0.02em;
   transition: opacity 0.15s, transform 0.15s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
-.rp-store-btn:hover {
-  opacity: 0.88;
-  transform: translateY(-1px);
-}
+.rp-store-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
 @media (max-width: 480px) {
-  .rp-hero { height: 260px; }
-  .rp-body { padding: 24px 16px 0; }
-  .rp-stat-val { font-size: 0.9rem; }
+  .rp-body { padding: 16px 14px 0; }
+  .rp-hero-wrap { border-radius: 14px; margin-bottom: 18px; }
+  .rp-stat-val { font-size: 0.88rem; }
+  .rp-ingredient, .rp-step { padding: 10px 12px; }
 }

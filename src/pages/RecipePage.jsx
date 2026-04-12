@@ -206,7 +206,7 @@ export default function RecipePage() {
 
         {/* CTA */}
         <div className="rp-cta">
-          <img src="/icons/Savor2.png" alt="Savor" className="rp-cta-logo" />
+          <img src="/icons/savor-final.png" alt="Savor" className="rp-cta-logo" />
           <p className="rp-cta-text">Save recipes from anywhere. Cook without the clutter.</p>
           <a href={PLAY_STORE} className="rp-store-btn" target="_blank" rel="noopener noreferrer">
             Get Savor on Android

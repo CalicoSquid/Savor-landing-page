@@ -8,6 +8,9 @@ export default function Nav() {
   const location = useLocation() // Get the current location
 
   const isStudio = location.pathname.startsWith('/studio')
+  const isRecipe = location.pathname.startsWith('/r/')
+
+  if (isRecipe) return null
 
   return (
     // Set a data attribute based on the active page
