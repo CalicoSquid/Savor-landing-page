@@ -38,6 +38,12 @@ function getDomain(url) {
 
 const PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
+const ICON_FILENAME = { Feijoa: 'Feijoah' }
+function getThemeIcon(theme) {
+  const name = ICON_FILENAME[theme] ?? theme
+  return `/icons/icon-${name || 'default'}.png`
+}
+
 function decode(str) {
   if (!str || typeof document === 'undefined') return str ?? ''
   const txt = document.createElement('textarea')
@@ -163,7 +169,7 @@ export default function RecipePage() {
           {recipe.user && (
             <div className="rp-author">
               <img
-                src={`/icons/icon-${recipe.user.theme || 'default'}.png`}
+                src={getThemeIcon(recipe.user.theme)}
                 alt={recipe.user.name || recipe.user.username}
                 className="rp-avatar"
                 onError={e => { e.target.src = '/icons/icon-default.png' }}
