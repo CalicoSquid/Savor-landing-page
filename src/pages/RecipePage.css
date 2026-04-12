@@ -68,9 +68,9 @@
   bottom: 10px;
   left: 12px;
   font-size: 0.68rem;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.9);
   text-decoration: none;
-  background: rgba(0,0,0,0.38);
+  background: rgba(0,0,0,0.55);
   padding: 3px 8px;
   border-radius: 6px;
   font-family: var(--font);
@@ -114,9 +114,7 @@
 .rp-author { display: flex; align-items: center; gap: 8px; }
 .rp-avatar {
   width: 26px; height: 26px;
-  border-radius: 50%;
-  border: 1.5px solid #e8e8e4;
-  object-fit: cover;
+  object-fit: contain;
 }
 .rp-author-name {
   font-family: var(--font);
