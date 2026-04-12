@@ -16,7 +16,6 @@ const QUERY = `
       category
       cuisine
       sourceUrl
-      scrapedWithAI
       imageCredit { photographer photographerUrl }
       times { prep { hours minutes } cook { hours minutes } total { hours minutes } }
       recipeYield
@@ -40,7 +39,7 @@ function getDomain(url) {
 const PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
 function decode(str) {
-  if (!str) return str
+  if (!str || typeof document === 'undefined') return str ?? ''
   const txt = document.createElement('textarea')
   txt.innerHTML = str
   return txt.value
@@ -90,20 +89,20 @@ export default function RecipePage() {
 
   useEffect(() => {
     if (!recipe) return
-    document.title = `${recipe.name} · Savor`
+    document.title = `${decode(recipe.name)} · Savor`
     const setMeta = (prop, val, attr = 'property') => {
       let el = document.querySelector(`meta[${attr}="${prop}"]`)
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el) }
       el.setAttribute('content', val)
     }
     const desc = recipe.description || `${recipe.cuisine || ''} recipe saved on Savor`.trim()
-    setMeta('og:title', recipe.name)
+    setMeta('og:title', decode(recipe.name))
     setMeta('og:description', desc)
     setMeta('og:image', recipe.image || '/images/savor-final.png')
     setMeta('og:url', window.location.href)
     setMeta('og:type', 'article')
     setMeta('twitter:card', 'summary_large_image', 'name')
-    setMeta('twitter:title', recipe.name, 'name')
+    setMeta('twitter:title', decode(recipe.name), 'name')
     setMeta('twitter:description', desc, 'name')
     setMeta('robots', 'noindex, nofollow', 'name')
   }, [recipe])
