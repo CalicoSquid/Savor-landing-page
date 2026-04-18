@@ -347,6 +347,7 @@
     background-position: left center;
     margin-bottom: 14px;
     padding-bottom: 14px;
+    border-bottom: 2px solid #FF5722;
   }
 
   /* ── Hero — short, sharp ───────────────────────────────────────── */
@@ -379,16 +380,35 @@
   .rp-stat-label  { font-size: 7pt; }
   .rp-stat-val    { font-size: 11pt; color: #FF5722; }
 
-  /* ── Two-column content layout ─────────────────────────────────── */
-  /* Ingredients left (narrower), Instructions right (wider) */
+  /* ── Layout — ingredients float left as sidebar, instructions full width ── */
+  /* This mirrors how real printed recipe cards work — ingredients are scanned  */
+  /* before cooking, instructions are read sequentially and need full width.    */
   .rp-sections-wrap {
-    display: grid;
-    grid-template-columns: 0.8fr 1fr;
-    gap: 20px;
-    align-items: start;
+    display: block;
   }
 
-  /* Sections inside the grid */
+  /* Ingredients float left as a narrow sidebar */
+  .rp-sections-wrap .rp-section:first-child {
+    float: left;
+    width: 36%;
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+
+  /* Instructions take remaining width, flow naturally */
+  .rp-sections-wrap .rp-section:last-child {
+    overflow: hidden; /* creates a new block formatting context next to the float */
+    margin-bottom: 0;
+  }
+
+  /* Clearfix so footer clears the float */
+  .rp-sections-wrap::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  /* Sections inside the layout */
   .rp-section { margin-bottom: 0; }
   .rp-section-title {
     font-size: 8pt;
