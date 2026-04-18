@@ -177,6 +177,9 @@ export default function RecipePage() {
               <span className="rp-author-name">
                 Saved by {recipe.user.name || recipe.user.username}
               </span>
+              <button className="rp-print-btn" onClick={() => window.print()}>
+                🖨 Print recipe
+              </button>
             </div>
           )}
         </div>
@@ -199,6 +202,9 @@ export default function RecipePage() {
             <span className="rp-source-arrow">↗</span>
           </a>
         )}
+
+        <div className="rp-sections-wrap">
+
 
         {/* Ingredients */}
         {recipe.ingredients?.length > 0 && (
@@ -229,6 +235,8 @@ export default function RecipePage() {
             </ol>
           </section>
         )}
+
+        </div>
 
         {/* CTA */}
         <div className="rp-cta">
