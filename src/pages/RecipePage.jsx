@@ -38,6 +38,32 @@ function getDomain(url) {
 
 const PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
+function buildJsonLd(recipe, id) {
+  const ld = {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: recipe.name,
+    description: recipe.description || undefined,
+    image: recipe.image || undefined,
+    recipeCategory: recipe.category || undefined,
+    recipeCuisine: recipe.cuisine || undefined,
+    recipeYield: recipe.recipeYield || undefined,
+    recipeIngredient: recipe.ingredients?.map(ing =>
+      typeof ing === 'string' ? ing : `${ing.amount ?? ''} ${ing.unit ?? ''} ${ing.name ?? ''}`.trim()
+    ),
+    recipeInstructions: recipe.instructions?.map((step, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      text: typeof step === 'string' ? step : step.text || step.instruction || '',
+    })),
+  }
+  if (recipe.times?.prep) ld.prepTime = `PT${recipe.times.prep.hours || 0}H${recipe.times.prep.minutes || 0}M`
+  if (recipe.times?.cook) ld.cookTime = `PT${recipe.times.cook.hours || 0}H${recipe.times.cook.minutes || 0}M`
+  if (recipe.times?.total) ld.totalTime = `PT${recipe.times.total.hours || 0}H${recipe.times.total.minutes || 0}M`
+  if (recipe.sourceUrl) ld.url = recipe.sourceUrl
+  return JSON.stringify(ld)
+}
+
 const ICON_FILENAME = { Feijoa: 'Feijoah' }
 function getThemeIcon(theme) {
   const name = ICON_FILENAME[theme] ?? theme
@@ -111,6 +137,12 @@ export default function RecipePage() {
     setMeta('twitter:title', decode(recipe.name), 'name')
     setMeta('twitter:description', desc, 'name')
     setMeta('robots', 'noindex, nofollow', 'name')
+
+    // JSON-LD — lets Savor's scraper parse this page cleanly
+    let ldEl = document.getElementById('recipe-jsonld')
+    if (!ldEl) { ldEl = document.createElement('script'); ldEl.id = 'recipe-jsonld'; ldEl.type = 'application/ld+json'; document.head.appendChild(ldEl) }
+    ldEl.textContent = buildJsonLd(recipe, id)
+    return () => ldEl?.remove()
   }, [recipe])
 
   const prepTime = recipe && formatTime(recipe.times?.prep)
@@ -242,8 +274,14 @@ export default function RecipePage() {
         <div className="rp-cta">
           <img src="/images/savor-final.png" alt="Savor" className="rp-cta-logo" />
           <p className="rp-cta-text">Save recipes from anywhere. Cook without the clutter.</p>
-          <a href={PLAY_STORE} className="rp-store-btn" target="_blank" rel="noopener noreferrer">
-            Get Savor on Android
+          <a
+            href={`savor://create?url=${encodeURIComponent(window.location.href)}`}
+            className="rp-store-btn"
+          >
+           🡇 Save to Savor
+          </a>
+          <a href={PLAY_STORE} className="rp-get-savor-link" target="_blank" rel="noopener noreferrer">
+            Don't have Savor? Get it free →
           </a>
         </div>
 

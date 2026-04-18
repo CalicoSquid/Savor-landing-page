@@ -284,6 +284,16 @@
 }
 .rp-store-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
+.rp-get-savor-link {
+  font-family: var(--font);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.rp-get-savor-link:hover { opacity: 1; }
+
 @media (max-width: 480px) {
   .rp-body { padding: 16px 14px 0; }
   .rp-root { padding-top: 8px; }
