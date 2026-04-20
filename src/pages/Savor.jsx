@@ -164,7 +164,7 @@ export default function Savor() {
                                 className="btn btn-fruit shimmer"
                                 target="_blank"
                                 rel="noreferrer">
-                                Download APK
+                                Download From Play Store
                             </a>
                         </AccessGate>
                     </div>
