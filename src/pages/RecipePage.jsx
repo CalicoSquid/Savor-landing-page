@@ -12,6 +12,7 @@ const QUERY = `
       description
       image
       ingredients
+      ingredientGroups { label startIndex }
       instructions
       category
       cuisine
@@ -38,6 +39,7 @@ function getDomain(url) {
 
 const PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
+// eslint-disable-next-line no-unused-vars
 function buildJsonLd(recipe, id) {
   const ld = {
     '@context': 'https://schema.org',
@@ -243,12 +245,23 @@ export default function RecipePage() {
           <section className="rp-section">
             <h2 className="rp-section-title">Ingredients</h2>
             <ul className="rp-ingredients">
-              {recipe.ingredients.map((ing, i) => (
-                <li key={i} className="rp-ingredient">
-                  <span className="rp-ingredient-dot" />
-                  <span>{decode(typeof ing === 'string' ? ing : `${ing.amount ?? ''} ${ing.unit ?? ''} ${ing.name ?? ''}`.trim())}</span>
-                </li>
-              ))}
+              {recipe.ingredients.map((ing, i) => {
+                const group = recipe.ingredientGroups?.find(g => g.startIndex === i)
+                return (
+                  <>
+                    {group && (
+                      <li key={`group-${i}`} className="rp-ingredient-group">
+                        <span className="rp-ingredient-group-label">{group.label}</span>
+                        <span className="rp-ingredient-group-line" />
+                      </li>
+                    )}
+                    <li key={i} className="rp-ingredient">
+                      <span className="rp-ingredient-dot" />
+                      <span>{decode(typeof ing === 'string' ? ing : `${ing.amount ?? ''} ${ing.unit ?? ''} ${ing.name ?? ''}`.trim())}</span>
+                    </li>
+                  </>
+                )
+              })}
             </ul>
           </section>
         )}
@@ -278,7 +291,7 @@ export default function RecipePage() {
             href={`savor://create?url=${encodeURIComponent(window.location.href)}`}
             className="rp-store-btn"
           >
-           🡇 Save to Savor
+           Save to Savor
           </a>
           <a href={PLAY_STORE} className="rp-get-savor-link" target="_blank" rel="noopener noreferrer">
             Don't have Savor? Get it free →

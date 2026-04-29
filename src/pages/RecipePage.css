@@ -218,6 +218,34 @@
   margin-top: 7px;
 }
 
+/* ── Ingredient groups ──────────────────────────────────────────── */
+.rp-ingredient-group {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border-bottom: none;
+  margin-top: 16px;
+}
+.rp-ingredient-group:first-child { margin-top: 0; }
+.rp-ingredient-group-label {
+  font-family: var(--font);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.rp-ingredient-group-line {
+  flex: 1;
+  height: 1px;
+  background: var(--primary);
+  opacity: 0.2;
+}
+
 .rp-instructions { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .rp-step {
   display: flex;
@@ -324,6 +352,8 @@
   background: #FF5722;
   color: #fff;
 }
+
+
 
 /* ── Print styles ────────────────────────────────────────────────── */
 @media print {
@@ -450,6 +480,11 @@
     margin-top: 5px;
     background: #FF5722;
   }
+
+  /* ── Ingredient groups — print ─────────────────────────────────── */
+  .rp-ingredient-group { margin-top: 8px; }
+  .rp-ingredient-group-label { font-size: 7pt; color: #FF5722; }
+  .rp-ingredient-group-line { background: #FF5722; }
 
   /* ── Instructions — card style with orange left border ─────────── */
   .rp-instructions { gap: 6px; }
