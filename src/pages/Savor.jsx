@@ -5,10 +5,10 @@ import AccessGate from '../components/AccessGate'
 import { useState, useRef } from 'react'
 
 const SCREENSHOTS = [
-    { file: '/screenshots/watermelon.png', title: 'Snap to Save', sub: 'Point your camera at any cookbook page. Savor reads it, structures it, saves it. No typing.', bg: 'linear-gradient(135deg, #C62828, #FF4081)' },
-    { file: '/screenshots/blueberry.png', title: 'Just One Tap', sub: 'Browse the web inside the app. Find a recipe you love, hit import — it\'s yours forever.', bg: 'linear-gradient(135deg, #303F9F, #5C6BC0)' },
-    { file: '/screenshots/dragonfruit.png', title: 'Just The Recipe', sub: 'No life stories. No ads. No scroll. Savor strips every recipe down to what you actually need.', bg: 'linear-gradient(135deg, #AD1457, #FF1493)' },
-    { file: '/screenshots/lime.png', title: 'Share the Love', sub: 'Post to the community feed. See what the world is cooking. Save anything that looks good.', bg: 'linear-gradient(135deg, #8BC34A, #689F38)' },
+    { file: '/screenshots/scan.png', title: 'Snap to Save', sub: 'Point your camera at any cookbook page. Savor reads it, structures it, saves it. No typing.', bg: 'linear-gradient(135deg, #C62828, #FF4081)' },
+    { file: '/screenshots/found.png', title: 'Just One Tap', sub: 'Browse the web inside the app. Find a recipe you love, hit import — it\'s yours forever.', bg: 'linear-gradient(135deg, #303F9F, #5C6BC0)' },
+    { file: '/screenshots/recipe.png', title: 'Just The Recipe', sub: 'No life stories. No ads. No scroll. Savor strips every recipe down to what you actually need.', bg: 'linear-gradient(135deg, #AD1457, #FF1493)' },
+    { file: '/screenshots/community.png', title: 'Share the Love', sub: 'Post to the community feed. See what the world is cooking. Save anything that looks good.', bg: 'linear-gradient(135deg, #8BC34A, #689F38)' },
 ]
 
 

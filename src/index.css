@@ -233,3 +233,8 @@ body {
 @media (max-width: 768px) {
   .container { padding: 0 16px; }
 }
+
+.nav-icon--potluck {
+  height: 28px;
+  width: auto;
+}
