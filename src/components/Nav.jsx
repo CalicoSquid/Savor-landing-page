@@ -15,7 +15,7 @@ export default function Nav() {
 
   const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : 'savor'
   const iconSrc  = isStudio  ? '/images/logo_W.png'
-                 : isPotluck ? '/potluck/potluck-splash.png'
+                 : isPotluck ? '/potluck/potluck-icon.png'
                  : getIcon(activeTheme.name)
   const iconAlt  = isStudio  ? 'CalicoSquid Code'
                  : isPotluck ? 'Potluck by Savor'
@@ -28,11 +28,11 @@ export default function Nav() {
           <img
             src={iconSrc}
             alt={iconAlt}
-            className={`nav-icon ${isPotluck ? 'nav-icon--potluck' : ''}`}
+            className={`nav-icon`}
           />
         </NavLink>
         <ul className="nav-links">
-          <li><NavLink to="/" end>App</NavLink></li>
+          <li><NavLink to="/" end>Savor</NavLink></li>
           <li><NavLink to="/potluck">Potluck</NavLink></li>
           <li><NavLink to="/studio">Studio</NavLink></li>
         </ul>

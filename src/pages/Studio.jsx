@@ -2,10 +2,10 @@
 import './Studio.css'
 
 const SERVICES = [
-    { icon: '📱', title: 'React Native', desc: 'Cross-platform mobile apps built for Android. Expo, EAS, Play Store deploy.' },
-    { icon: '⚙️', title: 'Backend & API', desc: 'Node.js, GraphQL, MongoDB. Scalable backends that ship with the app.' },
-    { icon: '🎨', title: 'UI & Design Systems', desc: 'Theming, component libraries, pixel-perfect interfaces that feel native.' },
-    { icon: '🚀', title: 'End-to-End', desc: 'Auth, payments, push notifications, analytics. Solo or team, I ship.' },
+    { icon: '📱', title: 'React Native', desc: 'Android apps built with Expo and EAS. I know the pipeline end to end — dev build to Play Store.' },
+    { icon: '⚙️', title: 'Backend & API', desc: 'GraphQL, Node.js, MongoDB. The server side ships with the app, not six weeks after.' },
+    { icon: '🎨', title: 'UI & Design', desc: 'I care about how things feel. Pixel-perfect, themed, responsive — no half-finished interfaces.' },
+    { icon: '🚀', title: 'The Full Build', desc: 'Auth, subscriptions, push notifications, OCR, scrapers. Ive built it. I can build it for you.' },
 ]
 
 export default function Studio() {
@@ -15,14 +15,13 @@ export default function Studio() {
             {/* ── Hero ───────────────────────────────────────────────── */}
             <section className="studio-hero">
                 <div className="container studio-hero-content">
-                    <p className="studio-hero-eyebrow fade-up fade-up-2">Available for freelance</p>
+                    <p className="studio-hero-eyebrow fade-up fade-up-2">Open to freelance</p>
                     <h1 className="studio-hero-title fade-up fade-up-3">
-                        I build apps<br />
-                        <span className="studio-hero-accent">people actually use.</span>
+                        Solo dev.<br />
+                        <span className="studio-hero-accent">Full stack. Ships.</span>
                     </h1>
                     <p className="studio-hero-sub fade-up fade-up-4">
-                        Former professional chef turned React Native developer.
-                        I bring a decade of high-pressure kitchen discipline to every build.
+                        I spent a decade as a professional chef before I started building apps. Turns out the obsession with getting every detail right doesn't stay in the kitchen.
                     </p>
                     <div className="studio-hero-ctas fade-up fade-up-4">
                         {/* TODO: replace href with email or contact form */}
@@ -35,7 +34,7 @@ export default function Studio() {
             <section className="studio-services">
                 <div className="container">
                     <p className="studio-overline">What I do</p>
-                    <h2 className="studio-section-title">Mobile-first.<br />Production-ready.</h2>
+                    <h2 className="studio-section-title">I do the whole thing.<br />Start to ship.</h2>
                     <div className="services-grid">
                         {SERVICES.map((s) => (
                             <div className="service-card" key={s.title}>
@@ -54,13 +53,13 @@ export default function Studio() {
                     <div className="story-quote-wrap">
                         <span className="story-quote-mark">"</span>
                         <blockquote className="story-quote">
-                            A decade in professional kitchens taught me more about shipping under pressure than any bootcamp could.
+                            Mise en place isn't a cooking term. It's the only way to build anything worth using.
                         </blockquote>
                     </div>
                     <div className="story-body">
                         <p className="story-overline">The story</p>
-                        <p className="story-text">I spent years as a professional chef before making the jump to software. Turns out the discipline, the precision, and the obsession with every plate carries over to every pixel.</p>
-                        <p className="story-text">Mise en place doesn't stop at the kitchen. CalicoSquid Code is where I build things I actually want to exist. Solo dev, nights and weekends, full-time cat supervisor.</p>
+                        <p className="story-text">I spent years as a professional chef before I wrote a line of code. The jump felt strange until I realised it wasn't... Both are about precision, pressure, and caring way too much about the details most people wouldn't notice.</p>
+                        <p className="story-text">CalicoSquidCode is where I build things I actually want to exist. Right now that's Savor, a recipe app I started the day I couldnt bear to throw out my mums old recipe cards. Solo dev, nights and weekends, full-time cat supervisor. Based on a farm in Montenegro, which is as great as it sounds.</p>
                         <div className="story-stack">
                             <span className="stack-pill">React Native</span>
                             <span className="stack-pill">Expo</span>
@@ -80,13 +79,13 @@ export default function Studio() {
             <section className="studio-work" id="work">
                 <div className="container">
                     <p className="studio-overline">Featured work</p>
-                    <h2 className="studio-section-title">Built with intent.</h2>
+                    <h2 className="studio-section-title">Things I've built.</h2>
                     <div className="work-card">
                         <div className="work-card-left">
                             {/* Corrected: Using the inverted Savor wordmark */}
                             <img src="/images/Savor_white.png" alt="Savor" className="work-wordmark" />
                             <p className="work-tag">React Native · Android · 2026</p>
-                            <p className="work-desc">A full-stack recipe management app built for people who actually cook. Scrape any recipe URL, scan a physical cookbook with OCR, or type one in yourself — all in one place. 12 fruit themes, community feed, Pro tier, Railway backend.</p>                            <div className="work-links">
+                            <p className="work-desc">A recipe app I built because every other one annoyed me. Paste a URL, scan a cookbook page, or type something out, Savor handles all of it. 12 fruit themes, a community feed that doesn't chase engagement, and a Pro tier that costs less than a coffee. Built alone, from scratch, while also trying to grow my own vegetables.</p>                            <div className="work-links">
                                 <a href="/" className="studio-btn-primary">View app →</a>
                             </div>
                         </div>
@@ -102,8 +101,8 @@ export default function Studio() {
                 <div className="studio-cta-bg" />
                 <div className="container studio-cta-inner">
                     <img src="/images/logo_W.png" alt="" className="cta-squid" aria-hidden="true" />
-                    <h2 className="cta-title">Let's build something.</h2>
-                    <p className="cta-sub">Got an app idea? Need a React Native dev who ships? Let's talk.</p>
+                    <h2 className="cta-title">Got something to build?</h2>
+                    <p className="cta-sub">I'm a solo dev who's done this end to end. If you've got an idea and need someone who'll actually care about it, get in touch.</p>
                     <div className="studio-hero-ctas">
                         <a href="mailto:calicoSquidCode@gmail.com" className="studio-btn-primary">Get in touch</a>
                         <a href="https://buymeacoffee.com/calicosquid" className="studio-btn-ghost" target="_blank" rel="noreferrer">Buy me a coffee</a>

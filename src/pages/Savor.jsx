@@ -1,8 +1,7 @@
 import './savor.css'
 import { useTheme } from '../context/useTheme'
 import { getIcon } from '../utils/themeUtils'
-import AccessGate from '../components/AccessGate'
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 
 const SCREENSHOTS = [
     { file: '/screenshots/scan.png', title: 'Snap to Save', sub: 'Point your camera at any cookbook page. Savor reads it, structures it, saves it. No typing.', bg: 'linear-gradient(135deg, #C62828, #FF4081)' },
@@ -14,21 +13,21 @@ const SCREENSHOTS = [
 
 const PILLARS = [
     {
-        title: 'Capture from anywhere.',
-        sub: 'Paste a URL, scan a cookbook, or type it out. Savor is built to handle the mess. Headless browser orchestration and on-device OCR strip away the ads and life stories. You get the recipe. The noise stays on the web.'
+        title: 'Discover.',
+        sub: 'Savor\'s built-in browser spots recipes as you browse. One tap and it\'s saved properly — the photo, the ingredients, the steps. No copying, no pasting, no twelve paragraphs about the author\'s holiday in Tuscany.'
     },
     {
-        title: 'Structured, not generated.',
-        sub: 'Savor doesn\'t write recipes. It reads them. A three-tier extraction stack maps raw text and image data into a clean, consistent schema. Ingredients, quantities, steps, timings — exactly as written.'
+        title: 'Preserve.',
+        sub: 'Got a drawer full of handwritten cards or a battered old cookbook? Point your camera at them. Savor reads the writing, rebuilds the recipe, even finds an image when there isn\'t one. Recipes that nearly disappeared, brought back to life.'
     },
     {
-        title: 'Browse, tap, done.',
-        sub: 'The built-in browser is a full import pipeline. Find a recipe anywhere on the web, tap once, and watch Savor parse and save it in real time, without ever leaving the app. No copy-paste. No switching tabs.'
+        title: 'Imagine.',
+        sub: 'Got a recipe rattling around in your head? Type it out, however roughly. Savor turns it into a real recipe card you can actually cook from.'
     },
     {
-        title: 'Built from real kitchens.',
-        sub: 'The feed is built from recipes people actually make and want others to find. No algorithm, no promoted posts, just cooks sharing what works. Save what catches your eye. Share what sticks.'
-    }
+        title: 'Together.',
+        sub: 'A calm, algorithm-free feed of people who actually love food. No viral five-second reels. No endless smash cuts. Just cooks sharing what they made for lunch today.'
+    },
 ]
 
 
@@ -58,14 +57,6 @@ function ThemeCard({ theme, active, onSelect }) {
 export default function Savor() {
     const { activeTheme, selectTheme, themes } = useTheme()
     const featuresRef = useRef(null)
-    const [activeSlide, setActiveSlide] = useState(0)
-
-    function handleFeaturesScroll() {
-        const el = featuresRef.current
-        if (!el) return
-        const index = Math.round(el.scrollLeft / el.offsetWidth)
-        setActiveSlide(index)
-    }
 
     return (
         <main className="page savor-page">
@@ -74,22 +65,19 @@ export default function Savor() {
             <section className="hero">
                 <div className="hero-glow" style={{ background: `radial-gradient(ellipse at 50% 60%, ${activeTheme.primary}22 0%, transparent 70%)` }} />
                 <div className="container hero-inner">
-                    <span className="beta-badge fade-up fade-up-1">Beta — Android</span>
-                    <img src="/images/Savor.png" alt="Savor" className="hero-wordmark fade-up fade-up-2" />
-                    <p className="hero-tagline fade-up fade-up-3">
+                    <img src="/images/Savor.png" alt="Savor" className="hero-wordmark fade-up fade-up-1" />
+                    <p className="hero-tagline fade-up fade-up-2">
                         <span style={{ color: 'var(--primary)' }}>Cook</span>{' '}
                         <span style={{ color: 'var(--dark)' }}>in</span>{' '}
                         <span style={{ color: 'var(--tertiary)' }}>Color.</span>
                     </p>
                     <p className="hero-sub fade-up fade-up-3">
-                        Save any recipe, from anywhere. Paste a URL, scan a cookbook page, or type in grandma's secret — Savor handles all of it.
-
-
-                    </p>
-                    <div className="action-row fade-up fade-up-4">
-                        <a href="#beta" className="btn btn-green">Get the App</a>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfzqEdHxV0QKyhhWZ7zWLT5qUZWZAU2QwIt4PWuSoUrjkN-DQ/viewform" className="btn btn-fruit" target="_blank" rel="noreferrer">Leave Feedback</a>                        <a href="#flavors" className="btn btn-tertiary">Pick Your Flavor</a>
-                        <a href="/studio" className="btn btn-dark">calicoSquid<span className="footer-csc-code">Code</span></a>
+                        Browse the web, scan a recipe card or type in Grandmas secret.
+                        A recipe app made by a chef who got tired of recipe apps. Built around the things that made me fall in love with cooking in the first place.</p>
+                    <div className="hero-cta-row fade-up fade-up-4">
+                        <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes" className="btn btn-green" target="_blank" rel="noreferrer">Get the App</a>
+                        <a href="#flavors" className="btn btn-tertiary">Pick Your Flavor</a>
+                        <a href="/potluck" className="btn btn-fruit">Spin for Your Supper</a>                        <a href="/studio" className="btn btn-dark">calicoSquid<span className="footer-csc-code">Code</span></a>
                     </div>
                 </div>
             </section>
@@ -109,7 +97,7 @@ export default function Savor() {
 
             {/* ── Features ───────────────────────────────────────────── */}
             {/* ── Features ───────────────────────────────────────────── */}
-            <section className="features" ref={featuresRef} onScroll={handleFeaturesScroll}>
+            <section className="features" ref={featuresRef}>
                 {SCREENSHOTS.map((s, i) => (
                     <div className={`feature-row ${i % 2 === 1 ? 'feature-row--reverse' : ''}`} key={s.file}>
                         <div className="feature-row-img" style={{ background: s.bg }}>
@@ -123,11 +111,7 @@ export default function Savor() {
                     </div>
                 ))}
             </section>
-            <div className="features-dots">
-                {SCREENSHOTS.map((_, i) => (
-                    <span key={i} className={`features-dot ${i === activeSlide ? 'features-dot--active' : ''}`} />
-                ))}
-            </div>
+
 
             {/* ── Pick Your Flavor ───────────────────────────────────── */}
             <section className="flavors" id="flavors">
@@ -147,27 +131,23 @@ export default function Savor() {
                 </div>
             </section>
 
-            {/* ── Beta CTA ───────────────────────────────────────────── */}
-            <section className="beta-cta" id="beta">
-                <div className="beta-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
-                <div className="container beta-cta-inner">
-                    <img src={getIcon(activeTheme.name)} alt="Savor" className="beta-cta-icon" />
-                    <p className="beta-cta-overline">You're early</p>
-                    <h2 className="beta-cta-title">That's a good thing.</h2>
-                    <p className="beta-cta-sub">
-                        Savor is in beta and your feedback shapes what ships.
-                        Download the APK, cook something, and tell me what's broken.
+            {/* ── Download CTA ───────────────────────────────────────── */}
+            <section className="download-cta" id="download">
+                <div className="download-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
+                <div className="container download-cta-inner">
+                    <img src={getIcon(activeTheme.name)} alt="Savor" className="download-cta-icon" />
+                    <h2 className="download-cta-title">A home for every recipe that matters.</h2>
+                    <p className="download-cta-sub">
+                        I started Savor the day I found my mum's old recipe cards. Tattered, smudged, stained — but still meaning the world to me. That's what Savor is now. A place worthy of them.
                     </p>
-                    <div className="action-row">
-                        <AccessGate >
-                            <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes"
-                                className="btn btn-fruit shimmer"
-                                target="_blank"
-                                rel="noreferrer">
-                                Download From Play Store
-                            </a>
-                        </AccessGate>
-                    </div>
+                    <a
+                        href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="download-play-link"
+                    >
+                        <img src="/potluck/play2.png" alt="Get it on Google Play" className="download-play-badge" />
+                    </a>
                 </div>
             </section>
 

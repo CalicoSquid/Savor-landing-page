@@ -9,7 +9,7 @@
 }
 
 /* ── Page ───────────────────────────────────────────────────────── */
-.pl-page { background: var(--bg); }
+.pl-page { background: var(--bg); font-family: var(--font); }
 
 /* ── Nav potluck theme ──────────────────────────────────────────── */
 .nav[data-nav-theme="potluck"] {
@@ -20,28 +20,37 @@
 .nav[data-nav-theme="potluck"] .nav-links a.active { color: var(--pl-orange); }
 .nav[data-nav-theme="potluck"] .nav-links a::after { background: var(--pl-orange); }
 
-/* ── Hero ───────────────────────────────────────────────────────── */
+/* ── Hero — spinner section with comic bg ───────────────────────── */
 .pl-hero {
   position: relative;
-  padding: 40px 0 72px;
+  padding: 48px 0 64px;
   overflow: hidden;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  background: url('/potluck/bg.png') center center / cover no-repeat;
 }
 
 .pl-hero-bg {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 60%, rgba(255,152,0,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 40%, rgba(20,40,41,0.05) 0%, transparent 50%);
+  z-index: 0;
+  background: rgba(250,248,244,0.10);
   pointer-events: none;
 }
 
 .pl-hero-inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+/* ── Pitch section — clean light ────────────────────────────────── */
+.pl-pitch {
+  padding: 64px 0 72px;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
 /* ── Wheel column ───────────────────────────────────────────────── */
@@ -293,9 +302,7 @@
   text-align: center;
   width: 100%;
   max-width: 720px;
-  margin-top: 56px;
-  padding-top: 48px;
-  border-top: 1px solid rgba(0,0,0,0.07);
+  margin: 0 auto;
   gap: 0;
 }
 
@@ -463,7 +470,35 @@
 .pl-step-sub   { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.65; max-width: 220px; }
 
 /* ── Savor pitch ─────────────────────────────────────────────────── */
-.pl-savor-pitch { padding: 88px 0; }
+/* ── Savor pitch ─────────────────────────────────────────────────── */
+.pl-savor-pitch {
+  padding: 88px 0;
+  background: var(--surface-2);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.pl-savor-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 64px;
+}
+
+.pl-savor-wordmark {
+  height: 36px;
+  width: auto;
+  display: block;
+  margin-bottom: 16px;
+  opacity: 0.9;
+}
+
+.pl-savor-header-sub {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pl-orange);
+}
 
 .pl-savor-inner {
   display: grid;
@@ -527,30 +562,111 @@
 }
 .pl-savor-cta:hover { opacity: 0.72; }
 
-/* ── Screenshot display — clean phones, no gradient cards ───────── */
+/* ── 5 screenshots — two rows, staggered ────────────────────────── */
 .pl-savor-screenshots {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  overflow: visible;
+}
+
+.pl-screenshots-row {
+  display: flex;
+  gap: 10px;
   align-items: flex-end;
   justify-content: center;
-  gap: 12px;
+  padding: 16px 16px 16px;
 }
 
 .pl-screenshot-phone {
-  height: 130px;
   width: auto;
   object-fit: contain;
   display: block;
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: 0 6px 20px rgba(20,40,41,0.12);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+/* Row 1: 3 phones — outer shorter, middle taller */
+.pl-screenshots-row:first-child .pl-screenshot-phone          { height: 140px; }
+.pl-screenshots-row:first-child .pl-screenshot-phone:nth-child(2) { height: 168px; box-shadow: 0 10px 28px rgba(20,40,41,0.16); }
+
+/* Row 2: 2 phones — equal height, centered */
+.pl-screenshots-row:last-child .pl-screenshot-phone { height: 154px; box-shadow: 0 8px 24px rgba(20,40,41,0.14); }
+
+.pl-screenshot-phone:hover { transform: translateY(-4px); }
+
+/* ── Potluck app screenshots strip ──────────────────────────────── */
+.pl-app-shots {
+  padding: 72px 0;
+  background: var(--bg);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.pl-app-shots-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  overflow: visible;
+}
+
+.pl-app-shots-text {
+  text-align: center;
+}
+
+.pl-app-shots-title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--pl-teal);
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.pl-app-shots-sub {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.pl-app-shots-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 20px 20px 20px;
+}
+
+.pl-app-shot {
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(20,40,41,0.16);
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
   transition: transform 0.2s;
 }
 
-.pl-screenshot-phone:nth-child(2) {
-  height: 152px;
-  box-shadow: 0 8px 26px rgba(20,40,41,0.16);
+.pl-app-shot:nth-child(1) { height: 340px; }
+.pl-app-shot:nth-child(2) { height: 400px; box-shadow: 0 20px 60px rgba(20,40,41,0.22); }
+.pl-app-shot:nth-child(3) { height: 340px; }
+
+.pl-app-shot:hover { transform: translateY(-6px); }
+
+@media (max-width: 900px) {
+  .pl-app-shots-row { gap: 12px; }
+  .pl-app-shot:nth-child(1) { height: 240px; }
+  .pl-app-shot:nth-child(2) { height: 280px; }
+  .pl-app-shot:nth-child(3) { height: 240px; }
 }
 
-.pl-screenshot-phone:hover { transform: translateY(-4px); }
+@media (max-width: 640px) {
+  .pl-app-shots      { padding: 56px 0; }
+  .pl-app-shots-row  { gap: 10px; overflow-x: auto; justify-content: flex-start; padding: 0 24px 8px; }
+  .pl-app-shot:nth-child(1) { height: 200px; }
+  .pl-app-shot:nth-child(2) { height: 230px; }
+  .pl-app-shot:nth-child(3) { height: 200px; }
+}
 
 /* ── Final CTA ──────────────────────────────────────────────────── */
 .pl-final-cta {
@@ -577,30 +693,24 @@
 
 /* ── Responsive — tablet ────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .pl-pitch-col {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    justify-items: start;
-    text-align: left;
-    gap: 20px 32px;
-    max-width: 600px;
-    margin-top: 44px;
-    padding-top: 40px;
-  }
-
-  .pl-supper      { width: 240px; }
+  .pl-supper      { width: 260px; }
   .pl-pitch-right { gap: 20px; }
 
   .pl-savor-inner { grid-template-columns: 1fr; gap: 40px; }
+  .pl-savor-header { margin-bottom: 40px; }
+  .pl-savor-screenshots { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; gap: 8px; justify-content: flex-start; }
+  .pl-screenshots-row { gap: 8px; }
   .pl-steps       { gap: 28px; max-width: 100%; }
 
-  .pl-screenshot-phone              { height: 110px; }
-  .pl-screenshot-phone:nth-child(2) { height: 128px; }
+  .pl-screenshots-row:first-child .pl-screenshot-phone          { height: 110px; }
+  .pl-screenshots-row:first-child .pl-screenshot-phone:nth-child(2) { height: 132px; }
+  .pl-screenshots-row:last-child .pl-screenshot-phone           { height: 120px; }
 }
 
 /* ── Responsive — mobile ────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .pl-hero     { padding: 24px 0 48px; }
+  .pl-hero     { padding: 28px 0 52px; }
+  .pl-pitch     { padding: 48px 0 56px; }
 
   .pl-wordmark { width: 70%; max-width: 210px; margin-bottom: 24px; }
 
@@ -625,7 +735,7 @@
   .pl-powered    { margin-top: 10px; font-size: 10px; }
 
   /* Pitch — single column */
-  .pl-pitch-col   { margin-top: 36px; padding-top: 32px; gap: 24px; }
+  .pl-pitch-col   { gap: 24px; }
   .pl-supper      { width: 240px; max-width: 70vw; margin-bottom: 0; }
   .pl-pitch-right { grid-template-columns: 1fr; gap: 20px; }
   .pl-pitch-divider { display: none; }
@@ -642,10 +752,14 @@
   /* Savor pitch */
   .pl-savor-pitch { padding: 64px 0; }
   .pl-savor-inner { gap: 32px; }
+  .pl-savor-header { margin-bottom: 32px; }
+  .pl-savor-wordmark { height: 28px; }
 
-  .pl-savor-screenshots             { gap: 10px; overflow-x: auto; padding-bottom: 4px; justify-content: flex-start; }
-  .pl-screenshot-phone              { height: 100px; }
-  .pl-screenshot-phone:nth-child(2) { height: 116px; }
+  .pl-savor-screenshots { flex-direction: row; overflow-x: auto; padding-bottom: 8px; gap: 8px; justify-content: flex-start; align-items: flex-end; }
+  .pl-screenshots-row { gap: 8px; }
+  .pl-screenshots-row:first-child .pl-screenshot-phone          { height: 95px; }
+  .pl-screenshots-row:first-child .pl-screenshot-phone:nth-child(2) { height: 114px; }
+  .pl-screenshots-row:last-child .pl-screenshot-phone           { height: 104px; }
 
   /* Final CTA */
   .pl-final-cta { padding: 64px 0; }

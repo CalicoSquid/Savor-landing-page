@@ -13,10 +13,14 @@ const MID_HEADLINES  = ['Not feeling it?','Uninspired?','Not quite right?','Keep
 const CAP_HEADLINES  = ['That\'s your three.','Three spins. That\'s the deal.','The wheel has spoken.','Alright, you\'ve seen enough.']
 const CAP_CHEEKS     = ['Surely one of those will do?','The wheel tried its best.','Three great options right there.','You dare defy the universe?']
 
-const SAVOR_SCREENSHOTS = [
-    { file: '/screenshots/scan.png', title: 'Snap to Save', sub: 'Point your camera at any cookbook page. Savor reads it, structures it, saves it. No typing.', bg: 'linear-gradient(135deg, #C62828, #FF4081)' },
-    { file: '/screenshots/found.png',  title: 'Just One Tap',   sub: 'Browse the web inside the app. Find a recipe you love, hit import — it\'s yours forever.',     bg: 'linear-gradient(135deg, #303F9F, #5C6BC0)' },
-    { file: '/screenshots/community.png',       title: 'Share the Love', sub: 'Post to the community feed. See what the world is cooking. Save anything that looks good.',   bg: 'linear-gradient(135deg, #8BC34A, #689F38)' },
+const SAVOR_SCREENSHOTS_ROW1 = [
+    { file: '/screenshots/scan.png',   title: 'Snap to Save'    },
+    { file: '/screenshots/home.png',    title: 'Home'            },
+    { file: '/screenshots/found.png',    title: 'Just One Tap'    },
+]
+const SAVOR_SCREENSHOTS_ROW2 = [
+    { file: '/screenshots/recipe.png',  title: 'Just the Recipe' },
+    { file: '/screenshots/community.png',         title: 'Share the Love'  },
 ]
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
@@ -228,11 +232,10 @@ export default function Potluck() {
         <main className="page pl-page">
 
             {/* ── Hero ─────────────────────────────────────────────── */}
+            {/* ── Spinner section ───────────────────────────────────── */}
             <section className="pl-hero">
                 <div className="pl-hero-bg" />
                 <div className="container pl-hero-inner">
-
-                    {/* Wheel demo */}
                     <div className="pl-wheel-col">
                         <img src="/potluck/wordmark2.png" alt="Potluck by Savor" className="pl-wordmark" />
 
@@ -298,8 +301,12 @@ export default function Potluck() {
 
                         <p className="pl-powered">Powered by Savor</p>
                     </div>
+                </div>
+            </section>
 
-                    {/* Pitch row — below wheel */}
+            {/* ── Pitch section ─────────────────────────────────────── */}
+            <section className="pl-pitch">
+                <div className="container">
                     <div className="pl-pitch-col">
                         <img src="/potluck/supper2.png" alt="Spin For Your Supper" className="pl-supper" />
                         <div className="pl-pitch-right">
@@ -323,7 +330,6 @@ export default function Potluck() {
                             <img src="/potluck/play2.png" alt="Get it on Google Play" className="pl-play-badge" />
                         </a>
                     </div>
-
                 </div>
             </section>
 
@@ -349,33 +355,56 @@ export default function Potluck() {
 
             {/* ── Savor pitch ──────────────────────────────────────── */}
             <section className="pl-savor-pitch">
-                <div className="container pl-savor-inner">
-                    <div className="pl-savor-text">
-                        <p className="pl-section-overline">Want more?</p>
-                        <h2 className="pl-savor-title">Potluck is just the beginning.</h2>
-                        <p className="pl-savor-sub">
-                            Potluck draws from Savor — a full recipe app where you can save anything from anywhere. Paste a URL, scan a cookbook page, or type in grandma's secret. Your whole kitchen, in one place.
-                        </p>
-                        <div className="pl-savor-features">
-                            {['Save from any URL or cookbook page', 'No ads. No life stories. Just recipes.', '25 free recipes — unlimited with Pro', 'Community feed of real home cooks'].map(f => (
-                                <div className="pl-savor-feature" key={f}>
-                                    <span className="pl-feature-dot" />
-                                    <span>{f}</span>
-                                </div>
-                            ))}
-                        </div>
-                        <a href="/" className="pl-savor-cta">Explore Savor →</a>
+                <div className="container">
+                    <div className="pl-savor-header">
+                        <img src="/images/Savor.png" alt="Savor" className="pl-savor-wordmark" />
+                        <p className="pl-savor-header-sub">Want more?</p>
                     </div>
+                    <div className="pl-savor-inner">
+                        <div className="pl-savor-text">
+                            <h2 className="pl-savor-title">Potluck is just the beginning.</h2>
+                            <p className="pl-savor-sub">
+                                Potluck draws from Savor — a full recipe app where you can save anything from anywhere. Paste a URL, scan a cookbook page, or type in grandma's secret. Your whole kitchen, in one place.
+                            </p>
+                            <div className="pl-savor-features">
+                                {['Save from any URL or cookbook page', 'No ads. No life stories. Just recipes.', '25 free recipes — unlimited with Pro', 'Community feed of real home cooks'].map(f => (
+                                    <div className="pl-savor-feature" key={f}>
+                                        <span className="pl-feature-dot" />
+                                        <span>{f}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <a href="/" className="pl-savor-cta">Explore Savor →</a>
+                        </div>
 
-                    <div className="pl-savor-screenshots">
-                        {SAVOR_SCREENSHOTS.map((s) => (
-                            <img
-                                key={s.file}
-                                src={s.file}
-                                alt={s.title}
-                                className="pl-screenshot-phone"
-                            />
-                        ))}
+                        <div className="pl-savor-screenshots">
+                            <div className="pl-screenshots-row">
+                                {SAVOR_SCREENSHOTS_ROW1.map((s) => (
+                                    <img key={s.file} src={s.file} alt={s.title} className="pl-screenshot-phone" />
+                                ))}
+                            </div>
+                            <div className="pl-screenshots-row">
+                                {SAVOR_SCREENSHOTS_ROW2.map((s) => (
+                                    <img key={s.file} src={s.file} alt={s.title} className="pl-screenshot-phone" />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── Potluck app screenshots ───────────────────────────── */}
+            <section className="pl-app-shots">
+                <div className="container pl-app-shots-inner">
+                    <div className="pl-app-shots-text">
+                        <p className="pl-section-overline">See it in action</p>
+                        <h2 className="pl-app-shots-title">Spin. Browse. Cook.</h2>
+                        <p className="pl-app-shots-sub">Three spins, one decision, zero stress.</p>
+                    </div>
+                    <div className="pl-app-shots-row">
+                        <img src="/potluck/Potluck_ASO_Destiny2.png" alt="Potluck app" className="pl-app-shot" />
+                        <img src="/potluck/potluck_ASO_Hero.png"     alt="Potluck app" className="pl-app-shot" />
+                        <img src="/potluck/Potluck_ASO_Fate3.png"    alt="Potluck app" className="pl-app-shot" />
                     </div>
                 </div>
             </section>
