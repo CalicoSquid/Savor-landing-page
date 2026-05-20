@@ -47,7 +47,6 @@ export default function Privacy() {
       <section style={{ padding: '70px 0 140px' }}>
         <div className="container" style={{ maxWidth: 680, margin: '0 auto' }}>
 
-          {/* Overline */}
           <p style={{
             fontSize: '0.72rem',
             fontWeight: 700,
@@ -116,12 +115,14 @@ export default function Privacy() {
           {section("What we collect — Savor", <>
             {p("Savor requires an account to save and manage your recipes. When you use Savor we collect:")}
             {li([
-              "Email address — used for account creation and authentication only.",
+              "Google profile — when you sign in with Google we receive your display name, email address, and profile picture from Google.",
+              "Email address — if you register with email and password, we store your email for authentication only.",
+              "Your username — displayed alongside recipes you share to the community feed.",
               "Recipes you save — stored in your personal recipe box on our servers.",
               "Recipes you choose to share — visible to other Savor users in the community feed.",
-              "Your username — displayed alongside recipes you share.",
+              "Subscription status — if you subscribe to Savor Pro, we receive your subscription status from RevenueCat and Google Play. We never see your payment details.",
             ])}
-            {p("We do not collect your real name, phone number, location, contacts, or any other personal information.")}
+            {p("We do not collect your real name (beyond what Google provides), phone number, location, contacts, or any other personal information.")}
           </>)}
 
           {section("What we collect — Potluck by Savor", <>
@@ -130,12 +131,27 @@ export default function Privacy() {
             {p("Your spin session (which recipes you've seen) is stored locally on your device using AsyncStorage and is never sent to us.")}
           </>)}
 
+          {section("Camera and scan", <>
+            {p("Savor's scan feature lets you photograph physical recipe cards and cookbooks to import them into your recipe box. When you use this feature:")}
+            {li([
+              "Your camera is accessed only when you actively initiate a scan.",
+              "Images are processed on-device using ML Kit OCR to extract text.",
+              "Where needed, extracted text is sent to our server for recipe parsing. The image itself is never sent to or stored on our servers.",
+              "Processed text is not retained after your recipe has been imported.",
+            ])}
+          </>)}
+
+          {section("Push notifications", <>
+            {p("With your permission, Savor may send you push notifications about your recipe activity and community updates. Notifications are optional — you can enable or disable them at any time in your device settings. We do not use notifications for advertising.")}
+          </>)}
+
           {section("How we use your data", <>
             {p("Savor uses your data solely to provide the service:")}
             {li([
-              "Your email authenticates you via Firebase Authentication.",
-              "Your recipes are stored so you can access them across devices.",
+              "Your email and Google profile authenticate you and keep your recipe box synced across devices.",
+              "Your username is displayed alongside recipes you share to the community feed.",
               "Shared recipes are displayed in the community feed as you intended.",
+              "Subscription status unlocks Pro features in the app.",
             ])}
             {p("We do not sell your data. We do not use your data for advertising. We do not share your data with third parties except the infrastructure providers listed below.")}
           </>)}
@@ -143,15 +159,17 @@ export default function Privacy() {
           {section("Third-party services", <>
             {p("We use a small number of trusted services to run the apps:")}
             {li([
-              "Firebase Authentication (Google) — handles sign-in for Savor. Your email is stored with Firebase.",
+              "Firebase Authentication (Google) — handles sign-in for Savor. Your email and Google profile are stored with Firebase.",
               "MongoDB Atlas — stores your recipes and account data on our behalf.",
               "Railway — hosts our server that both apps communicate with.",
+              "RevenueCat — manages subscription billing for Savor Pro. RevenueCat receives your subscription status and purchase history via Google Play. We never receive your payment card details.",
+              "Expo / EAS — used to deliver over-the-air app updates. No personal data is transmitted.",
             ])}
             {p("Each of these services has their own privacy policy. We have chosen providers who take data seriously and do not use your data for their own advertising or profiling.")}
           </>)}
 
           {section("Data retention and deletion", <>
-            {p("You can delete your Savor account at any time from within the app (Settings → Delete Account). This permanently deletes your account, email address, and all saved recipes immediately.")}
+            {p("You can delete your Savor account at any time from within the app (Settings → Privacy & Data → Delete Account). This permanently deletes your account, email address, and all saved recipes immediately.")}
             {p("Recipes you have shared to the community feed remain as anonymous contributions after account deletion — your username is removed but the recipe stays. This is intentional so the community isn't disrupted when someone leaves. If you want a specific shared recipe removed, contact us.")}
             {p("Potluck stores nothing on our servers tied to you, so there is nothing to delete.")}
           </>)}
@@ -160,11 +178,14 @@ export default function Privacy() {
             {p("Our apps are not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, contact us and we will delete it.")}
           </>)}
 
+          {section("Your rights", <>
+            {p("Depending on where you live, you may have rights regarding your personal data — including the right to access, correct, or delete it. To exercise any of these rights, contact us at the address below. We will respond within a reasonable timeframe.")}
+          </>)}
+
           {section("Changes to this policy", <>
             {p("If we make material changes to this policy we will update the date at the top of this page. Continued use of the apps after changes constitutes acceptance of the updated policy.")}
           </>)}
 
-          {/* Contact */}
           <div style={{
             borderTop: '1px solid rgba(0,0,0,0.07)',
             paddingTop: 32,
@@ -184,7 +205,6 @@ export default function Privacy() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <div className="container footer-inner">
           <span className="footer-copy">
