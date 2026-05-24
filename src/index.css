@@ -95,6 +95,20 @@ body {
   background: #121212; /* Very dark background */
 }
 
+/* FORAGE side colors */
+.nav[data-nav-theme="forage"] {
+  background: linear-gradient(90deg, #2d5a3d, #3d7a4f);
+}
+
+.nav[data-nav-theme="forage"] .nav-links a {
+  color: rgba(255,255,255,0.7);
+}
+
+.nav[data-nav-theme="forage"] .nav-links a:hover,
+.nav[data-nav-theme="forage"] .nav-links a.active {
+  color: #ffffff;
+}
+
 .nav .container {
   display: flex;
   align-items: center;
@@ -237,4 +251,11 @@ body {
 .nav-icon--potluck {
   height: 28px;
   width: auto;
+}
+
+.nav-icon--forage {
+  height: 36px;
+  width: 36px;
+  border-radius: 9px;
+  object-fit: cover;
 }

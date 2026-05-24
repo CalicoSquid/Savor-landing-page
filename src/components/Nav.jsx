@@ -9,16 +9,19 @@ export default function Nav() {
 
   const isStudio  = location.pathname.startsWith('/studio')
   const isPotluck = location.pathname.startsWith('/potluck')
+  const isForage  = location.pathname.startsWith('/forage')
   const isRecipe  = location.pathname.startsWith('/r/')
 
   if (isRecipe) return null
 
-  const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : 'savor'
+  const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isForage ? 'forage' : 'savor'
   const iconSrc  = isStudio  ? '/images/logo_W.png'
                  : isPotluck ? '/potluck/potluck-icon.png'
+                 : isForage  ? '/forage/forage-icon.png'
                  : getIcon(activeTheme.name)
   const iconAlt  = isStudio  ? 'CalicoSquid Code'
                  : isPotluck ? 'Potluck by Savor'
+                 : isForage  ? 'Forage'
                  : activeTheme.name
 
   return (
@@ -28,7 +31,7 @@ export default function Nav() {
           <img
             src={iconSrc}
             alt={iconAlt}
-            className={`nav-icon`}
+            className={`nav-icon${isPotluck ? ' nav-icon--potluck' : isForage ? ' nav-icon--forage' : ''}`}
           />
         </NavLink>
         <ul className="nav-links">
