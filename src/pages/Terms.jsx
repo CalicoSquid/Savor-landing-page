@@ -1,3 +1,5 @@
+import Footer from '../components/Footer'
+
 export default function Terms() {
   const LAST_UPDATED = "May 2026";
 
@@ -191,15 +193,7 @@ export default function Terms() {
         </div>
       </section>
 
-      <footer className="footer">
-        <div className="container footer-inner">
-          <span className="footer-copy">
-            <a href="/studio" className="footer-csc-link">
-              calicoSquid<span className="footer-csc-code">Code</span>
-            </a>
-          </span>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

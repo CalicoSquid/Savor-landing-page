@@ -9,6 +9,7 @@ import DeleteAccount from './pages/DeleteAccount'
 import Privacy from './pages/Privacy'
 import ForagePrivacy from './pages/ForagePrivacy'
 import Terms from './pages/Terms'
+import NotFound from './pages/NotFound'
 import { ThemeProvider } from './context/ThemeProvider'
 import Nav from './components/Nav'
 
@@ -29,6 +30,7 @@ export default function AppRoutes() {
         <Route path="/privacy"             element={<Privacy />} />
         <Route path="/forage/privacy"      element={<ForagePrivacy />} />
         <Route path="/terms"               element={<Terms />} />
+        <Route path="*"                    element={<NotFound />} />
       </Routes>
     </ThemeProvider>
   )

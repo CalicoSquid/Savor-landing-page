@@ -1,5 +1,6 @@
 // src/pages/Studio.jsx
 import './Studio.css'
+import Footer from '../components/Footer'
 
 const SERVICES = [
     { icon: '📱', title: 'React Native', desc: 'Android apps built with Expo and EAS. I know the pipeline end to end — dev build to Play Store.' },
@@ -111,13 +112,7 @@ export default function Studio() {
             </section>
 
             {/* ── Footer ─────────────────────────────────────────────── */}
-            <footer className="studio-footer">
-                <div className="container studio-footer-inner">
-                    <span className="studio-footer-name">
-                        calicoSquid<span className="studio-footer-orange">Code</span>
-                    </span>
-                </div>
-            </footer>
+            <Footer />
 
         </main >
     )
