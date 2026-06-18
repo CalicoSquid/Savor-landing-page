@@ -6,25 +6,25 @@ import Footer from '../components/Footer'
 const PILLARS = [
     {
         title: 'Discover.',
-        img: '/screenshots/found.png',
+        img: '/screenshots/found.webp',
         bg: 'linear-gradient(135deg, #303F9F, #5C6BC0)',
         sub: 'Savor\'s built-in browser spots recipes as you browse. One tap and it\'s saved properly — the photo, the ingredients, the steps. No copying, no pasting, no twelve paragraphs about the author\'s holiday in Tuscany.'
     },
     {
         title: 'Preserve.',
-        img: '/screenshots/scan.png',
+        img: '/screenshots/scan.webp',
         bg: 'linear-gradient(135deg, #C62828, #FF4081)',
         sub: 'Got a drawer full of handwritten cards or a battered old cookbook? Point your camera at them. Savor reads the writing, rebuilds the recipe, even finds an image when there isn\'t one. Recipes that nearly disappeared, brought back to life.'
     },
     {
         title: 'Imagine.',
-        img: '/screenshots/recipe.png',
+        img: '/screenshots/recipe.webp',
         bg: 'linear-gradient(135deg, #AD1457, #FF1493)',
         sub: 'Got a recipe rattling around in your head? Type it out, however roughly. Savor turns it into a real recipe card you can actually cook from.'
     },
     {
         title: 'Together.',
-        img: '/screenshots/community.png',
+        img: '/screenshots/community.webp',
         bg: 'linear-gradient(135deg, #8BC34A, #689F38)',
         sub: 'A calm, algorithm-free feed of people who actually love food. No viral five-second reels. No endless smash cuts. Just cooks sharing what they made for lunch today.'
     },
@@ -64,7 +64,7 @@ export default function Savor() {
             <section className="hero">
                 <div className="hero-glow" style={{ background: `radial-gradient(ellipse at 50% 60%, ${activeTheme.primary}22 0%, transparent 70%)` }} />
                 <div className="container hero-inner">
-                    <img src="/images/Savor.png" alt="Savor" className="hero-wordmark fade-up fade-up-1" />
+                    <img src="/images/Savor.webp" alt="Savor" className="hero-wordmark fade-up fade-up-1" />
                     <p className="hero-tagline fade-up fade-up-2">
                         <span style={{ color: 'var(--primary)' }}>Cook</span>{' '}
                         <span style={{ color: 'var(--dark)' }}>in</span>{' '}

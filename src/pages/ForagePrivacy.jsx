@@ -109,7 +109,7 @@ export default function ForagePrivacy() {
           {/* App identity */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
             <img
-              src="/forage/forage-icon.png"
+              src="/forage/forage-icon.webp"
               alt="Forage"
               style={{ width: 56, height: 56, borderRadius: 14, boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}
             />

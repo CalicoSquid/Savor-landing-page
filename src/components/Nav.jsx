@@ -15,9 +15,9 @@ export default function Nav() {
   if (isRecipe) return null
 
   const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isForage ? 'forage' : 'savor'
-  const iconSrc  = isStudio  ? '/images/logo_W.png'
-                 : isPotluck ? '/potluck/potluck-icon.png'
-                 : isForage  ? '/forage/forage-icon-bg.png'
+  const iconSrc  = isStudio  ? '/images/logo_W.webp'
+                 : isPotluck ? '/potluck/potluck-icon.webp'
+                 : isForage  ? '/forage/forage-icon-bg.webp'
                  : getIcon(activeTheme.name)
   const iconAlt  = isStudio  ? 'CalicoSquid Code'
                  : isPotluck ? 'Potluck by Savor'

@@ -18,7 +18,7 @@ const STEPS = [
     body: "One recipe lands. That's dinner. The wheel doesn't miss — and it's got opinions about your choices.",
   },
   {
-    badge: { img: '/potluck/savor-logo.png', alt: 'Savor' },
+    badge: { img: '/potluck/savor-logo.webp', alt: 'Savor' },
     title: 'Save it to Savor.',
     body: 'Love what landed? One tap sends it straight to Savor, saved and scaled and yours for next time.',
   },
@@ -44,12 +44,12 @@ export default function Potluck() {
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="pl-hero">
           <div className="pl-container pl-hero-inner">
-            <img src="/potluck/wordmark2.png" alt="Potluck" className="pl-wordmark" />
+            <img src="/potluck/wordmark2.webp" alt="Potluck" className="pl-wordmark" />
 
             <div className="pl-wheel" aria-hidden="true">
-              <img src="/potluck/outer.png" alt="" className="pl-wheel-outer" />
+              <img src="/potluck/outer.webp" alt="" className="pl-wheel-outer" />
               <span className="pl-wheel-spin">
-                <img src="/potluck/spinner.png" alt="" className="pl-wheel-spinner" />
+                <img src="/potluck/spinner.webp" alt="" className="pl-wheel-spinner" />
               </span>
               <span className="pl-wheel-glass-t" />
               <span className="pl-wheel-glass-b" />
@@ -121,9 +121,9 @@ export default function Potluck() {
               <Link to="/" className="pl-btn pl-btn--teal">Meet Savor →</Link>
             </div>
             <div className="pl-pair-icons">
-              <img src="/potluck/potluck-icon.png" alt="Potluck" className="pl-pair-icon" />
+              <img src="/potluck/potluck-icon.webp" alt="Potluck" className="pl-pair-icon" />
               <span className="pl-pair-x">×</span>
-              <img src="/icons/icon-Tangerine.png" alt="Savor" className="pl-pair-icon" />
+              <img src="/potluck/savor-logo.webp" alt="Savor" className="pl-pair-icon" />
             </div>
           </div>
         </section>
