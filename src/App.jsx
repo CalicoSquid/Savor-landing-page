@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Savor from './pages/Savor'
 import Studio from './pages/Studio'
 import Potluck from './pages/Potluck'
+import About from './pages/About'
+import Faq from './pages/Faq'
 import RecipePage from './pages/RecipePage'
 import DeleteAccount from './pages/DeleteAccount'
 import Privacy from './pages/Privacy'
@@ -18,6 +20,8 @@ export default function App() {
         <Routes>
           <Route path="/"                    element={<Savor />} />
           <Route path="/potluck"             element={<Potluck />} />
+          <Route path="/about"               element={<About />} />
+          <Route path="/faq"                 element={<Faq />} />
           <Route path="/studio"              element={<Studio />} />
           <Route path="/r/:id"               element={<RecipePage />} />
           <Route path="/delete-account"      element={<DeleteAccount />} />

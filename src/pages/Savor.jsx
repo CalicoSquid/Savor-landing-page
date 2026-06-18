@@ -1,31 +1,31 @@
 import './savor.css'
 import { useTheme } from '../context/useTheme'
 import { getIcon } from '../utils/themeUtils'
-import { useRef } from 'react'
-
-const SCREENSHOTS = [
-    { file: '/screenshots/scan.png', title: 'Snap to Save', sub: 'Point your camera at any cookbook page. Savor reads it, structures it, saves it. No typing.', bg: 'linear-gradient(135deg, #C62828, #FF4081)' },
-    { file: '/screenshots/found.png', title: 'Just One Tap', sub: 'Browse the web inside the app. Find a recipe you love, hit import — it\'s yours forever.', bg: 'linear-gradient(135deg, #303F9F, #5C6BC0)' },
-    { file: '/screenshots/recipe.png', title: 'Just The Recipe', sub: 'No life stories. No ads. No scroll. Savor strips every recipe down to what you actually need.', bg: 'linear-gradient(135deg, #AD1457, #FF1493)' },
-    { file: '/screenshots/community.png', title: 'Share the Love', sub: 'Post to the community feed. See what the world is cooking. Save anything that looks good.', bg: 'linear-gradient(135deg, #8BC34A, #689F38)' },
-]
-
+import Footer from '../components/Footer'
 
 const PILLARS = [
     {
         title: 'Discover.',
+        img: '/screenshots/found.png',
+        bg: 'linear-gradient(135deg, #303F9F, #5C6BC0)',
         sub: 'Savor\'s built-in browser spots recipes as you browse. One tap and it\'s saved properly — the photo, the ingredients, the steps. No copying, no pasting, no twelve paragraphs about the author\'s holiday in Tuscany.'
     },
     {
         title: 'Preserve.',
+        img: '/screenshots/scan.png',
+        bg: 'linear-gradient(135deg, #C62828, #FF4081)',
         sub: 'Got a drawer full of handwritten cards or a battered old cookbook? Point your camera at them. Savor reads the writing, rebuilds the recipe, even finds an image when there isn\'t one. Recipes that nearly disappeared, brought back to life.'
     },
     {
         title: 'Imagine.',
+        img: '/screenshots/recipe.png',
+        bg: 'linear-gradient(135deg, #AD1457, #FF1493)',
         sub: 'Got a recipe rattling around in your head? Type it out, however roughly. Savor turns it into a real recipe card you can actually cook from.'
     },
     {
         title: 'Together.',
+        img: '/screenshots/community.png',
+        bg: 'linear-gradient(135deg, #8BC34A, #689F38)',
         sub: 'A calm, algorithm-free feed of people who actually love food. No viral five-second reels. No endless smash cuts. Just cooks sharing what they made for lunch today.'
     },
 ]
@@ -56,7 +56,6 @@ function ThemeCard({ theme, active, onSelect }) {
 
 export default function Savor() {
     const { activeTheme, selectTheme, themes } = useTheme()
-    const featuresRef = useRef(null)
 
     return (
         <main className="page savor-page">
@@ -77,16 +76,20 @@ export default function Savor() {
                     <div className="hero-cta-row fade-up fade-up-4">
                         <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes" className="btn btn-green" target="_blank" rel="noreferrer">Get the App</a>
                         <a href="#flavors" className="btn btn-tertiary">Pick Your Flavor</a>
-                        <a href="/potluck" className="btn btn-fruit">Spin for Your Supper</a>                        <a href="/studio" className="btn btn-dark">calicoSquid<span className="footer-csc-code">Code</span></a>
+                        <a href="/potluck" className="btn btn-fruit">Spin for Your Supper</a>
+                        <a href="/about" className="btn btn-dark">The Story</a>
                     </div>
                 </div>
             </section>
 
-            {/* ── Pillars ─────────────────────────────────────────────── */}
+            {/* ── Pillars (with merged screenshots) ──────────────────── */}
             <section className="pillars">
                 <div className="container pillars-grid">
                     {PILLARS.map((p) => (
                         <div className="pillar" key={p.title}>
+                            <div className="pillar-shot" style={{ background: p.bg }}>
+                                <img src={p.img} alt={p.title} />
+                            </div>
                             <div className="pillar-rule" style={{ background: 'var(--grad-fruit)' }} />
                             <h3 className="pillar-title">{p.title}</h3>
                             <p className="pillar-sub">{p.sub}</p>
@@ -94,24 +97,6 @@ export default function Savor() {
                     ))}
                 </div>
             </section>
-
-            {/* ── Features ───────────────────────────────────────────── */}
-            {/* ── Features ───────────────────────────────────────────── */}
-            <section className="features" ref={featuresRef}>
-                {SCREENSHOTS.map((s, i) => (
-                    <div className={`feature-row ${i % 2 === 1 ? 'feature-row--reverse' : ''}`} key={s.file}>
-                        <div className="feature-row-img" style={{ background: s.bg }}>
-                            <img src={s.file} alt={s.title} className="feature-row-screenshot" />
-                        </div>
-                        <div className="feature-row-text">
-                            <div className="feature-overline" style={{ background: 'var(--grad-fruit)' }} />
-                            <h3 className="feature-row-title">{s.title}</h3>
-                            <p className="feature-row-sub">{s.sub}</p>
-                        </div>
-                    </div>
-                ))}
-            </section>
-
 
             {/* ── Pick Your Flavor ───────────────────────────────────── */}
             <section className="flavors" id="flavors">
@@ -152,16 +137,7 @@ export default function Savor() {
             </section>
 
             {/* ── Footer ─────────────────────────────────────────────── */}
-            <footer className="footer">
-                <div className="container footer-inner">
-                    <span className="footer-copy">
-
-                        <a href="/studio" className="footer-csc-link">
-                            calicoSquid<span className="footer-csc-code">Code</span>
-                        </a>
-                    </span>
-                </div>
-            </footer>
+            <Footer />
 
         </main >
     )

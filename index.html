@@ -2,19 +2,99 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/public/icons/icon-default.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#FF6D00" />
+
+    <!-- Primary meta -->
+    <title>Savor — Save Any Recipe | Recipe Scanner &amp; Keeper App</title>
     <meta
       name="description"
-      content="Savor — Cook in Color. Save any recipe, from anywhere."
+      content="Savor is a recipe app made by a chef. Scan cookbook pages and handwritten cards, import recipes from any website in one tap, and keep them all ad-free and beautifully organized."
     />
+    <link rel="canonical" href="https://getsavor.recipes/" />
+
+    <!-- Favicons (Vite serves /public at the site root) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/icons/icon-default.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-default.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Savor" />
+    <meta property="og:title" content="Savor — Save Any Recipe, From Anywhere" />
+    <meta
+      property="og:description"
+      content="A recipe app made by a chef who got tired of recipe apps. Scan, import, and keep every recipe — ad-free, no life stories, no scroll."
+    />
+    <meta property="og:url" content="https://getsavor.recipes/" />
+    <meta property="og:image" content="https://getsavor.recipes/images/savor-final.png" />
+    <meta property="og:image:alt" content="Savor — Cook in Color" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Savor — Save Any Recipe, From Anywhere" />
+    <meta
+      name="twitter:description"
+      content="A recipe app made by a chef. Scan cookbook pages, import from any site in one tap, keep everything ad-free."
+    />
+    <meta name="twitter:image" content="https://getsavor.recipes/images/savor-final.png" />
+
+    <!-- Structured data: read by Google rich results AND AI answer engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://getsavor.recipes/#website",
+          "url": "https://getsavor.recipes/",
+          "name": "Savor",
+          "description": "Save any recipe, from anywhere.",
+          "publisher": { "@id": "https://getsavor.recipes/#org" }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://getsavor.recipes/#org",
+          "name": "CalicoSquid",
+          "url": "https://getsavor.recipes/",
+          "logo": "https://getsavor.recipes/images/savor-final.png"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://getsavor.recipes/#app",
+          "name": "Savor",
+          "applicationCategory": "LifestyleApplication",
+          "operatingSystem": "Android",
+          "url": "https://getsavor.recipes/",
+          "downloadUrl": "https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes",
+          "installUrl": "https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes",
+          "image": "https://getsavor.recipes/images/savor-final.png",
+          "publisher": { "@id": "https://getsavor.recipes/#org" },
+          "description": "Savor is a recipe app made by a chef. Scan cookbook pages and handwritten recipe cards with your camera, import recipes from any website in one tap, type out a recipe from memory, and keep them all ad-free and beautifully organized — with no life stories and no endless scroll.",
+          "featureList": [
+            "Scan handwritten recipe cards and cookbook pages with your camera",
+            "Import a recipe from any website in one tap with the built-in browser",
+            "Strip out ads, pop-ups and life stories — keep just the recipe",
+            "Turn a roughly-typed recipe into a clean, cookable recipe card",
+            "Calm, algorithm-free community recipe feed",
+            "12 customizable fruit color themes"
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <title>Savor — Cook in Color</title>
   </head>
   <body>
     <div id="root"></div>

@@ -1,0 +1,181 @@
+/* ── Shared content-page styles (About, FAQ) ─────────────────────── */
+/* Built on the existing token system in index.css + theme variables. */
+
+.doc-page {
+  background: var(--bg);
+  min-height: 70vh;
+}
+
+.doc-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+
+.doc-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+
+.doc-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--grad-fruit);
+}
+
+.doc-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text-primary);
+}
+
+.doc-lead {
+  margin-top: 18px;
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ── About ───────────────────────────────────────────────────────── */
+.about-block { margin-top: 40px; }
+
+.about-block h2 {
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.about-block p {
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.about-block p strong { color: var(--text-primary); font-weight: 700; }
+
+/* ── FAQ ─────────────────────────────────────────────────────────── */
+.faq-list { margin-top: 40px; }
+
+.faq-item {
+  border-top: 1px solid rgba(0,0,0,0.09);
+  padding: 4px 0;
+}
+.faq-item:last-child { border-bottom: 1px solid rgba(0,0,0,0.09); }
+
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 4px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: '';
+  flex: 0 0 auto;
+  width: 11px;
+  height: 11px;
+  border-right: 2.5px solid var(--primary);
+  border-bottom: 2.5px solid var(--primary);
+  transform: rotate(45deg);
+  transition: transform 0.25s ease;
+  margin-right: 6px;
+}
+.faq-item[open] summary::after { transform: rotate(-135deg); }
+
+.faq-answer {
+  padding: 0 4px 22px;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 62ch;
+}
+.faq-answer a { color: var(--primary); font-weight: 600; text-decoration: none; }
+.faq-answer a:hover { text-decoration: underline; }
+
+/* ── Shared CTA strip ────────────────────────────────────────────── */
+.doc-cta {
+  margin-top: 56px;
+  padding: 34px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 10%, transparent), color-mix(in srgb, var(--primary) 4%, transparent));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+.doc-cta h2 {
+  font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.doc-cta-badge { height: 54px; width: auto; }
+.doc-cta-badge-link { display: inline-flex; transition: transform 0.15s, opacity 0.15s; }
+.doc-cta-badge-link:hover { transform: translateY(-2px); opacity: 0.9; }
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid rgba(0,0,0,0.07);
+  background: var(--bg);
+  padding: 40px 0;
+}
+.site-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-footer-links a {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.site-footer-links a:hover { color: var(--primary); }
+
+.site-footer-mark {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.site-footer-mark .code { color: var(--primary); }
+
+@media (max-width: 560px) {
+  .doc-inner { padding: 40px 20px 64px; }
+  .doc-cta { padding: 26px 20px; }
+  .site-footer-inner { flex-direction: column; align-items: flex-start; }
+}

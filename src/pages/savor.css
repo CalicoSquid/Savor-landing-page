@@ -568,3 +568,32 @@
     width: 100%;
   }
 }
+/* ── Pillars with merged screenshots (overrides earlier rules) ───── */
+.pillars-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.pillar { gap: 14px; }
+
+.pillar-shot {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+.pillar-shot img {
+  width: 38%;
+  max-width: 188px;
+  height: auto;
+  margin-top: 26px;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 16px 38px rgba(0,0,0,0.22);
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .pillars-grid { grid-template-columns: 1fr; gap: 36px; }
+  .pillar-shot { aspect-ratio: 16 / 9; }
+  .pillar-shot img { max-width: 200px; }
+}
