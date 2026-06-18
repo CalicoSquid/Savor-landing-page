@@ -30,6 +30,13 @@ const ROUTES = [
     canonical: 'https://getsavor.recipes/about',
   },
   {
+    url: '/potluck',
+    file: 'potluck.html',
+    title: 'Potluck — Spin for Your Supper | A Savor App',
+    desc: 'Can’t decide what to cook? Potluck spins the wheel and picks tonight’s dinner for you — one tap, one recipe, no scrolling. Save what you love straight to Savor. Free on Android.',
+    canonical: 'https://getsavor.recipes/potluck',
+  },
+  {
     url: '/faq',
     file: 'faq.html',
     title: 'Savor FAQ — Questions About the Recipe App',
@@ -74,4 +81,3 @@ console.log(`✓ prerendered ${count} route(s)`)
 const shell = template.replace(/<link\s+rel="canonical"[^>]*\/>\s*/, '')
 fs.writeFileSync(path.join(dist, 'app.html'), shell)
 console.log('  wrote SPA fallback shell -> dist/app.html')
-
