@@ -1,6 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { gsap } from 'gsap'
-import confetti from 'canvas-confetti'
 import { ThemeContext } from './themeContext'
 import { themes, applyTheme } from './themes'
 
@@ -22,41 +20,55 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     if (!burstStyle || !burstRef.current) return
-    const { x, y} = burstStyle
-    const el = burstRef.current
-    const ox = x / window.innerWidth
-    const oy = y / window.innerHeight
+    let cancelled = false
 
-    if (tlRef.current) tlRef.current.kill()
+    // gsap + canvas-confetti are browser-only; load them lazily so they
+    // never run during the static (Node) prerender build.
+    ;(async () => {
+      const [{ gsap }, { default: confetti }] = await Promise.all([
+        import('gsap'),
+        import('canvas-confetti'),
+      ])
+      if (cancelled || !burstRef.current) return
 
-    const tl = gsap.timeline()
-    tlRef.current = tl
+      const { x, y } = burstStyle
+      const el = burstRef.current
+      const ox = x / window.innerWidth
+      const oy = y / window.innerHeight
 
-    tl.fromTo(el,
-      { clipPath: `circle(0px at ${x}px ${y}px)`, opacity: 1 },
-      { clipPath: `circle(150vmax at ${x}px ${y}px)`, duration: 0.8, ease: 'power4.out' }
-    )
-      .add(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' })
-      })
-      .add(() => {
-        confetti({
-          particleCount: 40,
-          spread: 80,
-          origin: { x: ox, y: oy },
-          colors: ['#ffffff', '#ffffffcc', '#ffffffaa'],
-          gravity: 0.8,
-          scalar: 0.4,
-          drift: 0.8,
-          ticks: 180,
+      if (tlRef.current) tlRef.current.kill()
+
+      const tl = gsap.timeline()
+      tlRef.current = tl
+
+      tl.fromTo(el,
+        { clipPath: `circle(0px at ${x}px ${y}px)`, opacity: 1 },
+        { clipPath: `circle(150vmax at ${x}px ${y}px)`, duration: 0.8, ease: 'power4.out' }
+      )
+        .add(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' })
         })
-      })
-      .to(el, {
-        opacity: 0,
-        duration: 1.6,
-        ease: 'power1.inOut',
-        onComplete: () => setBurstStyle(null)
-      })
+        .add(() => {
+          confetti({
+            particleCount: 40,
+            spread: 80,
+            origin: { x: ox, y: oy },
+            colors: ['#ffffff', '#ffffffcc', '#ffffffaa'],
+            gravity: 0.8,
+            scalar: 0.4,
+            drift: 0.8,
+            ticks: 180,
+          })
+        })
+        .to(el, {
+          opacity: 0,
+          duration: 1.6,
+          ease: 'power1.inOut',
+          onComplete: () => setBurstStyle(null)
+        })
+    })()
+
+    return () => { cancelled = true }
   }, [burstStyle])
 
   return (

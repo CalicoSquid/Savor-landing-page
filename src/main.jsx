@@ -1,10 +1,23 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot, createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import './index.css'
-import App from './App'
+import AppRoutes from './App'
 
-createRoot(document.getElementById('root')).render(
+const root = document.getElementById('root')
+
+const tree = (
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   </StrictMode>
 )
+
+// Hydrate the prerendered HTML when present; fall back to a fresh render
+// for SPA-only routes that weren't prerendered.
+if (root.hasChildNodes()) {
+  hydrateRoot(root, tree)
+} else {
+  createRoot(root).render(tree)
+}

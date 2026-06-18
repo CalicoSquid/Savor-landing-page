@@ -1,4 +1,5 @@
 // src/pages/About.jsx
+import { useEffect } from 'react'
 import './pages.css'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
@@ -7,15 +8,12 @@ const PLAY_URL =
   'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
 export default function About() {
+  useEffect(() => {
+    document.title = 'About Savor — A Recipe App Made by a Chef'
+  }, [])
+
   return (
     <>
-      <title>About Savor — A Recipe App Made by a Chef</title>
-      <meta
-        name="description"
-        content="The story behind Savor: a recipe app built by a former chef, for saving, scanning and keeping every recipe that matters — ad-free, with no life stories and no scroll."
-      />
-      <link rel="canonical" href="https://getsavor.recipes/about" />
-
       <main className="page doc-page">
         <div className="container doc-inner">
           <span className="doc-eyebrow">About</span>
