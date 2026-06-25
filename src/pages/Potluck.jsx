@@ -25,11 +25,12 @@ const STEPS = [
 ]
 
 const VERDICTS = [
-  'The wheel has spoken.',
-  'Argue with the universe later.',
-  'Dessert. No notes.',
-  'Quick one — you’ll barely notice.',
-  'It chose. You cook.',
+  'Resistance is futile. Also delicious.',
+  'Good luck doing better.',
+  'Don’t make it weird. Just cook it.',
+  'That’s dinner. No appeals.',
+  'Pudding counts as dinner. Officially, now.',
+  'Stop scrolling. Start cooking.',
 ]
 
 export default function Potluck() {
