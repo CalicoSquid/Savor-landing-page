@@ -8,6 +8,12 @@
   function = "recipe-og"
 
 [[redirects]]
+  from = "/app"
+  to = "https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/app.html"
   status = 200
