@@ -5,19 +5,10 @@
 import { useEffect } from 'react'
 import './forage.css'
 import Footer from '../components/Footer'
+import SeasonExplorer from '../components/forage/SeasonExplorer'
+import BadgeWall from '../components/forage/BadgeWall'
 
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.forage'
-
-// Real field-guide volumes from the app's Contents screen. Numbered because
-// the app genuinely organises its 893 species into these five volumes — the
-// numbering encodes real structure, it isn't decoration.
-const VOLUMES = [
-  { no: 'I',   name: 'Herbs & Greens',  count: 200, sub: 'Edible foliage, shoots and herbaceous plants', color: '#2D4A3E' },
-  { no: 'II',  name: 'Berries & Fruits', count: 368, sub: 'Sweet and savoury botanical fruits',          color: '#9B2D20' },
-  { no: 'III', name: 'Wildflowers',     count: 62,  sub: 'Edible blossoms and floral parts',            color: '#5B3A8C' },
-  { no: 'IV',  name: 'Roots & Tubers',  count: 171, sub: 'Underground energy stores',                    color: '#8A5A2B' },
-  { no: 'V',   name: 'Trees & Shrubs',  count: 73,  sub: 'Bark, sap, leaves and woody plants',           color: '#2D4A3E' },
-]
 
 const FEATURES = [
   {
@@ -84,7 +75,7 @@ export default function Forage() {
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="fg-hero">
         <div className="fg-hero-inner">
-          <img src="/forage/forage-wordmark.png" alt="Forage" className="fg-wordmark fg-fade fg-fade-1" />
+          <img src="/forage/forage-wordmark.webp" alt="Forage" className="fg-wordmark fg-fade fg-fade-1" />
           <p className="fg-hero-tagline fg-fade fg-fade-2">Find it. Learn it. Cook it.</p>
           <p className="fg-hero-sub fg-fade fg-fade-3">
             Free food is growing near you right now. Forage helps you find wild
@@ -102,29 +93,21 @@ export default function Forage() {
         <div className="fg-hero-rule" aria-hidden="true" />
       </section>
 
-      {/* ── Signature: the Contents page ──────────────────────────────────── */}
-      <section className="fg-contents" id="guide">
-        <div className="fg-contents-inner">
+      {/* ── Signature: interactive seasonal explorer ──────────────────────── */}
+      <section className="fg-explorer-section" id="guide">
+        <SeasonExplorer />
+      </section>
+
+      {/* ── Field guide note ──────────────────────────────────────────────── */}
+      <section className="fg-guidenote">
+        <div className="fg-guidenote-inner">
           <p className="fg-overline">Forage · Field Guide</p>
-          <h2 className="fg-contents-title">Contents</h2>
-          <p className="fg-contents-sub">893 documented edible species, in five volumes.</p>
-
-          <ol className="fg-volumes">
-            {VOLUMES.map((v) => (
-              <li className="fg-vol" key={v.no}>
-                <span className="fg-vol-no">Vol. {v.no}</span>
-                <span className="fg-vol-main">
-                  <span className="fg-vol-name" style={{ color: v.color }}>{v.name}</span>
-                  <span className="fg-vol-sub">{v.sub}</span>
-                </span>
-                <span className="fg-vol-count">{v.count}</span>
-              </li>
-            ))}
-          </ol>
-
-          <p className="fg-contents-foot">
-            Species data sourced from the Plants For A Future database.
-            Edibility ratings of 4 or above included.
+          <h2 className="fg-guidenote-title">893 species, five volumes</h2>
+          <p className="fg-guidenote-sub">
+            Herbs &amp; greens, berries &amp; fruits, wildflowers, roots &amp;
+            tubers, trees &amp; shrubs — each with safety ratings, seasons and
+            habitats. Species data from the Plants For A Future database,
+            edibility 4 and above.
           </p>
         </div>
       </section>
@@ -143,6 +126,42 @@ export default function Forage() {
             </div>
           </div>
         ))}
+      </section>
+
+      {/* ── Collectible badge wall ────────────────────────────────────────── */}
+      <section className="fg-badges-section">
+        <BadgeWall />
+      </section>
+
+      {/* ── Campfire Cookbook (dark ember beat) ───────────────────────────── */}
+      <section className="fg-campfire">
+        <div className="fg-campfire-glow" aria-hidden="true" />
+        <div className="fg-campfire-inner">
+          <div className="fg-campfire-copy">
+            <p className="fg-eyebrow fg-eyebrow--ember">Campfire Kitchen</p>
+            <h2 className="fg-campfire-title">Then you cook it</h2>
+            <p className="fg-campfire-lead">
+              Every find opens the Campfire Cookbook — wild recipes built around
+              what you actually brought home. Something to cook for everything
+              you find, sorted by kind and ready when you are.
+            </p>
+            <ul className="fg-kinds">
+              {['Herb', 'Berry', 'Flower', 'Root', 'Tree', 'Nut'].map((k) => (
+                <li className="fg-kind" key={k}>{k}</li>
+              ))}
+            </ul>
+            <p className="fg-campfire-note">
+              Six kinds of wild ingredient, each with recipes waiting.
+            </p>
+          </div>
+          <div className="fg-campfire-shot">
+            <img
+              src="/forage/aso/campfire-phone.webp"
+              alt="Campfire Cookbook — wild recipes built around what you find"
+              loading="lazy"
+            />
+          </div>
+        </div>
       </section>
 
       {/* ── Yours Forever / pricing ───────────────────────────────────────── */}

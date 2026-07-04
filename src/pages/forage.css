@@ -126,90 +126,55 @@
   opacity: 0.6;
 }
 
-/* ── Signature: Contents / field-guide index ──────────────────────────── */
-.forage-page .fg-contents {
-  padding: clamp(48px, 8vw, 88px) 24px;
-  background: var(--fg-cream);
-}
-.forage-page .fg-contents-inner {
-  max-width: 720px;
-  margin: 0 auto;
-}
-.forage-page .fg-overline { text-align: left; }
-.forage-page .fg-contents-title {
-  font-family: "Lora", Georgia, serif;
-  font-weight: 700;
-  font-size: clamp(2.2rem, 6vw, 3.2rem);
-  color: var(--fg-green);
-  margin: 0 0 6px;
-  line-height: 1.05;
-}
-.forage-page .fg-contents-sub {
-  font-size: 1rem;
-  color: var(--fg-muted);
-  margin: 0 0 32px;
-}
-.forage-page .fg-volumes {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* ── Field guide note (defined card, breaks the cream run) ────────────── */
+.forage-page .fg-guidenote {
+  padding: clamp(48px, 7vw, 80px) 24px;
+  background: var(--fg-cream-2);
   border-top: 1px solid var(--fg-line);
 }
-.forage-page .fg-vol {
-  display: grid;
-  grid-template-columns: 68px 1fr auto;
-  align-items: baseline;
-  gap: 16px;
-  padding: 20px 4px;
-  border-bottom: 1px solid var(--fg-line);
-  transition: background .18s ease, padding-left .18s ease;
+.forage-page .fg-guidenote-inner {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+  background: var(--fg-white);
+  border: 1px solid var(--fg-line);
+  border-radius: 20px;
+  padding: clamp(32px, 5vw, 48px) clamp(24px, 4vw, 44px);
+  box-shadow: 0 12px 32px rgba(31,52,43,0.07);
+  position: relative;
 }
-.forage-page .fg-vol:hover {
-  background: rgba(45,74,62,0.035);
-  padding-left: 12px;
+.forage-page .fg-guidenote-inner::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 50%;
+  transform: translateX(-50%);
+  width: 64px; height: 3px;
+  background: var(--fg-terra);
+  border-radius: 0 0 3px 3px;
 }
-.forage-page .fg-vol-no {
-  font-family: "RalewaySemiBold", "Raleway", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.72rem;
-  color: var(--fg-muted);
-  padding-top: 6px;
-}
-.forage-page .fg-vol-main { display: flex; flex-direction: column; gap: 3px; }
-.forage-page .fg-vol-name {
+.forage-page .fg-guidenote .fg-overline { text-align: center; }
+.forage-page .fg-guidenote-title {
   font-family: "Lora", Georgia, serif;
   font-weight: 700;
-  font-size: clamp(1.15rem, 3vw, 1.5rem);
-  line-height: 1.15;
-}
-.forage-page .fg-vol-sub {
-  font-family: "Lora", Georgia, serif;
-  font-style: italic;
-  font-size: 0.92rem;
-  color: var(--fg-muted);
-}
-.forage-page .fg-vol-count {
-  font-family: "Lora", Georgia, serif;
-  font-size: 1.35rem;
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem);
   color: var(--fg-green);
-  font-variant-numeric: tabular-nums;
+  margin: 0 0 14px;
+  line-height: 1.1;
 }
-.forage-page .fg-contents-foot {
-  margin: 24px 0 0;
-  font-family: "Lora", Georgia, serif;
-  font-style: italic;
-  font-size: 0.85rem;
+.forage-page .fg-guidenote-sub {
+  font-size: 1rem;
+  line-height: 1.7;
   color: var(--fg-muted);
-  line-height: 1.5;
+  margin: 0;
 }
 
 /* ── Features ─────────────────────────────────────────────────────────── */
 .forage-page .fg-features {
-  padding: clamp(24px, 4vw, 40px) 24px;
+  padding: clamp(24px, 4vw, 40px) 24px clamp(40px, 6vw, 64px);
   max-width: 1080px;
   margin: 0 auto;
 }
+.forage-page .fg-feature:first-child { padding-top: clamp(40px, 6vw, 72px); }
 .forage-page .fg-feature {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -308,6 +273,366 @@
   to { opacity: 1; transform: none; }
 }
 
+/* ── Seasonal explorer (interactive centrepiece) ──────────────────────── */
+.forage-page .fg-explorer-section {
+  padding: clamp(48px, 8vw, 96px) 24px;
+  background: linear-gradient(180deg, var(--fg-cream), var(--fg-cream-2));
+}
+.forage-page .fg-explorer {
+  max-width: 780px;
+  margin: 0 auto;
+}
+.forage-page .fg-explorer-head { text-align: center; margin-bottom: 28px; }
+.forage-page .fg-explorer-head .fg-eyebrow { text-align: center; }
+.forage-page .fg-explorer-title {
+  font-family: "Lora", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  color: var(--fg-green);
+  margin: 0 0 12px;
+  line-height: 1.08;
+}
+.forage-page .fg-explorer-sub {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--fg-muted);
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+/* Season tabs */
+.forage-page .fg-season-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.forage-page .fg-season-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 6px;
+  border: 1.5px solid var(--fg-line);
+  border-radius: 14px;
+  background: var(--fg-white);
+  cursor: pointer;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.forage-page .fg-season-tab:hover { transform: translateY(-2px); }
+.forage-page .fg-season-tab.is-active {
+  border-color: var(--tab-accent, var(--fg-green));
+  box-shadow: 0 6px 18px rgba(45,74,62,0.12);
+}
+.forage-page .fg-season-tab-label {
+  font-family: "RalewaySemiBold", "Raleway", sans-serif;
+  font-size: 0.98rem;
+  color: var(--fg-green);
+}
+.forage-page .fg-season-tab.is-active .fg-season-tab-label { color: var(--tab-accent, var(--fg-green)); }
+.forage-page .fg-season-tab-months {
+  font-size: 0.72rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.02em;
+}
+
+/* Stage */
+.forage-page .fg-explorer-stage {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(31,52,43,0.20);
+  min-height: 420px;
+}
+.forage-page .fg-explorer-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+.forage-page .fg-explorer-bg.is-active { opacity: 1; }
+.forage-page .fg-explorer-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20,30,24,0.35) 0%, rgba(20,30,24,0.72) 55%, rgba(20,30,24,0.9) 100%);
+}
+.forage-page .fg-explorer-content {
+  position: relative;
+  padding: clamp(20px, 4vw, 32px);
+  animation: fg-fade-up .5s ease both;
+}
+.forage-page .fg-season-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1.5px solid;
+  background: rgba(245,240,232,0.14);
+  backdrop-filter: blur(4px);
+  color: var(--fg-cream);
+  font-family: "RalewaySemiBold", "Raleway", sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 16px;
+}
+.forage-page .fg-season-chip-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* Finds list */
+.forage-page .fg-finds { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.forage-page .fg-find {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: rgba(245,240,232,0.97);
+  border-radius: 14px;
+  animation: fg-find-in .45s ease both;
+}
+@keyframes fg-find-in {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+.forage-page .fg-find-kind {
+  flex: none;
+  width: 8px;
+  align-self: stretch;
+  border-radius: 6px;
+  min-height: 42px;
+}
+.forage-page .fg-find-body { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.forage-page .fg-find-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.forage-page .fg-find-name {
+  font-family: "Lora", Georgia, serif;
+  font-weight: 700;
+  font-size: 1.08rem;
+  color: var(--fg-ink);
+}
+.forage-page .fg-find-flag {
+  font-family: "RalewaySemiBold", "Raleway", sans-serif;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-terra-deep);
+  background: rgba(196,98,45,0.14);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.forage-page .fg-find-sci {
+  font-family: "Lora", Georgia, serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+}
+.forage-page .fg-find-meta { font-size: 0.8rem; color: rgba(45,74,62,0.7); }
+.forage-page .fg-find-rating {
+  flex: none;
+  font-size: 0.9rem;
+  color: var(--fg-terra);
+  letter-spacing: 1px;
+}
+.forage-page .fg-find-rating-dim { color: rgba(45,74,62,0.2); }
+.forage-page .fg-explorer-foot {
+  margin: 16px 0 0;
+  font-size: 0.82rem;
+  color: rgba(245,240,232,0.75);
+  text-align: center;
+}
+.forage-page .fg-explorer-foot em { color: var(--fg-cream); font-style: italic; }
+
+/* ── Badge wall ───────────────────────────────────────────────────────── */
+.forage-page .fg-badges-section {
+  padding: clamp(56px, 9vw, 104px) 24px;
+  background: var(--fg-green);
+  position: relative;
+}
+.forage-page .fg-badges { max-width: 900px; margin: 0 auto; }
+.forage-page .fg-badges-head { text-align: center; margin-bottom: 36px; }
+.forage-page .fg-badges-head .fg-eyebrow { text-align: center; color: var(--fg-terra); }
+.forage-page .fg-badges-title {
+  font-family: "Lora", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  color: var(--fg-cream);
+  margin: 0 0 12px;
+}
+.forage-page .fg-badges-sub {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(245,240,232,0.78);
+  max-width: 440px;
+  margin: 0 auto;
+}
+.forage-page .fg-badge-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.forage-page .fg-badge-cell { display: flex; }
+.forage-page .fg-badge {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 12px 16px;
+  border-radius: 16px;
+  background: rgba(245,240,232,0.06);
+  border: 1px solid rgba(245,240,232,0.1);
+  cursor: pointer;
+  text-align: center;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+  overflow: hidden;
+}
+.forage-page .fg-badge:hover { transform: translateY(-3px); }
+.forage-page .fg-badge-medal {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background .25s ease, box-shadow .25s ease;
+}
+.forage-page .fg-badge-svg { width: 30px; height: 30px; transition: color .25s ease; }
+.forage-page .fg-badge-name {
+  font-family: "RalewaySemiBold", "Raleway", sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.2;
+  transition: color .25s ease;
+}
+.forage-page .fg-badge-desc {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: rgba(245,240,232,0.0);
+  max-height: 0;
+  transition: color .25s ease, max-height .25s ease, margin .25s ease;
+  overflow: hidden;
+}
+
+/* Earned: in colour */
+.forage-page .fg-badge.is-earned .fg-badge-medal {
+  background: var(--badge-color);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+.forage-page .fg-badge.is-earned .fg-badge-svg { color: var(--fg-cream); }
+.forage-page .fg-badge.is-earned .fg-badge-name { color: var(--fg-cream); }
+
+/* Locked: silhouette until hover/peek */
+.forage-page .fg-badge.is-locked .fg-badge-medal { background: rgba(245,240,232,0.1); }
+.forage-page .fg-badge.is-locked .fg-badge-svg { color: rgba(245,240,232,0.32); }
+.forage-page .fg-badge.is-locked .fg-badge-name { color: rgba(245,240,232,0.5); }
+.forage-page .fg-badge.is-locked:hover .fg-badge-medal,
+.forage-page .fg-badge.is-locked.is-peek .fg-badge-medal {
+  background: var(--badge-color);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+.forage-page .fg-badge.is-locked:hover .fg-badge-svg,
+.forage-page .fg-badge.is-locked.is-peek .fg-badge-svg { color: var(--fg-cream); }
+.forage-page .fg-badge.is-locked:hover .fg-badge-name,
+.forage-page .fg-badge.is-locked.is-peek .fg-badge-name { color: var(--fg-cream); }
+
+/* Reveal desc on hover/peek for all */
+.forage-page .fg-badge:hover .fg-badge-desc,
+.forage-page .fg-badge.is-peek .fg-badge-desc {
+  color: rgba(245,240,232,0.72);
+  max-height: 60px;
+  margin-top: 2px;
+}
+.forage-page .fg-badges-foot {
+  text-align: center;
+  margin: 28px 0 0;
+  font-family: "Lora", Georgia, serif;
+  font-style: italic;
+  color: rgba(245,240,232,0.6);
+  font-size: 0.9rem;
+}
+
+/* ── Campfire Cookbook (dark ember beat) ──────────────────────────────── */
+.forage-page .fg-campfire {
+  position: relative;
+  padding: clamp(64px, 10vw, 120px) 24px;
+  background:
+    radial-gradient(ellipse at 78% 88%, rgba(196,98,45,0.28) 0%, transparent 48%),
+    linear-gradient(160deg, #1a1512 0%, #241a14 55%, #2b1a10 100%);
+  overflow: hidden;
+}
+.forage-page .fg-campfire-glow {
+  position: absolute;
+  right: -8%;
+  bottom: -20%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(224,122,44,0.4) 0%, rgba(196,98,45,0.12) 40%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+.forage-page .fg-campfire-inner {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 0.85fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 72px);
+}
+.forage-page .fg-eyebrow--ember { color: #E0A34A; }
+.forage-page .fg-campfire-title {
+  font-family: "Lora", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.1rem, 5.5vw, 3.1rem);
+  color: #F5E9D8;
+  margin: 0 0 18px;
+  line-height: 1.05;
+}
+.forage-page .fg-campfire-lead {
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: rgba(245,233,216,0.82);
+  margin: 0 0 26px;
+  max-width: 44ch;
+}
+.forage-page .fg-kinds {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 16px;
+  padding: 0;
+}
+.forage-page .fg-kind {
+  font-family: "RalewaySemiBold", "Raleway", sans-serif;
+  font-size: 0.86rem;
+  color: #F5E9D8;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(224,163,74,0.4);
+  background: rgba(224,163,74,0.08);
+}
+.forage-page .fg-campfire-note {
+  font-family: "Lora", Georgia, serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: rgba(245,233,216,0.55);
+  margin: 0;
+}
+.forage-page .fg-campfire-shot {
+  display: flex;
+  justify-content: center;
+}
+.forage-page .fg-campfire-shot img {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+
 /* ── Responsive ───────────────────────────────────────────────────────── */
 @media (max-width: 760px) {
   .forage-page .fg-feature {
@@ -321,10 +646,31 @@
   .forage-page .fg-feature-shot { order: 1; }
   .forage-page .fg-feature-body { margin-inline: auto; }
   .forage-page .fg-vol { grid-template-columns: 54px 1fr auto; gap: 12px; }
+  .forage-page .fg-badge-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .forage-page .fg-season-tab-months { font-size: 0.66rem; }
+  .forage-page .fg-find-rating { align-self: flex-start; }
+  .forage-page .fg-campfire-inner { grid-template-columns: 1fr; text-align: center; }
+  .forage-page .fg-campfire-copy { order: 2; }
+  .forage-page .fg-campfire-shot { order: 1; }
+  .forage-page .fg-campfire-lead { margin-inline: auto; }
+  .forage-page .fg-kinds { justify-content: center; }
+}
+
+@media (max-width: 440px) {
+  .forage-page .fg-season-tabs { gap: 6px; }
+  .forage-page .fg-season-tab { padding: 10px 4px; border-radius: 11px; }
+  .forage-page .fg-season-tab-label { font-size: 0.86rem; }
+  .forage-page .fg-find { padding: 12px; gap: 10px; }
+  .forage-page .fg-find-meta { font-size: 0.74rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .forage-page .fg-fade { animation: none; opacity: 1; transform: none; }
   .forage-page .fg-btn:hover,
   .forage-page .fg-vol:hover { transform: none; }
+  .forage-page .fg-find,
+  .forage-page .fg-explorer-content { animation: none; opacity: 1; transform: none; }
+  .forage-page .fg-explorer-bg { transition: none; }
+  .forage-page .fg-season-tab:hover,
+  .forage-page .fg-badge:hover { transform: none; }
 }
