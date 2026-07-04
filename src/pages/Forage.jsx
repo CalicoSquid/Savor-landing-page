@@ -75,7 +75,7 @@ export default function Forage() {
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="fg-hero">
         <div className="fg-hero-inner">
-          <img src="/forage/forage-wordmark.webp" alt="Forage" className="fg-wordmark fg-fade fg-fade-1" />
+          <img src="/forage/forage-wordmark.png" alt="Forage" className="fg-wordmark fg-fade fg-fade-1" />
           <p className="fg-hero-tagline fg-fade fg-fade-2">Find it. Learn it. Cook it.</p>
           <p className="fg-hero-sub fg-fade fg-fade-3">
             Free food is growing near you right now. Forage helps you find wild
