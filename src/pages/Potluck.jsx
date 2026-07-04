@@ -45,7 +45,7 @@ export default function Potluck() {
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="pl-hero">
           <div className="pl-container pl-hero-inner">
-            <img src="/potluck/wordmark2.webp" alt="Potluck" className="pl-wordmark" />
+            <img src="/potluck/potluck_wordmark.webp" alt="Potluck" className="pl-wordmark" />
 
             <div className="pl-wheel" aria-hidden="true">
               <img src="/potluck/outer.webp" alt="" className="pl-wheel-outer" />

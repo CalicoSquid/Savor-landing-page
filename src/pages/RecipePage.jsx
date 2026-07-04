@@ -138,13 +138,32 @@ export default function RecipePage() {
     setMeta('twitter:card', 'summary_large_image', 'name')
     setMeta('twitter:title', decode(recipe.name), 'name')
     setMeta('twitter:description', desc, 'name')
-    setMeta('robots', 'noindex, nofollow', 'name')
+
+    // Indexability: only ever index recipes with no sourceUrl (originals —
+    // OCR/scan/handwritten, not scraped from another site). Anything with a
+    // sourceUrl is someone else's content; point Google at the real thing
+    // instead of letting us duplicate-rank against it.
+    const isOriginal = !recipe.sourceUrl
+    setMeta('robots', isOriginal ? 'index, follow' : 'noindex, nofollow', 'name')
+
+    let linkEl = document.querySelector('link[rel="canonical"]')
+    if (!linkEl) { linkEl = document.createElement('link'); linkEl.setAttribute('rel', 'canonical'); document.head.appendChild(linkEl) }
+    linkEl.setAttribute('href', isOriginal ? window.location.href : recipe.sourceUrl)
 
     // JSON-LD — lets Savor's scraper parse this page cleanly
     let ldEl = document.getElementById('recipe-jsonld')
     if (!ldEl) { ldEl = document.createElement('script'); ldEl.id = 'recipe-jsonld'; ldEl.type = 'application/ld+json'; document.head.appendChild(ldEl) }
     ldEl.textContent = buildJsonLd(recipe, id)
-    return () => ldEl?.remove()
+
+    // Reset on unmount so a client-side nav away (e.g. recipe -> home via
+    // SPA routing) doesn't leave this recipe's robots/canonical behind on
+    // whatever page the person lands on next.
+    return () => {
+      ldEl?.remove()
+      setMeta('robots', 'index, follow', 'name')
+      const link = document.querySelector('link[rel="canonical"]')
+      if (link) link.setAttribute('href', window.location.origin + '/')
+    }
   }, [recipe])
 
   const prepTime = recipe && formatTime(recipe.times?.prep)

@@ -249,13 +249,13 @@ body {
 }
 
 .nav-icon--potluck {
-  height: 28px;
+  height: 40px;
   width: auto;
 }
 
 .nav-icon--forage {
-  height: 36px;
-  width: 36px;
+  height: 40px;
+  width: 40px;
   border-radius: 9px;
   object-fit: cover;
 }
