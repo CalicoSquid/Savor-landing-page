@@ -27,6 +27,7 @@ const SITE = 'https://getsavor.recipes'
 const STATIC_ROUTES = [
   { loc: '/',        changefreq: 'weekly',  priority: '1.0' },
   { loc: '/potluck',  changefreq: 'monthly', priority: '0.8' },
+  { loc: '/forage',   changefreq: 'monthly', priority: '0.8' },
   { loc: '/about',    changefreq: 'monthly', priority: '0.7' },
   { loc: '/faq',      changefreq: 'monthly', priority: '0.7' },
   { loc: '/studio',   changefreq: 'monthly', priority: '0.4' },
@@ -77,7 +78,7 @@ const today = new Date().toISOString().slice(0, 10)
 const recipes = await fetchIndexableRecipes()
 
 const entries = [
-  ...STATIC_ROUTES.map(r => urlEntry({ loc: `${SITE}${r.loc}`, lastmod: today, ...r })),
+  ...STATIC_ROUTES.map(r => urlEntry({ ...r, loc: `${SITE}${r.loc}`, lastmod: today })),
   ...recipes.map(r => urlEntry({
     loc: `${SITE}/r/${r.id}`,
     lastmod: (r.updatedAt || today).slice(0, 10),

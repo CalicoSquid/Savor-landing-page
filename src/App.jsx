@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Savor from './pages/Savor'
 import Studio from './pages/Studio'
 import Potluck from './pages/Potluck'
+import Forage from './pages/Forage'
 import About from './pages/About'
 import Faq from './pages/Faq'
 import RecipePage from './pages/RecipePage'
@@ -23,6 +24,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/"                         element={<Savor />} />
         <Route path="/potluck"                  element={<Potluck />} />
+        <Route path="/forage"                   element={<Forage />} />
         <Route path="/about"                    element={<About />} />
         <Route path="/faq"                      element={<Faq />} />
         <Route path="/studio"                   element={<Studio />} />

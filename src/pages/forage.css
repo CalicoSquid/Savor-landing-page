@@ -1,0 +1,330 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Forage — showcase page. Earthy field-guide palette (forest green +
+   terracotta + warm cream), pulled straight from the app's own colors.js.
+   Everything scoped to .forage-page so it never inherits Savor's fruit
+   themes, and Savor's tokens never leak in here.
+   ───────────────────────────────────────────────────────────────────────── */
+.forage-page {
+  --fg-green: #2D4A3E;
+  --fg-green-deep: #1f342b;
+  --fg-terra: #C4622D;
+  --fg-terra-deep: #7A3B1E;
+  --fg-cream: #F5F0E8;
+  --fg-cream-2: #efe8db;
+  --fg-ink: #1A1A1A;
+  --fg-muted: rgba(45,74,62,0.62);
+  --fg-line: rgba(45,74,62,0.16);
+
+  background: var(--fg-cream);
+  color: var(--fg-ink);
+  font-family: "Raleway", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+.forage-page *,
+.forage-page *::before,
+.forage-page *::after { box-sizing: border-box; }
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+.forage-page .fg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 28px;
+  border-radius: 999px;
+  font-family: "RalewaySemiBold", "Raleway", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+}
+.forage-page .fg-btn-primary {
+  background: var(--fg-terra);
+  color: var(--fg-cream);
+  box-shadow: 0 6px 20px rgba(196,98,45,0.28);
+}
+.forage-page .fg-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(196,98,45,0.36);
+}
+.forage-page .fg-btn-ghost {
+  background: transparent;
+  color: var(--fg-green);
+  border-color: var(--fg-line);
+}
+.forage-page .fg-btn-ghost:hover {
+  background: rgba(45,74,62,0.05);
+  transform: translateY(-2px);
+}
+
+/* ── Eyebrows ─────────────────────────────────────────────────────────── */
+.forage-page .fg-eyebrow,
+.forage-page .fg-overline {
+  font-family: "RalewaySemiBold", "Raleway", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  color: var(--fg-terra);
+  margin: 0 0 12px;
+}
+.forage-page .fg-eyebrow--light { color: rgba(245,240,232,0.7); }
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+.forage-page .fg-hero {
+  position: relative;
+  padding: clamp(72px, 12vw, 140px) 24px clamp(40px, 7vw, 72px);
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(196,98,45,0.10) 0%, transparent 55%),
+    var(--fg-cream);
+}
+.forage-page .fg-hero-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.forage-page .fg-wordmark {
+  width: min(440px, 78vw);
+  height: auto;
+  display: block;
+  margin: 0 auto 18px;
+}
+.forage-page .fg-hero-tagline {
+  font-family: "Lora", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.15rem, 3.2vw, 1.5rem);
+  color: var(--fg-green);
+  margin: 0 0 20px;
+}
+.forage-page .fg-hero-sub {
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--fg-muted);
+  max-width: 540px;
+  margin: 0 auto 32px;
+}
+.forage-page .fg-hero-cta {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.forage-page .fg-hero-note {
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin: 0;
+}
+.forage-page .fg-hero-rule {
+  width: min(120px, 30vw);
+  height: 2px;
+  margin: clamp(36px, 6vw, 56px) auto 0;
+  background: linear-gradient(90deg, transparent, var(--fg-terra), transparent);
+  opacity: 0.6;
+}
+
+/* ── Signature: Contents / field-guide index ──────────────────────────── */
+.forage-page .fg-contents {
+  padding: clamp(48px, 8vw, 88px) 24px;
+  background: var(--fg-cream);
+}
+.forage-page .fg-contents-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.forage-page .fg-overline { text-align: left; }
+.forage-page .fg-contents-title {
+  font-family: "Lora", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  color: var(--fg-green);
+  margin: 0 0 6px;
+  line-height: 1.05;
+}
+.forage-page .fg-contents-sub {
+  font-size: 1rem;
+  color: var(--fg-muted);
+  margin: 0 0 32px;
+}
+.forage-page .fg-volumes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--fg-line);
+}
+.forage-page .fg-vol {
+  display: grid;
+  grid-template-columns: 68px 1fr auto;
+  align-items: baseline;
+  gap: 16px;
+  padding: 20px 4px;
+  border-bottom: 1px solid var(--fg-line);
+  transition: background .18s ease, padding-left .18s ease;
+}
+.forage-page .fg-vol:hover {
+  background: rgba(45,74,62,0.035);
+  padding-left: 12px;
+}
+.forage-page .fg-vol-no {
+  font-family: "RalewaySemiBold", "Raleway", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--fg-muted);
+  padding-top: 6px;
+}
+.forage-page .fg-vol-main { display: flex; flex-direction: column; gap: 3px; }
+.forage-page .fg-vol-name {
+  font-family: "Lora", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+  line-height: 1.15;
+}
+.forage-page .fg-vol-sub {
+  font-family: "Lora", Georgia, serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--fg-muted);
+}
+.forage-page .fg-vol-count {
+  font-family: "Lora", Georgia, serif;
+  font-size: 1.35rem;
+  color: var(--fg-green);
+  font-variant-numeric: tabular-nums;
+}
+.forage-page .fg-contents-foot {
+  margin: 24px 0 0;
+  font-family: "Lora", Georgia, serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+  line-height: 1.5;
+}
+
+/* ── Features ─────────────────────────────────────────────────────────── */
+.forage-page .fg-features {
+  padding: clamp(24px, 4vw, 40px) 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.forage-page .fg-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(28px, 6vw, 72px);
+  padding: clamp(40px, 7vw, 80px) 0;
+  border-bottom: 1px solid var(--fg-line);
+}
+.forage-page .fg-feature:last-child { border-bottom: none; }
+.forage-page .fg-feature--rev .fg-feature-copy { order: 2; }
+.forage-page .fg-feature--rev .fg-feature-shot { order: 1; }
+.forage-page .fg-feature-title {
+  font-family: "Lora", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  line-height: 1.12;
+  color: var(--fg-green);
+  margin: 0 0 16px;
+}
+.forage-page .fg-feature-body {
+  font-size: 1.02rem;
+  line-height: 1.68;
+  color: var(--fg-muted);
+  margin: 0;
+  max-width: 40ch;
+}
+.forage-page .fg-feature-shot {
+  display: flex;
+  justify-content: center;
+}
+.forage-page .fg-feature-shot img {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(31,52,43,0.18);
+}
+
+/* ── Yours Forever ────────────────────────────────────────────────────── */
+.forage-page .fg-forever {
+  margin-top: clamp(24px, 5vw, 48px);
+  padding: clamp(64px, 10vw, 120px) 24px;
+  background:
+    linear-gradient(180deg, rgba(31,52,43,0.0), rgba(31,52,43,0.0)),
+    var(--fg-green);
+  text-align: center;
+  position: relative;
+}
+.forage-page .fg-forever::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 120%, rgba(196,98,45,0.22) 0%, transparent 60%);
+  pointer-events: none;
+}
+.forage-page .fg-forever-inner {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.forage-page .fg-forever-title {
+  font-family: "Lora", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 7vw, 3.6rem);
+  color: var(--fg-cream);
+  margin: 0 0 18px;
+  line-height: 1.02;
+}
+.forage-page .fg-forever-sub {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: rgba(245,240,232,0.82);
+  margin: 0 0 30px;
+}
+.forage-page .fg-forever-cta { margin-bottom: 16px; }
+.forage-page .fg-forever-price {
+  font-family: "RalewaySemiBold", "Raleway", sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.6);
+  margin: 0;
+}
+
+/* ── Entrance animation ───────────────────────────────────────────────── */
+.forage-page .fg-fade {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fg-fade-up .7s cubic-bezier(.2,.7,.3,1) forwards;
+}
+.forage-page .fg-fade-1 { animation-delay: .05s; }
+.forage-page .fg-fade-2 { animation-delay: .16s; }
+.forage-page .fg-fade-3 { animation-delay: .27s; }
+.forage-page .fg-fade-4 { animation-delay: .38s; }
+@keyframes fg-fade-up {
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .forage-page .fg-feature {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+  .forage-page .fg-feature--rev .fg-feature-copy { order: 2; }
+  .forage-page .fg-feature--rev .fg-feature-shot { order: 1; }
+  .forage-page .fg-feature-copy { order: 2; }
+  .forage-page .fg-feature-shot { order: 1; }
+  .forage-page .fg-feature-body { margin-inline: auto; }
+  .forage-page .fg-vol { grid-template-columns: 54px 1fr auto; gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .forage-page .fg-fade { animation: none; opacity: 1; transform: none; }
+  .forage-page .fg-btn:hover,
+  .forage-page .fg-vol:hover { transform: none; }
+}
