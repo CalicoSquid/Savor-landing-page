@@ -189,10 +189,22 @@ export default function DemoBlog() {
     fontLink.href = FONT_HREF
     document.head.appendChild(fontLink)
 
+    // JSON-LD — injected into <head> via textContent, mirroring RecipePage.jsx
+    // exactly (that page scrapes cleanly in Savor's in-app browser). An inline
+    // <script> in the React body tree lands in <body> and, when written through
+    // React, reads back empty via .innerText in Savor's DETECT_JS — so it must
+    // live here, in head, set with textContent, like the page that works.
+    const ldEl = document.createElement('script')
+    ldEl.id = 'demo-recipe-jsonld'
+    ldEl.type = 'application/ld+json'
+    ldEl.textContent = JSON.stringify(RECIPE_SCHEMA)
+    document.head.appendChild(ldEl)
+
     return () => {
       document.title = prevTitle
       added.forEach((el) => el.remove())
       fontLink.remove()
+      ldEl.remove()
     }
   }, [])
 
@@ -215,14 +227,6 @@ export default function DemoBlog() {
 
   return (
     <div className="db-page">
-      {/* JSON-LD lives in the initial render tree (not a later effect) so
-          it's present in the DOM at the same moment as everything else —
-          no timing gap for Savor's on-load detection to race against. */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(RECIPE_SCHEMA) }}
-      />
-
       <div className="db-save-float">♥ Save</div>
       <button
         id="db-shoot-trigger"
@@ -455,7 +459,7 @@ export default function DemoBlog() {
             is the bit; this is the actual product moment. */}
         <div className="db-cta">
           <p className="db-cta-text">
-            That's Savor's in-app browser doing that — for real, live, on any recipe site.
+            Get the lasagne recipe — skip the divorce journals.
           </p>
           <a
             href={`savor://browse?url=${encodeURIComponent(
