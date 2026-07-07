@@ -372,7 +372,7 @@ export default function DemoBlog() {
           <a href="#db-ad">A Word From Our Sponsor</a>
           <a href="#db-etymology">On The Word "Lasagne"</a>
           <a href="#db-history">A Brief History (600 words)</a>
-          <a href="#db-recipe-jump">Jump to Recipe</a>
+          <a href="#db-almost">Jump to Recipe</a>
         </nav>
 
         <p className="db-lede">
