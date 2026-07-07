@@ -103,6 +103,25 @@ function scrollToY(targetY, duration, useBounce) {
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 
+// ── Nudge ─────────────────────────────────────────────────────────────────
+// The escalating fourth-wall interruptions seeded between blog sections.
+// Written in Marguerite's voice but needling the reader for still scrolling.
+// Early ones are pure text comedy (setup); the later `tappable` ones offer
+// the release — a tap scrolls down to the real Savor CTA (see scrollToCta).
+// `tier` drives the escalating visual weight (1 quietest → 4 loudest).
+function Nudge({ tier = 1, tappable = false, onEscape, children }) {
+  const cls = `db-nudge db-nudge-t${tier}${tappable ? ' db-nudge-tap' : ''}`
+  if (!tappable) {
+    return <div className={cls} aria-hidden="true">{children}</div>
+  }
+  return (
+    <button type="button" className={cls} onClick={onEscape}>
+      <span className="db-nudge-text">{children}</span>
+      <span className="db-nudge-arrow" aria-hidden="true">↓</span>
+    </button>
+  )
+}
+
 // ── Import simulation ────────────────────────────────────────────────────
 // A styled clone of Savor's in-app RecipeBar + a lightweight app header
 // (see savor/src/components/search/components/RecipeBar.jsx, WebView.jsx,
@@ -124,6 +143,7 @@ const INSTALL_CHECK_MS = 1600
 
 export default function DemoBlog() {
   const runningRef = useRef(false)
+  const [shooting, setShooting] = useState(false)
   const simRunningRef = useRef(false)
   const simTimersRef = useRef([])
   const [simPhase, setSimPhase] = useState('off') // off | bloom | idle | checking | ready | importing
@@ -176,6 +196,7 @@ export default function DemoBlog() {
   async function runShoot() {
     if (runningRef.current) return
     runningRef.current = true
+    setShooting(true)
     for (const step of STEPS) {
       const el = document.getElementById(step.id)
       if (!el) continue
@@ -188,6 +209,7 @@ export default function DemoBlog() {
       await wait(step.dwell)
     }
     runningRef.current = false
+    setShooting(false)
   }
 
   // Clear any pending simulation timers on unmount so a stray setState
@@ -195,6 +217,24 @@ export default function DemoBlog() {
   useEffect(() => {
     return () => simTimersRef.current.forEach(clearTimeout)
   }, [])
+
+  // Escape closes the fallback modal (desktop/keyboard).
+  useEffect(() => {
+    if (!showFallback) return
+    const onKey = (e) => { if (e.key === 'Escape') setShowFallback(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [showFallback])
+
+  // Scrolls the reader down to the real payoff CTA. Used by the tappable
+  // "escape" nudges seeded through the blog — they don't fire the reveal
+  // themselves (that would be disorienting mid-page); they deliver the
+  // reader to the canonical "See how it works in Savor" moment at the end.
+  function scrollToCta() {
+    document
+      .getElementById('db-savor-cta')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
 
   function beginSimulation() {
     if (simRunningRef.current) return
@@ -223,30 +263,25 @@ export default function DemoBlog() {
     )
   }
 
-  // CTA in Savor mode — swaps back to the plain comedy blog. No bloom on
-  // the way out; this is a deliberate, instant undo, not another transition.
-  // CTA in Savor mode — swaps back to the plain comedy blog.
-async function exitSavorMode() {
-  simTimersRef.current.forEach(clearTimeout)
-  simTimersRef.current = []
-  simRunningRef.current = false
-  setSimPhase('off')
-  setSavorMode(false)
-
-  // 1. Find the target element
-  const storyEl = document.getElementById('db-story')
-  
-  if (storyEl) {
-    // 2. Calculate the Y position (matching the offset padding used in your runShoot function)
-    const targetY = storyEl.getBoundingClientRect().top + window.scrollY - 18
-    
-    // 3. Smoothly scroll to the section (using an 800ms duration, for example)
-    await scrollToY(targetY, 0, false)
-  } else {
-    // Fallback if element isn't found
-    window.scrollTo(0, 0)
+  // CTA in Savor mode — swaps back to the plain comedy blog and lands the
+  // reader on the divorce story (the CTA copy promises exactly that). No
+  // bloom on the way out; this is a deliberate, instant undo. The double-rAF
+  // lets savorMode's reflow (header unmount, padding removal) settle before
+  // we measure #db-story's position, so the smooth-scroll target is correct.
+  function exitSavorMode() {
+    simTimersRef.current.forEach(clearTimeout)
+    simTimersRef.current = []
+    simRunningRef.current = false
+    setSimPhase('off')
+    setSavorMode(false)
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        document
+          .getElementById('db-story')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    )
   }
-}
 
   // Fires the real deep link, then uses the standard visibility-change
   // heuristic to detect whether the OS actually switched to Savor. If
@@ -261,15 +296,23 @@ async function exitSavorMode() {
     const deepLink = `savor://create?url=${encodeURIComponent(pageUrl)}`
 
     let leftPage = false
-    const onVisibilityChange = () => {
-      if (document.hidden) leftPage = true
+    const markLeft = () => { leftPage = true }
+    // visibilitychange covers the common Android Chrome app-switch; pagehide
+    // is the more reliable signal when the browser is fully backgrounded by
+    // the launched app. Either firing means Savor opened — no fallback needed.
+    const onVisibility = () => { if (document.hidden) markLeft() }
+    document.addEventListener('visibilitychange', onVisibility)
+    window.addEventListener('pagehide', markLeft)
+
+    const cleanup = () => {
+      document.removeEventListener('visibilitychange', onVisibility)
+      window.removeEventListener('pagehide', markLeft)
     }
-    document.addEventListener('visibilitychange', onVisibilityChange)
 
     window.location.href = deepLink
 
     const timeoutId = setTimeout(() => {
-      document.removeEventListener('visibilitychange', onVisibilityChange)
+      cleanup()
       if (!leftPage) setShowFallback(true)
       simRunningRef.current = false
       setSimPhase('off')
@@ -283,7 +326,7 @@ async function exitSavorMode() {
   }
 
   return (
-    <div className={`db-page${savorMode ? ' db-savor-mode' : ''}`}>
+    <div className={`db-page${savorMode ? ' db-savor-mode' : ''}${shooting ? ' db-shooting' : ''}`}>
       <div className="db-save-float">♥ Save</div>
       <button
         id="db-shoot-trigger"
@@ -332,7 +375,7 @@ async function exitSavorMode() {
           <a href="#db-recipe-jump">Jump to Recipe</a>
         </nav>
 
-        <p className="db-lede" id="db-lede">
+        <p className="db-lede">
           Before we get to the lasagne, you deserve to know why this dish saved my marriage. And then ended it.
         </p>
 
@@ -354,6 +397,10 @@ async function exitSavorMode() {
             usually while the béchamel is thickening, which — don't worry — we'll get to.
           </p>
         </section>
+
+        <Nudge tier={1}>
+          Still here? That's more patience than Robert had.
+        </Nudge>
 
         <blockquote id="db-tuscany">
           "It was the autumn of 2011. A windswept hillside in Tuscany. A man named Giancarlo who I have never
@@ -387,6 +434,10 @@ async function exitSavorMode() {
             think it's a story about transformation. Or possibly plumbing. Etymology is like that sometimes.
           </p>
         </section>
+
+        <Nudge tier={2}>
+          We're nine paragraphs in. The recipe is... not nine paragraphs in.
+        </Nudge>
 
         <section id="db-history">
           <h2 className="db-section">A Brief History (600 words)</h2>
@@ -433,6 +484,9 @@ async function exitSavorMode() {
         </section>
 
         <section id="db-almost">
+          <Nudge tier={3} tappable onEscape={scrollToCta}>
+            That "Jump to Recipe" button? It jumped you here. Cruel. This one actually helps
+          </Nudge>
           <p>
             <b>Almost.</b> First, my thoughts on the moon, and how it, too, waxes and wanes the way a good ragù
             does over three hours of simmering. I won't elaborate further. I already have, several times, in the
@@ -443,7 +497,21 @@ async function exitSavorMode() {
             everything to do with grief, timing, and a caterer named Dennis. I promise this is relevant. It is
             not relevant. We're almost there.
           </p>
+          <p>
+            Dennis, if you must know, served a lasagne at that wedding. A store-bought one. My grandmother — the
+            store-bought-pasta-as-moral-failing grandmother, you'll recall — did not attend, having passed some
+            years prior, but I felt her disappointment move through the reception hall like a draft. I have spent
+            the intervening decade trying to cook my way back into her good opinion, which is difficult, on
+            account of the aforementioned death. This recipe is the closest I've come. I'm telling you this not
+            because it will help you make the lasagne — it will not — but because you clicked a button that said
+            "Jump to Recipe," and I feel you should understand the kind of person who builds a button like that
+            and then routes it here instead. We are, and I cannot stress this enough, almost there.
+          </p>
         </section>
+
+        <Nudge tier={4} tappable onEscape={scrollToCta}>
+          Enough. Skip the moon, the wedding, and Dennis — end the scroll
+        </Nudge>
 
         <hr className="db-divider" id="db-recipe-jump" />
 
@@ -516,7 +584,7 @@ async function exitSavorMode() {
             is the bit; this is the actual product moment. The CTA is
             mode-aware: in blog mode it launches the Savor simulation; once
             in Savor mode it becomes the way back to the comedy blog. */}
-        <div className="db-cta">
+        <div className="db-cta" id="db-savor-cta">
           {savorMode ? (
             <button type="button" onClick={exitSavorMode} className="db-cta-btn db-cta-btn-back">
               Read more about Marguerite's divorce journey →
@@ -604,7 +672,13 @@ async function exitSavorMode() {
       {/* ── App-not-installed fallback ── */}
       {showFallback && (
         <div className="db-sim-modal-backdrop" onClick={closeFallback}>
-          <div className="db-sim-modal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="db-sim-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Get Savor"
+            onClick={(e) => e.stopPropagation()}
+          >
             <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-modal-icon" />
             <h3 className="db-sim-modal-title">Looks like you don't have Savor yet</h3>
             <p className="db-sim-modal-body">
