@@ -225,13 +225,28 @@ export default function DemoBlog() {
 
   // CTA in Savor mode — swaps back to the plain comedy blog. No bloom on
   // the way out; this is a deliberate, instant undo, not another transition.
-  function exitSavorMode() {
-    simTimersRef.current.forEach(clearTimeout)
-    simTimersRef.current = []
-    simRunningRef.current = false
-    setSimPhase('off')
-    setSavorMode(false)
+  // CTA in Savor mode — swaps back to the plain comedy blog.
+async function exitSavorMode() {
+  simTimersRef.current.forEach(clearTimeout)
+  simTimersRef.current = []
+  simRunningRef.current = false
+  setSimPhase('off')
+  setSavorMode(false)
+
+  // 1. Find the target element
+  const storyEl = document.getElementById('db-story')
+  
+  if (storyEl) {
+    // 2. Calculate the Y position (matching the offset padding used in your runShoot function)
+    const targetY = storyEl.getBoundingClientRect().top + window.scrollY - 18
+    
+    // 3. Smoothly scroll to the section (using an 800ms duration, for example)
+    await scrollToY(targetY, 0, false)
+  } else {
+    // Fallback if element isn't found
+    window.scrollTo(0, 0)
   }
+}
 
   // Fires the real deep link, then uses the standard visibility-change
   // heuristic to detect whether the OS actually switched to Savor. If
@@ -317,7 +332,7 @@ export default function DemoBlog() {
           <a href="#db-recipe-jump">Jump to Recipe</a>
         </nav>
 
-        <p className="db-lede">
+        <p className="db-lede" id="db-lede">
           Before we get to the lasagne, you deserve to know why this dish saved my marriage. And then ended it.
         </p>
 
