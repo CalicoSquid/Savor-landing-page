@@ -5,6 +5,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { render } from './.ssr/entry-server.js'
 import { faqSchema } from './src/data/faqs.js'
+import { demoRecipeSchema } from './src/data/demoRecipe.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const dist = path.join(__dirname, 'dist')
@@ -50,6 +51,22 @@ const ROUTES = [
     desc: 'Answers to common questions about Savor: how to save and scan recipes, whether it is free, what makes it different, and which devices it runs on.',
     canonical: 'https://getsavor.recipes/faq',
     headExtra: `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`,
+  },
+  {
+    // Demo/parody page. Prerendered specifically so the Recipe JSON-LD is in
+    // the initial HTML — present before React mounts, which is what lets
+    // Savor's in-app browser detect it on load (an SPA-only render injects it
+    // too late, after onLoadEnd). noindex ships statically here too, since
+    // crawlers hitting this file won't run the page's JS. Kept out of the
+    // sitemap (generate-sitemap.js) regardless.
+    url: '/demo',
+    file: 'demo.html',
+    title: "The Only Lasagne Recipe You'll Ever Need (An Odyssey) | The Hearth & Hollow",
+    desc: 'A demo of how Savor pulls a clean recipe out of even the fluffiest recipe blog.',
+    canonical: 'https://getsavor.recipes/demo',
+    headExtra:
+      `<meta name="robots" content="noindex, nofollow" />\n` +
+      `  <script type="application/ld+json">${JSON.stringify(demoRecipeSchema)}</script>`,
   },
 ]
 

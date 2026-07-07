@@ -10,84 +10,21 @@
 import { useEffect, useRef } from 'react'
 import './DemoBlog.css'
 
-const RECIPE_SCHEMA = {
-  '@context': 'https://schema.org/',
-  '@type': 'Recipe',
-  name: "The Only Lasagne Recipe You'll Ever Need (An Odyssey)",
-  author: { '@type': 'Person', name: 'Marguerite Hollow' },
-  datePublished: '2016-03-11',
-  dateModified: '2026-07-02',
-  description: 'A classic layered lasagne with ragù and béchamel, arrived at after considerable detour.',
-  prepTime: 'PT30M',
-  cookTime: 'PT2H30M',
-  totalTime: 'PT3H',
-  recipeYield: '8 servings',
-  recipeCategory: 'Main Course',
-  recipeCuisine: 'Italian',
-  keywords: 'lasagne, ragù, béchamel, baked pasta, comfort food',
-  recipeIngredient: [
-    '2 tbsp olive oil',
-    '1 small yellow onion, finely diced',
-    '1 medium carrot, finely diced',
-    '1 celery stalk, finely diced',
-    '3 garlic cloves, minced',
-    '1 lb ground beef',
-    '1/2 lb ground pork',
-    '1/2 cup dry white wine',
-    '2 tbsp tomato paste',
-    '28 oz canned crushed tomatoes',
-    '1 cup whole milk, divided',
-    '2 bay leaves',
-    '4 tbsp unsalted butter',
-    '4 tbsp all-purpose flour',
-    '4 cups whole milk, warmed',
-    '1/4 tsp freshly grated nutmeg',
-    '1 lb fresh lasagne sheets',
-    '1 1/2 cups grated Parmigiano-Reggiano',
-    '12 oz fresh mozzarella, torn',
-    'Salt and black pepper, to taste',
-  ],
-  recipeInstructions: [
-    {
-      '@type': 'HowToSection',
-      name: 'Ragù',
-      itemListElement: [
-        { '@type': 'HowToStep', text: 'Heat olive oil in a heavy pot over medium heat. Add onion, carrot, and celery; cook 8 minutes until soft.' },
-        { '@type': 'HowToStep', text: 'Add garlic and cook 1 minute until fragrant.' },
-        { '@type': 'HowToStep', text: 'Add beef and pork. Break apart and brown, 8-10 minutes.' },
-        { '@type': 'HowToStep', text: 'Pour in wine and simmer until mostly evaporated, about 3 minutes.' },
-        { '@type': 'HowToStep', text: 'Stir in tomato paste and cook 2 minutes.' },
-        { '@type': 'HowToStep', text: 'Add crushed tomatoes and bay leaves. Season with salt and pepper. Simmer uncovered on low, stirring occasionally, 1.5-2 hours.' },
-        { '@type': 'HowToStep', text: 'Stir in 1/2 cup milk during the final 15 minutes. Discard bay leaves.' },
-      ],
-    },
-    {
-      '@type': 'HowToSection',
-      name: 'Béchamel',
-      itemListElement: [
-        { '@type': 'HowToStep', text: 'Melt butter in a saucepan over medium heat. Whisk in flour and cook 2 minutes, stirring constantly, without browning.' },
-        { '@type': 'HowToStep', text: 'Gradually whisk in warm milk. Simmer, whisking often, until thickened, 8-10 minutes.' },
-        { '@type': 'HowToStep', text: 'Season with nutmeg, salt, and pepper. Remove from heat.' },
-      ],
-    },
-    {
-      '@type': 'HowToSection',
-      name: 'Assembly',
-      itemListElement: [
-        { '@type': 'HowToStep', text: 'Preheat oven to 190°C (375°F).' },
-        { '@type': 'HowToStep', text: 'Spread a thin layer of ragù in a 9x13-inch baking dish. Add a layer of pasta sheets.' },
-        { '@type': 'HowToStep', text: 'Layer ragù, béchamel, and a scattering of Parmigiano. Repeat to build 4 layers, ending with béchamel.' },
-        { '@type': 'HowToStep', text: 'Top with mozzarella and remaining Parmigiano.' },
-        { '@type': 'HowToStep', text: 'Cover with foil and bake 25 minutes. Uncover and bake 15-20 minutes more, until golden and bubbling.' },
-        { '@type': 'HowToStep', text: 'Rest 15 minutes before slicing.' },
-      ],
-    },
-  ],
-  aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.98', ratingCount: '1247' },
-}
+// Self-hosted fonts (bundled at build time, served same-origin). Replaces the
+// old runtime <link> to fonts.googleapis.com, which stalled inside Savor's
+// in-app WebView and left onLoadEnd never firing (eternal spinner). Only the
+// exact weights/styles this page uses:
+import '@fontsource/playfair-display/600.css'        // section headings
+import '@fontsource/playfair-display/700.css'        // titles, ad headline
+import '@fontsource/playfair-display/700-italic.css' // hero title italic
+import '@fontsource/lora/400.css'                    // body
+import '@fontsource/lora/400-italic.css'             // lede, source note
+import '@fontsource/lora/600.css'                    // byline bold, buttons
+import '@fontsource/lora/700.css'                    // CTA button
+import '@fontsource/caveat/600.css'                  // tagline, blockquote
+import '@fontsource/jetbrains-mono/500.css'          // mono labels/meta
 
-const FONT_HREF =
-  'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Caveat:wght@600&family=JetBrains+Mono:wght@500&display=swap'
+import { demoRecipeSchema as RECIPE_SCHEMA } from '../data/demoRecipe'
 
 const PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
@@ -184,27 +121,24 @@ export default function DemoBlog() {
     setMeta('property', 'og:type', 'article')
     setMeta('name', 'twitter:card', 'summary')
 
-    const fontLink = document.createElement('link')
-    fontLink.rel = 'stylesheet'
-    fontLink.href = FONT_HREF
-    document.head.appendChild(fontLink)
-
-    // JSON-LD — injected into <head> via textContent, mirroring RecipePage.jsx
-    // exactly (that page scrapes cleanly in Savor's in-app browser). An inline
-    // <script> in the React body tree lands in <body> and, when written through
-    // React, reads back empty via .innerText in Savor's DETECT_JS — so it must
-    // live here, in head, set with textContent, like the page that works.
-    const ldEl = document.createElement('script')
-    ldEl.id = 'demo-recipe-jsonld'
-    ldEl.type = 'application/ld+json'
-    ldEl.textContent = JSON.stringify(RECIPE_SCHEMA)
-    document.head.appendChild(ldEl)
+    // JSON-LD — on the prerendered build this already ships statically in the
+    // initial HTML (see prerender.js), present before React mounts, which is
+    // what Savor's in-app browser needs. Only inject at runtime if it's NOT
+    // already there (the dev server / any non-prerendered render path), so we
+    // never end up with two copies after hydration.
+    let ldEl = null
+    if (!document.getElementById('demo-recipe-jsonld')) {
+      ldEl = document.createElement('script')
+      ldEl.id = 'demo-recipe-jsonld'
+      ldEl.type = 'application/ld+json'
+      ldEl.textContent = JSON.stringify(RECIPE_SCHEMA)
+      document.head.appendChild(ldEl)
+    }
 
     return () => {
       document.title = prevTitle
       added.forEach((el) => el.remove())
-      fontLink.remove()
-      ldEl.remove()
+      if (ldEl) ldEl.remove()
     }
   }, [])
 
@@ -248,7 +182,7 @@ export default function DemoBlog() {
           <div className="db-hero-art">
             <img
               className="db-hero-img"
-              src="https://images.unsplash.com/photo-1619895092538-128341789043?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src="/images/lasagne.webp"
               alt="A steaming pan of lasagne"
             />
             <div className="db-steam" />
