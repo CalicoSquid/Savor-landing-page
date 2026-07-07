@@ -104,14 +104,20 @@ function scrollToY(targetY, duration, useBounce) {
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 
 // ── Import simulation ────────────────────────────────────────────────────
-// A styled clone of Savor's in-app RecipeBar (see savor/src/components/
-// search/components/RecipeBar.jsx + WebView.jsx), staged entirely on this
-// page. The blog content underneath never changes — that's deliberate,
-// it's literally what the real in-app browser would show. Only the bar UI
-// is simulated; the deep link it fires at the end (savor://create) is
-// real, so the handoff into the app is a genuine import, not a mockup of
-// one. Phases mirror the native barPhase contract: idle → checking → ready.
-const SIM_BLOOM_MS = 520
+// A styled clone of Savor's in-app RecipeBar + a lightweight app header
+// (see savor/src/components/search/components/RecipeBar.jsx, WebView.jsx,
+// and appBar/*.jsx), staged entirely on this page. The blog content
+// underneath never changes — that's deliberate, it's literally what the
+// real in-app browser would show. Only the chrome around it is simulated;
+// the deep link fired at the end (savor://create) is real, so the handoff
+// into the app is a genuine import, not a mockup of one.
+//
+// Phases: bloom (transition cover) → idle → checking → ready → importing.
+// "savorMode" is a separate flag for the header + page framing, which
+// persists across idle/checking/ready/importing so the header doesn't
+// flicker between phases — only the bottom bar's content changes.
+const BLOOM_REVEAL_MS = 380   // point mid-bloom where we scroll-to-top + mount the header, still hidden under the cover
+const BLOOM_TOTAL_MS = 820    // full rise+hold+fade duration — must match the CSS keyframe below
 const SIM_IDLE_MS = 1000
 const SIM_CHECKING_MS = 1000
 const INSTALL_CHECK_MS = 1600
@@ -120,7 +126,8 @@ export default function DemoBlog() {
   const runningRef = useRef(false)
   const simRunningRef = useRef(false)
   const simTimersRef = useRef([])
-  const [simPhase, setSimPhase] = useState('off') // off | bloom | idle | checking | ready
+  const [simPhase, setSimPhase] = useState('off') // off | bloom | idle | checking | ready | importing
+  const [savorMode, setSavorMode] = useState(false)
   const [showFallback, setShowFallback] = useState(false)
 
   // Page-level meta: title, noindex, fonts. Same DOM-patching approach as
@@ -193,16 +200,37 @@ export default function DemoBlog() {
     if (simRunningRef.current) return
     simRunningRef.current = true
     setSimPhase('bloom')
-    simTimersRef.current.push(setTimeout(() => setSimPhase('idle'), SIM_BLOOM_MS))
+
+    // Mid-bloom, while the screen is still covered: jump to the top and
+    // mount the header. Both are invisible to the user until the bloom
+    // fades over them, which is what sells this as "a new screen" rather
+    // than "the page jumped while you watched."
     simTimersRef.current.push(
-      setTimeout(() => setSimPhase('checking'), SIM_BLOOM_MS + SIM_IDLE_MS)
+      setTimeout(() => {
+        window.scrollTo(0, 0)
+        setSavorMode(true)
+      }, BLOOM_REVEAL_MS)
+    )
+    simTimersRef.current.push(setTimeout(() => setSimPhase('idle'), BLOOM_TOTAL_MS))
+    simTimersRef.current.push(
+      setTimeout(() => setSimPhase('checking'), BLOOM_TOTAL_MS + SIM_IDLE_MS)
     )
     simTimersRef.current.push(
       setTimeout(
         () => setSimPhase('ready'),
-        SIM_BLOOM_MS + SIM_IDLE_MS + SIM_CHECKING_MS
+        BLOOM_TOTAL_MS + SIM_IDLE_MS + SIM_CHECKING_MS
       )
     )
+  }
+
+  // CTA in Savor mode — swaps back to the plain comedy blog. No bloom on
+  // the way out; this is a deliberate, instant undo, not another transition.
+  function exitSavorMode() {
+    simTimersRef.current.forEach(clearTimeout)
+    simTimersRef.current = []
+    simRunningRef.current = false
+    setSimPhase('off')
+    setSavorMode(false)
   }
 
   // Fires the real deep link, then uses the standard visibility-change
@@ -211,6 +239,7 @@ export default function DemoBlog() {
   // show the Play Store fallback instead of failing silently.
   function handleReadyTap() {
     if (simPhase !== 'ready') return
+    setSimPhase('importing')
 
     const pageUrl =
       typeof window !== 'undefined' ? window.location.href : 'https://getsavor.recipes/demo'
@@ -229,18 +258,17 @@ export default function DemoBlog() {
       if (!leftPage) setShowFallback(true)
       simRunningRef.current = false
       setSimPhase('off')
+      setSavorMode(false)
     }, INSTALL_CHECK_MS)
     simTimersRef.current.push(timeoutId)
   }
 
   function closeFallback() {
     setShowFallback(false)
-    setSimPhase('off')
-    simRunningRef.current = false
   }
 
   return (
-    <div className="db-page">
+    <div className={`db-page${savorMode ? ' db-savor-mode' : ''}`}>
       <div className="db-save-float">♥ Save</div>
       <button
         id="db-shoot-trigger"
@@ -470,35 +498,65 @@ export default function DemoBlog() {
         </div>
 
         {/* The real payoff — breaks character on purpose. Everything above
-            is the bit; this is the actual product moment. */}
+            is the bit; this is the actual product moment. The CTA is
+            mode-aware: in blog mode it launches the Savor simulation; once
+            in Savor mode it becomes the way back to the comedy blog. */}
         <div className="db-cta">
-          <p className="db-cta-text">
-            Get the lasagne recipe — skip the divorce journals.
-          </p>
-          <button type="button" onClick={beginSimulation} className="db-cta-btn">
-            Try it yourself →
-          </button>
+          {savorMode ? (
+            <button type="button" onClick={exitSavorMode} className="db-cta-btn db-cta-btn-back">
+              Read more about Marguerite's divorce journey →
+            </button>
+          ) : (
+            <button type="button" onClick={beginSimulation} className="db-cta-btn">
+              See how it works in Savor →
+            </button>
+          )}
           <a href={PLAY_STORE} className="db-cta-alt" target="_blank" rel="noopener noreferrer">
             Don't have Savor? Get it free →
           </a>
         </div>
       </div>
 
-      {/* ── Import simulation overlay — styled clone of the in-app RecipeBar.
-          Fixed-position, independent of scroll, rendered above everything.
-          See beginSimulation/handleReadyTap above for the state machine. */}
+      {/* ── App header — clone of Savor's home header (see savor Main.jsx
+          StandardHeaderBg + appBar/*.jsx). Can't touch the real browser's
+          own URL bar, so this stands in as the app chrome: primaryGradient
+          background, the tangerine mark on the left, palette + account
+          squircle buttons on the right. Cosmetic only — the buttons are
+          non-functional here; exiting back to the blog is the CTA's job. */}
+      {savorMode && (
+        <div className="db-sim-header" aria-hidden="true">
+          <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-header-mark" />
+          <div className="db-sim-header-actions">
+            <span className="db-sim-header-btn">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff">
+                <path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c.93 0 1.5-.7 1.5-1.5 0-.42-.16-.78-.42-1.06-.25-.28-.41-.64-.41-1.05 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-8.39-10-8.39zM6.5 12c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+              </svg>
+            </span>
+            <span className="db-sim-header-btn">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      )}
+
       {simPhase !== 'off' && (
         <>
           <div className={`db-sim-bloom${simPhase === 'bloom' ? ' active' : ''}`} />
           {simPhase !== 'bloom' && (
             <div className="db-sim-wrapper">
-              {(simPhase === 'idle' || simPhase === 'checking') && (
-                <div className={`db-sim-slim${simPhase === 'checking' ? ' db-sim-pulse' : ''}`}>
+              {(simPhase === 'idle' || simPhase === 'checking' || simPhase === 'importing') && (
+                <div
+                  className={`db-sim-slim${simPhase !== 'idle' ? ' db-sim-pulse' : ''}`}
+                >
                   <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-mark" />
                   <div className="db-sim-text">
                     <span className="db-sim-title">Savor</span>
                     <span className="db-sim-sub">
-                      {simPhase === 'checking' ? '  · checking this page…' : '  · looking for a recipe'}
+                      {simPhase === 'checking' && '  · checking this page…'}
+                      {simPhase === 'importing' && '  · importing recipe…'}
+                      {simPhase === 'idle' && '  · looking for a recipe'}
                     </span>
                   </div>
                   <div className="db-sim-dots">

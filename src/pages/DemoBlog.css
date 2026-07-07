@@ -305,15 +305,6 @@
   background: linear-gradient(155deg, #2E2118 0%, #1C130D 100%);
   color: #FAF3E6;
 }
-.db-page .db-cta-text {
-  font-family: 'Lora', serif;
-  font-size: 16px;
-  color: #E8DCC8;
-  margin: 0 0 18px;
-  max-width: 46ch;
-  margin-left: auto;
-  margin-right: auto;
-}
 .db-page .db-cta-btn {
   display: inline-block;
   background: linear-gradient(135deg, #FF5722, #FF9800);
@@ -327,6 +318,12 @@
   text-decoration: none;
   cursor: pointer;
   box-shadow: 0 10px 26px rgba(255, 87, 34, 0.35);
+}
+/* Return path — wears the blog's own tomato tone, not Savor orange, so it
+   reads as "go back to the fluff" rather than another Savor action. */
+.db-page .db-cta-btn-back {
+  background: var(--db-tomato);
+  box-shadow: 0 10px 26px rgba(178, 58, 46, 0.3);
 }
 .db-page .db-cta-alt {
   display: block;
@@ -361,24 +358,82 @@
 
 .db-sim-bloom {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 0;
+  inset: 0;
   background: linear-gradient(135deg, #FF5722, #FF9800);
-  border-radius: 50% 50% 0 0 / 140% 140% 0 0;
   opacity: 0;
   pointer-events: none;
   z-index: 998;
-  transform-origin: bottom center;
 }
+/* Rise to full coverage (0-380ms, matches BLOOM_REVEAL_MS — the scroll-to-top
+   and header mount happen right at that point, hidden under the cover),
+   hold near-opaque briefly, then fade out over the remainder. Total duration
+   must match BLOOM_TOTAL_MS in DemoBlog.jsx (820ms). */
 .db-sim-bloom.active {
-  animation: db-bloom-pulse 520ms cubic-bezier(0.22, 0.8, 0.2, 1) forwards;
+  animation: db-bloom-pulse 820ms cubic-bezier(0.22, 0.8, 0.2, 1) forwards;
 }
 @keyframes db-bloom-pulse {
-  0%   { height: 0; opacity: 0; }
-  35%  { opacity: 0.6; }
-  100% { height: 380px; opacity: 0; transform: scaleX(1.5); }
+  0%   { opacity: 0; clip-path: circle(0% at 50% 100%); }
+  46%  { opacity: 0.97; clip-path: circle(150% at 50% 100%); }
+  62%  { opacity: 0.97; clip-path: circle(150% at 50% 100%); }
+  100% { opacity: 0; clip-path: circle(150% at 50% 100%); }
+}
+
+/* Pushes content clear of the fixed header once savor mode is active —
+   applied to the .db-page root, set in DemoBlog.jsx alongside savorMode. */
+.db-page.db-savor-mode {
+  padding-top: calc(56px + env(safe-area-inset-top, 0px));
+}
+/* The blog's own floating "♥ Save" pill would collide with the sim bar and
+   break the in-app illusion — hide it while in Savor mode. */
+.db-page.db-savor-mode .db-save-float { display: none; }
+/* In Savor mode the CTA holds the "back to the blog" button, so drop the
+   dark payoff-box framing — it should read as a quiet return link, not a
+   second product moment. */
+.db-page.db-savor-mode .db-cta {
+  background: none;
+  padding: 20px 24px;
+}
+/* Was tuned for the dark payoff box; on the transparent savor-mode box it
+   needs the darker ink tone to stay legible on cream. */
+.db-page.db-savor-mode .db-cta-alt { color: var(--db-ink-soft); }
+
+/* ── App header — clone of Savor's home header (native: Main.jsx
+   StandardHeaderBg + appBar/ThemeButton/UserButton). Stands in for the
+   app chrome since we can't touch the browser's real URL bar. Tangerine
+   primaryGradient bar, mark left, tertiaryGradient squircle buttons right.
+   Cosmetic only — buttons don't do anything; the CTA handles exit. */
+.db-sim-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 997;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 14px;
+  padding-top: env(safe-area-inset-top, 0px);
+  box-sizing: content-box;
+  background: linear-gradient(90deg, #FF5722 0%, #FF9800 100%);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+  animation: db-sim-header-in 260ms cubic-bezier(0.22, 0.8, 0.2, 1) both;
+}
+@keyframes db-sim-header-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.db-sim-header-mark { width: 40px; height: 40px; flex-shrink: 0; }
+.db-sim-header-actions { display: flex; align-items: center; gap: 8px; }
+.db-sim-header-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #E64A00, #BF360C);
+  box-shadow: 0 4px 10px rgba(191, 54, 12, 0.38);
 }
 
 .db-sim-wrapper {
@@ -548,6 +603,7 @@
 @media (prefers-reduced-motion: reduce) {
   .db-page .db-steam { animation: none; opacity: 0.2; }
   .db-sim-bloom,
+  .db-sim-header,
   .db-sim-wrapper,
   .db-sim-ready,
   .db-sim-shine,
