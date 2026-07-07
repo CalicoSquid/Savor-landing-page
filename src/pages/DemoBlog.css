@@ -1,0 +1,355 @@
+/* src/pages/DemoBlog.css — scoped under .db-page so nothing here touches
+   the rest of the site's global styles (this page needs its own aesthetic:
+   it's pretending to be a foreign recipe blog, not part of getsavor.recipes). */
+
+.db-page {
+  --db-cream: #FAF3E6;
+  --db-cream-deep: #F1E6D3;
+  --db-ink: #3A2A1D;
+  --db-ink-soft: #6B5A47;
+  --db-tomato: #B23A2E;
+  --db-tomato-deep: #8F2C22;
+  --db-gold: #C89B3C;
+  --db-sage: #7C8B6F;
+  --db-line: rgba(58, 42, 29, 0.14);
+
+  background: var(--db-cream);
+  color: var(--db-ink);
+  font-family: 'Lora', serif;
+  line-height: 1.75;
+  font-size: 18px;
+  min-height: 100vh;
+}
+
+.db-page .db-wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+.db-page .db-save-float {
+  position: fixed;
+  right: 16px;
+  bottom: 22px;
+  background: var(--db-tomato);
+  color: white;
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(178, 58, 46, 0.35);
+  z-index: 50;
+  letter-spacing: 0.02em;
+}
+
+/* hidden shoot-mode trigger — invisible 56px tap target, bottom-left,
+   opposite the Save button. Tap before filming to run the paced
+   auto-scroll. Leave it alone and the page behaves like any normal site. */
+.db-page .db-shoot-trigger {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 56px;
+  height: 56px;
+  z-index: 60;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.db-page .db-topstrip {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--db-ink-soft);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--db-line);
+}
+
+.db-page .db-masthead { text-align: center; padding: 34px 24px 22px; }
+.db-page .db-site-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--db-tomato-deep);
+}
+.db-page .db-tagline {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: var(--db-ink-soft);
+  margin-top: 4px;
+}
+
+.db-page .db-hero { margin: 18px auto 0; max-width: 780px; }
+.db-page .db-hero-art {
+  height: 380px;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 44px rgba(58, 42, 29, 0.24);
+}
+.db-page .db-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  display: block;
+}
+.db-page .db-hero-art::after {
+  /* gentle bottom-up scrim so the white steam wisps stay legible over any photo */
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(30,16,10,0.28), transparent 45%);
+  pointer-events: none;
+}
+.db-page .db-steam {
+  position: absolute; top: 10%; left: 50%;
+  width: 3px; height: 70px;
+  background: linear-gradient(to top, rgba(255,255,255,0.65), transparent);
+  filter: blur(3px);
+  animation: db-rise 3.4s ease-in-out infinite;
+}
+.db-page .db-s2 { left: 42%; animation-delay: .6s; height: 50px; }
+.db-page .db-s3 { left: 58%; animation-delay: 1.2s; height: 56px; }
+@keyframes db-rise {
+  0% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(-22px); opacity: 0.15; }
+  100% { transform: translateY(-44px); opacity: 0; }
+}
+
+.db-page .db-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 40px;
+  line-height: 1.18;
+  text-align: center;
+  margin: 26px 0 10px;
+  color: var(--db-ink);
+}
+
+.db-page .db-byline {
+  text-align: center;
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  color: var(--db-ink-soft);
+  margin-bottom: 6px;
+}
+.db-page .db-byline b { color: var(--db-tomato-deep); }
+
+.db-page .db-rating {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--db-gold);
+  margin-bottom: 22px;
+}
+.db-page .db-rating span { color: var(--db-ink-soft); margin-left: 4px; }
+
+.db-page .db-jumpnav {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center;
+  padding: 14px 18px;
+  background: var(--db-cream-deep);
+  border: 1px solid var(--db-line);
+  border-radius: 10px;
+  margin-bottom: 30px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+.db-page .db-jumpnav a { color: var(--db-tomato-deep); text-decoration: none; padding: 5px 10px; border-radius: 6px; }
+.db-page .db-jumpnav a:hover { background: rgba(178, 58, 46, 0.08); }
+
+.db-page p { margin: 0 0 20px; }
+.db-page .db-lede { font-style: italic; color: var(--db-ink-soft); }
+
+.db-page h2.db-section {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 26px;
+  margin: 40px 0 14px;
+  color: var(--db-tomato-deep);
+}
+
+.db-page blockquote {
+  font-family: 'Caveat', cursive;
+  font-size: 26px;
+  color: var(--db-sage);
+  border-left: 3px solid var(--db-sage);
+  padding-left: 18px;
+  margin: 28px 0;
+}
+
+.db-page .db-ad {
+  margin: 40px 0;
+  border: 1px dashed var(--db-line);
+  border-radius: 10px;
+  padding: 22px;
+  background: #FFFDF8;
+  text-align: center;
+}
+.db-page .db-ad .db-ad-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9A8F7D;
+  margin-bottom: 10px;
+}
+.db-page .db-ad .db-ad-headline {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--db-ink);
+  margin-bottom: 6px;
+}
+.db-page .db-ad .db-ad-sub { font-size: 15px; color: var(--db-ink-soft); margin-bottom: 14px; }
+.db-page .db-ad button {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  background: var(--db-gold);
+  color: #3A2A1D;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: default;
+}
+
+.db-page .db-jump-btn-wrap { text-align: center; margin: 36px 0; }
+.db-page .db-jump-btn {
+  display: inline-block;
+  background: var(--db-tomato);
+  color: white;
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(178, 58, 46, 0.3);
+}
+
+/* The false-summit landing. min-height + centering guarantees the recipe
+   card below can never be visible in the same frame as this text — that
+   was the bug: without real height here, a tall viewport could see both
+   at once and the "it lied to me" beat didn't land. */
+.db-page #db-almost {
+  min-height: 62vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+.db-page #db-almost p { margin: 0; }
+
+/* Brief highlight on arrival — sells a half-second of "we made it" before
+   the text underneath gives away that it didn't. */
+.db-page .db-pulse { animation: db-pulse-flash 0.65s ease-out; }
+@keyframes db-pulse-flash {
+  0% { background: rgba(200, 155, 60, 0.22); }
+  100% { background: transparent; }
+}
+
+.db-page .db-divider { border: none; border-top: 1px solid var(--db-line); margin: 46px 0; }
+
+/* the actual recipe: deliberately plain, deliberately calm — the contrast
+   with the fluff above it is the whole joke */
+.db-page #db-recipe-card {
+  margin: 10px 0 60px;
+  background: #FFFFFF;
+  border: 1px solid var(--db-line);
+  border-radius: 8px;
+  padding: 26px 26px 22px;
+}
+.db-page #db-recipe-card .db-rc-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--db-ink-soft);
+  margin-bottom: 8px;
+}
+.db-page #db-recipe-card h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; margin: 0 0 12px; }
+.db-page #db-recipe-card h4.db-rc-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--db-tomato-deep);
+  margin: 18px 0 8px;
+}
+.db-page #db-recipe-card .db-meta {
+  display: flex; gap: 18px; flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--db-ink-soft);
+  margin-bottom: 16px;
+}
+.db-page #db-recipe-card ul,
+.db-page #db-recipe-card ol { margin: 0 0 14px; padding-left: 20px; font-size: 15px; }
+.db-page #db-recipe-card li { margin-bottom: 5px; }
+.db-page #db-recipe-card .db-rc-note { font-size: 13px; color: var(--db-ink-soft); font-style: italic; margin-top: 12px; }
+
+/* The real payoff — deliberately breaks from the fluff-blog theme above,
+   since this is the actual product moment, not part of the bit. */
+.db-page .db-cta {
+  margin: 8px 0 50px;
+  text-align: center;
+  padding: 30px 24px;
+  border-radius: 14px;
+  background: linear-gradient(155deg, #2E2118 0%, #1C130D 100%);
+  color: #FAF3E6;
+}
+.db-page .db-cta-text {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  color: #E8DCC8;
+  margin: 0 0 18px;
+  max-width: 46ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.db-page .db-cta-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #FF5722, #FF9800);
+  color: white;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(255, 87, 34, 0.35);
+}
+.db-page .db-cta-alt {
+  display: block;
+  margin-top: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #B8A98C;
+  text-decoration: none;
+}
+.db-page .db-cta-alt:hover { color: #E8DCC8; }
+
+.db-page .db-footer {
+  text-align: center;
+  padding: 30px 24px 60px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--db-ink-soft);
+}
+
+@media (max-width: 480px) {
+  .db-page .db-title { font-size: 30px; }
+  .db-page .db-hero-art { height: 240px; }
+  .db-page { font-size: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .db-page .db-steam { animation: none; opacity: 0.2; }
+}

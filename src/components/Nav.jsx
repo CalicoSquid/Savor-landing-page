@@ -11,8 +11,9 @@ export default function Nav() {
   const isPotluck = location.pathname.startsWith('/potluck')
   const isForage  = location.pathname.startsWith('/forage')
   const isRecipe  = location.pathname.startsWith('/r/')
+  const isDemo    = location.pathname.startsWith('/demo')
 
-  if (isRecipe) return null
+  if (isRecipe || isDemo) return null
 
   const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isForage ? 'forage' : 'savor'
   const iconSrc  = isStudio  ? '/images/logo_W.webp'

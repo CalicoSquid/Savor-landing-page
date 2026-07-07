@@ -3,6 +3,7 @@
 User-agent: *
 Allow: /
 Disallow: /delete-account
+Disallow: /demo
 
 # Explicitly welcome AI crawlers (GEO) — these are what surface Savor
 # when someone asks an assistant "what's a good recipe app?"
