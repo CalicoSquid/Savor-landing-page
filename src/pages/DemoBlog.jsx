@@ -7,7 +7,7 @@
 //
 // No site chrome (see Nav.jsx / no <Footer /> import) — the page needs to
 // read as a standalone foreign site, not part of getsavor.recipes.
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './DemoBlog.css'
 
 // Self-hosted fonts (bundled at build time, served same-origin). Replaces the
@@ -23,6 +23,13 @@ import '@fontsource/lora/600.css'                    // byline bold, buttons
 import '@fontsource/lora/700.css'                    // CTA button
 import '@fontsource/caveat/600.css'                  // tagline, blockquote
 import '@fontsource/jetbrains-mono/500.css'          // mono labels/meta
+// Self-hosted, same reasoning as the imports above (no runtime Google Fonts
+// request on this route — that's the exact stall that caused the original
+// WebView eternal-spinner bug). Raleway is Savor's actual in-app font,
+// used only by the import-simulation overlay below — NOT the fluff-blog
+// content, which stays on Lora/Playfair/Caveat on purpose.
+import '@fontsource/raleway/400.css'
+import '@fontsource/raleway/700.css'
 
 import { demoRecipeSchema as RECIPE_SCHEMA } from '../data/demoRecipe'
 
@@ -96,8 +103,25 @@ function scrollToY(targetY, duration, useBounce) {
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 
+// ── Import simulation ────────────────────────────────────────────────────
+// A styled clone of Savor's in-app RecipeBar (see savor/src/components/
+// search/components/RecipeBar.jsx + WebView.jsx), staged entirely on this
+// page. The blog content underneath never changes — that's deliberate,
+// it's literally what the real in-app browser would show. Only the bar UI
+// is simulated; the deep link it fires at the end (savor://create) is
+// real, so the handoff into the app is a genuine import, not a mockup of
+// one. Phases mirror the native barPhase contract: idle → checking → ready.
+const SIM_BLOOM_MS = 520
+const SIM_IDLE_MS = 1000
+const SIM_CHECKING_MS = 1000
+const INSTALL_CHECK_MS = 1600
+
 export default function DemoBlog() {
   const runningRef = useRef(false)
+  const simRunningRef = useRef(false)
+  const simTimersRef = useRef([])
+  const [simPhase, setSimPhase] = useState('off') // off | bloom | idle | checking | ready
+  const [showFallback, setShowFallback] = useState(false)
 
   // Page-level meta: title, noindex, fonts. Same DOM-patching approach as
   // RecipePage.jsx (no head-management library in this app), reverted on
@@ -157,6 +181,62 @@ export default function DemoBlog() {
       await wait(step.dwell)
     }
     runningRef.current = false
+  }
+
+  // Clear any pending simulation timers on unmount so a stray setState
+  // can't fire after the user's already navigated away.
+  useEffect(() => {
+    return () => simTimersRef.current.forEach(clearTimeout)
+  }, [])
+
+  function beginSimulation() {
+    if (simRunningRef.current) return
+    simRunningRef.current = true
+    setSimPhase('bloom')
+    simTimersRef.current.push(setTimeout(() => setSimPhase('idle'), SIM_BLOOM_MS))
+    simTimersRef.current.push(
+      setTimeout(() => setSimPhase('checking'), SIM_BLOOM_MS + SIM_IDLE_MS)
+    )
+    simTimersRef.current.push(
+      setTimeout(
+        () => setSimPhase('ready'),
+        SIM_BLOOM_MS + SIM_IDLE_MS + SIM_CHECKING_MS
+      )
+    )
+  }
+
+  // Fires the real deep link, then uses the standard visibility-change
+  // heuristic to detect whether the OS actually switched to Savor. If
+  // nothing happens within INSTALL_CHECK_MS, the app isn't installed —
+  // show the Play Store fallback instead of failing silently.
+  function handleReadyTap() {
+    if (simPhase !== 'ready') return
+
+    const pageUrl =
+      typeof window !== 'undefined' ? window.location.href : 'https://getsavor.recipes/demo'
+    const deepLink = `savor://create?url=${encodeURIComponent(pageUrl)}`
+
+    let leftPage = false
+    const onVisibilityChange = () => {
+      if (document.hidden) leftPage = true
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange)
+
+    window.location.href = deepLink
+
+    const timeoutId = setTimeout(() => {
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+      if (!leftPage) setShowFallback(true)
+      simRunningRef.current = false
+      setSimPhase('off')
+    }, INSTALL_CHECK_MS)
+    simTimersRef.current.push(timeoutId)
+  }
+
+  function closeFallback() {
+    setShowFallback(false)
+    setSimPhase('off')
+    simRunningRef.current = false
   }
 
   return (
@@ -395,19 +475,77 @@ export default function DemoBlog() {
           <p className="db-cta-text">
             Get the lasagne recipe — skip the divorce journals.
           </p>
-          <a
-            href={`savor://browse?url=${encodeURIComponent(
-              typeof window !== 'undefined' ? window.location.href : 'https://getsavor.recipes/demo'
-            )}`}
-            className="db-cta-btn"
-          >
+          <button type="button" onClick={beginSimulation} className="db-cta-btn">
             Try it yourself →
-          </a>
+          </button>
           <a href={PLAY_STORE} className="db-cta-alt" target="_blank" rel="noopener noreferrer">
             Don't have Savor? Get it free →
           </a>
         </div>
       </div>
+
+      {/* ── Import simulation overlay — styled clone of the in-app RecipeBar.
+          Fixed-position, independent of scroll, rendered above everything.
+          See beginSimulation/handleReadyTap above for the state machine. */}
+      {simPhase !== 'off' && (
+        <>
+          <div className={`db-sim-bloom${simPhase === 'bloom' ? ' active' : ''}`} />
+          {simPhase !== 'bloom' && (
+            <div className="db-sim-wrapper">
+              {(simPhase === 'idle' || simPhase === 'checking') && (
+                <div className={`db-sim-slim${simPhase === 'checking' ? ' db-sim-pulse' : ''}`}>
+                  <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-mark" />
+                  <div className="db-sim-text">
+                    <span className="db-sim-title">Savor</span>
+                    <span className="db-sim-sub">
+                      {simPhase === 'checking' ? '  · checking this page…' : '  · looking for a recipe'}
+                    </span>
+                  </div>
+                  <div className="db-sim-dots">
+                    <span /><span /><span />
+                  </div>
+                </div>
+              )}
+              {simPhase === 'ready' && (
+                <button type="button" className="db-sim-ready" onClick={handleReadyTap}>
+                  <span className="db-sim-icon-badge">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 3v12" /><path d="M6 11l6 6 6-6" /><path d="M5 21h14" />
+                    </svg>
+                  </span>
+                  <span className="db-sim-ready-text">
+                    <span className="db-sim-ready-title">Recipe found!</span>
+                    <span className="db-sim-ready-sub">Save to your recipe box</span>
+                  </span>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 6l6 6-6 6" />
+                  </svg>
+                  <span className="db-sim-shine" />
+                </button>
+              )}
+            </div>
+          )}
+        </>
+      )}
+
+      {/* ── App-not-installed fallback ── */}
+      {showFallback && (
+        <div className="db-sim-modal-backdrop" onClick={closeFallback}>
+          <div className="db-sim-modal" onClick={(e) => e.stopPropagation()}>
+            <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-modal-icon" />
+            <h3 className="db-sim-modal-title">Looks like you don't have Savor yet</h3>
+            <p className="db-sim-modal-body">
+              Get it free and try this for real — same one-tap import, any recipe site.
+            </p>
+            <a href={PLAY_STORE} target="_blank" rel="noopener noreferrer" className="db-sim-modal-btn">
+              Get Savor on Google Play
+            </a>
+            <button type="button" className="db-sim-modal-close" onClick={closeFallback}>
+              Not now
+            </button>
+          </div>
+        </div>
+      )}
 
       <footer className="db-footer">
         the hearth &amp; hollow · a fictional publication for demonstration purposes
