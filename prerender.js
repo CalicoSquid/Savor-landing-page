@@ -36,6 +36,7 @@ const ROUTES = [
     title: 'Potluck — Spin for Your Supper | A Savor App',
     desc: 'Can’t decide what to cook? Potluck spins the wheel and picks tonight’s dinner for you — one tap, one recipe, no scrolling. Save what you love straight to Savor. Free on Android.',
     canonical: 'https://getsavor.recipes/potluck',
+    ogImage: 'https://getsavor.recipes/potluck/potluck-splash.png',
   },
   {
     url: '/forage',
@@ -64,6 +65,7 @@ const ROUTES = [
     title: "The Only Lasagne Recipe You'll Ever Need (An Odyssey) | The Hearth & Hollow",
     desc: 'A demo of how Savor pulls a clean recipe out of even the fluffiest recipe blog.',
     canonical: 'https://getsavor.recipes/demo',
+    ogImage: 'https://getsavor.recipes/images/lasagne.webp',
     headExtra:
       `<meta name="robots" content="noindex, nofollow" />\n` +
       `  <script type="application/ld+json">${JSON.stringify(demoRecipeSchema)}</script>`,
@@ -73,6 +75,7 @@ const ROUTES = [
 let count = 0
 for (const r of ROUTES) {
   const appHtml = render(r.url)
+  const ogImage = r.ogImage || 'https://getsavor.recipes/images/savor-final.png'
 
   let html = template
     .replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`)
@@ -84,6 +87,43 @@ for (const r of ROUTES) {
     .replace(
       /<link\s+rel="canonical"[^>]*\/>/,
       `<link rel="canonical" href="${escAttr(r.canonical)}" />`,
+    )
+    // Social preview tags — every route previously inherited the homepage's
+    // og:title/description/image untouched, so a share of /demo or /potluck
+    // showed generic "Savor — Cook in Color" branding instead of that page's
+    // own content. Each route's own title/desc (and ogImage, where set) now
+    // drive these too.
+    .replace(
+      /<meta\s+property="og:title"[^>]*\/>/,
+      `<meta property="og:title" content="${escAttr(r.title)}" />`,
+    )
+    .replace(
+      /<meta\s+property="og:description"[\s\S]*?\/>/,
+      `<meta property="og:description" content="${escAttr(r.desc)}" />`,
+    )
+    .replace(
+      /<meta\s+property="og:url"[^>]*\/>/,
+      `<meta property="og:url" content="${escAttr(r.canonical)}" />`,
+    )
+    .replace(
+      /<meta\s+property="og:image"[^>]*\/>/,
+      `<meta property="og:image" content="${escAttr(ogImage)}" />`,
+    )
+    .replace(
+      /<meta\s+property="og:image:alt"[^>]*\/>/,
+      `<meta property="og:image:alt" content="${escAttr(r.title)}" />`,
+    )
+    .replace(
+      /<meta\s+name="twitter:title"[^>]*\/>/,
+      `<meta name="twitter:title" content="${escAttr(r.title)}" />`,
+    )
+    .replace(
+      /<meta\s+name="twitter:description"[\s\S]*?\/>/,
+      `<meta name="twitter:description" content="${escAttr(r.desc)}" />`,
+    )
+    .replace(
+      /<meta\s+name="twitter:image"[^>]*\/>/,
+      `<meta name="twitter:image" content="${escAttr(ogImage)}" />`,
     )
 
   if (r.headExtra) {

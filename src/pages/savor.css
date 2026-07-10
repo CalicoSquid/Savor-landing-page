@@ -45,11 +45,29 @@
   line-height: 1.0;
 }
 
-.hero-subtag {
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-top: -8px;
+.hero-colorstrip {
+  display: flex;
+  width: 220px;
+  max-width: 60%;
+  height: 7px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.hero-colorstrip-seg {
+  flex: 1;
+  height: 100%;
+  transform: translateX(-24px);
+  opacity: 0;
+  animation: hero-colorstrip-in 520ms cubic-bezier(0.22, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes hero-colorstrip-in {
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-colorstrip-seg { animation: none; transform: none; opacity: 1; }
 }
 
 .hero-sub {

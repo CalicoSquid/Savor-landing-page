@@ -447,6 +447,12 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 .db-sim-header-mark { width: 40px; height: 40px; flex-shrink: 0; }
+.db-sim-header-mark-link {
+  display: inline-flex;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+.db-sim-header-mark-link:active { transform: scale(0.92); opacity: 0.85; }
 .db-sim-header-actions { display: flex; align-items: center; gap: 8px; }
 .db-sim-header-btn {
   width: 38px;

@@ -139,13 +139,25 @@ export default function DemoBlog() {
     const prevTitle = document.title
     document.title = "The Only Lasagne Recipe You'll Ever Need (An Odyssey) | The Hearth & Hollow"
 
-    const added = []
+    // On the prerendered build these tags already ship statically (see
+    // prerender.js), present before React mounts. Reuse the existing tag
+    // in that case instead of appending a duplicate — only create a fresh
+    // one on paths that never got a static version (dev server, or any
+    // non-prerendered render). Either way, reverted on unmount.
+    const created = []
+    const restored = []
     const setMeta = (attr, key, content) => {
-      const el = document.createElement('meta')
-      el.setAttribute(attr, key)
-      el.setAttribute('content', content)
-      document.head.appendChild(el)
-      added.push(el)
+      const existing = document.querySelector(`meta[${attr}="${key}"]`)
+      if (existing) {
+        restored.push([existing, existing.getAttribute('content')])
+        existing.setAttribute('content', content)
+      } else {
+        const el = document.createElement('meta')
+        el.setAttribute(attr, key)
+        el.setAttribute('content', content)
+        document.head.appendChild(el)
+        created.push(el)
+      }
     }
 
     setMeta('name', 'robots', 'noindex, nofollow')
@@ -170,7 +182,8 @@ export default function DemoBlog() {
 
     return () => {
       document.title = prevTitle
-      added.forEach((el) => el.remove())
+      created.forEach((el) => el.remove())
+      restored.forEach(([el, prevContent]) => el.setAttribute('content', prevContent))
       if (ldEl) ldEl.remove()
     }
   }, [])
@@ -609,12 +622,18 @@ export default function DemoBlog() {
           StandardHeaderBg + appBar/*.jsx). Can't touch the real browser's
           own URL bar, so this stands in as the app chrome: primaryGradient
           background, the tangerine mark on the left, palette + account
-          squircle buttons on the right. Cosmetic only — the buttons are
-          non-functional here; exiting back to the blog is the CTA's job. */}
+          squircle buttons on the right. The mark is a real link back to
+          getsavor.recipes — this page has no site chrome of its own, so
+          once someone's in savorMode it's the only way back to the real
+          site short of the CTA or the browser back button. A plain <a>,
+          not a router <Link>, for the same WebView reason as Footer.jsx.
+          The action buttons stay cosmetic — exiting the bit is the CTA's job. */}
       {savorMode && (
-        <div className="db-sim-header" aria-hidden="true">
-          <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-header-mark" />
-          <div className="db-sim-header-actions">
+        <div className="db-sim-header">
+          <a href="/" className="db-sim-header-mark-link" aria-label="Back to Savor">
+            <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-header-mark" />
+          </a>
+          <div className="db-sim-header-actions" aria-hidden="true">
             <span className="db-sim-header-btn">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff">
                 <path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c.93 0 1.5-.7 1.5-1.5 0-.42-.16-.78-.42-1.06-.25-.28-.41-.64-.41-1.05 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-8.39-10-8.39zM6.5 12c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />

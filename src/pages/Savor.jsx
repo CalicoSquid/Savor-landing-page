@@ -63,7 +63,15 @@ export default function Savor() {
                     <h1 className="hero-tagline fade-up fade-up-2">
                         Join the war against <span style={{ color: 'var(--primary)' }}>scrolling.</span>
                     </h1>
-
+                    <div className="hero-colorstrip fade-up fade-up-2" aria-hidden="true">
+                        {themes.map((t, i) => (
+                            <span
+                                key={t.name}
+                                className="hero-colorstrip-seg"
+                                style={{ background: t.primary, animationDelay: `${i * 45}ms` }}
+                            />
+                        ))}
+                    </div>
                     <p className="hero-sub fade-up fade-up-3">
                         Point your camera at a handwritten recipe card or a page from an old cookbook, and Savor rebuilds it into something you can actually cook from. Or import any recipe from the web in one tap. Made by a professional chef who got tired of recipe apps.</p>
                     <div className="hero-cta-row fade-up fade-up-4">
@@ -148,7 +156,7 @@ export default function Savor() {
                         <div className="same-kitchen-app">
                             <img src="/potluck/potluck-icon.webp" alt="Potluck" className="same-kitchen-app-icon" />
                             <h3>Potluck</h3>
-                            <p>One spin and the universe decides what's for dinner — no scrolling, no deciding, just turn the oven on. It's basically a fun excuse to pull you into Savor, and it knows it.</p>
+                            <p>One spin and the universe decides what&rsquo;s for dinner — no scrolling, no deciding, just turn the oven on. It&rsquo;s basically a fun excuse to pull you into Savor, and it knows it.</p>
                             <a
                                 href="https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck"
                                 target="_blank"
@@ -161,7 +169,7 @@ export default function Savor() {
                         <div className="same-kitchen-app">
                             <img src="/forage/forage-icon-bg.webp" alt="Forage" className="same-kitchen-app-icon" />
                             <h3>Forage</h3>
-                            <p>A wild foraging companion — find and identify what's edible nearby, then learn to cook it safely. Comes with a set of neat boy-scout-style badges to earn along the way.</p>
+                            <p>A wild foraging companion — find and identify what&rsquo;s edible nearby, then learn to cook it safely. Comes with a set of cute, boy-scout-style badges to earn along the way.</p>
                             <a
                                 href="https://play.google.com/store/apps/details?id=com.calicosquid.forage"
                                 target="_blank"

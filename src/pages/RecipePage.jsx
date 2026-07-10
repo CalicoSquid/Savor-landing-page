@@ -225,7 +225,7 @@ export default function RecipePage() {
                 src={getThemeIcon(recipe.user.theme)}
                 alt={recipe.user.name || recipe.user.username}
                 className="rp-avatar"
-                onError={e => { e.target.src = '/icons/icon-default.png' }}
+                onError={e => { e.target.src = '/icons/icon-Tangerine.png' }}
               />
               <span className="rp-author-name">
                 Saved by {recipe.user.name || recipe.user.username}

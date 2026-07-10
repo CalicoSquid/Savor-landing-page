@@ -36,10 +36,6 @@
 .nav[data-nav-theme="potluck"] {
   background: linear-gradient(90deg, #1a3536, #142829);
 }
-.nav[data-nav-theme="potluck"] .nav-links a:hover,
-.nav[data-nav-theme="potluck"] .nav-links a.active {
-  color: #ffffff;
-}
 
 /* ── Three-dot brand signature ───────────────────────────────────────────── */
 .pl-dots {
