@@ -7,6 +7,9 @@ import About from './pages/About'
 import Faq from './pages/Faq'
 import RecipePage from './pages/RecipePage'
 import DemoBlog from './pages/DemoBlog'
+import BlogIndex from './pages/blog/BlogIndex'
+import SaveHandwrittenRecipeCards from './pages/blog/SaveHandwrittenRecipeCards'
+import LifeStoryBeforeTheRecipe from './pages/blog/LifeStoryBeforeTheRecipe'
 import DeleteAccount from './pages/DeleteAccount'
 import DeleteForageAccount from './pages/DeleteForageAccount'
 import Privacy from './pages/Privacy'
@@ -31,6 +34,9 @@ export default function AppRoutes() {
         <Route path="/studio"                   element={<Studio />} />
         <Route path="/r/:id"                    element={<RecipePage />} />
         <Route path="/demo"                     element={<DemoBlog />} />
+        <Route path="/blog"                     element={<BlogIndex />} />
+        <Route path="/blog/save-handwritten-recipe-cards" element={<SaveHandwrittenRecipeCards />} />
+        <Route path="/blog/life-story-before-the-recipe" element={<LifeStoryBeforeTheRecipe />} />
         <Route path="/delete-account"           element={<DeleteAccount />} />
         <Route path="/forage/delete-account"    element={<DeleteForageAccount />} />
         <Route path="/privacy"                  element={<Privacy />} />

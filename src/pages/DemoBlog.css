@@ -584,6 +584,111 @@
   to { transform: translateX(440px) skewX(-18deg); opacity: 0; }
 }
 
+/* ── Fake paywall — a bit, never a real gate ──────────────────────────────
+   Only ever shown to someone who scrolled to the recipe manually (see the
+   IntersectionObserver in DemoBlog.jsx); tapping the floating icon or the
+   CTA skips this entirely, permanently. The teaser clamps and blurs the
+   real recipe content in normal flow, then the panel bleeds edge-to-edge
+   in the space below it — no absolute positioning, so it can't drift out
+   of sync with the card's own padding if that ever changes. */
+.db-recipe-gated .db-recipe-content {
+  position: relative;
+  max-height: 260px;
+  overflow: hidden;
+  filter: blur(4px);
+  user-select: none;
+}
+.db-recipe-gated .db-recipe-content::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 90px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+}
+
+.db-paywall {
+  margin: 22px -26px -22px;
+  padding: 28px 26px 26px;
+  background: linear-gradient(160deg, #fff, #FFF6E6);
+  border-top: 2px dashed var(--db-gold);
+  border-radius: 0 0 8px 8px;
+  text-align: center;
+}
+.db-paywall-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--db-tomato);
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.db-paywall-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--db-ink);
+  margin-bottom: 10px;
+}
+.db-paywall-body {
+  font-size: 15px;
+  color: var(--db-ink-soft);
+  line-height: 1.6;
+  max-width: 42ch;
+  margin: 0 auto 12px;
+}
+.db-paywall-urgency {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--db-tomato-deep);
+  margin-bottom: 18px;
+}
+.db-paywall-fake-btn {
+  display: inline-block;
+  background: var(--db-gold);
+  color: #3A2A1D;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  padding: 13px 26px;
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 8px 20px rgba(200, 155, 60, 0.35);
+  transition: transform 120ms ease;
+}
+.db-paywall-fake-btn:active { animation: db-paywall-shake 400ms ease; }
+@keyframes db-paywall-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+.db-paywall-fine {
+  margin-top: 10px;
+  font-size: 11px;
+  color: #A8988A;
+}
+.db-paywall-dismiss {
+  display: block;
+  margin: 18px auto 0;
+  background: none;
+  border: none;
+  font-family: 'Lora', serif;
+  font-size: 13px;
+  color: var(--db-ink-soft);
+  text-decoration: underline;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.db-paywall-dismiss:hover { color: var(--db-tomato-deep); }
+
 /* ── App-not-installed fallback modal ─────────────────────────────────── */
 .db-sim-modal-backdrop {
   position: fixed;
@@ -684,7 +789,8 @@
   .db-sim-dots span,
   .db-sim-modal,
   .db-sim-modal-backdrop,
-  .db-savor-float {
+  .db-savor-float,
+  .db-paywall-fake-btn:active {
     animation: none !important;
   }
 }

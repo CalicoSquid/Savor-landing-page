@@ -132,6 +132,19 @@ export default function DemoBlog() {
   const [showFallback, setShowFallback] = useState(false)
   const [showIntro, setShowIntro] = useState(true)
 
+  // Fake paywall over the recipe — a bit, never a real gate. Only triggers
+  // for people who scroll to it manually; tapping the floating icon (or the
+  // CTA) is the express lane and skips it entirely, permanently, even if
+  // they later exit Savor mode and keep scrolling. Also suppressed during
+  // a scripted shoot take, so it can't interrupt a recording.
+  const recipeCardRef = useRef(null)
+  const [recipeGated, setRecipeGated] = useState(false)
+  const [usedExpressLane, setUsedExpressLane] = useState(false)
+  const [fakeSubscribeLabel, setFakeSubscribeLabel] = useState('Become an Insider — $29.99/mo')
+  const gateTriggeredRef = useRef(false)
+  const usedExpressLaneRef = useRef(false)
+  const shootingRef = useRef(false)
+
   // Page-level meta: title, noindex, fonts. Same DOM-patching approach as
   // RecipePage.jsx (no head-management library in this app), reverted on
   // unmount so leaving the route doesn't leak into the next page.
@@ -229,10 +242,70 @@ export default function DemoBlog() {
     return () => window.removeEventListener('keydown', onKey)
   }, [showIntro])
 
+  // Same, for the fake paywall.
+  useEffect(() => {
+    if (!recipeGated) return
+    const onKey = (e) => { if (e.key === 'Escape') setRecipeGated(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [recipeGated])
+
+  // Keep a ref mirror of `shooting` so the IntersectionObserver callback
+  // below (subscribed once, on mount) always reads the live value instead
+  // of the stale one from its closure.
+  useEffect(() => { shootingRef.current = shooting }, [shooting])
+
+  // Same, for usedExpressLane — the state drives rendering (showPaywall,
+  // below), the ref is only ever read inside the observer's callback.
+  useEffect(() => { usedExpressLaneRef.current = usedExpressLane }, [usedExpressLane])
+
+  // Trigger the paywall the first time the recipe card scrolls into view —
+  // but only for someone who got there by scrolling manually. Skipped
+  // entirely if they've already used the express lane, and suppressed
+  // during a scripted shoot take so it can't interrupt a recording.
+  useEffect(() => {
+    const el = recipeCardRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (
+            entry.isIntersecting &&
+            !usedExpressLaneRef.current &&
+            !shootingRef.current &&
+            !gateTriggeredRef.current
+          ) {
+            gateTriggeredRef.current = true
+            setRecipeGated(true)
+          }
+        })
+      },
+      { threshold: 0.35 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  // The "subscribe" button is decorative — the joke is that it looks like a
+  // real paywall CTA and does nothing. A little shake plus a beat of copy
+  // makes tapping it feel like a punchline instead of a dead button.
+  function handleFakeSubscribeTap() {
+    setFakeSubscribeLabel('Nice try.')
+    setTimeout(() => setFakeSubscribeLabel('Become an Insider — $29.99/mo'), 1600)
+  }
+
   function beginSimulation() {
     if (simRunningRef.current) return
     simRunningRef.current = true
     setSimPhase('bloom')
+
+    // Entering Savor mode by any means — the floating icon or the CTA,
+    // both call this — is the express lane. Set it here, at the point of
+    // the actual action, rather than reacting to `savorMode` changing in
+    // an effect. Permanent for the rest of the session: showPaywall below
+    // reads this state directly, so the paywall stays suppressed even
+    // after exiting Savor mode and scrolling back down.
+    setUsedExpressLane(true)
 
     // Mid-bloom, while the screen is still covered: jump to the top and
     // mount the header. Both are invisible to the user until the bloom
@@ -317,6 +390,13 @@ export default function DemoBlog() {
   function closeFallback() {
     setShowFallback(false)
   }
+
+  // Derived, not stored: the paywall should never be visible once the
+  // express lane's been used, regardless of how recipeGated itself got
+  // set — computing it here means there's no separate state to keep in
+  // sync. Reads usedExpressLane (state), never the ref — refs can't be
+  // read during render.
+  const showPaywall = recipeGated && !usedExpressLane
 
   return (
     <div className={`db-page${savorMode ? ' db-savor-mode' : ''}${shooting ? ' db-shooting' : ''}`}>
@@ -521,68 +601,90 @@ export default function DemoBlog() {
         <hr className="db-divider" id="db-recipe-jump" />
 
         {/* ============ THE ACTUAL RECIPE — plain on purpose, contrast is the joke ============ */}
-        <div id="db-recipe-card">
-          <div className="db-rc-label">Recipe</div>
-          <h3>The Only Lasagne Recipe You'll Ever Need</h3>
-          <div className="db-meta">
-            <span>Prep 30 min</span>
-            <span>Ragù ~2 hr</span>
-            <span>Bake 40 min</span>
-            <span>Serves 8</span>
-            <span>Oven 190°C</span>
+        <div id="db-recipe-card" ref={recipeCardRef} className={`db-recipe-wrap${showPaywall ? ' db-recipe-gated' : ''}`}>
+          <div className="db-recipe-content" aria-hidden={showPaywall}>
+            <div className="db-rc-label">Recipe</div>
+            <h3>The Only Lasagne Recipe You'll Ever Need</h3>
+            <div className="db-meta">
+              <span>Prep 30 min</span>
+              <span>Ragù ~2 hr</span>
+              <span>Bake 40 min</span>
+              <span>Serves 8</span>
+              <span>Oven 190°C</span>
+            </div>
+
+            <h4 className="db-rc-sub">Ragù</h4>
+            <ul>
+              <li>2 tbsp olive oil</li>
+              <li>1 small onion, finely diced</li>
+              <li>1 carrot, finely diced</li>
+              <li>1 celery stalk, finely diced</li>
+              <li>3 garlic cloves, minced</li>
+              <li>1 lb ground beef, ½ lb ground pork</li>
+              <li>½ cup dry white wine</li>
+              <li>2 tbsp tomato paste</li>
+              <li>28 oz canned crushed tomatoes</li>
+              <li>1 cup whole milk, divided</li>
+              <li>2 bay leaves · salt · pepper</li>
+            </ul>
+            <ol>
+              <li>Cook onion, carrot, celery in oil over medium heat, 8 min, until soft.</li>
+              <li>Add garlic, 1 min. Add beef and pork, brown 8-10 min, breaking apart.</li>
+              <li>Add wine, simmer until mostly evaporated, 3 min. Stir in tomato paste, 2 min.</li>
+              <li>Add tomatoes and bay leaves, season. Simmer uncovered on low, stirring now and then, 1.5-2 hr.</li>
+              <li>Stir in ½ cup milk the last 15 min. Discard bay leaves.</li>
+            </ol>
+
+            <h4 className="db-rc-sub">Béchamel</h4>
+            <ul>
+              <li>4 tbsp butter</li>
+              <li>4 tbsp flour</li>
+              <li>4 cups whole milk, warmed</li>
+              <li>¼ tsp nutmeg · salt · pepper</li>
+            </ul>
+            <ol>
+              <li>Melt butter, whisk in flour. Cook 2 min, stirring, don't let it brown.</li>
+              <li>Whisk in warm milk gradually. Simmer, whisking often, until thick, 8-10 min.</li>
+              <li>Season with nutmeg, salt, pepper.</li>
+            </ol>
+
+            <h4 className="db-rc-sub">Assembly</h4>
+            <ul>
+              <li>1 lb fresh lasagne sheets</li>
+              <li>1½ cups grated Parmigiano-Reggiano</li>
+              <li>12 oz fresh mozzarella, torn</li>
+            </ul>
+            <ol>
+              <li>Preheat oven to 190°C (375°F).</li>
+              <li>Thin layer of ragù in a 9x13 dish, then pasta.</li>
+              <li>Layer ragù, béchamel, Parmigiano. Repeat to 4 layers, ending on béchamel.</li>
+              <li>Top with mozzarella and remaining Parmigiano.</li>
+              <li>Cover, bake 25 min. Uncover, bake 15-20 min more until golden and bubbling.</li>
+              <li>Rest 15 min before slicing.</li>
+            </ol>
+
+            <div className="db-rc-note">No memoir. No moon. Just dinner.</div>
           </div>
 
-          <h4 className="db-rc-sub">Ragù</h4>
-          <ul>
-            <li>2 tbsp olive oil</li>
-            <li>1 small onion, finely diced</li>
-            <li>1 carrot, finely diced</li>
-            <li>1 celery stalk, finely diced</li>
-            <li>3 garlic cloves, minced</li>
-            <li>1 lb ground beef, ½ lb ground pork</li>
-            <li>½ cup dry white wine</li>
-            <li>2 tbsp tomato paste</li>
-            <li>28 oz canned crushed tomatoes</li>
-            <li>1 cup whole milk, divided</li>
-            <li>2 bay leaves · salt · pepper</li>
-          </ul>
-          <ol>
-            <li>Cook onion, carrot, celery in oil over medium heat, 8 min, until soft.</li>
-            <li>Add garlic, 1 min. Add beef and pork, brown 8-10 min, breaking apart.</li>
-            <li>Add wine, simmer until mostly evaporated, 3 min. Stir in tomato paste, 2 min.</li>
-            <li>Add tomatoes and bay leaves, season. Simmer uncovered on low, stirring now and then, 1.5-2 hr.</li>
-            <li>Stir in ½ cup milk the last 15 min. Discard bay leaves.</li>
-          </ol>
-
-          <h4 className="db-rc-sub">Béchamel</h4>
-          <ul>
-            <li>4 tbsp butter</li>
-            <li>4 tbsp flour</li>
-            <li>4 cups whole milk, warmed</li>
-            <li>¼ tsp nutmeg · salt · pepper</li>
-          </ul>
-          <ol>
-            <li>Melt butter, whisk in flour. Cook 2 min, stirring, don't let it brown.</li>
-            <li>Whisk in warm milk gradually. Simmer, whisking often, until thick, 8-10 min.</li>
-            <li>Season with nutmeg, salt, pepper.</li>
-          </ol>
-
-          <h4 className="db-rc-sub">Assembly</h4>
-          <ul>
-            <li>1 lb fresh lasagne sheets</li>
-            <li>1½ cups grated Parmigiano-Reggiano</li>
-            <li>12 oz fresh mozzarella, torn</li>
-          </ul>
-          <ol>
-            <li>Preheat oven to 190°C (375°F).</li>
-            <li>Thin layer of ragù in a 9x13 dish, then pasta.</li>
-            <li>Layer ragù, béchamel, Parmigiano. Repeat to 4 layers, ending on béchamel.</li>
-            <li>Top with mozzarella and remaining Parmigiano.</li>
-            <li>Cover, bake 25 min. Uncover, bake 15-20 min more until golden and bubbling.</li>
-            <li>Rest 15 min before slicing.</li>
-          </ol>
-
-          <div className="db-rc-note">No memoir. No moon. Just dinner.</div>
+          {showPaywall && (
+            <div className="db-paywall" role="dialog" aria-label="Subscribe to keep reading">
+              <span className="db-paywall-badge">Members Only</span>
+              <h4 className="db-paywall-title">You&rsquo;ve reached your monthly free lasagne.</h4>
+              <p className="db-paywall-body">
+                Become a Hearth &amp; Hollow Insider for $29.99/mo to keep reading.
+                First month free. Second month also technically free, due to a
+                loophole in this bit.
+              </p>
+              <p className="db-paywall-urgency">This offer expires in 4 minutes, or whenever you stop caring.</p>
+              <button type="button" className="db-paywall-fake-btn" onClick={handleFakeSubscribeTap}>
+                {fakeSubscribeLabel}
+              </button>
+              <div className="db-paywall-fine">Cancels never. Refunds nonexistent. Terms subject to vibes.</div>
+              <button type="button" className="db-paywall-dismiss" onClick={() => setRecipeGated(false)}>
+                No thanks, I&rsquo;ll just read it for free like it&rsquo;s a website
+              </button>
+            </div>
+          )}
         </div>
 
         {/* A small reward for anyone who read the whole bit instead of

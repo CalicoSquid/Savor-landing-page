@@ -17,6 +17,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+import { BLOG_POSTS } from './src/data/blogPosts.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const dist = path.join(__dirname, 'dist')
@@ -30,10 +31,19 @@ const STATIC_ROUTES = [
   { loc: '/forage',   changefreq: 'monthly', priority: '0.8' },
   { loc: '/about',    changefreq: 'monthly', priority: '0.7' },
   { loc: '/faq',      changefreq: 'monthly', priority: '0.7' },
+  { loc: '/blog',     changefreq: 'weekly',  priority: '0.7' },
   { loc: '/studio',   changefreq: 'monthly', priority: '0.4' },
   { loc: '/privacy',  changefreq: 'yearly',  priority: '0.2' },
   { loc: '/terms',    changefreq: 'yearly',  priority: '0.2' },
   { loc: '/forage/privacy', changefreq: 'yearly', priority: '0.2' },
+  // Blog posts — one entry per BLOG_POSTS entry, so a new post only needs
+  // adding to src/data/blogPosts.js, not here as well.
+  ...BLOG_POSTS.map((post) => ({
+    loc: `/blog/${post.slug}`,
+    changefreq: 'monthly',
+    priority: '0.6',
+    lastmod: post.date,
+  })),
 ]
 
 const QUERY = `
@@ -78,7 +88,7 @@ const today = new Date().toISOString().slice(0, 10)
 const recipes = await fetchIndexableRecipes()
 
 const entries = [
-  ...STATIC_ROUTES.map(r => urlEntry({ ...r, loc: `${SITE}${r.loc}`, lastmod: today })),
+  ...STATIC_ROUTES.map(r => urlEntry({ ...r, loc: `${SITE}${r.loc}`, lastmod: r.lastmod || today })),
   ...recipes.map(r => urlEntry({
     loc: `${SITE}/r/${r.id}`,
     lastmod: (r.updatedAt || today).slice(0, 10),

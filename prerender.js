@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { render } from './.ssr/entry-server.js'
 import { faqSchema } from './src/data/faqs.js'
 import { demoRecipeSchema } from './src/data/demoRecipe.js'
+import { BLOG_POSTS, blogPostSchema } from './src/data/blogPosts.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const dist = path.join(__dirname, 'dist')
@@ -70,6 +71,25 @@ const ROUTES = [
       `<meta name="robots" content="noindex, nofollow" />\n` +
       `  <script type="application/ld+json">${JSON.stringify(demoRecipeSchema)}</script>`,
   },
+  {
+    url: '/blog',
+    file: 'blog.html',
+    title: 'Savor Blog — Notes on Cooking, Paper, and Screens',
+    desc: 'Writing from the kitchen where Savor gets made — recipes worth keeping, and the tools, paper or otherwise, that actually keep them.',
+    canonical: 'https://getsavor.recipes/blog',
+  },
+  // Blog posts — one ROUTES entry per BLOG_POSTS entry. Add a new post to
+  // blogPosts.js and it's automatically prerendered with its own title,
+  // description, og:image, and BlogPosting schema — nothing to duplicate here.
+  ...BLOG_POSTS.map((post) => ({
+    url: `/blog/${post.slug}`,
+    file: `blog/${post.slug}.html`,
+    title: `${post.title} | Savor Blog`,
+    desc: post.dek,
+    canonical: `https://getsavor.recipes/blog/${post.slug}`,
+    ogImage: post.ogImage,
+    headExtra: `<script type="application/ld+json">${JSON.stringify(blogPostSchema(post))}</script>`,
+  })),
 ]
 
 let count = 0
