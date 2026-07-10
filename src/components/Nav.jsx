@@ -3,6 +3,8 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { useTheme } from '../context/useTheme'
 import { getIcon } from '../utils/themeUtils'
 
+const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
+
 export default function Nav() {
   const { activeTheme } = useTheme()
   const location = useLocation()
@@ -25,6 +27,11 @@ export default function Nav() {
                  : isForage  ? 'Forage'
                  : activeTheme.name
 
+  // Persistent install CTA only belongs on Savor's own pages (home, about,
+  // faq, etc). Potluck/Studio/Forage have their own pages and their own
+  // conversion paths — a "Get Savor" button there sends mixed signals.
+  const showCta = !isStudio && !isPotluck && !isForage
+
   return (
     <nav className="nav" data-nav-theme={navTheme}>
       <div className="container">
@@ -35,11 +42,11 @@ export default function Nav() {
             className={`nav-icon${isPotluck ? ' nav-icon--potluck' : isForage ? ' nav-icon--forage' : ''}`}
           />
         </NavLink>
-        <ul className="nav-links">
-          <li><NavLink to="/" end>Savor</NavLink></li>
-          <li><NavLink to="/potluck">Potluck</NavLink></li>
-          <li><NavLink to="/studio">Studio</NavLink></li>
-        </ul>
+        {showCta && (
+          <a href={PLAY_URL} target="_blank" rel="noreferrer" className="nav-cta">
+            Get the App
+          </a>
+        )}
       </div>
     </nav>
   )

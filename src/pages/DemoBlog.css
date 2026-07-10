@@ -23,20 +23,34 @@
 
 .db-page .db-wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
 
-.db-page .db-save-float {
+.db-page .db-savor-float {
   position: fixed;
   right: 16px;
   bottom: 22px;
-  background: var(--db-tomato);
-  color: white;
-  font-family: 'Lora', serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 12px 18px;
-  border-radius: 999px;
-  box-shadow: 0 8px 20px rgba(178, 58, 46, 0.35);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #FF5722, #FF9800);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 22px rgba(255, 87, 34, 0.4);
   z-index: 50;
-  letter-spacing: 0.02em;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  animation: db-savor-float-pulse 2.6s ease-in-out infinite;
+}
+.db-page .db-savor-float:active { transform: scale(0.94); }
+.db-page .db-savor-float-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  pointer-events: none;
+}
+@keyframes db-savor-float-pulse {
+  0%, 100% { box-shadow: 0 8px 22px rgba(255, 87, 34, 0.4); }
+  50%      { box-shadow: 0 8px 30px rgba(255, 87, 34, 0.65), 0 0 0 8px rgba(255, 87, 34, 0.12); }
 }
 
 /* hidden shoot-mode trigger — invisible 56px tap target, bottom-left,
@@ -392,13 +406,9 @@
 .db-page.db-savor-mode {
   padding-top: calc(56px + env(safe-area-inset-top, 0px));
 }
-/* The blog's own floating "♥ Save" pill would collide with the sim bar and
-   break the in-app illusion — hide it while in Savor mode. */
-.db-page.db-savor-mode .db-save-float { display: none; }
-/* Nudges are noise once you're in Savor mode, and they'd interrupt a clean
-   auto-scroll take — hide them in both cases. */
-.db-page.db-savor-mode .db-nudge,
-.db-page.db-shooting .db-nudge { display: none; }
+/* The floating Savor icon would collide with the sim bar and break the
+   in-app illusion — hide it while in Savor mode. */
+.db-page.db-savor-mode .db-savor-float { display: none; }
 /* In Savor mode the CTA holds the "back to the blog" button, so drop the
    dark payoff-box framing — it should read as a quiet return link, not a
    second product moment. */
@@ -620,77 +630,41 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Nudges — escalating fourth-wall interruptions between sections.
-   Tiers 1-2 are quiet text asides (setup); tiers 3-4 are tappable escape
-   hatches that scroll to the Savor CTA. Visual weight ramps with the tier
-   so the page's tone escalates alongside the copy. */
-.db-page .db-nudge {
-  display: block;
-  width: 100%;
-  margin: 30px auto;
+/* ── Completion reward — a small in-character payoff for anyone who read
+   the whole bit instead of tapping out early via the floating icon. */
+.db-page .db-reward {
+  margin: 8px 0 28px;
+  padding: 24px 22px;
+  border: 2px dashed var(--db-gold);
+  border-radius: 14px;
+  background: rgba(200, 155, 60, 0.06);
   text-align: center;
-  line-height: 1.4;
 }
-/* Tiers 1-2 — authorial asides in the blog's own Lora italic voice, so they
-   read as Marguerite muttering rather than a UI element. */
-.db-page .db-nudge-t1,
-.db-page .db-nudge-t2 {
-  font-family: 'Lora', serif;
-  font-style: italic;
-  color: var(--db-ink-soft);
+.db-page .db-reward-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--db-gold);
+  margin-bottom: 8px;
 }
-.db-page .db-nudge-t1 { font-size: 16px; opacity: 0.8; }
-.db-page .db-nudge-t2 { font-size: 17px; color: var(--db-tomato); }
-
-/* Tappable tiers — real buttons, but restrained: tinted text links with a
-   soft background wash and an arrow, not loud filled cards. Noticeable
-   without shouting over the recipe payoff below. */
-.db-page .db-nudge-tap {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  max-width: 36ch;
-  padding: 11px 20px;
-  border: 1px solid transparent;
-  border-radius: 20px;
-  background: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  font-family: 'Lora', serif;
-  font-weight: 600;
+.db-page .db-reward-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 21px;
+  color: var(--db-ink);
+  margin-bottom: 10px;
+}
+.db-page .db-reward-body {
   font-size: 15px;
-  line-height: 1.35;
-  transition: transform 120ms ease, background 120ms ease;
+  color: var(--db-ink-soft);
+  line-height: 1.6;
+  margin-bottom: 10px;
 }
-.db-page .db-nudge-tap:active { transform: scale(0.98); }
-.db-page .db-nudge-text { text-align: left; }
-
-/* Tier 3 — tomato ink on a faint tomato wash. */
-.db-page .db-nudge-t3 {
-  color: var(--db-tomato);
-  background: rgba(178, 58, 46, 0.07);
-  border-color: rgba(178, 58, 46, 0.2);
-}
-.db-page .db-nudge-t3:active { background: rgba(178, 58, 46, 0.12); }
-/* Tier 4 — Savor tangerine, a shade stronger: the final "make it stop". */
-.db-page .db-nudge-t4 {
-  color: #E8531B;
-  background: rgba(255, 87, 34, 0.09);
-  border-color: rgba(255, 87, 34, 0.28);
-}
-.db-page .db-nudge-t4:active { background: rgba(255, 87, 34, 0.15); }
-
-.db-page .db-nudge-arrow {
-  flex-shrink: 0;
-  font-size: 17px;
-  line-height: 1;
-  animation: db-nudge-bob 1.4s ease-in-out infinite;
-}
-@keyframes db-nudge-bob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(3px); }
+.db-page .db-reward-sig {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: var(--db-tomato-deep);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -704,7 +678,7 @@
   .db-sim-dots span,
   .db-sim-modal,
   .db-sim-modal-backdrop,
-  .db-nudge-arrow {
+  .db-savor-float {
     animation: none !important;
   }
 }

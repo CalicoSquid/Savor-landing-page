@@ -122,60 +122,24 @@ body {
   display: block;
 }
 
-/* New clean link structure (no background) */
-.nav-links {
-  display: flex;
-  gap: 32px; /* Standard spaced links */
-  list-style: none;
-  background: none; /* REMOVED: background */
-  padding: 0;       /* REMOVED: padding */
-  border-radius: 0; /* REMOVED: radius */
-}
-
-.nav-links li {
-  position: relative; /* Container for underline */
-}
-
-.nav-links a {
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.95rem; /* Larger font size */
-  color: rgba(255,255,255,0.7);
-  letter-spacing: 0.02em;
-  padding: 8px 0; /* Vertical padding only */
-  border-radius: 0; /* REMOVED: radius */
-  transition: color 0.2s;
-  display: block;
-}
-
-/* Conditional ACTIVE Link styling */
-/* Studio side active link is CSC Orange */
-.nav[data-nav-theme="studio"] .nav-links a:hover,
-.nav[data-nav-theme="studio"] .nav-links a.active {
-  color: var(--csc-white);
-}
-
-/* Savor side active link is White */
-.nav[data-nav-theme="savor"] .nav-links a:hover,
-.nav[data-nav-theme="savor"] .nav-links a.active {
-  color: white;
-}
-
-/* ── Underline Active State (for both) ───────────────── */
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 18px;
   border-radius: var(--radius-pill);
-  background: currentColor; /* Matches link color */
-  transform: scaleX(0); /* Hidden by default */
-  transition: transform 0.2s;
+  background: rgba(255,255,255,0.95);
+  color: var(--primary);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  transition: transform 0.15s, opacity 0.15s;
 }
-
-.nav-links a.active::after {
-  transform: scaleX(1); /* Reveal underline on active */
-}
+.nav-cta:hover { transform: translateY(-1px); opacity: 0.92; }
 
 /* ── Buttons ──────────────────────────────────────────────────── */
 .btn {

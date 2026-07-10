@@ -103,25 +103,6 @@ function scrollToY(targetY, duration, useBounce) {
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 
-// ── Nudge ─────────────────────────────────────────────────────────────────
-// The escalating fourth-wall interruptions seeded between blog sections.
-// Written in Marguerite's voice but needling the reader for still scrolling.
-// Early ones are pure text comedy (setup); the later `tappable` ones offer
-// the release — a tap scrolls down to the real Savor CTA (see scrollToCta).
-// `tier` drives the escalating visual weight (1 quietest → 4 loudest).
-function Nudge({ tier = 1, tappable = false, onEscape, children }) {
-  const cls = `db-nudge db-nudge-t${tier}${tappable ? ' db-nudge-tap' : ''}`
-  if (!tappable) {
-    return <div className={cls} aria-hidden="true">{children}</div>
-  }
-  return (
-    <button type="button" className={cls} onClick={onEscape}>
-      <span className="db-nudge-text">{children}</span>
-      <span className="db-nudge-arrow" aria-hidden="true">↓</span>
-    </button>
-  )
-}
-
 // ── Import simulation ────────────────────────────────────────────────────
 // A styled clone of Savor's in-app RecipeBar + a lightweight app header
 // (see savor/src/components/search/components/RecipeBar.jsx, WebView.jsx,
@@ -149,6 +130,7 @@ export default function DemoBlog() {
   const [simPhase, setSimPhase] = useState('off') // off | bloom | idle | checking | ready | importing
   const [savorMode, setSavorMode] = useState(false)
   const [showFallback, setShowFallback] = useState(false)
+  const [showIntro, setShowIntro] = useState(true)
 
   // Page-level meta: title, noindex, fonts. Same DOM-patching approach as
   // RecipePage.jsx (no head-management library in this app), reverted on
@@ -226,15 +208,13 @@ export default function DemoBlog() {
     return () => window.removeEventListener('keydown', onKey)
   }, [showFallback])
 
-  // Scrolls the reader down to the real payoff CTA. Used by the tappable
-  // "escape" nudges seeded through the blog — they don't fire the reveal
-  // themselves (that would be disorienting mid-page); they deliver the
-  // reader to the canonical "See how it works in Savor" moment at the end.
-  function scrollToCta() {
-    document
-      .getElementById('db-savor-cta')
-      ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-  }
+  // Same, for the onboarding modal.
+  useEffect(() => {
+    if (!showIntro) return
+    const onKey = (e) => { if (e.key === 'Escape') setShowIntro(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [showIntro])
 
   function beginSimulation() {
     if (simRunningRef.current) return
@@ -327,7 +307,34 @@ export default function DemoBlog() {
 
   return (
     <div className={`db-page${savorMode ? ' db-savor-mode' : ''}${shooting ? ' db-shooting' : ''}`}>
-      <div className="db-save-float">♥ Save</div>
+      {showIntro && (
+        <div className="db-sim-modal-backdrop" onClick={() => setShowIntro(false)}>
+          <div
+            className="db-sim-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label="About this page"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-modal-icon" />
+            <h3 className="db-sim-modal-title">This blog isn&rsquo;t real.</h3>
+            <p className="db-sim-modal-body">
+              We wrote an absurdly over-written recipe post on purpose, to show off something that is real: Savor&rsquo;s browser finding an actual recipe buried in all&hellip; this. Enjoy Marguerite&rsquo;s descent into lasagne-based grief, or tap the little Savor icon any time you&rsquo;ve had enough.
+            </p>
+            <button type="button" className="db-sim-modal-btn" onClick={() => setShowIntro(false)}>
+              Let&rsquo;s go
+            </button>
+          </div>
+        </div>
+      )}
+      <button
+        type="button"
+        className="db-savor-float"
+        onClick={beginSimulation}
+        aria-label="Skip to how this works in Savor"
+      >
+        <img src="/icons/icon-Tangerine.webp" alt="" className="db-savor-float-icon" />
+      </button>
       <button
         id="db-shoot-trigger"
         className="db-shoot-trigger"
@@ -398,10 +405,6 @@ export default function DemoBlog() {
           </p>
         </section>
 
-        <Nudge tier={1}>
-          Still here? That's more patience than Robert had.
-        </Nudge>
-
         <blockquote id="db-tuscany">
           "It was the autumn of 2011. A windswept hillside in Tuscany. A man named Giancarlo who I have never
           spoken to since."
@@ -434,10 +437,6 @@ export default function DemoBlog() {
             think it's a story about transformation. Or possibly plumbing. Etymology is like that sometimes.
           </p>
         </section>
-
-        <Nudge tier={2}>
-          We're nine paragraphs in. The recipe is... not nine paragraphs in.
-        </Nudge>
 
         <section id="db-history">
           <h2 className="db-section">A Brief History (600 words)</h2>
@@ -484,9 +483,6 @@ export default function DemoBlog() {
         </section>
 
         <section id="db-almost">
-          <Nudge tier={3} tappable onEscape={scrollToCta}>
-            That "Jump to Recipe" button? It jumped you here. Cruel. This one actually helps
-          </Nudge>
           <p>
             <b>Almost.</b> First, my thoughts on the moon, and how it, too, waxes and wanes the way a good ragù
             does over three hours of simmering. I won't elaborate further. I already have, several times, in the
@@ -508,10 +504,6 @@ export default function DemoBlog() {
             and then routes it here instead. We are, and I cannot stress this enough, almost there.
           </p>
         </section>
-
-        <Nudge tier={4} tappable onEscape={scrollToCta}>
-          Enough. Skip the moon, the wedding, and Dennis — end the scroll
-        </Nudge>
 
         <hr className="db-divider" id="db-recipe-jump" />
 
@@ -578,6 +570,19 @@ export default function DemoBlog() {
           </ol>
 
           <div className="db-rc-note">No memoir. No moon. Just dinner.</div>
+        </div>
+
+        {/* A small reward for anyone who read the whole bit instead of
+            tapping out early via the floating Savor icon. Stays in
+            Marguerite's voice — the CTA right after this is the actual
+            character break. */}
+        <div className="db-reward">
+          <div className="db-reward-label">A reward, of sorts</div>
+          <h3 className="db-reward-title">Certificate of Completion</h3>
+          <p className="db-reward-body">
+            Awarded to <strong>you</strong>, for outlasting one divorce, one moon metaphor, and a caterer named Dennis who did not deserve this much attention. Robert did not make it this far. Frankly, neither did the dog.
+          </p>
+          <div className="db-reward-sig">— Marguerite Hollow, probably crying</div>
         </div>
 
         {/* The real payoff — breaks character on purpose. Everything above

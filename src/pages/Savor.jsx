@@ -8,13 +8,8 @@ const PILLARS = [
         title: 'Discover.',
         img: '/screenshots/found.webp',
         bg: 'linear-gradient(135deg, #303F9F, #5C6BC0)',
-        sub: 'Savor\'s built-in browser spots recipes as you browse. One tap and it\'s saved properly — the photo, the ingredients, the steps. No copying, no pasting, no twelve paragraphs about the author\'s holiday in Tuscany.'
-    },
-    {
-        title: 'Preserve.',
-        img: '/screenshots/scan.webp',
-        bg: 'linear-gradient(135deg, #C62828, #FF4081)',
-        sub: 'Got a drawer full of handwritten cards or a battered old cookbook? Point your camera at them. Savor reads the writing, rebuilds the recipe, even finds an image when there isn\'t one. Recipes that nearly disappeared, brought back to life.'
+        sub: 'Savor\'s built-in browser spots recipes as you browse. One tap and it\'s saved properly — the photo, the ingredients, the steps. No copying, no pasting, no twelve paragraphs about the author\'s holiday in Tuscany.',
+        cta: { label: 'Try it on a fake food blog we wrote just to prove it →', href: '/demo' }
     },
     {
         title: 'Imagine.',
@@ -65,19 +60,43 @@ export default function Savor() {
                 <div className="hero-glow" style={{ background: `radial-gradient(ellipse at 50% 60%, ${activeTheme.primary}22 0%, transparent 70%)` }} />
                 <div className="container hero-inner">
                     <img src="/images/Savor.webp" alt="Savor" className="hero-wordmark fade-up fade-up-1" />
-                    <p className="hero-tagline fade-up fade-up-2">
-                        <span style={{ color: 'var(--primary)' }}>Cook</span>{' '}
-                        <span style={{ color: 'var(--dark)' }}>in</span>{' '}
-                        <span style={{ color: 'var(--tertiary)' }}>Color.</span>
-                    </p>
+                    <h1 className="hero-tagline fade-up fade-up-2">
+                        Join the war against <span style={{ color: 'var(--primary)' }}>scrolling.</span>
+                    </h1>
+
                     <p className="hero-sub fade-up fade-up-3">
-                        Browse the web, scan a recipe card or type in Grandmas secret.
-                        A recipe app made by a chef who got tired of recipe apps. Built around the things that made me fall in love with cooking in the first place.</p>
+                        Point your camera at a handwritten recipe card or a page from an old cookbook, and Savor rebuilds it into something you can actually cook from. Or import any recipe from the web in one tap. Made by a professional chef who got tired of recipe apps.</p>
                     <div className="hero-cta-row fade-up fade-up-4">
                         <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes" className="btn btn-green" target="_blank" rel="noreferrer">Get the App</a>
-                        <a href="#flavors" className="btn btn-tertiary">Pick Your Flavor</a>
-                        <a href="/potluck" className="btn btn-fruit">Spin for Your Supper</a>
-                        <a href="/about" className="btn btn-dark">The Story</a>
+                        <a href="#preserve" className="hero-secondary-link">See how it started ↓</a>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── Name disambiguation ─────────────────────────────────── */}
+            <section className="name-note">
+                <div className="container">
+                    <p className="name-note-text">
+                        <strong>Quick note:</strong> there are a few apps out there called Savor. This is the one with a recipe scanner for handwritten cards, zero ads, and no algorithm — built solo by a chef, on a farm in Montenegro.
+                    </p>
+                </div>
+            </section>
+
+            {/* ── Flagship: Preserve (merged with the origin story) ──── */}
+            <section className="features" id="preserve">
+                <div className="container">
+                    <div className="feature-row">
+                        <div className="feature-row-img" style={{ background: 'linear-gradient(135deg, #C62828, #FF4081)' }}>
+                            <img src="/screenshots/scan.webp" alt="Scanning a handwritten recipe card in Savor" className="feature-row-screenshot" />
+                        </div>
+                        <div className="feature-row-text">
+                            <div className="feature-overline" style={{ background: 'var(--grad-fruit)' }} />
+                            <p style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Where Savor started</p>
+                            <h2 className="feature-row-title">Preserve.</h2>
+                            <p className="feature-row-sub">
+                                I started Savor the day I found my mum&rsquo;s old recipe cards — tattered, smudged, and still the most important recipes I own. Point your camera at handwriting like that, or a page from a battered cookbook, and Savor reads it, rebuilds the recipe, and even finds a photo when there isn&rsquo;t one. Recipes that were one spill away from disappearing — saved properly, at last.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -93,6 +112,7 @@ export default function Savor() {
                             <div className="pillar-rule" style={{ background: 'var(--grad-fruit)' }} />
                             <h3 className="pillar-title">{p.title}</h3>
                             <p className="pillar-sub">{p.sub}</p>
+                            {p.cta && <a href={p.cta.href} className="pillar-cta">{p.cta.label}</a>}
                         </div>
                     ))}
                 </div>
@@ -116,6 +136,48 @@ export default function Savor() {
                 </div>
             </section>
 
+            {/* ── From the same kitchen ───────────────────────────────── */}
+            <section className="same-kitchen">
+                <div className="container same-kitchen-inner">
+                    <p className="same-kitchen-eyebrow">From the same kitchen</p>
+                    <h2 className="same-kitchen-title">Two more, still in testing.</h2>
+                    <p className="same-kitchen-sub">
+                        Savor comes from a one-person kitchen, not a studio. These are next.
+                    </p>
+                    <div className="same-kitchen-apps">
+                        <div className="same-kitchen-app">
+                            <img src="/potluck/potluck-icon.webp" alt="Potluck" className="same-kitchen-app-icon" />
+                            <h3>Potluck</h3>
+                            <p>One spin and the universe decides what's for dinner — no scrolling, no deciding, just turn the oven on. It's basically a fun excuse to pull you into Savor, and it knows it.</p>
+                            <a
+                                href="https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="same-kitchen-app-link"
+                            >
+                                Join the test →
+                            </a>
+                        </div>
+                        <div className="same-kitchen-app">
+                            <img src="/forage/forage-icon-bg.webp" alt="Forage" className="same-kitchen-app-icon" />
+                            <h3>Forage</h3>
+                            <p>A wild foraging companion — find and identify what's edible nearby, then learn to cook it safely. Comes with a set of neat boy-scout-style badges to earn along the way.</p>
+                            <a
+                                href="https://play.google.com/store/apps/details?id=com.calicosquid.forage"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="same-kitchen-app-link"
+                            >
+                                Join the test →
+                            </a>
+                        </div>
+                    </div>
+                    <p className="same-kitchen-disclaimer">
+                        Both are in closed testing on Google Play. Email <a href="mailto:dev@getsavor.recipes">dev@getsavor.recipes</a> to be added as a tester.
+                    </p>
+                </div>
+            </section>
+
             {/* ── Download CTA ───────────────────────────────────────── */}
             <section className="download-cta" id="download">
                 <div className="download-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
@@ -123,7 +185,7 @@ export default function Savor() {
                     <img src={getIcon(activeTheme.name)} alt="Savor" className="download-cta-icon" />
                     <h2 className="download-cta-title">A home for every recipe that matters.</h2>
                     <p className="download-cta-sub">
-                        I started Savor the day I found my mum's old recipe cards. Tattered, smudged, stained — but still meaning the world to me. That's what Savor is now. A place worthy of them.
+                        Free to start. No ads, ever. Available now on Android.
                     </p>
                     <a
                         href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes"
