@@ -75,7 +75,7 @@ export default function Savor() {
                     <p className="hero-sub fade-up fade-up-3">
                         Point your camera at a handwritten recipe card or a page from an old cookbook, and Savor rebuilds it into something you can actually cook from. Or import any recipe from the web in one tap. Made by a professional chef who got tired of recipe apps.</p>
                     <div className="hero-cta-row fade-up fade-up-4">
-                        <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes" className="btn btn-green" target="_blank" rel="noreferrer">Get the App</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes" className="btn btn-fruit" target="_blank" rel="noreferrer">Get the App</a>
                         <a href="#preserve" className="hero-secondary-link">See how it started ↓</a>
                     </div>
                 </div>
