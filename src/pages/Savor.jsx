@@ -94,8 +94,8 @@ export default function Savor() {
             <section className="features" id="preserve">
                 <div className="container">
                     <div className="feature-row">
-                        <div className="feature-row-img" style={{ background: 'linear-gradient(135deg, #C62828, #FF4081)' }}>
-                            <img src="/screenshots/scan.webp" alt="Scanning a handwritten recipe card in Savor" className="feature-row-screenshot" />
+                        <div className="feature-row-img feature-row-img--photo">
+                            <img src="/screenshots/savor-scan.webp" alt="A 1982 handwritten recipe card for Aunt Maja's lemon drizzle cake next to the same recipe saved in Savor" className="feature-row-photo" />
                         </div>
                         <div className="feature-row-text">
                             <div className="feature-overline" style={{ background: 'var(--grad-fruit)' }} />

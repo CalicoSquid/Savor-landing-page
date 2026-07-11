@@ -546,6 +546,9 @@ export default function DemoBlog() {
             <div className="db-steam" />
             <div className="db-steam db-s2" />
             <div className="db-steam db-s3" />
+            <span className="db-hero-credit">
+              Photo: <a href="https://unsplash.com/@rabbit_in_blue?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noreferrer">Karolina Kołodziejczak</a> / <a href="https://unsplash.com/photos/sliced-pizza-on-white-ceramic-plate-OSMAK8b74ls?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noreferrer">Unsplash</a>
+            </span>
           </div>
         </div>
 
@@ -965,6 +968,9 @@ export default function DemoBlog() {
               <div className="db-reveal-image">
                 <img src="/images/lasagne.webp" alt="Baked lasagne, sliced" />
               </div>
+              <p className="db-reveal-photo-credit">
+                📷 Photo by <a href="https://unsplash.com/@rabbit_in_blue?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noreferrer">Karolina Kołodziejczak</a> on <a href="https://unsplash.com/photos/sliced-pizza-on-white-ceramic-plate-OSMAK8b74ls?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noreferrer">Unsplash</a>
+              </p>
 
               <div className="db-reveal-times">
                 <div className="db-reveal-time-cell">
