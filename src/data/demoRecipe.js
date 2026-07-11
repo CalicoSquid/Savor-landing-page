@@ -80,3 +80,44 @@ export const demoRecipeSchema = {
   ],
   aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.98', ratingCount: '1247' },
 }
+
+// Grouped for the Savor-style reveal display (src/pages/DemoBlog.jsx). The
+// schema's recipeIngredient above is deliberately flat — that's correct for
+// JSON-LD — but the reveal needs the same Ragù/Béchamel/Assembly grouping
+// already used in the blog's own plain recipe card, so both presentations
+// of the recipe stay consistent with each other.
+export const demoRecipeGroups = [
+  {
+    label: 'Ragù',
+    items: [
+      '2 tbsp olive oil',
+      '1 small onion, finely diced',
+      '1 carrot, finely diced',
+      '1 celery stalk, finely diced',
+      '3 garlic cloves, minced',
+      '1 lb ground beef, \u00bd lb ground pork',
+      '\u00bd cup dry white wine',
+      '2 tbsp tomato paste',
+      '28 oz canned crushed tomatoes',
+      '1 cup whole milk, divided',
+      '2 bay leaves \u00b7 salt \u00b7 pepper',
+    ],
+  },
+  {
+    label: 'B\u00e9chamel',
+    items: [
+      '4 tbsp butter',
+      '4 tbsp flour',
+      '4 cups whole milk, warmed',
+      '\u00bc tsp nutmeg \u00b7 salt \u00b7 pepper',
+    ],
+  },
+  {
+    label: 'Assembly',
+    items: [
+      '1 lb fresh lasagne sheets',
+      '1\u00bd cups grated Parmigiano-Reggiano',
+      '12 oz fresh mozzarella, torn',
+    ],
+  },
+]

@@ -31,9 +31,35 @@ import '@fontsource/jetbrains-mono/500.css'          // mono labels/meta
 import '@fontsource/raleway/400.css'
 import '@fontsource/raleway/700.css'
 
-import { demoRecipeSchema as RECIPE_SCHEMA } from '../data/demoRecipe'
+import { demoRecipeSchema as RECIPE_SCHEMA, demoRecipeGroups } from '../data/demoRecipe'
 
 const PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
+
+// Matches the real app's Times.jsx formatting exactly (see savor-app
+// src/components/recipeCard/components/Times.jsx) — same "2h 30m" / "30m"
+// output, just reading from the schema's ISO8601 durations (PT2H30M) instead
+// of a {hours, minutes} object.
+function formatISODuration(iso) {
+  const h = /(\d+)H/.exec(iso)?.[1]
+  const m = /(\d+)M/.exec(iso)?.[1]
+  const parts = []
+  if (h) parts.push(`${h}h`)
+  if (m) parts.push(`${m}m`)
+  return parts.length ? parts.join(' ') : '\u2014'
+}
+
+// Matches the real app's ProgressBar.jsx getStatusMessage exactly — same
+// thresholds, same copy. The percentage curve driving it is synthetic here
+// (fixed PROGRESS_MS timeline, no real backend call to wait on), but the
+// message-per-threshold logic is copied as-is.
+function getStatusMessage(progress, complete) {
+  if (complete) return 'Recipe ready!'
+  if (progress < 20) return 'Fetching page...'
+  if (progress < 45) return 'Reading recipe data...'
+  if (progress < 70) return 'Extracting ingredients...'
+  if (progress < 90) return 'Almost there...'
+  return 'Finishing up...'
+}
 
 // Auto-scroll shoot timeline — paced with reading pauses, tuned to the
 // beat script. Triggered only by the hidden corner button; a normal
@@ -121,6 +147,9 @@ const BLOOM_TOTAL_MS = 820    // full rise+hold+fade duration — must match the
 const SIM_IDLE_MS = 1000
 const SIM_CHECKING_MS = 1000
 const INSTALL_CHECK_MS = 1600
+const PROGRESS_MS = 2200      // synthetic duration for the progress ring — mirrors the real
+                               // ProgressBar.jsx's easing quality, but on a fixed timeline
+                               // since there's no real backend call to actually wait on here
 
 export default function DemoBlog() {
   const runningRef = useRef(false)
@@ -129,7 +158,16 @@ export default function DemoBlog() {
   const simTimersRef = useRef([])
   const [simPhase, setSimPhase] = useState('off') // off | bloom | idle | checking | ready | importing
   const [savorMode, setSavorMode] = useState(false)
-  const [showFallback, setShowFallback] = useState(false)
+  const [showRecipeReveal, setShowRecipeReveal] = useState(false)
+  // 'progress' (circular progress ring, mirroring the real app's ProgressBar.jsx)
+  // or 'recipe' (the actual recipe, once the ring completes). Both stages
+  // share the same full-screen shell (see .db-reveal) — only the content
+  // inside it swaps, so it reads as one continuous screen rather than two
+  // separate popups.
+  const [revealStage, setRevealStage] = useState('progress')
+  const [progressPct, setProgressPct] = useState(0)
+  const [progressDone, setProgressDone] = useState(false)
+  const progressRafRef = useRef(null)
   const [showIntro, setShowIntro] = useState(true)
 
   // Fake paywall over the recipe — a bit, never a real gate. Only triggers
@@ -144,6 +182,42 @@ export default function DemoBlog() {
   const gateTriggeredRef = useRef(false)
   const usedExpressLaneRef = useRef(false)
   const shootingRef = useRef(false)
+
+  function stopProgressSequence() {
+    if (progressRafRef.current != null) {
+      cancelAnimationFrame(progressRafRef.current)
+      progressRafRef.current = null
+    }
+  }
+
+  // Drives the progress ring from 0-100 on a fixed, eased timeline. The real
+  // ProgressBar.jsx animates toward an indefinite 99% and only completes when
+  // real data arrives — there's no real backend call here to wait on, so this
+  // is a synthetic timeline instead, but the easing quality and the
+  // status-message thresholds (getStatusMessage) are copied as-is.
+  function runProgressSequence() {
+    const start = performance.now()
+    const tick = (now) => {
+      const elapsed = now - start
+      const t = Math.min(1, elapsed / PROGRESS_MS)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setProgressPct(Math.round(eased * 100))
+      if (t < 1) {
+        progressRafRef.current = requestAnimationFrame(tick)
+      } else {
+        progressRafRef.current = null
+        setProgressDone(true)
+        const doneTimer = setTimeout(() => setRevealStage('recipe'), 500)
+        simTimersRef.current.push(doneTimer)
+      }
+    }
+    progressRafRef.current = requestAnimationFrame(tick)
+  }
+
+  function closeRecipeReveal() {
+    stopProgressSequence()
+    setShowRecipeReveal(false)
+  }
 
   // Page-level meta: title, noindex, fonts. Same DOM-patching approach as
   // RecipePage.jsx (no head-management library in this app), reverted on
@@ -223,16 +297,19 @@ export default function DemoBlog() {
   // Clear any pending simulation timers on unmount so a stray setState
   // can't fire after the user's already navigated away.
   useEffect(() => {
-    return () => simTimersRef.current.forEach(clearTimeout)
+    return () => {
+      simTimersRef.current.forEach(clearTimeout)
+      stopProgressSequence()
+    }
   }, [])
 
-  // Escape closes the fallback modal (desktop/keyboard).
+  // Escape closes the recipe reveal (desktop/keyboard).
   useEffect(() => {
-    if (!showFallback) return
-    const onKey = (e) => { if (e.key === 'Escape') setShowFallback(false) }
+    if (!showRecipeReveal) return
+    const onKey = (e) => { if (e.key === 'Escape') closeRecipeReveal() }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [showFallback])
+  }, [showRecipeReveal])
 
   // Same, for the onboarding modal.
   useEffect(() => {
@@ -337,6 +414,7 @@ export default function DemoBlog() {
   function exitSavorMode() {
     simTimersRef.current.forEach(clearTimeout)
     simTimersRef.current = []
+    stopProgressSequence()
     simRunningRef.current = false
     setSimPhase('off')
     setSavorMode(false)
@@ -350,12 +428,23 @@ export default function DemoBlog() {
   }
 
   // Fires the real deep link, then uses the standard visibility-change
-  // heuristic to detect whether the OS actually switched to Savor. If
-  // nothing happens within INSTALL_CHECK_MS, the app isn't installed —
-  // show the Play Store fallback instead of failing silently.
+  // Fires the real deep link, then uses the standard visibility-change
+  // heuristic to detect whether the OS actually switched to Savor. The
+  // reveal shell opens immediately in its 'progress' stage — no reason to
+  // wait on the deep-link race before giving feedback — and its own timeline
+  // (runProgressSequence) carries it into the actual recipe. If the deep
+  // link succeeds first, the OS backgrounds the tab and none of this
+  // matters; the timeout below just resets everything cleanly in case the
+  // person comes back to this tab later.
   function handleReadyTap() {
     if (simPhase !== 'ready') return
     setSimPhase('importing')
+
+    setShowRecipeReveal(true)
+    setRevealStage('progress')
+    setProgressPct(0)
+    setProgressDone(false)
+    runProgressSequence()
 
     const pageUrl =
       typeof window !== 'undefined' ? window.location.href : 'https://getsavor.recipes/demo'
@@ -379,16 +468,19 @@ export default function DemoBlog() {
 
     const timeoutId = setTimeout(() => {
       cleanup()
-      if (!leftPage) setShowFallback(true)
       simRunningRef.current = false
       setSimPhase('off')
       setSavorMode(false)
+      // If Savor opened, leftPage is true and the OS has already switched
+      // away — stop the ring and reset, so a return to this tab later shows
+      // the plain blog rather than a stuck animation. If not, the reveal
+      // stays open and its own progress sequence carries it to the recipe.
+      if (leftPage) {
+        stopProgressSequence()
+        setShowRecipeReveal(false)
+      }
     }, INSTALL_CHECK_MS)
     simTimersRef.current.push(timeoutId)
-  }
-
-  function closeFallback() {
-    setShowFallback(false)
   }
 
   // Derived, not stored: the paywall should never be visible once the
@@ -795,28 +887,143 @@ export default function DemoBlog() {
         </>
       )}
 
-      {/* ── App-not-installed fallback ── */}
-      {showFallback && (
-        <div className="db-sim-modal-backdrop" onClick={closeFallback}>
-          <div
-            className="db-sim-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Get Savor"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-modal-icon" />
-            <h3 className="db-sim-modal-title">Looks like you don't have Savor yet</h3>
-            <p className="db-sim-modal-body">
-              Get it free and try this for real — same one-tap import, any recipe site.
-            </p>
-            <a href={PLAY_STORE} target="_blank" rel="noopener noreferrer" className="db-sim-modal-btn">
-              Get Savor on Google Play
-            </a>
-            <button type="button" className="db-sim-modal-close" onClick={closeFallback}>
-              Not now
+      {/* ── Recipe reveal ──────────────────────────────────────────────
+          The actual payoff for anyone without Savor installed. Styling is
+          pulled directly from the real app (savor-app src/components/
+          recipeCard/): 26px RalewayBold title, the Prep/Cook/Total Times
+          row, grouped ingredients with the uppercase-label-plus-divider
+          header, and steps with the left-border "STEP N" treatment from
+          Instructions.jsx. One continuous scroll rather than the real app's
+          three tabs — everything visible at once reads as more complete for
+          a single reveal moment, and there's no tab-switch animation to
+          half-fake. */}
+      {showRecipeReveal && (
+        <div className="db-reveal" role="dialog" aria-modal="true" aria-label="The Only Lasagne Recipe You'll Ever Need">
+          <div className="db-reveal-header">
+            <button type="button" className="db-reveal-back" onClick={closeRecipeReveal} aria-label="Back">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
             </button>
+            <img src="/icons/icon-Tangerine.webp" alt="" className="db-reveal-header-mark" />
           </div>
+
+          {revealStage === 'progress' ? (
+            /* ── Progress ring ──────────────────────────────────────────
+                Mirrors the real app's ProgressBar.jsx: 200px circular SVG,
+                gradient stroke, percentage centered inside it, and the same
+                status-message copy at the same thresholds (getStatusMessage
+                above). The real component animates toward an indefinite 99%
+                while it waits on an actual server response; this runs on a
+                fixed synthetic timeline instead (runProgressSequence) since
+                there's nothing real to wait on here. */
+            <div className="db-reveal-scroll db-reveal-progress-scroll">
+              <div className="db-reveal-progress">
+                <div className="db-reveal-ring-wrap">
+                  <svg className="db-reveal-ring" width="200" height="200" viewBox="0 0 200 200">
+                    <defs>
+                      <linearGradient id="db-reveal-ring-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#FF5722" />
+                        <stop offset="100%" stopColor="#FF9800" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,87,34,0.12)" strokeWidth="30" />
+                    <circle
+                      cx="100" cy="100" r="85" fill="none"
+                      stroke="url(#db-reveal-ring-grad)" strokeWidth="30"
+                      strokeLinecap="round"
+                      strokeDasharray={2 * Math.PI * 85}
+                      strokeDashoffset={2 * Math.PI * 85 - (progressPct / 100) * 2 * Math.PI * 85}
+                      transform="rotate(-90 100 100)"
+                    />
+                  </svg>
+                  <span className="db-reveal-ring-pct">{progressPct}%</span>
+                </div>
+                <p className={`db-reveal-progress-status${progressDone ? ' db-reveal-progress-done' : ''}`}>
+                  {getStatusMessage(progressPct, progressDone)}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="db-reveal-scroll">
+              <h2 className="db-reveal-title">The Only Lasagne Recipe You&rsquo;ll Ever Need</h2>
+              <p className="db-reveal-desc">{RECIPE_SCHEMA.description}</p>
+              <p className="db-reveal-author">by {RECIPE_SCHEMA.author.name}</p>
+
+              <div className="db-reveal-source">
+                <span className="db-reveal-source-line" />
+                <span className="db-reveal-source-inner">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18" />
+                  </svg>
+                  thehearthandhollow.com
+                </span>
+                <span className="db-reveal-source-line" />
+              </div>
+
+              <div className="db-reveal-image">
+                <img src="/images/lasagne.webp" alt="Baked lasagne, sliced" />
+              </div>
+
+              <div className="db-reveal-times">
+                <div className="db-reveal-time-cell">
+                  <span className="db-reveal-time-label">Prep</span>
+                  <span className="db-reveal-time-value">{formatISODuration(RECIPE_SCHEMA.prepTime)}</span>
+                </div>
+                <div className="db-reveal-time-cell db-reveal-time-mid">
+                  <span className="db-reveal-time-label">Cook</span>
+                  <span className="db-reveal-time-value">{formatISODuration(RECIPE_SCHEMA.cookTime)}</span>
+                </div>
+                <div className="db-reveal-time-cell">
+                  <span className="db-reveal-time-label">Total</span>
+                  <span className="db-reveal-time-value">{formatISODuration(RECIPE_SCHEMA.totalTime)}</span>
+                </div>
+              </div>
+
+              <div className="db-reveal-divider" />
+
+              <h3 className="db-reveal-section-title">Ingredients</h3>
+              {demoRecipeGroups.map((group) => (
+                <div key={group.label} className="db-reveal-group">
+                  <div className="db-reveal-group-header">
+                    <span className="db-reveal-group-label">{group.label}</span>
+                    <span className="db-reveal-group-line" />
+                  </div>
+                  {group.items.map((item) => (
+                    <div key={item} className="db-reveal-ingredient">{item}</div>
+                  ))}
+                </div>
+              ))}
+
+              <h3 className="db-reveal-section-title db-reveal-section-title-spaced">Instructions</h3>
+              {RECIPE_SCHEMA.recipeInstructions.map((section) => (
+                <div key={section.name} className="db-reveal-group">
+                  <div className="db-reveal-group-header">
+                    <span className="db-reveal-group-label">{section.name}</span>
+                    <span className="db-reveal-group-line" />
+                  </div>
+                  {section.itemListElement.map((step, i) => (
+                    <div key={i} className="db-reveal-step">
+                      <span className="db-reveal-step-label">Step {i + 1}</span>
+                      <p className="db-reveal-step-text">{step.text}</p>
+                    </div>
+                  ))}
+                </div>
+              ))}
+
+              <div className="db-reveal-spacer" />
+            </div>
+          )}
+
+          {revealStage === 'recipe' && (
+            <div className="db-reveal-cta">
+              <a href={PLAY_STORE} target="_blank" rel="noopener noreferrer" className="db-reveal-cta-btn">
+                Get Savor — save recipes like this automatically
+              </a>
+              <div className="db-reveal-cta-sub">This is what every recipe looks like once Savor&rsquo;s done with it.</div>
+            </div>
+          )}
         </div>
       )}
 

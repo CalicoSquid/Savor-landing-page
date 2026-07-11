@@ -741,6 +741,254 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* ── Recipe reveal ─────────────────────────────────────────────────────
+   Full-screen takeover, styled from the real app's actual recipe screen
+   (savor-app src/components/recipeCard/). Uses Savor's own font (Raleway,
+   already self-hosted on this page), appBg (#fafaf7), and the tangerine
+   primaryGradient — not the blog's Lora/Playfair/tomato palette. This is
+   the one place on the page meant to look like it's really running Savor,
+   not like part of the bit. */
+.db-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  background: #fafaf7;
+  font-family: 'Raleway', sans-serif;
+  animation: db-reveal-in 320ms cubic-bezier(0.22, 0.8, 0.2, 1) both;
+}
+@keyframes db-reveal-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.db-reveal-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 14px 14px;
+  background: linear-gradient(135deg, #FF5722, #FF9800);
+}
+.db-reveal-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.db-reveal-header-mark {
+  width: 34px;
+  height: 34px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  object-fit: contain;
+}
+
+.db-reveal-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 20px;
+}
+
+/* ── Progress ring stage ──────────────────────────────────────────── */
+.db-reveal-progress-scroll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.db-reveal-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+.db-reveal-ring-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.db-reveal-ring circle:last-child {
+  transition: stroke-dashoffset 90ms linear;
+}
+.db-reveal-ring-pct {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+.db-reveal-progress-status {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+}
+.db-reveal-progress-done {
+  color: #FF5722;
+  font-weight: 700;
+}
+
+.db-reveal-title {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  color: #1a1a1a;
+  padding: 20px 8px 0;
+}
+.db-reveal-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  text-align: center;
+  color: #888;
+  padding: 0 8px;
+  margin-top: 10px;
+}
+.db-reveal-author {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-align: center;
+  color: #aaa;
+  margin-top: 8px;
+}
+
+.db-reveal-source {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+.db-reveal-source-line { flex: 1; height: 1px; background: #e8e8e8; }
+.db-reveal-source-inner {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #FF5722;
+  white-space: nowrap;
+}
+
+.db-reveal-image {
+  width: 100%;
+  height: 240px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.db-reveal-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.db-reveal-times {
+  display: flex;
+  width: 100%;
+  padding: 14px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.db-reveal-time-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.db-reveal-time-mid { border-left: 1px solid rgba(255,87,34,0.25); border-right: 1px solid rgba(255,87,34,0.25); }
+.db-reveal-time-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #FF5722;
+}
+.db-reveal-time-value { font-size: 15px; font-weight: 700; color: #1a1a1a; }
+
+.db-reveal-divider { height: 1px; background: #eee; margin: 22px 0 4px; }
+
+.db-reveal-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 22px 0 12px;
+}
+.db-reveal-section-title-spaced { margin-top: 36px; }
+
+.db-reveal-group { margin-bottom: 4px; }
+.db-reveal-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 6px;
+}
+.db-reveal-group-label {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #FF5722;
+}
+.db-reveal-group-line { flex: 1; height: 1px; background: rgba(255,87,34,0.25); }
+
+.db-reveal-ingredient {
+  padding: 7px 0;
+  font-size: 15px;
+  color: #333;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.db-reveal-step {
+  border-left: 3px solid #FF5722;
+  padding-left: 14px;
+  margin-bottom: 14px;
+}
+.db-reveal-step-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #FF5722;
+  margin-bottom: 4px;
+}
+.db-reveal-step-text { font-size: 15px; line-height: 24px; color: #333; }
+
+.db-reveal-spacer { height: 24px; }
+
+.db-reveal-cta {
+  flex-shrink: 0;
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom, 0px));
+  background: #fff;
+  border-top: 1px solid #eee;
+  text-align: center;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.05);
+}
+.db-reveal-cta-btn {
+  display: block;
+  background: linear-gradient(135deg, #FF5722, #FF9800);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 15px;
+  border-radius: 999px;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 120ms ease;
+}
+.db-reveal-cta-btn:active { transform: scale(0.98); }
+.db-reveal-cta-sub {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #999;
+}
+
 /* ── Completion reward — a small in-character payoff for anyone who read
    the whole bit instead of tapping out early via the floating icon. */
 .db-page .db-reward {
@@ -790,7 +1038,8 @@
   .db-sim-modal,
   .db-sim-modal-backdrop,
   .db-savor-float,
-  .db-paywall-fake-btn:active {
+  .db-paywall-fake-btn:active,
+  .db-reveal {
     animation: none !important;
   }
 }
