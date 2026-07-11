@@ -10,6 +10,15 @@
   overflow: hidden;
 }
 
+/* Hero is sized to sit close to a full first-viewport on phones — close
+   enough that the name-note disclaimer directly below it was peeking in
+   by a sliver on load, undercutting the opening impression. Padding out
+   the boundary here (rather than shrinking hero content) pushes that
+   sliver fully below the fold so the first screen is just the hero. */
+@media (max-height: 800px) {
+  .hero { padding-bottom: 100px; }
+}
+
 .hero-glow {
   position: absolute;
   inset: 0;
@@ -91,6 +100,47 @@
   gap: 16px;
   width: 100%;
   margin-top: 8px;
+}
+
+/* Hero primary CTA — scoped here (not on .btn-green globally) since that
+   class is reused on the 404 page, where a pulsing glow makes no sense.
+   Glow ties the fixed green fill back to whichever fruit theme is active
+   (--primary updates per theme in context/themes.js), so the button reads
+   as part of the same color story as the strip above it instead of
+   opting out of it. Gloss + heavier lift give it more physical presence. */
+.hero-cta-row .btn-green {
+  position: relative;
+  isolation: isolate;
+  box-shadow: 0 10px 28px rgba(46,125,50,0.45), 0 2px 6px rgba(0,0,0,0.15);
+}
+.hero-cta-row .btn-green::before {
+  /* border-radius: inherit (not overflow:hidden on the button) keeps this
+     clipped to the pill shape — overflow:hidden would also clip the glow
+     below, which needs to bleed outside the box. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.25), transparent 60%);
+  pointer-events: none;
+}
+.hero-cta-row .btn-green::after {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--primary);
+  opacity: 0.3;
+  filter: blur(20px);
+  animation: hero-btn-pulse 2.8s ease-in-out infinite;
+}
+@keyframes hero-btn-pulse {
+  0%, 100% { opacity: 0.22; transform: scale(1); }
+  50%      { opacity: 0.42; transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-row .btn-green::after { animation: none; opacity: 0.3; }
 }
 
 .hero-play-link {

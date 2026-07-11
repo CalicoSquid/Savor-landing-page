@@ -1043,3 +1043,21 @@
     animation: none !important;
   }
 }
+
+/* Desktop: this screen simulates the real Savor app, which only exists
+   at phone widths. Frame it as a centered card instead of stretching
+   edge-to-edge. box-shadow spread doubles as the dimmed backdrop —
+   unaffected by this element's own overflow:hidden. */
+@media (min-width: 640px) {
+  .db-reveal {
+    inset: 0;
+    margin: auto;
+    width: 420px;
+    height: min(860px, 92vh);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 9999px rgba(15, 10, 6, 0.55),
+      0 40px 100px rgba(0, 0, 0, 0.45);
+  }
+}
