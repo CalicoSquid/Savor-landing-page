@@ -8,7 +8,7 @@ const PILLARS = [
         title: 'Discover.',
         img: '/screenshots/found.webp',
         bg: 'linear-gradient(135deg, #303F9F, #5C6BC0)',
-        sub: 'Savor\'s built-in browser spots recipes as you browse. One tap and it\'s saved properly — the photo, the ingredients, the steps. No copying, no pasting, no twelve paragraphs about the author\'s holiday in Tuscany.',
+        sub: <>Savor's built-in browser spots recipes as you browse. One tap and it's saved properly — the photo, the ingredients, the steps. No copying, no pasting, no twelve paragraphs about the author's holiday in Tuscany. Join the <strong>war against scrolling</strong>, one tap at a time.</>,
         cta: { label: 'Try it on a fake food blog we wrote just to prove it →', href: '/demo' }
     },
     {
@@ -61,7 +61,8 @@ export default function Savor() {
                 <div className="container hero-inner">
                     <img src="/images/Savor.webp" alt="Savor" className="hero-wordmark fade-up fade-up-1" />
                     <h1 className="hero-tagline fade-up fade-up-2">
-                        Join the war against <span style={{ color: 'var(--primary)' }}>scrolling.</span>
+                        Recipes fade.<br />
+                        <span style={{ color: 'var(--primary)' }}>Savor doesn&rsquo;t.</span>
                     </h1>
                     <div className="hero-colorstrip fade-up fade-up-2" aria-hidden="true">
                         {themes.map((t, i) => (
