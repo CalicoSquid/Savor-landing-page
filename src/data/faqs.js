@@ -36,7 +36,7 @@ export const FAQS = [
   },
   {
     q: 'Who makes Savor?',
-    a: 'Savor is built by a former professional chef working solo under the name CalicoSquid, alongside a small family of cooking apps including Forage and Potluck.',
+    a: 'Savor is built by a former professional chef working solo under the name CalicoSquid, alongside a small family of cooking apps including Caper and Potluck.',
   },
   {
     q: 'Are my recipes private?',

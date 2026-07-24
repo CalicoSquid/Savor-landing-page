@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   Forage — showcase page. Earthy field-guide palette (forest green +
+   Caper — showcase page. Earthy field-guide palette (forest green +
    terracotta + warm cream), pulled straight from the app's own colors.js.
    Everything scoped to .forage-page so it never inherits Savor's fruit
    themes, and Savor's tokens never leak in here.

@@ -1,5 +1,5 @@
 // src/data/forageShowcase.js
-// Real content for the Forage marketing page's interactive pieces.
+// Real content for the Caper marketing page's interactive pieces.
 // Species names, parts, flavours and safety flags are drawn from the app's
 // own PFAF-sourced data; the four-season model mirrors src/lib/seasons.js in
 // the app (Spring = wild garlic, Summer = herbs, Autumn = mushrooms/harvest,
@@ -12,7 +12,7 @@ export const SEASONS = [
     label: 'Spring',
     chip: 'Wild garlic season',
     months: 'Mar – May',
-    bg: '/forage/seasons/spring.webp',
+    bg: '/caper/seasons/spring.webp',
     accent: '#5A8A5A',
     species: [
       { name: 'Wild Garlic',    sci: 'Allium ursinum',      parts: ['Leaves', 'Flowers'], flavour: 'Pungent, garlicky', rating: 5, kind: 'herb',   note: false },
@@ -27,7 +27,7 @@ export const SEASONS = [
     label: 'Summer',
     chip: 'Herb season',
     months: 'Jun – Aug',
-    bg: '/forage/seasons/summer.webp',
+    bg: '/caper/seasons/summer.webp',
     accent: '#C99A2E',
     species: [
       { name: 'Wild Fennel',   sci: 'Foeniculum vulgare',  parts: ['Leaves', 'Seed'],    flavour: 'Aniseed',       rating: 4, kind: 'herb',   note: true },
@@ -42,7 +42,7 @@ export const SEASONS = [
     label: 'Autumn',
     chip: 'Harvest season',
     months: 'Sep – Nov',
-    bg: '/forage/seasons/autumn.webp',
+    bg: '/caper/seasons/autumn.webp',
     accent: '#B5651D',
     species: [
       { name: 'Blackberry',      sci: 'Rubus fruticosus',   parts: ['Fruit'],          flavour: 'Sweet, tart',   rating: 5, kind: 'berry', note: false },
@@ -57,7 +57,7 @@ export const SEASONS = [
     label: 'Winter',
     chip: 'Berry & bark season',
     months: 'Dec – Feb',
-    bg: '/forage/seasons/winter.webp',
+    bg: '/caper/seasons/winter.webp',
     accent: '#5A7D8A',
     species: [
       { name: 'Rosehip',      sci: 'Rosa canina',        parts: ['Fruit'],          flavour: 'Tart, fruity', rating: 4, kind: 'berry', note: true },

@@ -11,26 +11,26 @@ export default function Nav() {
 
   const isStudio  = location.pathname.startsWith('/studio')
   const isPotluck = location.pathname.startsWith('/potluck')
-  const isForage  = location.pathname.startsWith('/forage')
+  const isCaper   = location.pathname.startsWith('/caper') || location.pathname.startsWith('/forage')
   const isRecipe  = location.pathname.startsWith('/r/')
   const isDemo    = location.pathname.startsWith('/demo')
 
   if (isRecipe || isDemo) return null
 
-  const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isForage ? 'forage' : 'savor'
+  const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isCaper ? 'forage' : 'savor'
   const iconSrc  = isStudio  ? '/images/logo_W.webp'
                  : isPotluck ? '/potluck/potluck-icon.webp'
-                 : isForage  ? '/forage/forage-icon-bg.webp'
+                 : isCaper   ? '/caper/caper-icon-bg.webp'
                  : getIcon(activeTheme.name)
   const iconAlt  = isStudio  ? 'CalicoSquid Code'
                  : isPotluck ? 'Potluck by Savor'
-                 : isForage  ? 'Forage'
+                 : isCaper   ? 'Caper'
                  : activeTheme.name
 
   // Persistent install CTA only belongs on Savor's own pages (home, about,
-  // faq, etc). Potluck/Studio/Forage have their own pages and their own
+  // faq, etc). Potluck/Studio/Caper have their own pages and their own
   // conversion paths — a "Get Savor" button there sends mixed signals.
-  const showCta = !isStudio && !isPotluck && !isForage
+  const showCta = !isStudio && !isPotluck && !isCaper
 
   return (
     <nav className="nav" data-nav-theme={navTheme}>
@@ -39,7 +39,7 @@ export default function Nav() {
           <img
             src={iconSrc}
             alt={iconAlt}
-            className={`nav-icon${isPotluck ? ' nav-icon--potluck' : isForage ? ' nav-icon--forage' : ''}`}
+            className={`nav-icon${isPotluck ? ' nav-icon--potluck' : isCaper ? ' nav-icon--forage' : ''}`}
           />
         </NavLink>
         {showCta && (

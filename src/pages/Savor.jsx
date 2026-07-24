@@ -168,8 +168,8 @@ export default function Savor() {
                             </a>
                         </div>
                         <div className="same-kitchen-app">
-                            <img src="/forage/forage-icon-bg.webp" alt="Forage" className="same-kitchen-app-icon" />
-                            <h3>Forage</h3>
+                            <img src="/caper/caper-icon-bg.webp" alt="Caper" className="same-kitchen-app-icon" />
+                            <h3>Caper</h3>
                             <p>A wild foraging companion — find and identify what&rsquo;s edible nearby, then learn to cook it safely. Comes with a set of cute, boy-scout-style badges to earn along the way.</p>
                             <a
                                 href="https://play.google.com/store/apps/details?id=com.calicosquid.forage"

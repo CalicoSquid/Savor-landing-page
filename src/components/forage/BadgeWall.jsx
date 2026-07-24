@@ -1,5 +1,5 @@
 // src/components/forage/BadgeWall.jsx
-// A collectible wall of real Forage badges. A few start "earned" (in colour);
+// A collectible wall of real Caper badges. A few start "earned" (in colour);
 // the rest are locked silhouettes that light up on hover/focus/tap — the
 // collector's-shelf feeling, quietly. Icon paths are Material Design Icons
 // (Pictogrammers, Apache-2.0), inlined as SVG so no icon font is needed.

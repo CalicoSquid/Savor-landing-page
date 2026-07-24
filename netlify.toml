@@ -14,6 +14,21 @@
   force = true
 
 [[redirects]]
+  from = "/forage"
+  to = "/caper"
+  status = 301
+
+[[redirects]]
+  from = "/forage/privacy"
+  to = "/caper/privacy"
+  status = 301
+
+[[redirects]]
+  from = "/forage/delete-account"
+  to = "/caper/delete-account"
+  status = 301
+
+[[redirects]]
   from = "/*"
   to = "/app.html"
   status = 200

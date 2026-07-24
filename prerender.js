@@ -40,11 +40,12 @@ const ROUTES = [
     ogImage: 'https://getsavor.recipes/potluck/potluck-splash.png',
   },
   {
-    url: '/forage',
-    file: 'forage.html',
-    title: 'Forage — Find Dinner in the Wild | Wild Food Foraging App',
-    desc: 'Forage is a wild-food companion app made by a chef. Identify 893 wild edibles with safety ratings, see what’s in season near you, cook what you find, and keep every find in your logbook. One payment, no subscription.',
-    canonical: 'https://getsavor.recipes/forage',
+    url: '/caper',
+    file: 'caper.html',
+    title: 'Caper — Find Dinner in the Wild | Wild Food Foraging App',
+    desc: 'Caper is a wild-food companion app made by a chef. Identify 893 wild edibles with safety ratings, see what’s in season near you, cook what you find, and keep every find in your logbook. One payment, no subscription.',
+    canonical: 'https://getsavor.recipes/caper',
+    ogImage: 'https://getsavor.recipes/caper/caper-feature-graphic.png',
   },
   {
     url: '/faq',

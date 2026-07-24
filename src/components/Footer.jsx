@@ -16,7 +16,7 @@ export default function Footer() {
           <li><a href="/blog">Blog</a></li>
           <li><a href="/faq">FAQ</a></li>
           <li><a href="/potluck">Potluck</a></li>
-          <li><a href="/forage">Forage</a></li>
+          <li><a href="/caper">Caper</a></li>
           <li><a href="/demo">Demo</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>

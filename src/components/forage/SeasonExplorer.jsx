@@ -22,7 +22,7 @@ export default function SeasonExplorer() {
   return (
     <div className="fg-explorer">
       <div className="fg-explorer-head">
-        <p className="fg-eyebrow">Forage Near Me</p>
+        <p className="fg-eyebrow">Wild Food Near Me</p>
         <h2 className="fg-explorer-title">What&rsquo;s out there right now</h2>
         <p className="fg-explorer-sub">
           Wild food follows the seasons. Tap through the year and see a taste
@@ -99,7 +99,7 @@ export default function SeasonExplorer() {
           </ul>
 
           <p className="fg-explorer-foot">
-            A handful of {active.species.length}. In the app, Forage shows what&rsquo;s
+            A handful of {active.species.length}. In the app, Caper shows what&rsquo;s
             genuinely in season near <em>your</em> location.
           </p>
         </div>

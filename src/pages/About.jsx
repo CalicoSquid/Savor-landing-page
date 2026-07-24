@@ -69,7 +69,7 @@ export default function About() {
             <p>
               Savor is built by one former chef, working solo under the name{' '}
               <strong>CalicoSquid</strong>, from a farm in Montenegro. It’s part of
-              a small family of cooking apps — alongside <strong>Forage</strong>, a
+              a small family of cooking apps — alongside <strong>Caper</strong>, a
               companion for wild food, and <strong>Potluck</strong>, a playful way
               to decide what’s for dinner. Made by someone who actually cooks, for
               people who actually cook.
