@@ -20,7 +20,14 @@ export default function NotFound() {
 
       <main className="page">
         <div className="nf-wrap">
-          <img src={getIcon(activeTheme.name)} alt="" className="nf-icon" />
+          <img
+            src={getIcon(activeTheme.name)}
+            alt=""
+            className="nf-icon"
+            width="160"
+            height="160"
+            decoding="async"
+          />
           <span className="nf-code"><span className="num">404</span> · not found</span>
           <h1 className="nf-title">This recipe doesn’t exist.</h1>
           <p className="nf-lead">

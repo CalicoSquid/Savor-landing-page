@@ -212,7 +212,7 @@ export default async function handler(request, context) {
         `${recipe.cuisine || recipe.category || 'A'} recipe saved on Savor`.trim()
       )
     )
-    const image = recipe.image || 'https://getsavor.recipes/images/savor-final.png'
+    const image = recipe.image || 'https://getsavor.recipes/images/savor-final.webp'
     const pageUrl = escapeHtml(request.url)
     const isOriginal = !recipe.sourceUrl
 

@@ -27,11 +27,14 @@ export default function Apocaleaf() {
     setMeta('og:description', PAGE_DESCRIPTION, 'property')
     setMeta('og:type', 'website', 'property')
     setMeta('og:url', 'https://getsavor.recipes/apocaleaf', 'property')
-    setMeta('og:image', 'https://getsavor.recipes/apocaleaf/apocaleaf-og.png', 'property')
+    setMeta('og:image', 'https://getsavor.recipes/apocaleaf/apocaleaf-og.webp', 'property')
+    setMeta('og:image:type', 'image/webp', 'property')
+    setMeta('og:image:width', '1200', 'property')
+    setMeta('og:image:height', '630', 'property')
     setMeta('twitter:card', 'summary_large_image')
     setMeta('twitter:title', PAGE_TITLE)
     setMeta('twitter:description', PAGE_DESCRIPTION)
-    setMeta('twitter:image', 'https://getsavor.recipes/apocaleaf/apocaleaf-og.png')
+    setMeta('twitter:image', 'https://getsavor.recipes/apocaleaf/apocaleaf-og.webp')
 
     let canonical = document.querySelector('link[rel="canonical"]')
     if (!canonical) {
@@ -45,7 +48,18 @@ export default function Apocaleaf() {
   return (
     <main className={`apoc-page${isAuthorised ? ' apoc-page--authorised' : ''}`}>
       <div className="apoc-botanical-field" aria-hidden="true" />
-      <img className="apoc-wildflowers" src="/apocaleaf/wildflowers.webp" alt="" aria-hidden="true" />
+      <img
+        className="apoc-wildflowers"
+        src="/apocaleaf/wildflowers.webp"
+        srcSet="/apocaleaf/wildflowers-512.webp 512w, /apocaleaf/wildflowers.webp 960w"
+        sizes="(max-width: 600px) 76vw, 58vw"
+        alt=""
+        aria-hidden="true"
+        width="960"
+        height="960"
+        loading="eager"
+        decoding="async"
+      />
       <div className="apoc-noise" aria-hidden="true" />
 
       <section className="apoc-shell" aria-labelledby="apoc-title">
@@ -70,7 +84,15 @@ export default function Apocaleaf() {
             </p>
 
             <div className="apoc-brand-lockup" aria-label="Apocaleaf">
-              <img src="/apocaleaf/standard-issue-mark.png" alt="" aria-hidden="true" />
+              <img
+                src="/apocaleaf/standard-issue-mark.webp"
+                alt=""
+                aria-hidden="true"
+                width="512"
+                height="512"
+                loading="eager"
+                decoding="async"
+              />
               <div>
                 <p className="apoc-wordmark">APOCALEAF</p>
                 <p className="apoc-brandline">Forage the ruins. File the report.</p>
@@ -94,8 +116,24 @@ export default function Apocaleaf() {
               </div>
 
               <div className="apoc-seal-lockup" aria-hidden="true">
-                <img className="apoc-seal-ring" src="/apocaleaf/famine-approval-ring.png" alt="" />
-                <img className="apoc-seal-mark" src="/apocaleaf/standard-issue-mark.png" alt="" />
+                <img
+                  className="apoc-seal-ring"
+                  src="/apocaleaf/famine-approval-ring.webp"
+                  alt=""
+                  width="512"
+                  height="512"
+                  loading="eager"
+                  decoding="async"
+                />
+                <img
+                  className="apoc-seal-mark"
+                  src="/apocaleaf/standard-issue-mark.webp"
+                  alt=""
+                  width="512"
+                  height="512"
+                  loading="eager"
+                  decoding="async"
+                />
               </div>
 
               <p className="apoc-dossier-kicker">Citizen field directive</p>

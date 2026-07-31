@@ -42,7 +42,15 @@ function ThemeCard({ theme, active, onSelect }) {
                 {active && <span className="theme-card-check">&#10003;</span>}
             </div>
             <div className="theme-card-label">
-                <img src={getIcon(theme.name)} alt={theme.name} className="theme-card-icon" />
+                <img
+                    src={getIcon(theme.name)}
+                    alt={theme.name}
+                    className="theme-card-icon"
+                    width="160"
+                    height="160"
+                    loading="lazy"
+                    decoding="async"
+                />
                 <span className="theme-card-name">{theme.name}</span>
             </div>
         </button>
@@ -59,7 +67,16 @@ export default function Savor() {
             <section className="hero">
                 <div className="hero-glow" style={{ background: `radial-gradient(ellipse at 50% 60%, ${activeTheme.primary}22 0%, transparent 70%)` }} />
                 <div className="container hero-inner">
-                    <img src="/images/Savor.webp" alt="Savor" className="hero-wordmark fade-up fade-up-1" />
+                    <img
+                        src="/images/Savor.webp"
+                        alt="Savor"
+                        className="hero-wordmark fade-up fade-up-1"
+                        width="840"
+                        height="263"
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
+                    />
                     <h1 className="hero-tagline fade-up fade-up-2">
                         Recipes fade.<br />
                         <span style={{ color: 'var(--primary)' }}>Savor doesn&rsquo;t.</span>
@@ -96,7 +113,17 @@ export default function Savor() {
                 <div className="container">
                     <div className="feature-row">
                         <div className="feature-row-img feature-row-img--photo">
-                            <img src="/screenshots/savor-scan.webp" alt="A 1982 handwritten recipe card for Aunt Maja's lemon drizzle cake next to the same recipe saved in Savor" className="feature-row-photo" />
+                            <img
+                                src="/screenshots/savor-scan.webp"
+                                srcSet="/screenshots/savor-scan-640.webp 640w, /screenshots/savor-scan.webp 1000w"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                alt="A 1982 handwritten recipe card for Aunt Maja's lemon drizzle cake next to the same recipe saved in Savor"
+                                className="feature-row-photo"
+                                width="1000"
+                                height="1000"
+                                loading="lazy"
+                                decoding="async"
+                            />
                         </div>
                         <div className="feature-row-text">
                             <div className="feature-overline" style={{ background: 'var(--grad-fruit)' }} />
@@ -116,7 +143,16 @@ export default function Savor() {
                     {PILLARS.map((p) => (
                         <div className="pillar" key={p.title}>
                             <div className="pillar-shot" style={{ background: p.bg }}>
-                                <img src={p.img} alt={p.title} />
+                                <img
+                                    src={p.img}
+                                    srcSet={`${p.img.replace('.webp', '-240.webp')} 240w, ${p.img} 480w`}
+                                    sizes="(max-width: 900px) 200px, 188px"
+                                    alt={p.title}
+                                    width="480"
+                                    height="1002"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
                             </div>
                             <div className="pillar-rule" style={{ background: 'var(--grad-fruit)' }} />
                             <h3 className="pillar-title">{p.title}</h3>
@@ -155,7 +191,15 @@ export default function Savor() {
                     </p>
                     <div className="same-kitchen-apps">
                         <div className="same-kitchen-app">
-                            <img src="/potluck/potluck-icon.webp" alt="Potluck" className="same-kitchen-app-icon" />
+                            <img
+                                src="/potluck/potluck-icon.webp"
+                                alt="Potluck"
+                                className="same-kitchen-app-icon"
+                                width="192"
+                                height="192"
+                                loading="lazy"
+                                decoding="async"
+                            />
                             <h3>Potluck</h3>
                             <p>One spin and the universe decides what&rsquo;s for dinner — no scrolling, no deciding, just turn the oven on. It&rsquo;s basically a fun excuse to pull you into Savor, and it knows it.</p>
                             <div className="same-kitchen-app-links">
@@ -166,7 +210,15 @@ export default function Savor() {
                             </div>
                         </div>
                         <div className="same-kitchen-app">
-                            <img src="/caper/caper-icon-bg.webp" alt="Caper" className="same-kitchen-app-icon" />
+                            <img
+                                src="/caper/caper-icon.webp"
+                                alt="Caper"
+                                className="same-kitchen-app-icon"
+                                width="160"
+                                height="160"
+                                loading="lazy"
+                                decoding="async"
+                            />
                             <h3>Caper</h3>
                             <p>A wild foraging companion — find and identify what&rsquo;s edible nearby, then learn to cook it safely. Comes with a set of cute, boy-scout-style badges to earn along the way.</p>
                             <div className="same-kitchen-app-links">
@@ -181,8 +233,24 @@ export default function Savor() {
                                 <div className="apoc-teaser-grid" aria-hidden="true" />
                                 <span className="apoc-teaser-stamp">Coming soon</span>
                                 <div className="apoc-teaser-lockup" aria-hidden="true">
-                                    <img src="/apocaleaf/famine-approval-ring.png" alt="" className="apoc-teaser-ring" />
-                                    <img src="/apocaleaf/standard-issue-splash.png" alt="" className="apoc-teaser-seal" />
+                                    <img
+                                        src="/apocaleaf/famine-approval-ring.webp"
+                                        alt=""
+                                        className="apoc-teaser-ring"
+                                        width="512"
+                                        height="512"
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                    <img
+                                        src="/apocaleaf/standard-issue-splash.webp"
+                                        alt=""
+                                        className="apoc-teaser-seal"
+                                        width="256"
+                                        height="256"
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
                                 </div>
                                 <span className="apoc-teaser-agency">F.A.M.I.N.E. // Field Archive</span>
                                 <h3 className="apoc-teaser-title">Apocaleaf</h3>
@@ -205,7 +273,15 @@ export default function Savor() {
             <section className="download-cta" id="download">
                 <div className="download-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
                 <div className="container download-cta-inner">
-                    <img src={getIcon(activeTheme.name)} alt="Savor" className="download-cta-icon" />
+                    <img
+                        src={getIcon(activeTheme.name)}
+                        alt="Savor"
+                        className="download-cta-icon"
+                        width="160"
+                        height="160"
+                        loading="lazy"
+                        decoding="async"
+                    />
                     <h2 className="download-cta-title">A home for every recipe that matters.</h2>
                     <p className="download-cta-sub">
                         Free to start. No ads, ever. Available now on Android.
@@ -216,7 +292,15 @@ export default function Savor() {
                         rel="noreferrer"
                         className="download-play-link"
                     >
-                        <img src="/potluck/play2.png" alt="Get it on Google Play" className="download-play-badge" />
+                        <img
+                            src="/potluck/play2.webp"
+                            alt="Get it on Google Play"
+                            className="download-play-badge"
+                            width="440"
+                            height="121"
+                            loading="lazy"
+                            decoding="async"
+                        />
                     </a>
                 </div>
             </section>

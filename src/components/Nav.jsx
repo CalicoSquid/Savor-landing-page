@@ -21,8 +21,8 @@ export default function Nav() {
   const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isCaper ? 'forage' : isApocaleaf ? 'apocaleaf' : 'savor'
   const iconSrc  = isStudio  ? '/images/logo_W.webp'
                  : isPotluck ? '/potluck/potluck-icon.webp'
-                 : isCaper   ? '/caper/caper-icon-bg.webp'
-                 : isApocaleaf ? '/apocaleaf/standard-issue-mark.png'
+                 : isCaper   ? '/caper/caper-icon.webp'
+                 : isApocaleaf ? '/apocaleaf/standard-issue-mark.webp'
                  : getIcon(activeTheme.name)
   const iconAlt  = isStudio  ? 'CalicoSquid Code'
                  : isPotluck ? 'Potluck by Savor'
@@ -43,6 +43,9 @@ export default function Nav() {
             src={iconSrc}
             alt={iconAlt}
             className={`nav-icon${isPotluck ? ' nav-icon--potluck' : isCaper ? ' nav-icon--forage' : isApocaleaf ? ' nav-icon--apocaleaf' : ''}`}
+            width="44"
+            height="44"
+            decoding="async"
           />
         </NavLink>
         {showCta && (

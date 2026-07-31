@@ -16,28 +16,28 @@ const FEATURES = [
     eyebrow: 'Wild Food Near Me',
     title: "What's out there, right now",
     body: 'See wild edibles in season near you, ranked by what people are actually finding. Every card tells you the part to eat, how common it is, and what to watch for — before you pick.',
-    img: '/caper/aso/whats-out-there.png',
+    img: '/caper/aso/whats-out-there.webp',
     alt: 'Caper — wild edibles in season near you',
   },
   {
     eyebrow: 'The Field Guide',
     title: 'Know before you pick',
     body: '893 documented edible species, each with safety ratings, seasons and habitats. Species data drawn from the Plants For A Future database — only edibility ratings of 4 and above.',
-    img: '/caper/aso/know-before-you-pick.png',
+    img: '/caper/aso/know-before-you-pick.webp',
     alt: 'Caper field guide with 893 wild plants',
   },
   {
     eyebrow: 'Campfire Kitchen',
     title: 'Wild recipes, built around what you find',
     body: "Log a find and the Campfire Cookbook fills with recipes you can actually make from it. Something to cook for everything you bring home.",
-    img: '/caper/aso/campfire-cookbook.png',
+    img: '/caper/aso/campfire-cookbook.webp',
     alt: 'Campfire Cookbook — wild recipes',
   },
   {
     eyebrow: 'Your Logbook',
     title: 'Every find, remembered',
     body: 'Log your spots, photos and notes. Build a personal record of what you found and where, season by season — a watchlist for what you want to find next.',
-    img: '/caper/aso/logbook.png',
+    img: '/caper/aso/logbook.webp',
     alt: 'Caper logbook of your finds',
   },
 ]
@@ -65,7 +65,10 @@ export default function Caper() {
       'property',
     )
     setMeta('og:description', desc, 'property')
-    setMeta('og:image', 'https://getsavor.recipes/caper/caper-feature-graphic.png', 'property')
+    setMeta('og:image', 'https://getsavor.recipes/caper/caper-feature-graphic.webp', 'property')
+    setMeta('og:image:type', 'image/webp', 'property')
+    setMeta('og:image:width', '1200', 'property')
+    setMeta('og:image:height', '587', 'property')
     setMeta(
       'og:url',
       isForageRoute ? 'https://getsavor.recipes/forage' : 'https://getsavor.recipes/caper',
@@ -95,10 +98,17 @@ export default function Caper() {
       <section className="fg-hero">
         <div className="fg-hero-inner">
           <img
-            src="/caper/caper-wordmark.png"
+            src="/caper/caper-wordmark.webp"
+            srcSet="/caper/caper-wordmark-480.webp 480w, /caper/caper-wordmark.webp 960w"
+            sizes="(max-width: 564px) 78vw, 440px"
             alt={isForageRoute ? '' : 'Caper'}
             aria-hidden={isForageRoute ? 'true' : undefined}
             className="fg-wordmark fg-fade fg-fade-1"
+            width="960"
+            height="331"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           {isForageRoute && (
             <h1 className="fg-hero-title fg-fade fg-fade-2">
@@ -153,7 +163,16 @@ export default function Caper() {
               <p className="fg-feature-body">{f.body}</p>
             </div>
             <div className="fg-feature-shot">
-              <img src={f.img} alt={f.alt} loading="lazy" />
+              <img
+                src={f.img}
+                srcSet={`${f.img.replace('.webp', '-360.webp')} 360w, ${f.img} 720w`}
+                sizes="(max-width: 760px) 90vw, 340px"
+                alt={f.alt}
+                width="720"
+                height="1279"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </div>
         ))}
@@ -188,8 +207,13 @@ export default function Caper() {
           <div className="fg-campfire-shot">
             <img
               src="/caper/aso/campfire-phone.webp"
+              srcSet="/caper/aso/campfire-phone-360.webp 360w, /caper/aso/campfire-phone.webp 720w"
+              sizes="(max-width: 760px) 90vw, 360px"
               alt="Campfire Cookbook — wild recipes built around what you find"
+              width="720"
+              height="895"
               loading="lazy"
+              decoding="async"
             />
           </div>
         </div>

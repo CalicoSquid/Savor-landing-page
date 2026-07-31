@@ -30,11 +30,11 @@ The control is keyboard accessible, uses `aria-expanded` and `aria-live`, and ho
 
 - `src/pages/Apocaleaf.jsx`
 - `src/pages/apocaleaf.css`
-- `public/apocaleaf/apocaleaf-og.png`
+- `public/apocaleaf/apocaleaf-og.webp`
 - `public/apocaleaf/field-guide-bg.webp`
 - `public/apocaleaf/wildflowers.webp`
-- `public/apocaleaf/standard-issue-mark.png`
-- `public/apocaleaf/print-noise.png`
+- `public/apocaleaf/standard-issue-mark.webp`
+- `public/apocaleaf/print-noise.webp`
 
 ## Files updated
 
@@ -52,7 +52,7 @@ The existing Savor-page Apocaleaf teaser now links to `/apocaleaf`.
 - Title: `Apocaleaf — Post-Apocalyptic Foraging Game | Coming Soon`
 - Description: `Apocaleaf is a post-apocalyptic foraging game where Citizens locate edible plants, file field reports, earn Scrip, and rebuild the archive.`
 - Canonical: `https://getsavor.recipes/apocaleaf`
-- Open Graph image: `/apocaleaf/apocaleaf-og.png`
+- Open Graph image: `/apocaleaf/apocaleaf-og.webp`
 - Included in prerendering and the generated sitemap.
 
 ## Verification

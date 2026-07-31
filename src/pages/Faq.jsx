@@ -42,9 +42,13 @@ export default function Faq() {
               className="doc-cta-badge-link"
             >
               <img
-                src="/potluck/play2.png"
+                src="/potluck/play2.webp"
                 alt="Get Savor on Google Play"
                 className="doc-cta-badge"
+                width="440"
+                height="121"
+                loading="lazy"
+                decoding="async"
               />
             </a>
             <Link

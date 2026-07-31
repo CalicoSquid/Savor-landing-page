@@ -41,7 +41,11 @@
   position: absolute;
   inset: 0;
   z-index: -4;
-  background-image: url('/apocaleaf/field-guide-bg.webp');
+  background-image: url('/apocaleaf/field-guide-bg-384.webp');
+  background-image: image-set(
+    url('/apocaleaf/field-guide-bg-384.webp') 1x,
+    url('/apocaleaf/field-guide-bg.webp') 2x
+  );
   background-size: 460px auto;
   background-position: center top;
   opacity: 0.13;
@@ -64,7 +68,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background-image: url('/apocaleaf/print-noise.png');
+  background-image: url('/apocaleaf/print-noise.webp');
   background-size: 360px;
   opacity: 0.045;
   mix-blend-mode: multiply;

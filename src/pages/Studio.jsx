@@ -84,14 +84,30 @@ export default function Studio() {
                     <div className="work-card">
                         <div className="work-card-left">
                             {/* Corrected: Using the inverted Savor wordmark */}
-                            <img src="/images/Savor_white.webp" alt="Savor" className="work-wordmark" />
+                            <img
+                                src="/images/Savor_white.webp"
+                                alt="Savor"
+                                className="work-wordmark"
+                                width="480"
+                                height="150"
+                                loading="lazy"
+                                decoding="async"
+                            />
                             <p className="work-tag">React Native · Android · 2026</p>
                             <p className="work-desc">A recipe app I built because every other one annoyed me. Paste a URL, scan a cookbook page, or type something out, Savor handles all of it. 12 fruit themes, a community feed that doesn't chase engagement, and a Pro tier that costs less than a coffee. Built alone, from scratch, while also trying to grow my own vegetables.</p>                            <div className="work-links">
                                 <a href="/" className="studio-btn-primary">View app →</a>
                             </div>
                         </div>
                         <div className="work-card-right">
-                            <img src="/images/ssss.webp" alt="Savor app" className="work-screenshot" />
+                            <img
+                                src="/images/ssss.webp"
+                                alt="Savor app"
+                                className="work-screenshot"
+                                width="480"
+                                height="1003"
+                                loading="lazy"
+                                decoding="async"
+                            />
                         </div>
                     </div>
                 </div>
@@ -101,7 +117,16 @@ export default function Studio() {
             <section className="studio-cta" id="cta">
                 <div className="studio-cta-bg" />
                 <div className="container studio-cta-inner">
-                    <img src="/images/logo_W.webp" alt="" className="cta-squid" aria-hidden="true" />
+                    <img
+                        src="/images/logo_W.webp"
+                        alt=""
+                        className="cta-squid"
+                        aria-hidden="true"
+                        width="395"
+                        height="582"
+                        loading="lazy"
+                        decoding="async"
+                    />
                     <h2 className="cta-title">Got something to build?</h2>
                     <p className="cta-sub">I'm a solo dev who's done this end to end. If you've got an idea and need someone who'll actually care about it, get in touch.</p>
                     <div className="studio-hero-ctas">

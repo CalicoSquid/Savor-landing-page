@@ -16,6 +16,24 @@ const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 const escAttr = (s) => esc(s).replace(/"/g, '&quot;')
 
+const OG_IMAGE_DIMENSIONS = {
+  '/images/savor-final.webp': [1200, 369],
+  '/potluck/potluck-splash.webp': [1024, 1024],
+  '/caper/caper-feature-graphic.webp': [1200, 587],
+  '/apocaleaf/apocaleaf-og.webp': [1200, 630],
+  '/images/lasagne.webp': [1600, 1066],
+  '/screenshots/scan.webp': [480, 1002],
+  '/screenshots/found.webp': [480, 1002],
+}
+
+function ogDimensions(imageUrl) {
+  try {
+    return OG_IMAGE_DIMENSIONS[new URL(imageUrl).pathname] || [1200, 630]
+  } catch {
+    return [1200, 630]
+  }
+}
+
 const ROUTES = [
   {
     url: '/',
@@ -41,7 +59,7 @@ const ROUTES = [
     title: 'Potluck — Spin for Your Supper | A Savor App',
     desc: 'Can’t decide what to cook? Potluck spins the wheel and picks tonight’s dinner — one tap, one recipe, no scrolling. Save what you love to Savor. Free.',
     canonical: 'https://getsavor.recipes/potluck',
-    ogImage: 'https://getsavor.recipes/potluck/potluck-splash.png',
+    ogImage: 'https://getsavor.recipes/potluck/potluck-splash.webp',
   },
   {
     url: '/caper',
@@ -49,7 +67,7 @@ const ROUTES = [
     title: 'Caper — Find Dinner in the Wild | Wild Food Foraging App',
     desc: 'Caper is a wild-food companion made by a chef. Identify 893 wild edibles with safety ratings, see what’s in season nearby, and log every find. One payment.',
     canonical: 'https://getsavor.recipes/caper',
-    ogImage: 'https://getsavor.recipes/caper/caper-feature-graphic.png',
+    ogImage: 'https://getsavor.recipes/caper/caper-feature-graphic.webp',
   },
   {
     url: '/forage',
@@ -57,7 +75,7 @@ const ROUTES = [
     title: 'Forage Wild Food Safely with Caper | Seasonal Field Guide',
     desc: 'Caper helps new and curious foragers find wild edibles in season nearby, check safety ratings and habitats, log discoveries, and cook what they find.',
     canonical: 'https://getsavor.recipes/forage',
-    ogImage: 'https://getsavor.recipes/caper/caper-feature-graphic.png',
+    ogImage: 'https://getsavor.recipes/caper/caper-feature-graphic.webp',
   },
   {
     // Legal. Previously fell through to the SPA shell (app.html), so /privacy
@@ -87,7 +105,7 @@ const ROUTES = [
     title: 'Privacy Policy — Caper Wild Food & Foraging App',
     desc: 'How the Caper wild-food app handles your data: what we collect, location and logbook privacy, third-party services, and how to delete your account.',
     canonical: 'https://getsavor.recipes/caper/privacy',
-    ogImage: 'https://getsavor.recipes/caper/caper-feature-graphic.png',
+    ogImage: 'https://getsavor.recipes/caper/caper-feature-graphic.webp',
   },
   {
     url: '/studio',
@@ -147,7 +165,8 @@ const ROUTES = [
 let count = 0
 for (const r of ROUTES) {
   const appHtml = render(r.url)
-  const ogImage = r.ogImage || 'https://getsavor.recipes/images/savor-final.png'
+  const ogImage = r.ogImage || 'https://getsavor.recipes/images/savor-final.webp'
+  const [ogImageWidth, ogImageHeight] = ogDimensions(ogImage)
 
   let html = template
     .replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`)
@@ -180,6 +199,14 @@ for (const r of ROUTES) {
     .replace(
       /<meta\s+property="og:image"[^>]*\/>/,
       `<meta property="og:image" content="${escAttr(ogImage)}" />`,
+    )
+    .replace(
+      /<meta\s+property="og:image:width"[^>]*\/>/,
+      `<meta property="og:image:width" content="${ogImageWidth}" />`,
+    )
+    .replace(
+      /<meta\s+property="og:image:height"[^>]*\/>/,
+      `<meta property="og:image:height" content="${ogImageHeight}" />`,
     )
     .replace(
       /<meta\s+property="og:image:alt"[^>]*\/>/,

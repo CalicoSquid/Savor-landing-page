@@ -113,6 +113,10 @@ export default function CaperPrivacy() {
             <img
               src="/caper/caper-icon.webp"
               alt="Caper"
+              width="160"
+              height="160"
+              loading="lazy"
+              decoding="async"
               style={{ width: 56, height: 56, borderRadius: 14, boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}
             />
             <div>

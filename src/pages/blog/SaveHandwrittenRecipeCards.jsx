@@ -116,7 +116,13 @@ export default function SaveHandwrittenRecipeCards() {
             <figure className="blog-post-figure">
                 <img
                     src="/screenshots/scan.webp"
+                    srcSet="/screenshots/scan-240.webp 240w, /screenshots/scan.webp 480w"
+                    sizes="(max-width: 560px) 240px, 320px"
                     alt="Savor rebuilding a recipe from a photographed handwritten card"
+                    width="480"
+                    height="1002"
+                    loading="lazy"
+                    decoding="async"
                 />
                 <figcaption>
                     A handwritten recipe card rebuilt into a searchable recipe with Savor.

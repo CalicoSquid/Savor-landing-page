@@ -49,14 +49,12 @@ export default function SeasonExplorer() {
 
       {/* Stage: backdrop + chip + species */}
       <div className="fg-explorer-stage">
-        {SEASONS.map((s) => (
-          <div
-            key={s.key}
-            className={`fg-explorer-bg ${s.key === activeKey ? 'is-active' : ''}`}
-            style={{ backgroundImage: `url(${s.bg})` }}
-            aria-hidden="true"
-          />
-        ))}
+        <div
+          key={active.key}
+          className="fg-explorer-bg is-active"
+          style={{ backgroundImage: `url(${active.bg})` }}
+          aria-hidden="true"
+        />
         <div className="fg-explorer-scrim" aria-hidden="true" />
 
         <div className="fg-explorer-content" key={activeKey}>

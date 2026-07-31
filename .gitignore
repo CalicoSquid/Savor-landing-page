@@ -26,4 +26,3 @@ dist-ssr
 # SSR prerender build artifact
 .ssr
 delete-orphans.sh
-optimize-assets.mjs

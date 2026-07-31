@@ -18,7 +18,7 @@ const STEPS = [
     body: "One recipe lands. That's dinner. The wheel doesn't miss — and it's got opinions about your choices.",
   },
   {
-    badge: { img: '/potluck/savor-logo.webp', alt: 'Savor' },
+    badge: { img: '/icons/icon-Tangerine.webp', alt: 'Savor' },
     title: 'Save it to Savor.',
     body: 'Love what landed? One tap sends it straight to Savor, saved and scaled and yours for next time.',
   },
@@ -45,12 +45,37 @@ export default function Potluck() {
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="pl-hero">
           <div className="pl-container pl-hero-inner">
-            <img src="/potluck/potluck_wordmark.webp" alt="Potluck" className="pl-wordmark" />
+            <img
+              src="/potluck/potluck_wordmark.webp"
+              alt="Potluck"
+              className="pl-wordmark"
+              width="640"
+              height="241"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
 
             <div className="pl-wheel" aria-hidden="true">
-              <img src="/potluck/outer.webp" alt="" className="pl-wheel-outer" />
+              <img
+                src="/potluck/outer.webp"
+                alt=""
+                className="pl-wheel-outer"
+                width="640"
+                height="640"
+                loading="eager"
+                decoding="async"
+              />
               <span className="pl-wheel-spin">
-                <img src="/potluck/spinner.webp" alt="" className="pl-wheel-spinner" />
+                <img
+                  src="/potluck/spinner.webp"
+                  alt=""
+                  className="pl-wheel-spinner"
+                  width="512"
+                  height="512"
+                  loading="eager"
+                  decoding="async"
+                />
               </span>
               <span className="pl-wheel-glass-t" />
               <span className="pl-wheel-glass-b" />
@@ -64,7 +89,15 @@ export default function Potluck() {
               you just turn the oven on.
             </p>
             <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-play-link">
-              <img src="/potluck/play2.png" alt="Get Potluck on Google Play" className="pl-play-badge" />
+              <img
+                src="/potluck/play2.webp"
+                alt="Get Potluck on Google Play"
+                className="pl-play-badge"
+                width="440"
+                height="121"
+                loading="eager"
+                decoding="async"
+              />
             </a>
           </div>
         </section>
@@ -79,7 +112,14 @@ export default function Potluck() {
                 <div className="pl-step" key={s.title}>
                   <div className="pl-step-badge">
                     {typeof s.badge === 'object'
-                      ? <img src={s.badge.img} alt={s.badge.alt} />
+                      ? <img
+                          src={s.badge.img}
+                          alt={s.badge.alt}
+                          width="160"
+                          height="160"
+                          loading="lazy"
+                          decoding="async"
+                        />
                       : <span>{s.badge}</span>}
                   </div>
                   <h3>{s.title}</h3>
@@ -122,9 +162,25 @@ export default function Potluck() {
               <Link to="/" className="pl-btn pl-btn--teal">Meet Savor →</Link>
             </div>
             <div className="pl-pair-icons">
-              <img src="/potluck/potluck-icon.webp" alt="Potluck" className="pl-pair-icon" />
+              <img
+                src="/potluck/potluck-icon.webp"
+                alt="Potluck"
+                className="pl-pair-icon"
+                width="192"
+                height="192"
+                loading="lazy"
+                decoding="async"
+              />
               <span className="pl-pair-x">×</span>
-              <img src="/potluck/savor-logo.webp" alt="Savor" className="pl-pair-icon" />
+              <img
+                src="/icons/icon-Tangerine.webp"
+                alt="Savor"
+                className="pl-pair-icon"
+                width="160"
+                height="160"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </div>
         </section>
@@ -134,7 +190,15 @@ export default function Potluck() {
           <div className="pl-container pl-section pl-download-inner">
             <h2>Spin for your supper.</h2>
             <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-play-link">
-              <img src="/potluck/play2.png" alt="Get Potluck on Google Play" className="pl-play-badge" />
+              <img
+                src="/potluck/play2.webp"
+                alt="Get Potluck on Google Play"
+                className="pl-play-badge"
+                width="440"
+                height="121"
+                loading="lazy"
+                decoding="async"
+              />
             </a>
           </div>
         </section>

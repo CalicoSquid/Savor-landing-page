@@ -73,7 +73,16 @@ export default function LifeStoryBeforeTheRecipe() {
       </p>
 
       <figure className="blog-post-figure">
-        <img src="/screenshots/found.webp" alt="Savor detecting a recipe while browsing and offering to import it" />
+        <img
+          src="/screenshots/found.webp"
+          srcSet="/screenshots/found-240.webp 240w, /screenshots/found.webp 480w"
+          sizes="(max-width: 560px) 240px, 320px"
+          alt="Savor detecting a recipe while browsing and offering to import it"
+          width="480"
+          height="1002"
+          loading="lazy"
+          decoding="async"
+        />
         <figcaption>Savor spots a recipe as you browse — no copying, no pasting, no life story.</figcaption>
       </figure>
 

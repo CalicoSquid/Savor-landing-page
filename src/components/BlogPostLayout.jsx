@@ -36,7 +36,15 @@ export default function BlogPostLayout({ title, date, readTime, children }) {
         <div className="doc-cta">
           <h2>A home for every recipe that matters.</h2>
           <a href={PLAY_URL} target="_blank" rel="noreferrer" className="doc-cta-badge-link">
-            <img src="/potluck/play2.png" alt="Get Savor on Google Play" className="doc-cta-badge" />
+            <img
+              src="/potluck/play2.webp"
+              alt="Get Savor on Google Play"
+              className="doc-cta-badge"
+              width="440"
+              height="121"
+              loading="lazy"
+              decoding="async"
+            />
           </a>
           <a href="/blog" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>
             Read more from the blog &rarr;

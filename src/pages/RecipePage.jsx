@@ -133,7 +133,7 @@ export default function RecipePage() {
     const desc = recipe.description || `${recipe.cuisine || ''} recipe saved on Savor`.trim()
     setMeta('og:title', decode(recipe.name))
     setMeta('og:description', desc)
-    setMeta('og:image', recipe.image || '/images/savor-final.png')
+    setMeta('og:image', recipe.image || '/images/savor-final.webp')
     setMeta('og:url', window.location.href)
     setMeta('og:type', 'article')
     setMeta('twitter:card', 'summary_large_image', 'name')
@@ -181,7 +181,14 @@ export default function RecipePage() {
   if (error || !recipe) return (
     <div className="rp-state">
       <div className="rp-not-found">
-        <img src="/images/savor-final.png" alt="Savor" className="rp-nf-logo" />
+        <img
+          src="/images/savor-final-ui.webp"
+          alt="Savor"
+          className="rp-nf-logo"
+          width="480"
+          height="148"
+          decoding="async"
+        />
         <h2>Recipe not found</h2>
         <p>This recipe may have been removed or the link is incorrect.</p>
         <a href={PLAY_STORE} className="rp-store-btn" target="_blank" rel="noopener noreferrer">
@@ -198,7 +205,16 @@ export default function RecipePage() {
         {/* Hero — padded, rounded, tasteful */}
         {recipe.image && (
           <div className="rp-hero-wrap">
-            <img src={recipe.image} alt={recipe.name} className="rp-hero-img" />
+            <img
+              src={recipe.image}
+              alt={recipe.name}
+              className="rp-hero-img"
+              width="1200"
+              height="800"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
             {recipe.imageCredit?.photographer && (
               <a
                 className="rp-credit"
@@ -226,6 +242,10 @@ export default function RecipePage() {
                 src={getThemeIcon(recipe.user.theme)}
                 alt=""
                 className="rp-avatar"
+                width="160"
+                height="160"
+                loading="lazy"
+                decoding="async"
                 onError={e => {
                   e.currentTarget.onerror = null
                   e.currentTarget.src = '/icons/icon-default.webp'
@@ -308,7 +328,15 @@ export default function RecipePage() {
 
         {/* CTA */}
         <div className="rp-cta">
-          <img src="/images/savor-final.png" alt="Savor" className="rp-cta-logo" />
+          <img
+            src="/images/savor-final-ui.webp"
+            alt="Savor"
+            className="rp-cta-logo"
+            width="480"
+            height="148"
+            loading="lazy"
+            decoding="async"
+          />
           <p className="rp-cta-text">Save recipes from anywhere. Cook without the clutter.</p>
           <a
             href={`savor://create?url=${encodeURIComponent(window.location.href)}`}

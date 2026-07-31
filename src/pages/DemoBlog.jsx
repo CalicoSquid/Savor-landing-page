@@ -501,7 +501,15 @@ export default function DemoBlog() {
             aria-label="About this page"
             onClick={(e) => e.stopPropagation()}
           >
-            <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-modal-icon" />
+            <img
+              src="/icons/icon-Tangerine.webp"
+              alt=""
+              className="db-sim-modal-icon"
+              width="160"
+              height="160"
+              loading="lazy"
+              decoding="async"
+            />
             <h3 className="db-sim-modal-title">This blog isn&rsquo;t real.</h3>
             <p className="db-sim-modal-body">
               We wrote an absurdly over-written recipe post on purpose, to show off something that is real: Savor&rsquo;s browser finding an actual recipe buried in all&hellip; this. Enjoy Marguerite&rsquo;s descent into lasagne-based grief, or tap the little Savor icon any time you&rsquo;ve had enough.
@@ -518,7 +526,15 @@ export default function DemoBlog() {
         onClick={beginSimulation}
         aria-label="Skip to how this works in Savor"
       >
-        <img src="/icons/icon-Tangerine.webp" alt="" className="db-savor-float-icon" />
+        <img
+              src="/icons/icon-Tangerine.webp"
+              alt=""
+              className="db-savor-float-icon"
+              width="160"
+              height="160"
+              loading="lazy"
+              decoding="async"
+            />
       </button>
       <button
         id="db-shoot-trigger"
@@ -541,7 +557,14 @@ export default function DemoBlog() {
             <img
               className="db-hero-img"
               src="/images/lasagne.webp"
+              srcSet="/images/lasagne-800.webp 800w, /images/lasagne.webp 1600w"
+              sizes="(max-width: 820px) calc(100vw - 40px), 780px"
               alt="A steaming pan of lasagne"
+              width="1600"
+              height="1066"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
             />
             <div className="db-steam" />
             <div className="db-steam db-s2" />
@@ -828,7 +851,15 @@ export default function DemoBlog() {
       {savorMode && (
         <div className="db-sim-header">
           <a href="/" className="db-sim-header-mark-link" aria-label="Back to Savor">
-            <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-header-mark" />
+            <img
+              src="/icons/icon-Tangerine.webp"
+              alt=""
+              className="db-sim-header-mark"
+              width="160"
+              height="160"
+              loading="lazy"
+              decoding="async"
+            />
           </a>
           <div className="db-sim-header-actions" aria-hidden="true">
             <span className="db-sim-header-btn">
@@ -854,7 +885,15 @@ export default function DemoBlog() {
                 <div
                   className={`db-sim-slim${simPhase !== 'idle' ? ' db-sim-pulse' : ''}`}
                 >
-                  <img src="/icons/icon-Tangerine.webp" alt="" className="db-sim-mark" />
+                  <img
+              src="/icons/icon-Tangerine.webp"
+              alt=""
+              className="db-sim-mark"
+              width="160"
+              height="160"
+              loading="lazy"
+              decoding="async"
+            />
                   <div className="db-sim-text">
                     <span className="db-sim-title">Savor</span>
                     <span className="db-sim-sub">
@@ -908,7 +947,15 @@ export default function DemoBlog() {
                 <path d="M15 18l-6-6 6-6" />
               </svg>
             </button>
-            <img src="/icons/icon-Tangerine.webp" alt="" className="db-reveal-header-mark" />
+            <img
+              src="/icons/icon-Tangerine.webp"
+              alt=""
+              className="db-reveal-header-mark"
+              width="160"
+              height="160"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
 
           {revealStage === 'progress' ? (
@@ -966,7 +1013,16 @@ export default function DemoBlog() {
               </div>
 
               <div className="db-reveal-image">
-                <img src="/images/lasagne.webp" alt="Baked lasagne, sliced" />
+                <img
+                  src="/images/lasagne-800.webp"
+                  srcSet="/images/lasagne-800.webp 800w, /images/lasagne.webp 1600w"
+                  sizes="(max-width: 600px) calc(100vw - 56px), 520px"
+                  alt="Baked lasagne, sliced"
+                  width="800"
+                  height="533"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               <p className="db-reveal-photo-credit">
                 📷 Photo by <a href="https://unsplash.com/@rabbit_in_blue?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noreferrer">Karolina Kołodziejczak</a> on <a href="https://unsplash.com/photos/sliced-pizza-on-white-ceramic-plate-OSMAK8b74ls?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noreferrer">Unsplash</a>
