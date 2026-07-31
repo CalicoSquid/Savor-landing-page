@@ -56,6 +56,14 @@ const ROUTES = [
     ogImage: "https://getsavor.recipes/caper/caper-feature-graphic.png",
   },
   {
+    url: "/apocaleaf",
+    file: "apocaleaf.html",
+    title: "Apocaleaf — Post-Apocalyptic Foraging Game | Coming Soon",
+    desc: "Apocaleaf is a post-apocalyptic foraging game where Citizens locate edible plants, file field reports, earn Scrip, and rebuild the archive.",
+    canonical: "https://getsavor.recipes/apocaleaf",
+    ogImage: "https://getsavor.recipes/apocaleaf/apocaleaf-og.png",
+  },
+  {
     url: "/faq",
     file: "faq.html",
     title: "Savor FAQ — Questions About the Recipe App",

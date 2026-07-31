@@ -1,0 +1,645 @@
+/* ── Apocaleaf / coming-soon field file ───────────────────────── */
+:root {
+  --apoc-paper: #d9caa9;
+  --apoc-paper-light: #f2e7cb;
+  --apoc-paper-raised: #e8dbbc;
+  --apoc-ink: #2d2923;
+  --apoc-muted: #6b6255;
+  --apoc-leaf: #5a6b3a;
+  --apoc-acid: #b4e424;
+  --apoc-oxblood: #9c3b2e;
+  --apoc-warning: #a86e12;
+  --apoc-mono: 'JetBrains Mono', monospace;
+}
+
+.nav[data-nav-theme='apocaleaf'] {
+  background: rgba(217, 202, 169, 0.96);
+  border-bottom: 3px solid var(--apoc-oxblood);
+  box-shadow: 0 8px 24px rgba(45, 41, 35, 0.13);
+  backdrop-filter: blur(12px);
+}
+
+.nav-icon--apocaleaf {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.apoc-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 64px 24px 24px;
+  color: var(--apoc-ink);
+  background:
+    radial-gradient(circle at 76% 20%, rgba(180, 228, 36, 0.17), transparent 24rem),
+    linear-gradient(135deg, #e6d8b9 0%, #d8c7a3 52%, #cdbc95 100%);
+  isolation: isolate;
+}
+
+.apoc-botanical-field {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  background-image: url('/apocaleaf/field-guide-bg.webp');
+  background-size: 460px auto;
+  background-position: center top;
+  opacity: 0.13;
+  mix-blend-mode: multiply;
+}
+
+.apoc-wildflowers {
+  position: absolute;
+  z-index: -2;
+  left: -8vw;
+  bottom: -21vw;
+  width: min(660px, 58vw);
+  opacity: 0.36;
+  mix-blend-mode: multiply;
+  filter: saturate(0.84) contrast(1.04);
+  pointer-events: none;
+}
+
+.apoc-noise {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url('/apocaleaf/print-noise.png');
+  background-size: 360px;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.apoc-shell {
+  width: min(1180px, 100%);
+  min-height: calc(100vh - 88px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border: 1px solid rgba(45, 41, 35, 0.32);
+  background: rgba(242, 231, 203, 0.55);
+  box-shadow: 0 28px 90px rgba(45, 41, 35, 0.18);
+  backdrop-filter: blur(3px);
+}
+
+.apoc-file-header,
+.apoc-file-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border-color: rgba(45, 41, 35, 0.26);
+  color: var(--apoc-muted);
+  font-family: var(--apoc-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.apoc-file-header {
+  border-bottom: 1px solid rgba(45, 41, 35, 0.26);
+}
+
+.apoc-file-header span:first-child,
+.apoc-file-footer span:last-child {
+  color: var(--apoc-oxblood);
+}
+
+.apoc-file-footer {
+  border-top: 1px solid rgba(45, 41, 35, 0.26);
+}
+
+.apoc-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(390px, 0.84fr);
+  gap: clamp(42px, 7vw, 94px);
+  align-items: center;
+  padding: clamp(54px, 7vw, 90px);
+}
+
+.apoc-copy {
+  max-width: 630px;
+}
+
+.apoc-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  color: var(--apoc-leaf);
+  font-family: var(--apoc-mono);
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.apoc-status-light {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--apoc-ink);
+  border-radius: 50%;
+  background: var(--apoc-acid);
+  box-shadow: 0 0 0 5px rgba(180, 228, 36, 0.19);
+}
+
+.apoc-copy h1 {
+  max-width: 720px;
+  margin: 0;
+  color: var(--apoc-ink);
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(3.45rem, 7vw, 6.75rem);
+  font-weight: 800;
+  letter-spacing: -0.065em;
+  line-height: 0.89;
+  text-wrap: balance;
+}
+
+.apoc-copy h1::after {
+  content: '';
+  display: block;
+  width: 94px;
+  height: 7px;
+  margin-top: 28px;
+  background: var(--apoc-oxblood);
+  transform: rotate(-1deg);
+}
+
+.apoc-lede {
+  max-width: 590px;
+  margin-top: 28px;
+  color: rgba(45, 41, 35, 0.78);
+  font-size: clamp(1.03rem, 1.55vw, 1.22rem);
+  line-height: 1.75;
+}
+
+.apoc-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 32px;
+}
+
+.apoc-brand-lockup img {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+}
+
+.apoc-wordmark {
+  color: var(--apoc-ink);
+  font-family: var(--apoc-mono);
+  font-size: clamp(1.22rem, 2vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1;
+}
+
+.apoc-brandline {
+  margin-top: 7px;
+  color: var(--apoc-leaf);
+  font-family: var(--apoc-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.apoc-safety {
+  max-width: 600px;
+  margin-top: 34px;
+  padding: 13px 16px;
+  border-left: 5px solid var(--apoc-warning);
+  background: rgba(168, 110, 18, 0.1);
+  color: #6d4811;
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.apoc-safety strong {
+  font-weight: 800;
+}
+
+.apoc-dossier-wrap {
+  position: relative;
+  width: min(100%, 470px);
+  justify-self: end;
+  perspective: 1200px;
+}
+
+.apoc-dossier-wrap::before,
+.apoc-dossier-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 24px -14px -14px 24px;
+  z-index: -2;
+  border: 1px solid rgba(45, 41, 35, 0.26);
+  background: #c4b48e;
+  transform: rotate(2.4deg);
+}
+
+.apoc-dossier-wrap::after {
+  inset: 11px -7px -8px 12px;
+  z-index: -1;
+  background: #dfd0ae;
+  transform: rotate(-1.35deg);
+}
+
+.apoc-dossier {
+  position: relative;
+  min-height: 590px;
+  overflow: hidden;
+  padding: 24px 28px 26px;
+  border: 5px solid var(--apoc-ink);
+  background:
+    linear-gradient(rgba(156, 59, 46, 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(156, 59, 46, 0.11) 1px, transparent 1px),
+    var(--apoc-paper-light);
+  background-size: 32px 32px;
+  box-shadow: 0 24px 60px rgba(45, 41, 35, 0.21);
+  transform: rotate(-0.45deg);
+  transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 420ms ease;
+}
+
+.apoc-page--authorised .apoc-dossier {
+  transform: rotate(0deg) translateY(-3px);
+  box-shadow: 0 30px 72px rgba(45, 41, 35, 0.25);
+}
+
+.apoc-dossier::before {
+  content: '';
+  position: absolute;
+  inset: 13px;
+  border: 2px solid var(--apoc-oxblood);
+  pointer-events: none;
+}
+
+.apoc-dossier-corner {
+  position: absolute;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  background: var(--apoc-paper);
+  opacity: 0.65;
+}
+
+.apoc-dossier-corner--top {
+  top: -28px;
+  right: -26px;
+  transform: rotate(42deg);
+}
+
+.apoc-dossier-corner--bottom {
+  bottom: -28px;
+  left: -26px;
+  transform: rotate(42deg);
+}
+
+.apoc-dossier-meta {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--apoc-muted);
+  font-family: var(--apoc-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.apoc-seal-lockup {
+  position: relative;
+  width: 184px;
+  height: 184px;
+  margin: 29px auto 15px;
+}
+
+.apoc-seal-ring,
+.apoc-seal-mark {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.apoc-seal-ring {
+  opacity: 0.9;
+  transform: scale(1.06) rotate(-3deg);
+}
+
+.apoc-seal-mark {
+  transform: scale(0.74);
+}
+
+.apoc-dossier-kicker {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  color: var(--apoc-oxblood);
+  font-family: var(--apoc-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.apoc-dossier h2 {
+  position: relative;
+  z-index: 3;
+  max-width: 330px;
+  margin: 9px auto 19px;
+  color: var(--apoc-ink);
+  font-size: clamp(1.38rem, 2.2vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.apoc-directive-window {
+  position: relative;
+  z-index: 3;
+  min-height: 124px;
+  margin: 0 auto 20px;
+  padding: 14px 16px;
+  border-top: 1px solid rgba(45, 41, 35, 0.38);
+  border-bottom: 1px solid rgba(45, 41, 35, 0.38);
+}
+
+.apoc-redactions {
+  position: absolute;
+  inset: 17px 16px;
+  display: grid;
+  align-content: center;
+  gap: 12px;
+  opacity: 1;
+  transition: opacity 180ms ease, transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.apoc-redactions span {
+  height: 12px;
+  background: var(--apoc-ink);
+}
+
+.apoc-redactions span:nth-child(1) { width: 88%; }
+.apoc-redactions span:nth-child(2) { width: 100%; }
+.apoc-redactions span:nth-child(3) { width: 72%; }
+.apoc-redactions span:nth-child(4) { width: 91%; }
+
+.apoc-page--authorised .apoc-redactions {
+  opacity: 0;
+  transform: translateX(44px);
+  pointer-events: none;
+}
+
+.apoc-directives {
+  display: grid;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 260ms 170ms ease, transform 360ms 170ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.apoc-page--authorised .apoc-directives {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.apoc-directives li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--apoc-ink);
+  font-family: var(--apoc-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.apoc-directives li span {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--apoc-acid);
+  color: #1f241a;
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+.apoc-authorise {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 2px solid var(--apoc-ink);
+  background: var(--apoc-acid);
+  color: #1f241a;
+  font-family: var(--apoc-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--apoc-ink);
+  transition: transform 140ms ease, box-shadow 140ms ease, background 260ms ease;
+}
+
+.apoc-authorise:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--apoc-ink);
+}
+
+.apoc-authorise:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--apoc-ink);
+}
+
+.apoc-authorise:focus-visible {
+  outline: 4px solid rgba(156, 59, 46, 0.35);
+  outline-offset: 4px;
+}
+
+.apoc-authorise:disabled {
+  background: var(--apoc-paper-raised);
+  color: var(--apoc-leaf);
+  cursor: default;
+  box-shadow: 2px 2px 0 rgba(45, 41, 35, 0.72);
+}
+
+.apoc-button-seal {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.69rem;
+}
+
+.apoc-accepted-stamp {
+  position: absolute;
+  z-index: 8;
+  right: 18px;
+  bottom: 70px;
+  padding: 8px 13px 7px;
+  border: 5px solid var(--apoc-oxblood);
+  color: var(--apoc-oxblood);
+  font-family: var(--apoc-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  opacity: 0;
+  transform: rotate(-7deg) scale(1.5);
+  pointer-events: none;
+}
+
+.apoc-page--authorised .apoc-accepted-stamp {
+  animation: apoc-stamp-hit 430ms cubic-bezier(0.17, 0.84, 0.3, 1.2) forwards;
+}
+
+@keyframes apoc-stamp-hit {
+  0% { opacity: 0; transform: rotate(-7deg) scale(1.8); }
+  62% { opacity: 0.92; transform: rotate(-7deg) scale(0.93); }
+  100% { opacity: 0.84; transform: rotate(-7deg) scale(1); }
+}
+
+.apoc-dossier-note {
+  position: relative;
+  z-index: 3;
+  margin: 13px 0 0;
+  color: var(--apoc-muted);
+  font-family: var(--apoc-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .apoc-page {
+    padding-inline: 14px;
+  }
+
+  .apoc-shell {
+    min-height: auto;
+  }
+
+  .apoc-layout {
+    grid-template-columns: 1fr;
+    gap: 54px;
+    padding: 56px clamp(24px, 7vw, 58px) 72px;
+  }
+
+  .apoc-copy {
+    max-width: 720px;
+  }
+
+  .apoc-dossier-wrap {
+    width: min(100%, 500px);
+    justify-self: center;
+  }
+
+  .apoc-wildflowers {
+    left: -16vw;
+    bottom: -9vw;
+    width: 76vw;
+    opacity: 0.22;
+  }
+}
+
+@media (max-width: 600px) {
+  .apoc-page {
+    padding: 64px 0 0;
+  }
+
+  .apoc-shell {
+    border-left: 0;
+    border-right: 0;
+    background: rgba(242, 231, 203, 0.7);
+    box-shadow: none;
+  }
+
+  .apoc-file-header,
+  .apoc-file-footer {
+    padding-inline: 14px;
+    font-size: 0.56rem;
+  }
+
+  .apoc-file-header span:nth-child(2),
+  .apoc-file-footer span:first-child {
+    display: none;
+  }
+
+  .apoc-layout {
+    padding: 45px 20px 66px;
+  }
+
+  .apoc-copy h1 {
+    font-size: clamp(3.2rem, 17vw, 5rem);
+  }
+
+  .apoc-lede {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .apoc-brand-lockup img {
+    width: 58px;
+    height: 58px;
+  }
+
+  .apoc-wordmark {
+    font-size: 1.08rem;
+    letter-spacing: 0.13em;
+  }
+
+  .apoc-dossier {
+    min-height: 560px;
+    padding: 22px 20px 24px;
+    border-width: 4px;
+  }
+
+  .apoc-dossier::before {
+    inset: 10px;
+  }
+
+  .apoc-seal-lockup {
+    width: 165px;
+    height: 165px;
+  }
+
+  .apoc-accepted-stamp {
+    right: 12px;
+    bottom: 68px;
+    font-size: 0.82rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apoc-dossier,
+  .apoc-redactions,
+  .apoc-directives,
+  .apoc-authorise {
+    transition: none;
+  }
+
+  .apoc-page--authorised .apoc-accepted-stamp {
+    animation: none;
+    opacity: 0.84;
+    transform: rotate(-7deg) scale(1);
+  }
+}

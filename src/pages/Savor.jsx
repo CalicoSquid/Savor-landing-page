@@ -189,7 +189,10 @@ export default function Savor() {
                                 <span className="apoc-teaser-tag">Forage the ruins. File the report. Eat well.</span>
                             </div>
                             <p>A post-apocalyptic foraging game disguised as a field file. Track edible plants, file your findings, earn collection cards, and build a survival archive from the wreckage.</p>
-                            <span className="same-kitchen-app-soon">Not in testing yet</span>
+                            <div className="same-kitchen-app-links">
+                                <a href="/apocaleaf" className="same-kitchen-app-link">Open field file →</a>
+                                <span className="same-kitchen-app-soon">Not in testing yet</span>
+                            </div>
                         </div>
                     </div>
                     <p className="same-kitchen-disclaimer">

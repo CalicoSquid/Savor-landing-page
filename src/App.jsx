@@ -3,6 +3,7 @@ import Savor from './pages/Savor'
 import Studio from './pages/Studio'
 import Potluck from './pages/Potluck'
 import Caper from './pages/Caper'
+import Apocaleaf from './pages/Apocaleaf'
 import About from './pages/About'
 import Faq from './pages/Faq'
 import RecipePage from './pages/RecipePage'
@@ -30,6 +31,7 @@ export default function AppRoutes() {
         <Route path="/potluck"                  element={<Potluck />} />
         <Route path="/caper"                    element={<Caper />} />
         <Route path="/forage"                   element={<Caper />} />
+        <Route path="/apocaleaf"                element={<Apocaleaf />} />
         <Route path="/about"                    element={<About />} />
         <Route path="/faq"                      element={<Faq />} />
         <Route path="/studio"                   element={<Studio />} />
