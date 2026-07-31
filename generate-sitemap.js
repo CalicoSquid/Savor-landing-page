@@ -29,7 +29,10 @@ const STATIC_ROUTES = [
   { loc: '/',        changefreq: 'weekly',  priority: '1.0' },
   { loc: '/potluck',  changefreq: 'monthly', priority: '0.8' },
   { loc: '/caper',   changefreq: 'monthly', priority: '0.8' },
-  { loc: '/apocaleaf', changefreq: 'monthly', priority: '0.7' },
+  // /forage has its own prerendered metadata, H1 and self-canonical (see
+  // prerender.js), so it belongs here. It was previously prerendered but
+  // absent from the sitemap.
+  { loc: '/forage',  changefreq: 'monthly', priority: '0.6' },
   { loc: '/about',    changefreq: 'monthly', priority: '0.7' },
   { loc: '/faq',      changefreq: 'monthly', priority: '0.7' },
   { loc: '/blog',     changefreq: 'weekly',  priority: '0.7' },
