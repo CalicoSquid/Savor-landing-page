@@ -14,11 +14,6 @@
   force = true
 
 [[redirects]]
-  from = "/forage"
-  to = "/caper"
-  status = 301
-
-[[redirects]]
   from = "/forage/privacy"
   to = "/caper/privacy"
   status = 301

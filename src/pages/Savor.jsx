@@ -149,40 +149,51 @@ export default function Savor() {
             <section className="same-kitchen">
                 <div className="container same-kitchen-inner">
                     <p className="same-kitchen-eyebrow">From the same kitchen</p>
-                    <h2 className="same-kitchen-title">Two more, still in testing.</h2>
+                    <h2 className="same-kitchen-title">More from the same kitchen.</h2>
                     <p className="same-kitchen-sub">
-                        Savor comes from a one-person kitchen, not a studio. These are next.
+                        Savor comes from a one-person kitchen, not a studio. Two are already in testing. One more is creeping into view.
                     </p>
                     <div className="same-kitchen-apps">
                         <div className="same-kitchen-app">
                             <img src="/potluck/potluck-icon.webp" alt="Potluck" className="same-kitchen-app-icon" />
                             <h3>Potluck</h3>
                             <p>One spin and the universe decides what&rsquo;s for dinner — no scrolling, no deciding, just turn the oven on. It&rsquo;s basically a fun excuse to pull you into Savor, and it knows it.</p>
-                            <a
-                                href="https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="same-kitchen-app-link"
-                            >
-                                Join the test →
-                            </a>
+                            <div className="same-kitchen-app-links">
+                                <a href="/potluck" className="same-kitchen-app-link">See Potluck →</a>
+                                <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck"
+                                    target="_blank" rel="noreferrer"
+                                    className="same-kitchen-app-link same-kitchen-app-link--muted">Join the test</a>
+                            </div>
                         </div>
                         <div className="same-kitchen-app">
                             <img src="/caper/caper-icon-bg.webp" alt="Caper" className="same-kitchen-app-icon" />
                             <h3>Caper</h3>
                             <p>A wild foraging companion — find and identify what&rsquo;s edible nearby, then learn to cook it safely. Comes with a set of cute, boy-scout-style badges to earn along the way.</p>
-                            <a
-                                href="https://play.google.com/store/apps/details?id=com.calicosquid.forage"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="same-kitchen-app-link"
-                            >
-                                Join the test →
-                            </a>
+                            <div className="same-kitchen-app-links">
+                                <a href="/caper" className="same-kitchen-app-link">See Caper →</a>
+                                <a href="https://play.google.com/store/apps/details?id=com.calicosquid.forage"
+                                    target="_blank" rel="noreferrer"
+                                    className="same-kitchen-app-link same-kitchen-app-link--muted">Join the test</a>
+                            </div>
+                        </div>
+                        <div className="same-kitchen-app same-kitchen-app--apocaleaf">
+                            <div className="apoc-teaser">
+                                <div className="apoc-teaser-grid" aria-hidden="true" />
+                                <span className="apoc-teaser-stamp">Coming soon</span>
+                                <div className="apoc-teaser-lockup" aria-hidden="true">
+                                    <img src="/apocaleaf/famine-approval-ring.png" alt="" className="apoc-teaser-ring" />
+                                    <img src="/apocaleaf/standard-issue-splash.png" alt="" className="apoc-teaser-seal" />
+                                </div>
+                                <span className="apoc-teaser-agency">F.A.M.I.N.E. // Field Archive</span>
+                                <h3 className="apoc-teaser-title">Apocaleaf</h3>
+                                <span className="apoc-teaser-tag">Forage the ruins. File the report. Eat well.</span>
+                            </div>
+                            <p>A post-apocalyptic foraging game disguised as a field file. Track edible plants, file your findings, earn collection cards, and build a survival archive from the wreckage.</p>
+                            <span className="same-kitchen-app-soon">Not in testing yet</span>
                         </div>
                     </div>
                     <p className="same-kitchen-disclaimer">
-                        Both are in closed testing on Google Play. Email <a href="mailto:dev@getsavor.recipes">dev@getsavor.recipes</a> to be added as a tester.
+                        Potluck and Caper are in closed testing on Google Play. Email <a href="mailto:dev@getsavor.recipes">dev@getsavor.recipes</a> to be added as a tester. Apocaleaf is still cooking.
                     </p>
                 </div>
             </section>

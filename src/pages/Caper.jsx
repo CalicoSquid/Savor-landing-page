@@ -3,6 +3,7 @@
 // app's own colors.js), shares the getsavor.recipes domain. Not part of the
 // Savor family nav — reached via footer + direct link only.
 import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import './forage.css'
 import Footer from '../components/Footer'
 import SeasonExplorer from '../components/forage/SeasonExplorer'
@@ -42,32 +43,50 @@ const FEATURES = [
 ]
 
 export default function Caper() {
+  const { pathname } = useLocation()
+  const isForageRoute = pathname === '/forage'
+
   useEffect(() => {
-    document.title = 'Caper — Find Dinner in the Wild | Wild Food Foraging App'
+    document.title = isForageRoute
+      ? 'Forage Wild Food Safely with Caper | Seasonal Field Guide'
+      : 'Caper — Find Dinner in the Wild | Wild Food Foraging App'
     const setMeta = (name, content, attr = 'name') => {
       let el = document.querySelector(`meta[${attr}="${name}"]`)
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el) }
       el.setAttribute('content', content)
     }
-    const desc = 'Caper is a wild-food companion app made by a chef. Identify 893 wild edibles with safety ratings, see what\u2019s in season near you, cook what you find, and keep every find in your logbook. One payment, no subscription.'
+    const desc = isForageRoute
+      ? 'Caper helps new and curious foragers find wild edibles in season nearby, check safety ratings and habitats, log discoveries, and cook what they find.'
+      : 'Caper is a wild-food companion app made by a chef. Identify 893 wild edibles with safety ratings, see what\u2019s in season near you, cook what you find, and keep every find in your logbook. One payment, no subscription.'
     setMeta('description', desc)
-    setMeta('og:title', 'Caper — Find Dinner in the Wild', 'property')
+    setMeta(
+      'og:title',
+      isForageRoute ? 'Forage Wild Food Safely with Caper | Seasonal Field Guide' : 'Caper — Find Dinner in the Wild',
+      'property',
+    )
     setMeta('og:description', desc, 'property')
     setMeta('og:image', 'https://getsavor.recipes/caper/caper-feature-graphic.png', 'property')
-    setMeta('og:url', 'https://getsavor.recipes/caper', 'property')
+    setMeta(
+      'og:url',
+      isForageRoute ? 'https://getsavor.recipes/forage' : 'https://getsavor.recipes/caper',
+      'property',
+    )
     setMeta('og:type', 'website', 'property')
     setMeta('twitter:card', 'summary_large_image')
 
     let link = document.querySelector('link[rel="canonical"]')
     if (!link) { link = document.createElement('link'); link.setAttribute('rel', 'canonical'); document.head.appendChild(link) }
-    link.setAttribute('href', 'https://getsavor.recipes/caper')
+    link.setAttribute(
+      'href',
+      isForageRoute ? 'https://getsavor.recipes/forage' : 'https://getsavor.recipes/caper',
+    )
 
     return () => {
       setMeta('robots', 'index, follow')
       const l = document.querySelector('link[rel="canonical"]')
       if (l) l.setAttribute('href', window.location.origin + '/')
     }
-  }, [])
+  }, [isForageRoute])
 
   return (
     <main className="page forage-page" data-nav-theme="forage">
@@ -75,8 +94,20 @@ export default function Caper() {
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="fg-hero">
         <div className="fg-hero-inner">
-          <img src="/caper/caper-wordmark.png" alt="Caper" className="fg-wordmark fg-fade fg-fade-1" />
-          <p className="fg-hero-tagline fg-fade fg-fade-2">Find it. Learn it. Cook it.</p>
+          <img
+            src="/caper/caper-wordmark.png"
+            alt={isForageRoute ? '' : 'Caper'}
+            aria-hidden={isForageRoute ? 'true' : undefined}
+            className="fg-wordmark fg-fade fg-fade-1"
+          />
+          {isForageRoute && (
+            <h1 className="fg-hero-title fg-fade fg-fade-2">
+              Forage wild food safely with Caper
+            </h1>
+          )}
+          <p className={`fg-hero-tagline fg-fade ${isForageRoute ? 'fg-fade-3' : 'fg-fade-2'}`}>
+            Find it. Learn it. Cook it.
+          </p>
           <p className="fg-hero-sub fg-fade fg-fade-3">
             Free food is growing near you right now. Caper helps you find wild
             edibles, learn them safely, and cook what you bring home — even if

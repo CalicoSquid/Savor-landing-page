@@ -68,8 +68,9 @@ function buildJsonLd(recipe, id) {
 
 const ICON_FILENAME = { Feijoa: 'Feijoah' }
 function getThemeIcon(theme) {
-  const name = ICON_FILENAME[theme] ?? theme
-  return `/icons/icon-${name || 'default'}.png`
+  const key = typeof theme === 'string' ? theme.trim() : ''
+  const name = ICON_FILENAME[key] ?? key
+  return `/icons/icon-${name || 'default'}.webp`
 }
 
 function decode(str) {
@@ -223,9 +224,12 @@ export default function RecipePage() {
             <div className="rp-author">
               <img
                 src={getThemeIcon(recipe.user.theme)}
-                alt={recipe.user.name || recipe.user.username}
+                alt=""
                 className="rp-avatar"
-                onError={e => { e.target.src = '/icons/icon-Tangerine.png' }}
+                onError={e => {
+                  e.currentTarget.onerror = null
+                  e.currentTarget.src = '/icons/icon-default.webp'
+                }}
               />
               <span className="rp-author-name">
                 Saved by {recipe.user.name || recipe.user.username}

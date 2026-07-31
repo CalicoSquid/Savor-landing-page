@@ -437,7 +437,7 @@
 }
 
 .same-kitchen-inner {
-  max-width: 680px;
+  max-width: 1040px;
   margin: 0 auto;
 }
 
@@ -480,6 +480,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
 .same-kitchen-app-icon {
@@ -512,6 +513,167 @@
   margin-top: 6px;
 }
 .same-kitchen-app-link:hover { text-decoration: underline; }
+/* Each app card now offers two destinations: its page on this site (primary)
+   and its Play Store listing (secondary). Plain <a> anchors, matching the
+   Footer convention — a real document navigation, not an SPA push, so the
+   in-app WebView fires onLoadEnd and the new page starts at the top. */
+.same-kitchen-app-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 16px;
+  margin-top: 10px;
+}
+
+.same-kitchen-app-links .same-kitchen-app-link { margin-top: 0; }
+
+.same-kitchen-app-link--muted {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.apoc-teaser {
+  container-type: inline-size;
+  position: relative;
+  /* full-bleed out of the card's 24px padding */
+  margin: -24px -24px 14px;
+  padding: 20px 16px 22px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  border-bottom: 1px solid rgba(156, 59, 46, 0.22);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background:
+    linear-gradient(160deg, rgba(255,255,255,0.32), transparent 46%),
+    #e8dcc2;
+  box-shadow: inset 0 -12px 24px -18px rgba(71, 54, 34, 0.4);
+}
+
+.apoc-teaser::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(156, 59, 46, 0.38);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.apoc-teaser-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(51, 45, 36, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51, 45, 36, 0.08) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.32;
+}
+
+.apoc-teaser-lockup {
+  position: relative;
+  z-index: 2;
+  width: clamp(64px, 34cqi, 104px);
+  aspect-ratio: 1;
+  margin-bottom: 12px;
+}
+
+.apoc-teaser-ring,
+.apoc-teaser-seal {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.apoc-teaser-ring { transform: scale(1.14) rotate(-3deg); opacity: 0.92; }
+.apoc-teaser-seal { transform: scale(0.78); }
+
+.apoc-teaser-agency {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(0.54rem, 2.9cqi, 0.64rem);
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: #9C3B2E;
+}
+
+/* wins over .same-kitchen-app h3 */
+.same-kitchen-app--apocaleaf .apoc-teaser-title {
+  position: relative;
+  z-index: 2;
+  margin: 6px 0 0;
+  font-size: clamp(1.2rem, 8.5cqi, 1.75rem);
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: #2d2820;
+}
+
+.apoc-teaser-tag {
+  position: relative;
+  z-index: 2;
+  margin-top: 9px;
+  max-width: 22ch;
+  font-size: clamp(0.62rem, 3.2cqi, 0.74rem);
+  line-height: 1.45;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #596c31;
+}
+
+.apoc-teaser-stamp {
+  position: absolute;
+  top: 14px;
+  right: 12px;
+  z-index: 3;
+  padding: 4px 8px 3px;
+  border: 2px solid #B44733;
+  border-radius: 3px;
+  color: #B44733;
+  background: rgba(236, 224, 200, 0.82);
+  font-size: clamp(0.5rem, 2.6cqi, 0.6rem);
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 900;
+  transform: rotate(4deg);
+}
+
+.same-kitchen-app--apocaleaf {
+  background: #f7f1e5;
+  color: #2b261f;
+  border-color: rgba(156, 59, 46, 0.18);
+  box-shadow: var(--shadow-sm);
+}
+
+.same-kitchen-app--apocaleaf h3 {
+  color: #2b261f;
+}
+
+.same-kitchen-app--apocaleaf p {
+  color: rgba(43, 38, 31, 0.76);
+}
+
+.same-kitchen-app-soon {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 8px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: rgba(132, 157, 58, 0.14);
+  color: #52652c;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
 
 .same-kitchen-disclaimer {
   margin-top: 24px;
@@ -525,6 +687,7 @@
   text-decoration: none;
 }
 .same-kitchen-disclaimer a:hover { text-decoration: underline; }
+
 
 /* ── Download CTA ──────────────────────────────────────────────── */
 .download-cta {
