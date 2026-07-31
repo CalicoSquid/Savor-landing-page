@@ -20,6 +20,7 @@ export default function Footer() {
           <li><a href="/demo">Demo</a></li>
           <li><a href="/privacy">Privacy</a></li>
           <li><a href="/terms">Terms</a></li>
+          <li><a href="https://seoreceipts.com/site/getsavor/?ref=badge&amp;utm_source=embed&amp;utm_medium=badge&amp;utm_campaign=status-founding" rel="nofollow sponsored noopener" target="_blank" title="View getsavor.recipes's Google Search Console stats"><img src="https://seoreceipts.com/api/badge?slug=getsavor&amp;mode=founding&amp;theme=paper&amp;size=compact" alt="Google Search Console stats for getsavor.recipes" height="44" loading="lazy"/></a></li>
         </ul>
         <div className="site-footer-end">
           <div className="site-footer-social">
