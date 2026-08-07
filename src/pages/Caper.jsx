@@ -2,8 +2,6 @@
 // Own visual identity (forest green + terracotta + cream, straight from the
 // app's own colors.js), shares the getsavor.recipes domain. Not part of the
 // Savor family nav — reached via footer + direct link only.
-import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 import './forage.css'
 import Footer from '../components/Footer'
 import SeasonExplorer from '../components/forage/SeasonExplorer'
@@ -43,54 +41,6 @@ const FEATURES = [
 ]
 
 export default function Caper() {
-  const { pathname } = useLocation()
-  const isForageRoute = pathname === '/forage'
-
-  useEffect(() => {
-    document.title = isForageRoute
-      ? 'Forage Wild Food Safely with Caper | Seasonal Field Guide'
-      : 'Caper — Find Dinner in the Wild | Wild Food Foraging App'
-    const setMeta = (name, content, attr = 'name') => {
-      let el = document.querySelector(`meta[${attr}="${name}"]`)
-      if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el) }
-      el.setAttribute('content', content)
-    }
-    const desc = isForageRoute
-      ? 'Caper helps new and curious foragers find wild edibles in season nearby, check safety ratings and habitats, log discoveries, and cook what they find.'
-      : 'Caper is a wild-food companion app made by a chef. Identify 893 wild edibles with safety ratings, see what\u2019s in season near you, cook what you find, and keep every find in your logbook. One payment, no subscription.'
-    setMeta('description', desc)
-    setMeta(
-      'og:title',
-      isForageRoute ? 'Forage Wild Food Safely with Caper | Seasonal Field Guide' : 'Caper — Find Dinner in the Wild',
-      'property',
-    )
-    setMeta('og:description', desc, 'property')
-    setMeta('og:image', 'https://getsavor.recipes/caper/caper-feature-graphic.webp', 'property')
-    setMeta('og:image:type', 'image/webp', 'property')
-    setMeta('og:image:width', '1200', 'property')
-    setMeta('og:image:height', '587', 'property')
-    setMeta(
-      'og:url',
-      isForageRoute ? 'https://getsavor.recipes/forage' : 'https://getsavor.recipes/caper',
-      'property',
-    )
-    setMeta('og:type', 'website', 'property')
-    setMeta('twitter:card', 'summary_large_image')
-
-    let link = document.querySelector('link[rel="canonical"]')
-    if (!link) { link = document.createElement('link'); link.setAttribute('rel', 'canonical'); document.head.appendChild(link) }
-    link.setAttribute(
-      'href',
-      isForageRoute ? 'https://getsavor.recipes/forage' : 'https://getsavor.recipes/caper',
-    )
-
-    return () => {
-      setMeta('robots', 'index, follow')
-      const l = document.querySelector('link[rel="canonical"]')
-      if (l) l.setAttribute('href', window.location.origin + '/')
-    }
-  }, [isForageRoute])
-
   return (
     <main className="page forage-page" data-nav-theme="forage">
 
@@ -101,8 +51,7 @@ export default function Caper() {
             src="/caper/caper-wordmark.webp"
             srcSet="/caper/caper-wordmark-480.webp 480w, /caper/caper-wordmark.webp 960w"
             sizes="(max-width: 564px) 78vw, 440px"
-            alt={isForageRoute ? '' : 'Caper'}
-            aria-hidden={isForageRoute ? 'true' : undefined}
+            alt="Caper"
             className="fg-wordmark fg-fade fg-fade-1"
             width="960"
             height="331"
@@ -110,12 +59,10 @@ export default function Caper() {
             decoding="async"
             fetchPriority="high"
           />
-          {isForageRoute && (
-            <h1 className="fg-hero-title fg-fade fg-fade-2">
-              Forage wild food safely with Caper
-            </h1>
-          )}
-          <p className={`fg-hero-tagline fg-fade ${isForageRoute ? 'fg-fade-3' : 'fg-fade-2'}`}>
+          <h1 className="fg-hero-title fg-fade fg-fade-2">
+            Find dinner in the wild with Caper
+          </h1>
+          <p className="fg-hero-tagline fg-fade fg-fade-3">
             Find it. Learn it. Cook it.
           </p>
           <p className="fg-hero-sub fg-fade fg-fade-3">
@@ -159,7 +106,7 @@ export default function Caper() {
           <div className={`fg-feature ${i % 2 ? 'fg-feature--rev' : ''}`} key={f.title}>
             <div className="fg-feature-copy">
               <p className="fg-eyebrow">{f.eyebrow}</p>
-              <h3 className="fg-feature-title">{f.title}</h3>
+              <h2 className="fg-feature-title">{f.title}</h2>
               <p className="fg-feature-body">{f.body}</p>
             </div>
             <div className="fg-feature-shot">

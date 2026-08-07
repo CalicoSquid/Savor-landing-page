@@ -1,49 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import '@fontsource/jetbrains-mono/400.css'
 import '@fontsource/jetbrains-mono/600.css'
 import '@fontsource/jetbrains-mono/700.css'
 import './apocaleaf.css'
 
-const PAGE_TITLE = 'Apocaleaf — Post-Apocalyptic Foraging Game | Coming Soon'
-const PAGE_DESCRIPTION = 'Apocaleaf is a post-apocalyptic foraging game where Citizens locate edible plants, file field reports, earn Scrip, and rebuild the archive.'
-
-function setMeta(name, content, attribute = 'name') {
-  let element = document.querySelector(`meta[${attribute}="${name}"]`)
-  if (!element) {
-    element = document.createElement('meta')
-    element.setAttribute(attribute, name)
-    document.head.appendChild(element)
-  }
-  element.setAttribute('content', content)
-}
-
 export default function Apocaleaf() {
   const [isAuthorised, setIsAuthorised] = useState(false)
-
-  useEffect(() => {
-    document.title = PAGE_TITLE
-    setMeta('description', PAGE_DESCRIPTION)
-    setMeta('og:title', PAGE_TITLE, 'property')
-    setMeta('og:description', PAGE_DESCRIPTION, 'property')
-    setMeta('og:type', 'website', 'property')
-    setMeta('og:url', 'https://getsavor.recipes/apocaleaf', 'property')
-    setMeta('og:image', 'https://getsavor.recipes/apocaleaf/apocaleaf-og.webp', 'property')
-    setMeta('og:image:type', 'image/webp', 'property')
-    setMeta('og:image:width', '1200', 'property')
-    setMeta('og:image:height', '630', 'property')
-    setMeta('twitter:card', 'summary_large_image')
-    setMeta('twitter:title', PAGE_TITLE)
-    setMeta('twitter:description', PAGE_DESCRIPTION)
-    setMeta('twitter:image', 'https://getsavor.recipes/apocaleaf/apocaleaf-og.webp')
-
-    let canonical = document.querySelector('link[rel="canonical"]')
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.setAttribute('rel', 'canonical')
-      document.head.appendChild(canonical)
-    }
-    canonical.setAttribute('href', 'https://getsavor.recipes/apocaleaf')
-  }, [])
 
   return (
     <main className={`apoc-page${isAuthorised ? ' apoc-page--authorised' : ''}`}>

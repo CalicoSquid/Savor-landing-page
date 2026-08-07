@@ -1,54 +1,16 @@
 // generate-sitemap.js — runs after prerender.js as part of `npm run build`.
-// Writes dist/sitemap.xml: the static marketing routes plus every recipe
-// the server deems indexable via the sitemapRecipes query.
-//
-// A recipe is indexable when it's (a) original — no sourceUrl, so no
-// duplicate-content problem — AND (b) has actually been opened by a real
-// visitor in a browser at least once (tracked server-side in the
-// RecipeLinkAccess collection, written by publicRecipe). Tapping Share in
-// the app alone doesn't qualify; the link has to have genuinely been
-// opened. That filter lives entirely in the sitemapRecipes resolver — this
-// script just consumes whatever it returns.
-//
-// If the server hasn't deployed sitemapRecipes yet, or no links have been
-// opened, this falls back gracefully to static-routes-only (see below).
-
+// Static URLs come from the same SEO route registry used by prerendering, so
+// adding a public page cannot silently drift out of the sitemap.
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
-import { BLOG_POSTS } from './src/data/blogPosts.js'
+import { SEO_PAGES, SITE_URL } from './src/data/seoPages.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const dist = path.join(__dirname, 'dist')
 
 const APOLLO_URI = process.env.VITE_APOLLO_URI || 'https://savor-app-server-gql-production.up.railway.app/graphql'
-const SITE = 'https://getsavor.recipes'
-
-const STATIC_ROUTES = [
-  { loc: '/',        changefreq: 'weekly',  priority: '1.0' },
-  { loc: '/potluck',  changefreq: 'monthly', priority: '0.8' },
-  { loc: '/caper',   changefreq: 'monthly', priority: '0.8' },
-  // /forage has its own prerendered metadata, H1 and self-canonical (see
-  // prerender.js), so it belongs here. It was previously prerendered but
-  // absent from the sitemap.
-  { loc: '/forage',  changefreq: 'monthly', priority: '0.6' },
-  { loc: '/about',    changefreq: 'monthly', priority: '0.7' },
-  { loc: '/faq',      changefreq: 'monthly', priority: '0.7' },
-  { loc: '/blog',     changefreq: 'weekly',  priority: '0.7' },
-  { loc: '/studio',   changefreq: 'monthly', priority: '0.4' },
-  { loc: '/privacy',  changefreq: 'yearly',  priority: '0.2' },
-  { loc: '/terms',    changefreq: 'yearly',  priority: '0.2' },
-  { loc: '/caper/privacy', changefreq: 'yearly', priority: '0.2' },
-  // Blog posts — one entry per BLOG_POSTS entry, so a new post only needs
-  // adding to src/data/blogPosts.js, not here as well.
-  ...BLOG_POSTS.map((post) => ({
-    loc: `/blog/${post.slug}`,
-    changefreq: 'monthly',
-    priority: '0.6',
-    lastmod: post.date,
-  })),
-]
 
 const QUERY = `
   query SitemapRecipes {
@@ -59,45 +21,52 @@ const QUERY = `
   }
 `
 
+function xmlEscape(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
 async function fetchIndexableRecipes() {
   try {
     const res = await fetch(APOLLO_URI, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: QUERY }),
+      signal: AbortSignal.timeout(10000),
     })
+    if (!res.ok) {
+      console.warn(`  ⚠ sitemapRecipes HTTP ${res.status}; shipping static routes only`)
+      return []
+    }
     const { data, errors } = await res.json()
     if (errors?.length) {
-      console.warn('  ⚠ sitemapRecipes query failed, shipping static routes only:', errors[0].message)
+      console.warn('  ⚠ sitemapRecipes query failed; shipping static routes only:', errors[0].message)
       return []
     }
     return data?.sitemapRecipes || []
-  } catch (e) {
-    console.warn('  ⚠ Could not reach GraphQL for sitemap recipes, shipping static routes only:', e.message)
+  } catch (error) {
+    console.warn('  ⚠ Could not reach GraphQL for sitemap recipes; shipping static routes only:', error.message)
     return []
   }
 }
 
-function urlEntry({ loc, lastmod, changefreq, priority }) {
-  return `  <url>
-    <loc>${loc}</loc>
-    ${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}
-    ${changefreq ? `<changefreq>${changefreq}</changefreq>` : ''}
-    ${priority ? `<priority>${priority}</priority>` : ''}
-  </url>`
+function urlEntry({ loc, lastmod }) {
+  const lastmodLine = lastmod ? `\n    <lastmod>${xmlEscape(lastmod)}</lastmod>` : ''
+  return `  <url>\n    <loc>${xmlEscape(loc)}</loc>${lastmodLine}\n  </url>`
 }
 
-const today = new Date().toISOString().slice(0, 10)
-
+const staticPages = SEO_PAGES.filter((item) => item.sitemap)
 const recipes = await fetchIndexableRecipes()
 
 const entries = [
-  ...STATIC_ROUTES.map(r => urlEntry({ ...r, loc: `${SITE}${r.loc}`, lastmod: r.lastmod || today })),
-  ...recipes.map(r => urlEntry({
-    loc: `${SITE}/r/${r.id}`,
-    lastmod: (r.updatedAt || today).slice(0, 10),
-    changefreq: 'monthly',
-    priority: '0.6',
+  ...staticPages.map((item) => urlEntry({ loc: item.canonical, lastmod: item.lastmod })),
+  ...recipes.map((recipe) => urlEntry({
+    loc: `${SITE_URL}/r/${encodeURIComponent(recipe.id)}`,
+    lastmod: recipe.updatedAt ? String(recipe.updatedAt).slice(0, 10) : undefined,
   })),
 ]
 
@@ -109,4 +78,4 @@ ${entries.join('\n')}
 
 fs.mkdirSync(dist, { recursive: true })
 fs.writeFileSync(path.join(dist, 'sitemap.xml'), xml)
-console.log(`✓ sitemap.xml written with ${STATIC_ROUTES.length} static routes + ${recipes.length} recipe pages`)
+console.log(`✓ sitemap.xml written with ${staticPages.length} static routes + ${recipes.length} recipe pages`)

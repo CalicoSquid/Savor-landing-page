@@ -1,5 +1,4 @@
 // src/pages/NotFound.jsx
-import { useEffect } from 'react'
 import './pages.css'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../context/useTheme'
@@ -9,15 +8,8 @@ import Footer from '../components/Footer'
 export default function NotFound() {
   const { activeTheme } = useTheme()
 
-  useEffect(() => {
-    document.title = 'Page not found — Savor'
-  }, [])
-
   return (
     <>
-      {/* Junk URLs shouldn't be indexed even though the SPA serves them 200 */}
-      <meta name="robots" content="noindex" />
-
       <main className="page">
         <div className="nf-wrap">
           <img
@@ -37,7 +29,7 @@ export default function NotFound() {
           </p>
           <div className="nf-actions">
             <Link to="/" className="btn btn-green">Back to the kitchen</Link>
-            <Link to="/faq" className="btn btn-tertiary">Browse the FAQ</Link>
+            <Link to="/faq/" className="btn btn-tertiary">Browse the FAQ</Link>
           </div>
         </div>
       </main>

@@ -1,10 +1,10 @@
 // src/data/faqs.js
-// Shared by the FAQ page (rendering) and the prerender build (FAQ schema in <head>).
+// Shared by the visible FAQ page and its structured data.
 
 export const FAQS = [
   {
     q: 'What is Savor?',
-    a: "Savor is a recipe app, made by a chef, for keeping every recipe that matters to you in one place. You can save recipes from any website, scan them off cookbook pages or handwritten cards with your camera, or type one in from memory — and Savor turns each into a clean, ad-free recipe card. It's available on Android.",
+    a: "Savor is a recipe organiser app, made by a chef, for keeping every recipe that matters to you in one place. You can save recipes from any website, scan them off cookbook pages or handwritten cards with your camera, or type one in from memory — and Savor turns each into a clean, ad-free recipe card. It's available on Android.",
   },
   {
     q: 'Is Savor free?',
@@ -17,6 +17,10 @@ export const FAQS = [
   {
     q: 'Can Savor scan handwritten recipe cards and cookbooks?',
     a: 'Yes. Point your camera at a cookbook page or a handwritten card and Savor reads the text, rebuilds it into a proper recipe, and even finds an image when the original doesn’t have one. It’s built for rescuing the recipes that only exist on paper.',
+  },
+  {
+    q: 'Can Savor import recipes from screenshots or photos?',
+    a: 'Yes. Choose a screenshot or photo of a recipe and Savor reads it into structured ingredients and steps, so recipes do not have to stay buried in your camera roll.',
   },
   {
     q: 'Does Savor have ads?',
@@ -43,13 +47,3 @@ export const FAQS = [
     a: 'The recipes you save are yours and stay in your collection. If you choose to share a recipe to the community feed, that one becomes public for others to discover and save — but nothing is shared unless you decide to share it.',
   },
 ]
-
-export const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQS.map(({ q, a }) => ({
-    '@type': 'Question',
-    name: q,
-    acceptedAnswer: { '@type': 'Answer', text: a },
-  })),
-}

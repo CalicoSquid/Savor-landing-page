@@ -28,7 +28,7 @@ export default function Nav() {
                  : isPotluck ? 'Potluck by Savor'
                  : isCaper   ? 'Caper'
                  : isApocaleaf ? 'Apocaleaf'
-                 : activeTheme.name
+                 : 'Savor'
 
   // Persistent install CTA only belongs on Savor's own pages (home, about,
   // faq, etc). Potluck/Studio/Caper have their own pages and their own

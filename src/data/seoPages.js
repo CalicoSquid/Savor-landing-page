@@ -1,0 +1,180 @@
+import { BLOG_POSTS } from './blogPosts.js'
+
+export const SITE_URL = 'https://getsavor.recipes'
+export const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
+export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/images/savor-og.jpg`
+
+const page = (config) => ({
+  ogType: 'website',
+  ogImage: DEFAULT_SOCIAL_IMAGE,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  robots: 'index, follow',
+  sitemap: true,
+  ...config,
+})
+
+export const STATIC_SEO_PAGES = [
+  page({
+    path: '/',
+    file: 'index.html',
+    title: 'Savor — Recipe Organiser App | Save & Scan Recipes',
+    description: 'Save recipes from websites, screenshots, cookbook pages and handwritten cards. Savor turns them into clean, cookable recipe cards — ad-free and made by a chef.',
+    canonical: `${SITE_URL}/`,
+    ogImageAlt: 'Savor — a recipe organiser for saving and scanning real recipes',
+  }),
+  page({
+    path: '/about',
+    file: 'about/index.html',
+    title: 'About Savor — A Recipe App Made by a Chef',
+    description: 'The story behind Savor: a recipe organiser built by a former chef for saving recipes from the web, paper and memory — without ads or endless scrolling.',
+    canonical: `${SITE_URL}/about/`,
+    ogImageAlt: 'About Savor, the recipe organiser made by a former chef',
+  }),
+  page({
+    path: '/faq',
+    file: 'faq/index.html',
+    title: 'Savor FAQ — Recipe Organiser & Scanner Questions',
+    description: 'Answers about Savor: saving recipes from websites, scanning handwritten cards and cookbooks, pricing, privacy, Android availability and the community feed.',
+    canonical: `${SITE_URL}/faq/`,
+    ogImageAlt: 'Frequently asked questions about the Savor recipe app',
+  }),
+  page({
+    path: '/blog',
+    file: 'blog/index.html',
+    title: 'Savor Blog — Recipe Organising, Paper & Cooking',
+    description: 'Writing from the kitchen where Savor gets made — preserving handwritten recipes, saving recipes from the web, and building a personal cookbook worth keeping.',
+    canonical: `${SITE_URL}/blog/`,
+    ogImageAlt: 'Savor Blog — notes on recipes, cooking, paper and screens',
+  }),
+  page({
+    path: '/potluck',
+    file: 'potluck/index.html',
+    title: 'Potluck — Spin for Your Supper | A Savor App',
+    description: 'Can’t decide what to cook? Potluck spins the wheel and picks tonight’s dinner — one tap, one recipe, no scrolling. Save what you love to Savor.',
+    canonical: `${SITE_URL}/potluck/`,
+    ogImage: `${SITE_URL}/potluck/potluck-og.jpg`,
+    ogImageAlt: 'Potluck by Savor — spin once and let it choose dinner',
+  }),
+  page({
+    path: '/caper',
+    file: 'caper/index.html',
+    title: 'Caper — Wild Food Foraging App & Seasonal Field Guide',
+    description: 'Caper is a wild-food companion made by a chef. Explore edible plants, see what’s in season nearby, log your finds and cook with what you bring home.',
+    canonical: `${SITE_URL}/caper/`,
+    ogImage: `${SITE_URL}/caper/caper-og.jpg`,
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogImageAlt: 'Caper — a seasonal wild-food foraging companion',
+  }),
+  page({
+    path: '/apocaleaf',
+    file: 'apocaleaf/index.html',
+    title: 'Apocaleaf — Post-Apocalyptic Foraging Game | Coming Soon',
+    description: 'Apocaleaf is a post-apocalyptic foraging game where Citizens locate edible plants, file field reports, earn Scrip and rebuild the archive.',
+    canonical: `${SITE_URL}/apocaleaf/`,
+    ogImage: `${SITE_URL}/apocaleaf/apocaleaf-og.jpg`,
+    ogImageAlt: 'Apocaleaf — a post-apocalyptic foraging game coming soon',
+  }),
+  page({
+    path: '/studio',
+    file: 'studio/index.html',
+    title: 'CalicoSquid Code — The Studio Behind Savor',
+    description: 'CalicoSquid Code is the one-person studio behind Savor, Potluck, Caper and Apocaleaf — apps built end to end by a former professional chef.',
+    canonical: `${SITE_URL}/studio/`,
+    ogImageAlt: 'CalicoSquid Code — the independent studio behind Savor',
+  }),
+  page({
+    path: '/privacy',
+    file: 'privacy/index.html',
+    title: 'Privacy Policy — Savor & Potluck Recipe Apps',
+    description: 'How the Savor and Potluck by Savor apps handle your data, including what is collected, how it is used and how to delete your account.',
+    canonical: `${SITE_URL}/privacy/`,
+    robots: 'noindex, follow',
+    sitemap: false,
+    ogImageAlt: 'Savor privacy policy',
+  }),
+  page({
+    path: '/terms',
+    file: 'terms/index.html',
+    title: 'Terms of Service — Savor & Potluck Recipe Apps',
+    description: 'Terms of service for Savor and Potluck by Savor, including accounts, acceptable use, purchases, shared recipes and changes to the service.',
+    canonical: `${SITE_URL}/terms/`,
+    robots: 'noindex, follow',
+    sitemap: false,
+    ogImageAlt: 'Savor terms of service',
+  }),
+  page({
+    path: '/caper/privacy',
+    file: 'caper/privacy/index.html',
+    title: 'Privacy Policy — Caper Wild Food App',
+    description: 'How the Caper wild-food app handles account, location and logbook data, the services it uses and how to delete your account.',
+    canonical: `${SITE_URL}/caper/privacy/`,
+    robots: 'noindex, follow',
+    sitemap: false,
+    ogImage: `${SITE_URL}/caper/caper-og.jpg`,
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogImageAlt: 'Caper privacy policy',
+  }),
+  page({
+    path: '/delete-account',
+    file: 'delete-account/index.html',
+    title: 'Delete Your Savor Account',
+    description: 'How to permanently delete your Savor account and associated personal data.',
+    canonical: `${SITE_URL}/delete-account/`,
+    robots: 'noindex, follow',
+    sitemap: false,
+    ogImageAlt: 'Savor account deletion instructions',
+  }),
+  page({
+    path: '/caper/delete-account',
+    file: 'caper/delete-account/index.html',
+    title: 'Delete Your Caper Account',
+    description: 'How to permanently delete your Caper account and associated personal data.',
+    canonical: `${SITE_URL}/caper/delete-account/`,
+    robots: 'noindex, follow',
+    sitemap: false,
+    ogImage: `${SITE_URL}/caper/caper-og.jpg`,
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogImageAlt: 'Caper account deletion instructions',
+  }),
+  page({
+    path: '/demo',
+    file: 'demo/index.html',
+    title: "The Only Lasagne Recipe You'll Ever Need (An Odyssey) | The Hearth & Hollow",
+    description: 'A deliberately over-the-top recipe-blog demo showing how Savor detects and saves the useful recipe beneath the clutter.',
+    canonical: `${SITE_URL}/demo/`,
+    robots: 'noindex, nofollow',
+    sitemap: false,
+    ogType: 'article',
+    ogImage: `${SITE_URL}/images/lasagne-og.jpg`,
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogImageAlt: 'A pan of lasagne on the Savor demo recipe blog',
+  }),
+]
+
+export const BLOG_SEO_PAGES = BLOG_POSTS.map((post) => page({
+  path: `/blog/${post.slug}`,
+  file: `blog/${post.slug}/index.html`,
+  title: post.metaTitle || `${post.title} | Savor Blog`,
+  description: post.metaDesc || post.dek,
+  canonical: `${SITE_URL}/blog/${post.slug}/`,
+  ogType: 'article',
+  ogImage: post.ogImage,
+  ogImageAlt: post.ogImageAlt || `${post.title} — Savor Blog`,
+  author: post.author || 'Caleb',
+  publishedTime: post.date,
+  modifiedTime: post.modified || post.date,
+  lastmod: post.modified || post.date,
+}))
+
+export const SEO_PAGES = [...STATIC_SEO_PAGES, ...BLOG_SEO_PAGES]
+export const SEO_BY_PATH = new Map(SEO_PAGES.map((item) => [item.path, item]))
+
+export function seoForPath(pathname) {
+  const normalised = pathname !== '/' ? pathname.replace(/\/+$/, '') : '/'
+  return SEO_BY_PATH.get(normalised) || null
+}

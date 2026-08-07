@@ -1,14 +1,10 @@
 // src/pages/blog/LifeStoryBeforeTheRecipe.jsx
-import { useEffect } from 'react'
 import BlogPostLayout from '../../components/BlogPostLayout'
 import { BLOG_POSTS } from '../../data/blogPosts'
 
 const post = BLOG_POSTS.find((p) => p.slug === 'life-story-before-the-recipe')
 
 export default function LifeStoryBeforeTheRecipe() {
-  useEffect(() => {
-    document.title = `${post.title} | Savor Blog`
-  }, [])
 
   return (
     <BlogPostLayout title={post.title} date={post.date} readTime={post.readTime}>
@@ -101,7 +97,7 @@ export default function LifeStoryBeforeTheRecipe() {
           &mdash; Marguerite Hollow&rsquo;s tragic lasagne saga, and the exact
           moment Savor cuts straight through it.
         </p>
-        <a href="/demo" className="blog-post-callout-link">Try the demo &rarr;</a>
+        <a href="/demo/" className="blog-post-callout-link">Try the demo &rarr;</a>
         <div className="blog-post-callout-caption">A full recipe page turned into a clean recipe in a few seconds.</div>
       </div>
 

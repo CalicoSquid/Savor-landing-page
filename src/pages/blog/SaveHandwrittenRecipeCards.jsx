@@ -1,14 +1,10 @@
 // src/pages/blog/SaveHandwrittenRecipeCards.jsx
-import { useEffect } from 'react'
 import BlogPostLayout from '../../components/BlogPostLayout'
 import { BLOG_POSTS } from '../../data/blogPosts'
 
 const post = BLOG_POSTS.find((p) => p.slug === 'save-handwritten-recipe-cards')
 
 export default function SaveHandwrittenRecipeCards() {
-    useEffect(() => {
-        document.title = `${post.title} | Savor Blog`
-    }, [])
 
     return (
         <BlogPostLayout title={post.title} date={post.date} readTime={post.readTime}>

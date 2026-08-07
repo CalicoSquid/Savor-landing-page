@@ -184,7 +184,7 @@ export default function Terms() {
             </p>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.65, marginTop: 8 }}>
               You can also read our{' '}
-              <a href="/privacy" style={{ color: 'var(--accent)', textDecoration: 'none' }}>
+              <a href="/privacy/" style={{ color: 'var(--accent)', textDecoration: 'none' }}>
                 Privacy Policy
               </a>.
             </p>

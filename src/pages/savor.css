@@ -86,6 +86,12 @@
   max-width: 400px;
 }
 
+.hero-sub--definition {
+  max-width: 470px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
 .action-row {
   display: flex;
   flex-direction: column;

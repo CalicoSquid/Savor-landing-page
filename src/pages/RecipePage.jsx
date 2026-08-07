@@ -38,8 +38,9 @@ function getDomain(url) {
 }
 
 const PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
+const SITE_URL = 'https://getsavor.recipes'
+const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/images/savor-og.jpg`
 
-// eslint-disable-next-line no-unused-vars
 function buildJsonLd(recipe, id) {
   const ld = {
     '@context': 'https://schema.org',
@@ -58,12 +59,12 @@ function buildJsonLd(recipe, id) {
       position: i + 1,
       text: typeof step === 'string' ? step : step.text || step.instruction || '',
     })),
+    url: recipe.sourceUrl || `${SITE_URL}/r/${encodeURIComponent(id)}`,
   }
   if (recipe.times?.prep) ld.prepTime = `PT${recipe.times.prep.hours || 0}H${recipe.times.prep.minutes || 0}M`
   if (recipe.times?.cook) ld.cookTime = `PT${recipe.times.cook.hours || 0}H${recipe.times.cook.minutes || 0}M`
   if (recipe.times?.total) ld.totalTime = `PT${recipe.times.total.hours || 0}H${recipe.times.total.minutes || 0}M`
-  if (recipe.sourceUrl) ld.url = recipe.sourceUrl
-  return JSON.stringify(ld)
+  return JSON.stringify(ld).replace(/</g, '\\u003c')
 }
 
 const ICON_FILENAME = { Feijoa: 'Feijoah' }
@@ -130,26 +131,36 @@ export default function RecipePage() {
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el) }
       el.setAttribute('content', val)
     }
-    const desc = recipe.description || `${recipe.cuisine || ''} recipe saved on Savor`.trim()
+    const desc = (recipe.description || `${recipe.cuisine || recipe.category || 'A'} recipe saved on Savor`).replace(/\s+/g, ' ').trim()
+    const metaDesc = desc.length > 180 ? `${desc.slice(0, 177).trimEnd()}…` : desc
+    const pageUrl = `${SITE_URL}/r/${encodeURIComponent(id)}`
+    let socialImage = DEFAULT_SOCIAL_IMAGE
+    try { socialImage = new URL(recipe.image || DEFAULT_SOCIAL_IMAGE, SITE_URL).href } catch { /* use default */ }
+
+    setMeta('description', metaDesc, 'name')
     setMeta('og:title', decode(recipe.name))
-    setMeta('og:description', desc)
-    setMeta('og:image', recipe.image || '/images/savor-final.webp')
-    setMeta('og:url', window.location.href)
+    setMeta('og:description', metaDesc)
+    setMeta('og:image', socialImage)
+    setMeta('og:image:secure_url', socialImage)
+    setMeta('og:image:alt', decode(recipe.name))
+    setMeta('og:url', pageUrl)
     setMeta('og:type', 'article')
     setMeta('twitter:card', 'summary_large_image', 'name')
     setMeta('twitter:title', decode(recipe.name), 'name')
-    setMeta('twitter:description', desc, 'name')
+    setMeta('twitter:description', metaDesc, 'name')
+    setMeta('twitter:image', socialImage, 'name')
+    setMeta('twitter:image:alt', decode(recipe.name), 'name')
 
     // Indexability: only ever index recipes with no sourceUrl (originals —
     // OCR/scan/handwritten, not scraped from another site). Anything with a
     // sourceUrl is someone else's content; point Google at the real thing
     // instead of letting us duplicate-rank against it.
     const isOriginal = !recipe.sourceUrl
-    setMeta('robots', isOriginal ? 'index, follow' : 'noindex, nofollow', 'name')
+    setMeta('robots', isOriginal ? 'index, follow' : 'noindex, follow', 'name')
 
     let linkEl = document.querySelector('link[rel="canonical"]')
     if (!linkEl) { linkEl = document.createElement('link'); linkEl.setAttribute('rel', 'canonical'); document.head.appendChild(linkEl) }
-    linkEl.setAttribute('href', isOriginal ? window.location.href : recipe.sourceUrl)
+    linkEl.setAttribute('href', isOriginal ? pageUrl : recipe.sourceUrl)
 
     // JSON-LD — lets Savor's scraper parse this page cleanly
     let ldEl = document.getElementById('recipe-jsonld')
@@ -339,7 +350,7 @@ export default function RecipePage() {
           />
           <p className="rp-cta-text">Save recipes from anywhere. Cook without the clutter.</p>
           <a
-            href={`savor://create?url=${encodeURIComponent(window.location.href)}`}
+            href={`savor://create?url=${encodeURIComponent(`${SITE_URL}/r/${encodeURIComponent(id)}`)}`}
             className="rp-store-btn"
           >
            Save to Savor

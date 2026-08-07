@@ -1,14 +1,10 @@
 // src/pages/blog/BlogIndex.jsx
-import { useEffect } from 'react'
 import '../pages.css'
 import './blog.css'
 import Footer from '../../components/Footer'
 import { BLOG_POSTS } from '../../data/blogPosts'
 
 export default function BlogIndex() {
-  useEffect(() => {
-    document.title = 'Savor Blog — Notes on Cooking, Paper, and Screens'
-  }, [])
 
   return (
     <>
@@ -30,11 +26,11 @@ export default function BlogIndex() {
                 className="blog-index-card"
               >
                 <span className="blog-index-card-meta">
-                  {new Date(post.date + 'T00:00:00').toLocaleDateString('en-US', {
+                  <time dateTime={post.date}>{new Date(post.date + 'T00:00:00').toLocaleDateString('en-GB', {
                     month: 'long',
                     day: 'numeric',
                     year: 'numeric',
-                  })}
+                  })}</time>
                   {' '}&middot;{' '}{post.readTime}
                 </span>
                 <h2 className="blog-index-card-title">{post.title}</h2>

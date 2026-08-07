@@ -1,5 +1,4 @@
 // src/pages/Faq.jsx
-import { useEffect } from 'react'
 import './pages.css'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
@@ -9,9 +8,6 @@ const PLAY_URL =
   'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
 export default function Faq() {
-  useEffect(() => {
-    document.title = 'Savor FAQ — Questions About the Recipe App'
-  }, [])
 
   return (
     <>
@@ -52,7 +48,7 @@ export default function Faq() {
               />
             </a>
             <Link
-              to="/about"
+              to="/about/"
               style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}
             >
               Read the story behind Savor →

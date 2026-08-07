@@ -1,5 +1,4 @@
 // src/pages/About.jsx
-import { useEffect } from 'react'
 import './pages.css'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
@@ -8,9 +7,6 @@ const PLAY_URL =
   'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
 export default function About() {
-  useEffect(() => {
-    document.title = 'About Savor — A Recipe App Made by a Chef'
-  }, [])
 
   return (
     <>
@@ -95,7 +91,7 @@ export default function About() {
               />
             </a>
             <Link
-              to="/faq"
+              to="/faq/"
               style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}
             >
               Read the frequently asked questions →

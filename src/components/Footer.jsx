@@ -12,15 +12,15 @@ export default function Footer() {
       <div className="container site-footer-inner">
         <ul className="site-footer-links">
           <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/faq">FAQ</a></li>
-          <li><a href="/potluck">Potluck</a></li>
-          <li><a href="/caper">Caper</a></li>
-          <li><a href="/apocaleaf">Apocaleaf</a></li>
-          <li><a href="/demo">Demo</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/terms">Terms</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a href="/potluck/">Potluck</a></li>
+          <li><a href="/caper/">Caper</a></li>
+          <li><a href="/apocaleaf/">Apocaleaf</a></li>
+          <li><a href="/demo/">Recipe import demo</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
           <li><a href="https://seoreceipts.com/site/getsavor/?ref=badge&amp;utm_source=embed&amp;utm_medium=badge&amp;utm_campaign=status-founding" rel="nofollow sponsored noopener" target="_blank" title="View getsavor.recipes's Google Search Console stats"><img src="https://seoreceipts.com/api/badge?slug=getsavor&amp;mode=founding&amp;theme=paper&amp;size=compact" alt="Google Search Console stats for getsavor.recipes" width="180" height="44" loading="lazy" decoding="async"/></a></li>
         </ul>
         <div className="site-footer-end">
@@ -39,7 +39,7 @@ export default function Footer() {
               </svg>
             </a>
           </div>
-          <a href="/studio" className="site-footer-mark">
+          <a href="/studio/" className="site-footer-mark">
             calicoSquid<span className="code">Code</span>
           </a>
         </div>

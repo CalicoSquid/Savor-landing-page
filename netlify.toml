@@ -3,9 +3,33 @@
   publish = "dist"
   edge_functions = "netlify/edge-functions"
 
+[build.processing.html]
+  pretty_urls = true
+
+# Dynamic shared recipe previews/search HTML are handled before the SPA shell.
 [[edge_functions]]
   path = "/r/*"
   function = "recipe-og"
+
+# Keep one public host and protocol. Domain-level rules only apply when the
+# relevant custom domains are attached to this Netlify site.
+[[redirects]]
+  from = "http://getsavor.recipes/*"
+  to = "https://getsavor.recipes/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.getsavor.recipes/*"
+  to = "https://getsavor.recipes/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.getsavor.recipes/*"
+  to = "https://getsavor.recipes/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/app"
@@ -13,17 +37,36 @@
   status = 301
   force = true
 
+# Caper replaced the old Forage marketing URL. Do not let two copies of the
+# same page compete in search.
+[[redirects]]
+  from = "/forage"
+  to = "/caper/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/forage/privacy"
-  to = "/caper/privacy"
+  to = "/caper/privacy/"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/forage/delete-account"
-  to = "/caper/delete-account"
+  to = "/caper/delete-account/"
   status = 301
+  force = true
 
+# The only route family that genuinely needs the client-rendered SPA shell.
+# Fixed marketing/blog/legal routes are emitted as static HTML by prerender.js.
 [[redirects]]
-  from = "/*"
+  from = "/r/*"
   to = "/app.html"
   status = 200
+
+# Hashed Vite bundles can be cached indefinitely. Public marketing images keep
+# normal Netlify caching so replacements at stable URLs are not pinned forever.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

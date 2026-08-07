@@ -1,5 +1,4 @@
 // src/pages/Potluck.jsx — showcase page for the (new) Potluck app.
-import { useEffect } from 'react'
 import './potluck.css'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
@@ -34,9 +33,6 @@ const VERDICTS = [
 ]
 
 export default function Potluck() {
-  useEffect(() => {
-    document.title = 'Potluck — Spin for Your Supper | A Savor App'
-  }, [])
 
   return (
     <>

@@ -17,13 +17,18 @@
 //     link preview card. Always thin, always noindex, always redirect real
 //     humans on through to the SPA.
 
-const SEARCH_CRAWLERS = ['googlebot', 'bingbot', 'applebot']
+const SEARCH_CRAWLERS = [
+  'googlebot', 'bingbot', 'applebot', 'duckduckbot',
+  'oai-searchbot', 'perplexitybot', 'claudebot',
+]
 const SOCIAL_CRAWLERS = [
   'whatsapp', 'facebookexternalhit', 'twitterbot', 'slackbot',
   'telegrambot', 'linkedinbot', 'discordbot', 'pinterest', 'iframely',
 ]
 
 const APOLLO_URI = 'https://savor-app-server-gql-production.up.railway.app/graphql'
+const SITE_URL = 'https://getsavor.recipes'
+const DEFAULT_IMAGE = `${SITE_URL}/images/savor-og.jpg`
 
 const QUERY = `
   query PublicRecipe($id: ID!) {
@@ -104,24 +109,29 @@ function buildJsonLd(recipe, pageUrl) {
   if (recipe.times?.prep) ld.prepTime = isoDuration(recipe.times.prep)
   if (recipe.times?.cook) ld.cookTime = isoDuration(recipe.times.cook)
   if (recipe.times?.total) ld.totalTime = isoDuration(recipe.times.total)
-  return JSON.stringify(ld)
+  return JSON.stringify(ld).replace(/</g, '\\u003c')
 }
 
 function baseHead({ title, desc, image, pageUrl }) {
   return `
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${title} · Savor</title>
   <meta name="description" content="${desc}" />
   <meta property="og:type"        content="article" />
   <meta property="og:title"       content="${title}" />
   <meta property="og:description" content="${desc}" />
   <meta property="og:image"       content="${image}" />
+  <meta property="og:image:secure_url" content="${image}" />
+  <meta property="og:image:alt"   content="${title}" />
   <meta property="og:url"         content="${pageUrl}" />
   <meta property="og:site_name"   content="Savor" />
+  <meta property="og:locale"      content="en_GB" />
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="${title}" />
   <meta name="twitter:description" content="${desc}" />
-  <meta name="twitter:image"       content="${image}" />`
+  <meta name="twitter:image"       content="${image}" />
+  <meta name="twitter:image:alt"   content="${title}" />`
 }
 
 // Thin stub: used for scraped recipes (search bots) and always for social
@@ -131,7 +141,7 @@ function thinStub({ title, desc, image, pageUrl, canonicalUrl }) {
 <html lang="en">
 <head>${baseHead({ title, desc, image, pageUrl })}
   <link rel="canonical" href="${canonicalUrl}" />
-  <meta name="robots" content="noindex, nofollow" />
+  <meta name="robots" content="noindex, follow" />
   <meta http-equiv="refresh" content="0; url=${pageUrl}" />
 </head>
 <body>
@@ -206,14 +216,15 @@ export default async function handler(request, context) {
     if (!recipe) return context.next()
 
     const title = escapeHtml(decodeEntities(recipe.name))
-    const desc = escapeHtml(
-      decodeEntities(
-        recipe.description ||
-        `${recipe.cuisine || recipe.category || 'A'} recipe saved on Savor`.trim()
-      )
-    )
-    const image = recipe.image || 'https://getsavor.recipes/images/savor-final.webp'
-    const pageUrl = escapeHtml(request.url)
+    const rawDesc = decodeEntities(
+      recipe.description ||
+      `${recipe.cuisine || recipe.category || 'A'} recipe saved on Savor`.trim()
+    ).replace(/\s+/g, ' ').trim()
+    const desc = escapeHtml(rawDesc.length > 180 ? `${rawDesc.slice(0, 177).trimEnd()}…` : rawDesc)
+    let image = DEFAULT_IMAGE
+    try { image = new URL(recipe.image || DEFAULT_IMAGE, SITE_URL).href } catch { image = DEFAULT_IMAGE }
+    image = escapeHtml(image)
+    const pageUrl = escapeHtml(`${SITE_URL}/r/${encodeURIComponent(id)}`)
     const isOriginal = !recipe.sourceUrl
 
     let html

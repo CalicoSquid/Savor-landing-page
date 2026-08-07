@@ -14,7 +14,7 @@ import '../pages/blog/blog.css'
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 
 export default function BlogPostLayout({ title, date, readTime, children }) {
-  const displayDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
+  const displayDate = new Date(date + 'T00:00:00').toLocaleDateString('en-GB', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
@@ -23,15 +23,17 @@ export default function BlogPostLayout({ title, date, readTime, children }) {
   return (
     <main className="page doc-page blog-post-page">
       <div className="doc-inner blog-post-inner">
-        <a href="/blog" className="blog-back-link">&larr; All posts</a>
+        <a href="/blog/" className="blog-back-link">&larr; All posts</a>
 
-        <span className="doc-eyebrow">Blog</span>
-        <h1 className="doc-title blog-post-title">{title}</h1>
-        <div className="blog-byline">
-          By <a href="/about">Caleb</a> &middot; {displayDate} &middot; {readTime}
-        </div>
+        <article>
+          <span className="doc-eyebrow">Blog</span>
+          <h1 className="doc-title blog-post-title">{title}</h1>
+          <div className="blog-byline">
+            By <a href="/about/">Caleb</a> &middot; <time dateTime={date}>{displayDate}</time> &middot; {readTime}
+          </div>
 
-        <article className="blog-post-body">{children}</article>
+          <div className="blog-post-body">{children}</div>
+        </article>
 
         <div className="doc-cta">
           <h2>A home for every recipe that matters.</h2>
@@ -46,7 +48,7 @@ export default function BlogPostLayout({ title, date, readTime, children }) {
               decoding="async"
             />
           </a>
-          <a href="/blog" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>
+          <a href="/blog/" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>
             Read more from the blog &rarr;
           </a>
         </div>

@@ -339,7 +339,7 @@ export default function CaperPrivacy() {
             </p>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.65, margin: 0 }}>
               This policy covers Caper only. For Savor Recipes and Potluck, see the{' '}
-              <a href="/privacy" style={{ color: '#3d7a4f', textDecoration: 'none', fontWeight: 600 }}>
+              <a href="/privacy/" style={{ color: '#3d7a4f', textDecoration: 'none', fontWeight: 600 }}>
                 Savor Privacy Policy
               </a>.
             </p>

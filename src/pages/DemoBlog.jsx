@@ -2,8 +2,8 @@
 //
 // A fictional, deliberately over-written recipe blog — used to demo how
 // Savor's in-app browser detects and imports a recipe. Not a real site,
-// not a real blogger. Deliberately excluded from the sitemap and robots.txt
-// (see public/robots.txt) and noindexed here at the page level too.
+// not a real blogger. Deliberately excluded from the sitemap and marked
+// noindex by the shared SEO route configuration.
 //
 // No site chrome (see Nav.jsx / no <Footer /> import) — the page needs to
 // read as a standalone foreign site, not part of getsavor.recipes.
@@ -219,60 +219,17 @@ export default function DemoBlog() {
     setShowRecipeReveal(false)
   }
 
-  // Page-level meta: title, noindex, fonts. Same DOM-patching approach as
-  // RecipePage.jsx (no head-management library in this app), reverted on
-  // unmount so leaving the route doesn't leak into the next page.
+  // The shared SeoManager owns title/meta/canonical for this route. Keep the
+  // demo Recipe schema available in dev as well as in the prerendered HTML so
+  // Savor's in-app browser can detect the fake recipe immediately.
   useEffect(() => {
-    const prevTitle = document.title
-    document.title = "The Only Lasagne Recipe You'll Ever Need (An Odyssey) | The Hearth & Hollow"
-
-    // On the prerendered build these tags already ship statically (see
-    // prerender.js), present before React mounts. Reuse the existing tag
-    // in that case instead of appending a duplicate — only create a fresh
-    // one on paths that never got a static version (dev server, or any
-    // non-prerendered render). Either way, reverted on unmount.
-    const created = []
-    const restored = []
-    const setMeta = (attr, key, content) => {
-      const existing = document.querySelector(`meta[${attr}="${key}"]`)
-      if (existing) {
-        restored.push([existing, existing.getAttribute('content')])
-        existing.setAttribute('content', content)
-      } else {
-        const el = document.createElement('meta')
-        el.setAttribute(attr, key)
-        el.setAttribute('content', content)
-        document.head.appendChild(el)
-        created.push(el)
-      }
-    }
-
-    setMeta('name', 'robots', 'noindex, nofollow')
-    setMeta('property', 'og:title', "The Only Lasagne Recipe You'll Ever Need (An Odyssey)")
-    setMeta('property', 'og:description', 'A demo of how Savor pulls a clean recipe out of even the fluffiest recipe blog.')
-    setMeta('property', 'og:type', 'article')
-    setMeta('name', 'twitter:card', 'summary')
-
-    // JSON-LD — on the prerendered build this already ships statically in the
-    // initial HTML (see prerender.js), present before React mounts, which is
-    // what Savor's in-app browser needs. Only inject at runtime if it's NOT
-    // already there (the dev server / any non-prerendered render path), so we
-    // never end up with two copies after hydration.
-    let ldEl = null
-    if (!document.getElementById('demo-recipe-jsonld')) {
-      ldEl = document.createElement('script')
-      ldEl.id = 'demo-recipe-jsonld'
-      ldEl.type = 'application/ld+json'
-      ldEl.textContent = JSON.stringify(RECIPE_SCHEMA)
-      document.head.appendChild(ldEl)
-    }
-
-    return () => {
-      document.title = prevTitle
-      created.forEach((el) => el.remove())
-      restored.forEach(([el, prevContent]) => el.setAttribute('content', prevContent))
-      if (ldEl) ldEl.remove()
-    }
+    if (document.getElementById('demo-recipe-jsonld')) return
+    const ldEl = document.createElement('script')
+    ldEl.id = 'demo-recipe-jsonld'
+    ldEl.type = 'application/ld+json'
+    ldEl.textContent = JSON.stringify(RECIPE_SCHEMA)
+    document.head.appendChild(ldEl)
+    return () => ldEl.remove()
   }, [])
 
   async function runShoot() {

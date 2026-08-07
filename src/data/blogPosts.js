@@ -1,6 +1,6 @@
 // src/data/blogPosts.js
-// Shared by the blog index page (rendering), prerender.js (meta tags +
-// BlogPosting schema), and generate-sitemap.js (sitemap entries). Add a new
+// Shared by the blog index, SEO route registry, structured data and sitemap.
+// Add a new
 // post here first — everything else reads from this list, so nothing drifts
 // out of sync across files the way title/description could if each script
 // kept its own copy.
@@ -20,7 +20,9 @@ export const BLOG_POSTS = [
     metaDesc: 'A preservation checklist for recipe cards, cookbook margins and torn-out clippings that exist in only one copy \u2014 on paper, in someone\u2019s handwriting.',
     date: '2026-06-30',
     readTime: '7 min read',
-    ogImage: 'https://getsavor.recipes/screenshots/scan.webp',
+    ogImage: 'https://getsavor.recipes/blog/save-handwritten-recipe-cards-og.jpg',
+    ogImageAlt: 'Savor Blog — How to save handwritten recipe cards before they are gone',
+    author: 'Caleb',
   },
   {
     slug: 'life-story-before-the-recipe',
@@ -30,25 +32,8 @@ export const BLOG_POSTS = [
     metaDesc: 'Why almost every recipe site makes you scroll past a memoir before the ingredients \u2014 the actual reason it happens, and the fastest way past it.',
     date: '2026-07-10',
     readTime: '5 min read',
-    ogImage: 'https://getsavor.recipes/screenshots/found.webp',
+    ogImage: 'https://getsavor.recipes/blog/life-story-before-the-recipe-og.jpg',
+    ogImageAlt: 'Savor Blog — Why online recipes come with a life story',
+    author: 'Caleb',
   },
 ]
-
-export function blogPostSchema(post) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.dek,
-    image: post.ogImage,
-    datePublished: post.date,
-    dateModified: post.date,
-    author: {
-      '@type': 'Person',
-      name: 'Caleb',
-      url: 'https://getsavor.recipes/about',
-    },
-    publisher: { '@id': 'https://getsavor.recipes/#org' },
-    mainEntityOfPage: `https://getsavor.recipes/blog/${post.slug}`,
-  }
-}

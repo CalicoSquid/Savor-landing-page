@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#FF6D00" />
 
-    <!-- Primary meta -->
-    <title>Savor — Recipe Scanner App | Scan, Save &amp; Cook</title>
-    <script async src="https://startupbar.co/widget/loader.js" data-startup-id="4ab7bc41-bf45-4f3a-bfea-959f23be9423"></script>
+    <!-- Default metadata. prerender.js replaces these values per public route. -->
+    <title>Savor — Recipe Organiser App | Save &amp; Scan Recipes</title>
     <meta
       name="description"
-      content="Scan handwritten recipe cards or cookbook pages, and import any recipe from the web in one tap. Ad-free, algorithm-free, and made by a chef. Free to start."
+      content="Save recipes from websites, screenshots, cookbook pages and handwritten cards. Savor turns them into clean, cookable recipe cards — ad-free and made by a chef."
     />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://getsavor.recipes/" />
+
+    <!-- The hero is the LCP candidate on the homepage. -->
+    <link rel="preload" as="image" href="/images/Savor.webp" type="image/webp" fetchpriority="high" />
 
     <!-- Favicons (Vite serves /public at the site root) -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -24,80 +27,32 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Savor" />
     <meta property="og:locale" content="en_GB" />
-    <meta property="og:title" content="Savor — Recipe Scanner App | Scan, Save &amp; Cook" />
+    <meta property="og:title" content="Savor — Recipe Organiser App | Save &amp; Scan Recipes" />
     <meta
       property="og:description"
-      content="Scan handwritten recipe cards or cookbook pages, and import any recipe from the web in one tap. Ad-free, algorithm-free, and made by a chef. Free to start."
+      content="Save recipes from websites, screenshots, cookbook pages and handwritten cards. Savor turns them into clean, cookable recipe cards — ad-free and made by a chef."
     />
     <meta property="og:url" content="https://getsavor.recipes/" />
-    <meta property="og:image" content="https://getsavor.recipes/images/savor-final.webp" />
-    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image" content="https://getsavor.recipes/images/savor-og.jpg" />
+    <meta property="og:image:secure_url" content="https://getsavor.recipes/images/savor-og.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="369" />
-    <meta property="og:image:alt" content="Savor — Recipe Scanner App | Scan, Save &amp; Cook" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Savor — a recipe organiser for saving and scanning real recipes" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Savor — Recipe Scanner App | Scan, Save &amp; Cook" />
+    <meta name="twitter:title" content="Savor — Recipe Organiser App | Save &amp; Scan Recipes" />
     <meta
       name="twitter:description"
-      content="Scan handwritten recipe cards or cookbook pages, and import any recipe from the web in one tap. Ad-free, algorithm-free, and made by a chef. Free to start."
+      content="Save recipes from websites, screenshots, cookbook pages and handwritten cards. Savor turns them into clean, cookable recipe cards — ad-free and made by a chef."
     />
-    <meta name="twitter:image" content="https://getsavor.recipes/images/savor-final.webp" />
+    <meta name="twitter:image" content="https://getsavor.recipes/images/savor-og.jpg" />
+    <meta name="twitter:image:alt" content="Savor — a recipe organiser for saving and scanning real recipes" />
 
-    <!-- Structured data: read by Google rich results AND AI answer engines -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://getsavor.recipes/#website",
-          "url": "https://getsavor.recipes/",
-          "name": "Savor",
-          "description": "Save any recipe, from anywhere.",
-          "publisher": { "@id": "https://getsavor.recipes/#org" }
-        },
-        {
-          "@type": "Organization",
-          "@id": "https://getsavor.recipes/#org",
-          "name": "CalicoSquid",
-          "url": "https://getsavor.recipes/",
-          "logo": "https://getsavor.recipes/images/savor-final.webp",
-          "sameAs": [
-            "https://www.instagram.com/savor_recipeapp/",
-            "https://uk.pinterest.com/cookincolor/"
-          ]
-        },
-        {
-          "@type": "SoftwareApplication",
-          "@id": "https://getsavor.recipes/#app",
-          "name": "Savor",
-          "applicationCategory": "LifestyleApplication",
-          "operatingSystem": "Android",
-          "url": "https://getsavor.recipes/",
-          "downloadUrl": "https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes",
-          "installUrl": "https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes",
-          "image": "https://getsavor.recipes/images/savor-final.webp",
-          "publisher": { "@id": "https://getsavor.recipes/#org" },
-          "description": "Savor is a recipe app made by a chef. Scan cookbook pages and handwritten recipe cards with your camera, import recipes from any website in one tap, type out a recipe from memory, and keep them all ad-free and beautifully organized — with no life stories and no endless scroll.",
-          "featureList": [
-            "Scan handwritten recipe cards and cookbook pages with your camera",
-            "Import a recipe from any website in one tap with the built-in browser",
-            "Strip out ads, pop-ups and life stories — keep just the recipe",
-            "Turn a roughly-typed recipe into a clean, cookable recipe card",
-            "Calm, algorithm-free community recipe feed",
-            "12 customizable fruit color themes"
-          ],
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          }
-        }
-      ]
-    }
-    </script>
+    <!-- ROUTE_STRUCTURED_DATA -->
+
+    <script async src="https://startupbar.co/widget/loader.js" data-startup-id="4ab7bc41-bf45-4f3a-bfea-959f23be9423"></script>
   </head>
   <body>
     <div id="root"></div>

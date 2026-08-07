@@ -7,19 +7,22 @@ const PILLARS = [
     {
         title: 'Discover.',
         img: '/screenshots/found.webp',
+        alt: 'Savor detecting a recipe on a website for one-tap import',
         bg: 'linear-gradient(135deg, #303F9F, #5C6BC0)',
         sub: <>Savor's built-in browser spots recipes as you browse. One tap and it's saved properly — the photo, the ingredients, the steps. No copying, no pasting, no twelve paragraphs about the author's holiday in Tuscany. Join the <strong>war against scrolling</strong>, one tap at a time.</>,
-        cta: { label: 'Try it on a fake food blog we wrote just to prove it →', href: '/demo' }
+        cta: { label: 'Try it on a fake food blog we wrote just to prove it →', href: '/demo/' }
     },
     {
         title: 'Imagine.',
         img: '/screenshots/recipe.webp',
+        alt: 'A clean Savor recipe card created from a rough recipe idea',
         bg: 'linear-gradient(135deg, #AD1457, #FF1493)',
         sub: 'Got a recipe rattling around in your head? Type it out, however roughly. Savor turns it into a real recipe card you can actually cook from.'
     },
     {
         title: 'Together.',
         img: '/screenshots/community.webp',
+        alt: 'Savor’s calm, algorithm-free community recipe feed',
         bg: 'linear-gradient(135deg, #8BC34A, #689F38)',
         sub: 'A calm, algorithm-free feed of people who actually love food. No viral five-second reels. No endless smash cuts. Just cooks sharing what they made for lunch today.'
     },
@@ -90,8 +93,10 @@ export default function Savor() {
                             />
                         ))}
                     </div>
+                    <p className="hero-sub hero-sub--definition fade-up fade-up-3">
+                        Savor is a recipe organiser for people who actually cook — save recipes from websites, screenshots, cookbook pages and handwritten cards, then keep them as clean, cookable recipe cards.
+                    </p>
                     <p className="hero-sub fade-up fade-up-3">
-
                         I built this because I thought it was cool. Because I wanted to build something
                         I liked. And because even though I've long since retired my chef whites, I still
                         cook. A lot. I thought it'd be fun to make somewhere people like me could find
@@ -118,7 +123,7 @@ export default function Savor() {
             <section className="name-note">
                 <div className="container">
                     <p className="name-note-text">
-                        <strong>Quick note:</strong> there are a few apps out there called Savor. This is the one with a recipe scanner for handwritten cards, zero ads, and no algorithm — built solo by a chef, on a farm in Montenegro.
+                        <strong>Quick note:</strong> there are a few apps out there called Savor. This is the recipe organiser with one-tap web imports, a scanner for handwritten cards, zero ads, and no algorithm — built solo by a chef, on a farm in Montenegro.
                     </p>
                 </div>
             </section>
@@ -145,8 +150,9 @@ export default function Savor() {
                             <p style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Where Savor started</p>
                             <h2 className="feature-row-title">Preserve.</h2>
                             <p className="feature-row-sub">
-                                I started Savor the day I found my mum&rsquo;s old recipe cards — tattered, smudged, and still the most important recipes I own. Point your camera at handwriting like that, or a page from a battered cookbook, and Savor reads it, rebuilds the recipe, and even finds a photo when there isn&rsquo;t one. Recipes that were one spill away from disappearing — saved properly, at last.
+                                I started Savor the day I found my mum&rsquo;s old recipe cards — tattered, smudged, and still the most important recipes I own. Point your camera at handwriting like that, import a photo or screenshot, or scan a page from a battered cookbook, and Savor reads it, rebuilds the recipe, and even finds a photo when there isn&rsquo;t one. Recipes that were one spill away from disappearing — saved properly, at last.
                             </p>
+                            <a href="/blog/save-handwritten-recipe-cards/" className="pillar-cta">How to preserve handwritten recipe cards →</a>
                         </div>
                     </div>
                 </div>
@@ -162,7 +168,7 @@ export default function Savor() {
                                     src={p.img}
                                     srcSet={`${p.img.replace('.webp', '-240.webp')} 240w, ${p.img} 480w`}
                                     sizes="(max-width: 900px) 200px, 188px"
-                                    alt={p.title}
+                                    alt={p.alt}
                                     width="480"
                                     height="1002"
                                     loading="lazy"
@@ -218,7 +224,7 @@ export default function Savor() {
                             <h3>Potluck</h3>
                             <p>One spin and the universe decides what&rsquo;s for dinner — no scrolling, no deciding, just turn the oven on. It&rsquo;s basically a fun excuse to pull you into Savor, and it knows it.</p>
                             <div className="same-kitchen-app-links">
-                                <a href="/potluck" className="same-kitchen-app-link">See Potluck →</a>
+                                <a href="/potluck/" className="same-kitchen-app-link">See Potluck →</a>
                                 <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck"
                                     target="_blank" rel="noreferrer"
                                     className="same-kitchen-app-link same-kitchen-app-link--muted">Join the test</a>
@@ -237,7 +243,7 @@ export default function Savor() {
                             <h3>Caper</h3>
                             <p>A wild foraging companion — find and identify what&rsquo;s edible nearby, then learn to cook it safely. Comes with a set of cute, boy-scout-style badges to earn along the way.</p>
                             <div className="same-kitchen-app-links">
-                                <a href="/caper" className="same-kitchen-app-link">See Caper →</a>
+                                <a href="/caper/" className="same-kitchen-app-link">See Caper →</a>
                                 <a href="https://play.google.com/store/apps/details?id=com.calicosquid.forage"
                                     target="_blank" rel="noreferrer"
                                     className="same-kitchen-app-link same-kitchen-app-link--muted">Join the test</a>
@@ -273,7 +279,7 @@ export default function Savor() {
                             </div>
                             <p>A post-apocalyptic foraging game disguised as a field file. Track edible plants, file your findings, earn collection cards, and build a survival archive from the wreckage.</p>
                             <div className="same-kitchen-app-links">
-                                <a href="/apocaleaf" className="same-kitchen-app-link">Open field file →</a>
+                                <a href="/apocaleaf/" className="same-kitchen-app-link">Open field file →</a>
                                 <span className="same-kitchen-app-soon">Not in testing yet</span>
                             </div>
                         </div>
