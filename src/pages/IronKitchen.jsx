@@ -19,38 +19,48 @@ export default function IronKitchen() {
     <main className="page iki-page">
       <section className="iki-hero">
         <div className="container iki-hero-inner">
-          <p className="iki-kicker">Savor × Iron Kitchen Inc.</p>
-          <h1>Good tools deserve good recipes. Good recipes deserve a home.</h1>
-          <p className="iki-hero-lead">
-            Iron Kitchen makes durable culinary tools for people who actually use their kitchens. As they share
-            the recipes that go with them, Savor gives those recipes a calm place to live — saved cleanly, easy
-            to find, and ready for next time.
-          </p>
-          <p className="iki-hero-note">
-            Two small teams, building useful things carefully. A little something from one family kitchen to another.
-          </p>
+          <div className="iki-hero-copy">
+            <p className="iki-kicker">A Savor × Iron Kitchen collaboration</p>
+            <h1>Good tools deserve good recipes.</h1>
+            <p className="iki-hero-lead">
+              Iron Kitchen makes hard-working kitchen tools — and recipes worth putting them to use. Savor gives
+              those recipes a home. We&rsquo;re both small, hands-on, and built around people who actually cook, so
+              teaming up felt pretty natural.
+            </p>
 
-          <div className="iki-palette" aria-label="Iron Kitchen collaboration theme colors">
-            <span className="iki-palette-orange" />
-            <span className="iki-palette-gold" />
-            <span className="iki-palette-ink" />
-            <span className="iki-palette-cream" />
+            <p className="iki-hero-theme-note">
+              <strong>A little something extra.</strong> Because it&rsquo;s nice to bring something to the table, Savor
+              users can pick up a free Iron Kitchen theme over at IKI.
+            </p>
+
+            <div className="iki-hero-actions">
+              <a
+                href={IRON_KITCHEN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="iki-btn iki-btn--primary"
+              >
+                Visit Iron Kitchen <span aria-hidden="true">↗</span>
+              </a>
+              <a href={PLAY_URL} target="_blank" rel="noreferrer" className="iki-secondary-link">
+                Don&rsquo;t have Savor yet? Get the app →
+              </a>
+            </div>
           </div>
 
-          <div className="iki-hero-actions">
-            <a
-              href={IRON_KITCHEN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="iki-btn iki-btn--primary"
-            >
-              Visit Iron Kitchen <span aria-hidden="true">↗</span>
-            </a>
-            <span className="iki-hero-action-note">Their tools, their recipes, and the exclusive Savor theme.</span>
-            <a href={PLAY_URL} target="_blank" rel="noreferrer" className="iki-secondary-link">
-              Don&rsquo;t have Savor yet? Get the app →
-            </a>
-          </div>
+          <aside className="iki-hero-brand" aria-label="About Iron Kitchen Inc.">
+            <img
+              src="/images/iron-kitchen-logo.webp"
+              alt="Iron Kitchen Inc."
+              width="512"
+              height="512"
+            />
+            <div className="iki-hero-brand-copy">
+              <span>Iron Kitchen Inc.</span>
+              <strong>Family-run in East Bend, North Carolina.</strong>
+              <p>Two brothers. American-made culinary tools. Plenty of engineering, and just as much love of cooking.</p>
+            </div>
+          </aside>
         </div>
       </section>
 
