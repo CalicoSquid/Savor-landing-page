@@ -1,42 +1,73 @@
+import { useLocation } from 'react-router-dom'
 import './iron-kitchen.css'
 import Footer from '../components/Footer'
 import { PLAY_URL } from '../data/seoPages'
 
 const IRON_KITCHEN_URL = 'https://ironkitcheninc.com/'
+const IRON_KITCHEN_STORY_URL = 'https://ironkitcheninc.com/pages/our-story'
 
-// Pass 2 browser → production-app canary. Once the deployed page has proven
-// the full claim path, this is the only value that needs to change to "IKI".
-const COLLAB_ID = 'IKI'
-const CLAIM_URL = `savor://collab?id=${COLLAB_ID}`
+// Browser → production-app canary. Keep this isolated from the public CTA.
+// Open /iron-kitchen?test=1 to reveal the test control.
+const TEST_COLLAB_ID = 'IKI_TEST'
+const TEST_CLAIM_URL = `savor://collab?id=${TEST_COLLAB_ID}`
 
 export default function IronKitchen() {
+  const { search } = useLocation()
+  const showTestClaim = new URLSearchParams(search).get('test') === '1'
+
   return (
     <main className="page iki-page">
       <section className="iki-hero">
+        <div className="iki-brand-ribbon">Family-operated <span aria-hidden="true">|</span> Made in America</div>
         <div className="iki-hero-grid" aria-hidden="true" />
+
         <div className="container iki-hero-inner">
           <div className="iki-hero-copy">
-            <p className="iki-eyebrow">Savor <span>×</span> Iron Kitchen Inc.</p>
-            <h1>Good tools. Good recipes. Built to stick around.</h1>
+            <div className="iki-lockup" aria-label="Savor and Iron Kitchen Inc.">
+              <img
+                src="/images/Savor_white.webp"
+                alt="Savor"
+                className="iki-lockup-savor"
+                width="480"
+                height="150"
+              />
+              <span className="iki-lockup-times" aria-hidden="true">×</span>
+              <img
+                src="/images/iron-kitchen-logo.webp"
+                alt="Iron Kitchen Inc."
+                className="iki-lockup-iron"
+                width="512"
+                height="512"
+              />
+            </div>
+
+            <p className="iki-eyebrow">Forged in fire</p>
+            <h1>Cook in color.<br />Built to last.</h1>
             <p className="iki-hero-lead">
-              Savor keeps the recipes worth making. Iron Kitchen builds the equipment worth keeping.
-              We teamed up on an exclusive Savor theme for cooks who care about both.
+              Savor keeps the recipes worth making. Iron Kitchen builds culinary tools worth keeping.
+              Together, we made an exclusive Savor theme for cooks who care about both.
             </p>
+
             <div className="iki-hero-actions">
-              <a href={CLAIM_URL} className="iki-btn iki-btn--claim">
-                Claim your IKI theme
+              <a
+                href={IRON_KITCHEN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="iki-btn iki-btn--primary"
+              >
+                Visit Iron Kitchen to claim the theme <span aria-hidden="true">↗</span>
               </a>
-              <a href={PLAY_URL} target="_blank" rel="noreferrer" className="iki-btn iki-btn--play">
+              <a href={PLAY_URL} target="_blank" rel="noreferrer" className="iki-btn iki-btn--secondary">
                 Get Savor
               </a>
             </div>
-            <p className="iki-claim-hint">The claim button opens the Savor Android app.</p>
+            <p className="iki-hero-note">The free collaboration theme is offered through Iron Kitchen Inc.</p>
           </div>
 
           <div className="iki-theme-preview" aria-label="Preview of the Savor and Iron Kitchen collaboration theme">
             <div className="iki-preview-topline">
-              <span>Exclusive theme</span>
-              <span className="iki-preview-mark">IKI</span>
+              <span>Exclusive Savor theme</span>
+              <img src="/images/iron-kitchen-logo.webp" alt="" width="512" height="512" />
             </div>
             <div className="iki-preview-appbar">
               <img src="/images/Savor_white.webp" alt="Savor" width="480" height="150" />
@@ -50,68 +81,119 @@ export default function IronKitchen() {
               <div className="iki-preview-line iki-preview-line--short" />
               <div className="iki-preview-swatches" aria-hidden="true">
                 <span className="iki-swatch iki-swatch--orange" />
-                <span className="iki-swatch iki-swatch--gunmetal" />
-                <span className="iki-swatch iki-swatch--steel" />
+                <span className="iki-swatch iki-swatch--black" />
+                <span className="iki-swatch iki-swatch--cream" />
               </div>
             </div>
-            <p className="iki-preview-foot">Made to cook. Built to last.</p>
+            <p className="iki-preview-foot">A little Iron Kitchen in your recipe box.</p>
           </div>
         </div>
       </section>
 
       <section className="iki-story">
         <div className="container iki-story-grid">
-          <div>
-            <p className="iki-section-kicker">From one family kitchen to another</p>
-            <h2>A collaboration that makes sense at the workbench and the stove.</h2>
+          <div className="iki-maker-card" aria-hidden="true">
+            <div className="iki-maker-card-band">Iron Kitchen Inc.</div>
+            <img src="/images/iron-kitchen-logo.webp" alt="" width="512" height="512" />
+            <strong>Family-run.<br />American-made.<br />Built with purpose.</strong>
+            <span>East Bend, North Carolina</span>
           </div>
+
           <div className="iki-story-copy">
+            <p className="iki-section-kicker">Meet Iron Kitchen</p>
+            <h2>Engineering belongs in the kitchen, too.</h2>
             <p>
-              Iron Kitchen Inc. is a family-run North Carolina company founded by two brothers,
-              bringing an engineering mindset to American-made culinary tools designed to perform
-              reliably and hold up over time.
+              Based in East Bend, North Carolina, Iron Kitchen Inc. is a family-run company built by two
+              brothers with backgrounds in mechanical engineering and automation — and a serious love of cooking.
             </p>
             <p>
-              Savor comes from the same sort of instinct: make something useful, make it carefully,
-              and give it a place in real kitchens. This theme brings Iron Kitchen&rsquo;s bold orange,
-              gunmetal and steel character into your Savor recipe collection.
+              Their idea is refreshingly simple: kitchen and butcher-shop tools shouldn&rsquo;t be disposable.
+              They should be thoughtfully engineered, made with integrity, and ready for years of real use.
             </p>
-            <a href={IRON_KITCHEN_URL} target="_blank" rel="noopener noreferrer" className="iki-text-link">
-              Meet Iron Kitchen Inc. <span aria-hidden="true">↗</span>
+            <p>
+              That felt familiar to us. Savor was built around the same instinct: keep the things that matter,
+              remove the clutter, and make something you actually want to live with.
+            </p>
+            <a
+              href={IRON_KITCHEN_STORY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="iki-text-link"
+            >
+              Read the Iron Kitchen story <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
       </section>
 
-      <section className="iki-claim" id="claim">
+      <section className="iki-theme-section">
+        <div className="container iki-theme-section-inner">
+          <div className="iki-theme-copy">
+            <p className="iki-section-kicker">The collaboration theme</p>
+            <h2>Bold orange. Black iron. Your recipes.</h2>
+            <p>
+              The Iron Kitchen theme brings their unmistakable orange-and-black identity into Savor without
+              turning your recipe collection into an ad. It&rsquo;s still Savor — just forged a little differently.
+            </p>
+          </div>
+
+          <div className="iki-theme-details">
+            <div>
+              <span className="iki-detail-label">Theme</span>
+              <strong>Iron Kitchen Inc.</strong>
+            </div>
+            <div>
+              <span className="iki-detail-label">Label</span>
+              <strong>Forged in fire</strong>
+            </div>
+            <div>
+              <span className="iki-detail-label">Cost</span>
+              <strong>Free collaboration gift</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="iki-claim-flow">
         <div className="container">
-          <div className="iki-claim-panel">
-            <div className="iki-claim-heading">
-              <p className="iki-section-kicker">A little something for your recipe box</p>
-              <h2>Your Iron Kitchen Savor theme is waiting.</h2>
-              <p>No code. No purchase verification. Just a permanent collaboration gift for the community.</p>
-            </div>
+          <div className="iki-claim-heading">
+            <p className="iki-section-kicker">How to get it</p>
+            <h2>The gift starts at Iron Kitchen.</h2>
+            <p>
+              We wanted this collaboration to send people toward the makers, not away from them. The permanent
+              claim lives with Iron Kitchen; Savor simply receives the gift when you tap their button.
+            </p>
+          </div>
 
-            <div className="iki-claim-paths">
-              <div className="iki-claim-path">
-                <span className="iki-step">01</span>
-                <h3>Already use Savor?</h3>
-                <p>Open this page on your Android device and tap below. Savor will handle the claim from there.</p>
-                <a href={CLAIM_URL} className="iki-btn iki-btn--claim">Claim your IKI theme</a>
-              </div>
+          <div className="iki-claim-paths">
+            <article className="iki-claim-path">
+              <span className="iki-step">01</span>
+              <h3>Already use Savor?</h3>
+              <p>
+                Visit Iron Kitchen on your Android phone and use their Savor collaboration button. Savor opens
+                and adds the exclusive theme to your collection.
+              </p>
+              <a
+                href={IRON_KITCHEN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="iki-btn iki-btn--dark"
+              >
+                Go to Iron Kitchen <span aria-hidden="true">↗</span>
+              </a>
+            </article>
 
-              <div className="iki-claim-path">
-                <span className="iki-step">02</span>
-                <h3>New to Savor?</h3>
-                <p>Install Savor from Google Play, then come back to this page and tap the claim button.</p>
-                <a href={PLAY_URL} target="_blank" rel="noreferrer" className="iki-btn iki-btn--play">Get Savor on Google Play</a>
-              </div>
-            </div>
-
-            <div className="iki-desktop-note">
-              <strong>On a computer?</strong> The theme is claimed inside the Savor Android app. Install Savor on your phone,
-              reopen <span>getsavor.recipes/iron-kitchen</span> there, and tap the claim button.
-            </div>
+            <article className="iki-claim-path">
+              <span className="iki-step">02</span>
+              <h3>New to Savor?</h3>
+              <p>
+                Install Savor from Google Play, then return to Iron Kitchen and tap their collaboration button.
+                There&rsquo;s no code to remember and no purchase verification.
+              </p>
+              <a href={PLAY_URL} target="_blank" rel="noreferrer" className="iki-btn iki-btn--outline">
+                Get Savor on Google Play
+              </a>
+            </article>
           </div>
         </div>
       </section>
@@ -120,14 +202,18 @@ export default function IronKitchen() {
         <div className="container iki-recipes-inner">
           <div className="iki-recipes-copy">
             <p className="iki-section-kicker">Cook it. Keep it.</p>
-            <h2>Iron Kitchen recipes belong in a recipe box, not a browser tab.</h2>
+            <h2>A good recipe deserves better than another browser tab.</h2>
             <p>
-              When an Iron Kitchen recipe catches your eye, Savor can turn the recipe page into a clean,
-              cookable card in your own collection — alongside recipes saved from screenshots, books,
-              handwritten cards and everywhere else you actually find things worth cooking.
+              Savor is an ad-free home for the recipes you actually care about — saved from websites, screenshots,
+              cookbook pages, handwritten cards and anywhere else real recipes turn up.
             </p>
-            <a href="/" className="iki-text-link">See what Savor saves <span aria-hidden="true">→</span></a>
+            <p>
+              Find something worth cooking at Iron Kitchen? Keep it with the rest of your recipe box instead of
+              trying to remember where you found it.
+            </p>
+            <a href="/" className="iki-text-link">See what Savor does <span aria-hidden="true">→</span></a>
           </div>
+
           <div className="iki-recipe-stack" aria-hidden="true">
             <div className="iki-recipe-sheet iki-recipe-sheet--back" />
             <div className="iki-recipe-sheet iki-recipe-sheet--mid" />
@@ -144,17 +230,40 @@ export default function IronKitchen() {
 
       <section className="iki-partner">
         <div className="container iki-partner-inner">
-          <p className="iki-section-kicker">Iron Kitchen Inc.</p>
-          <h2>Engineered in North Carolina. Made for kitchens that get used.</h2>
+          <img
+            src="/images/iron-kitchen-logo.webp"
+            alt="Iron Kitchen Inc."
+            className="iki-partner-logo"
+            width="512"
+            height="512"
+            loading="lazy"
+          />
+          <p className="iki-section-kicker">The people behind the tools</p>
+          <h2>Made in America. Made to work.</h2>
           <p>
-            Explore Iron Kitchen&rsquo;s American-made kitchen and butcher-shop equipment, practical guides,
-            and the story behind the family business.
+            Explore Iron Kitchen&rsquo;s culinary equipment, practical resources, and the family story behind a
+            North Carolina company bringing industrial-grade thinking into the kitchen.
           </p>
-          <a href={IRON_KITCHEN_URL} target="_blank" rel="noopener noreferrer" className="iki-btn iki-btn--partner">
+          <a
+            href={IRON_KITCHEN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="iki-btn iki-btn--primary"
+          >
             Visit Iron Kitchen Inc. <span aria-hidden="true">↗</span>
           </a>
         </div>
       </section>
+
+      {showTestClaim && (
+        <aside className="iki-test-claim" aria-label="Collaboration test controls">
+          <div>
+            <strong>IKI test handoff</strong>
+            <span>Canary only — not part of the public collaboration flow.</span>
+          </div>
+          <a href={TEST_CLAIM_URL}>Open test theme in Savor</a>
+        </aside>
+      )}
 
       <Footer />
     </main>

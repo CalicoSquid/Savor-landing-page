@@ -26,8 +26,8 @@ export const STATIC_SEO_PAGES = [
   page({
     path: '/iron-kitchen',
     file: 'iron-kitchen/index.html',
-    title: 'Savor × Iron Kitchen Inc. — Exclusive Recipe App Theme',
-    description: 'Savor and Iron Kitchen Inc. team up on an exclusive free Savor theme for cooks. Claim it in the Android app, or install Savor and return to unlock it.',
+    title: 'Savor × Iron Kitchen Inc. — Forged in Fire',
+    description: 'Meet Iron Kitchen Inc., a family-run North Carolina maker, and discover its exclusive free Savor recipe-app theme — offered through Iron Kitchen.',
     canonical: `${SITE_URL}/iron-kitchen/`,
     ogImageAlt: 'Savor × Iron Kitchen Inc. — an exclusive collaboration theme for Savor',
   }),

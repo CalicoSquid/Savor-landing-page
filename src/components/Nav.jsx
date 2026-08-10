@@ -13,12 +13,13 @@ export default function Nav() {
   const isPotluck = location.pathname.startsWith('/potluck')
   const isCaper   = location.pathname.startsWith('/caper') || location.pathname.startsWith('/forage')
   const isApocaleaf = location.pathname.startsWith('/apocaleaf')
+  const isIronKitchen = location.pathname.startsWith('/iron-kitchen')
   const isRecipe  = location.pathname.startsWith('/r/')
   const isDemo    = location.pathname.startsWith('/demo')
 
   if (isRecipe || isDemo) return null
 
-  const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isCaper ? 'forage' : isApocaleaf ? 'apocaleaf' : 'savor'
+  const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isCaper ? 'forage' : isApocaleaf ? 'apocaleaf' : isIronKitchen ? 'iron-kitchen' : 'savor'
   const iconSrc  = isStudio  ? '/images/logo_W.webp'
                  : isPotluck ? '/potluck/potluck-icon.webp'
                  : isCaper   ? '/caper/caper-icon.webp'
