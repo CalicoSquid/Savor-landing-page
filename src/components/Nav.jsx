@@ -39,16 +39,38 @@ export default function Nav() {
   return (
     <nav className="nav" data-nav-theme={navTheme}>
       <div className="container">
-        <NavLink to="/">
-          <img
-            src={iconSrc}
-            alt={iconAlt}
-            className={`nav-icon${isPotluck ? ' nav-icon--potluck' : isCaper ? ' nav-icon--forage' : isApocaleaf ? ' nav-icon--apocaleaf' : ''}`}
-            width="44"
-            height="44"
-            decoding="async"
-          />
-        </NavLink>
+        {isIronKitchen ? (
+          <NavLink to="/" className="nav-collab-lockup" aria-label="Savor home">
+            <img
+              src="/images/Savor.webp"
+              alt="Savor"
+              className="nav-collab-savor"
+              width="840"
+              height="263"
+              decoding="async"
+            />
+            <span className="nav-collab-times" aria-hidden="true">×</span>
+            <img
+              src="/images/iron-kitchen-logo.webp"
+              alt="Iron Kitchen Inc."
+              className="nav-collab-iki"
+              width="512"
+              height="512"
+              decoding="async"
+            />
+          </NavLink>
+        ) : (
+          <NavLink to="/">
+            <img
+              src={iconSrc}
+              alt={iconAlt}
+              className={`nav-icon${isPotluck ? ' nav-icon--potluck' : isCaper ? ' nav-icon--forage' : isApocaleaf ? ' nav-icon--apocaleaf' : ''}`}
+              width="44"
+              height="44"
+              decoding="async"
+            />
+          </NavLink>
+        )}
         {showCta && (
           <a href={PLAY_URL} target="_blank" rel="noreferrer" className="nav-cta">
             Get the App
