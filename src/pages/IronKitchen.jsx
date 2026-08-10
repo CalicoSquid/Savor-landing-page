@@ -57,8 +57,8 @@ export default function IronKitchen() {
             />
             <div className="iki-hero-brand-copy">
               <span>Iron Kitchen Inc.</span>
-              <strong>Family-run in East Bend, North Carolina.</strong>
-              <p>Two brothers. American-made culinary tools. Plenty of engineering, and just as much love of cooking.</p>
+              <strong>Built in East Bend, North Carolina.</strong>
+              <p>American-made kitchen tools, shaped by engineering and a serious love of cooking.</p>
             </div>
           </aside>
         </div>
