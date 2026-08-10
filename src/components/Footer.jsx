@@ -15,6 +15,7 @@ export default function Footer() {
           <li><a href="/about/">About</a></li>
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/faq/">FAQ</a></li>
+          <li><a href="/iron-kitchen/">Savor × Iron Kitchen</a></li>
           <li><a href="/potluck/">Potluck</a></li>
           <li><a href="/caper/">Caper</a></li>
           <li><a href="/apocaleaf/">Apocaleaf</a></li>

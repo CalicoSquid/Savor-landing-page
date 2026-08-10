@@ -147,6 +147,25 @@ export function structuredDataForPage(seo) {
 
   if (seo.path === '/') {
     graph.push(savorApplication, webPageNode(seo))
+  } else if (seo.path === '/iron-kitchen') {
+    const ironKitchenId = 'https://ironkitcheninc.com/#organisation'
+    graph.push(
+      savorApplication,
+      {
+        '@type': 'Organization',
+        '@id': ironKitchenId,
+        name: 'Iron Kitchen Inc.',
+        url: 'https://ironkitcheninc.com/',
+      },
+      {
+        ...webPageNode(seo),
+        about: [{ '@id': SAVOR_APP_ID }, { '@id': ironKitchenId }],
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Savor × Iron Kitchen Inc.', url: seo.canonical },
+      ]),
+    )
   } else if (seo.path === '/about') {
     graph.push(savorApplication, webPageNode(seo, 'AboutPage'))
   } else if (seo.path === '/faq') {

@@ -24,6 +24,14 @@ export const STATIC_SEO_PAGES = [
     ogImageAlt: 'Savor — a recipe organiser for saving and scanning real recipes',
   }),
   page({
+    path: '/iron-kitchen',
+    file: 'iron-kitchen/index.html',
+    title: 'Savor × Iron Kitchen Inc. — Exclusive Recipe App Theme',
+    description: 'Savor and Iron Kitchen Inc. team up on an exclusive free Savor theme for cooks. Claim it in the Android app, or install Savor and return to unlock it.',
+    canonical: `${SITE_URL}/iron-kitchen/`,
+    ogImageAlt: 'Savor × Iron Kitchen Inc. — an exclusive collaboration theme for Savor',
+  }),
+  page({
     path: '/about',
     file: 'about/index.html',
     title: 'About Savor — A Recipe App Made by a Chef',

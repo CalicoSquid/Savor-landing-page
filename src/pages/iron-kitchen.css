@@ -1,0 +1,537 @@
+.iki-page {
+  --iki-orange: #f05a00;
+  --iki-orange-dark: #c84300;
+  --iki-gunmetal: #343a3c;
+  --iki-gunmetal-dark: #1b1e1f;
+  --iki-steel: #747d80;
+  --iki-paper: #f4f5f3;
+  --iki-card: #fcfcfb;
+  background: var(--bg);
+  color: var(--text-primary);
+}
+
+.iki-hero {
+  position: relative;
+  overflow: hidden;
+  background: #171a1b;
+  color: #fff;
+}
+
+.iki-hero::before {
+  content: '';
+  position: absolute;
+  inset: -30% -10% auto auto;
+  width: min(760px, 76vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 90, 0, 0.22), transparent 66%);
+  pointer-events: none;
+}
+
+.iki-hero-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.09;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 84%);
+}
+
+.iki-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(330px, 0.8fr);
+  gap: clamp(48px, 7vw, 92px);
+  align-items: center;
+  padding-top: clamp(72px, 10vw, 118px);
+  padding-bottom: clamp(72px, 10vw, 118px);
+}
+
+.iki-eyebrow,
+.iki-section-kicker {
+  font-size: 0.78rem;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.iki-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 22px;
+}
+
+.iki-eyebrow::before {
+  content: '';
+  width: 34px;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--iki-orange);
+}
+
+.iki-eyebrow span { color: var(--iki-orange); }
+
+.iki-hero h1 {
+  max-width: 760px;
+  font-size: clamp(2.55rem, 6vw, 5.3rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+}
+
+.iki-hero-lead {
+  max-width: 650px;
+  margin-top: 26px;
+  font-size: clamp(1.05rem, 1.7vw, 1.22rem);
+  line-height: 1.72;
+  color: rgba(255,255,255,0.74);
+}
+
+.iki-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.iki-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 14px 22px;
+  border-radius: 14px;
+  font: 700 0.95rem/1.2 var(--font);
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.iki-btn:hover { transform: translateY(-2px); }
+.iki-btn:active { transform: translateY(0); }
+
+.iki-btn--claim {
+  background: linear-gradient(135deg, var(--iki-orange), var(--iki-orange-dark));
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(240, 90, 0, 0.24);
+}
+
+.iki-btn--play {
+  border: 1px solid rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+.iki-claim-path .iki-btn--play {
+  border-color: rgba(23,26,27,0.16);
+  background: var(--iki-gunmetal-dark);
+}
+
+.iki-claim-hint {
+  margin-top: 13px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.48);
+}
+
+.iki-theme-preview {
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 30px;
+  padding: 18px;
+  background: linear-gradient(160deg, #42494c 0%, #252a2c 100%);
+  box-shadow: 0 36px 90px rgba(0,0,0,0.38);
+  transform: rotate(1.2deg);
+}
+
+.iki-theme-preview::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(240,90,0,0.46);
+  border-radius: 23px;
+  pointer-events: none;
+}
+
+.iki-preview-topline,
+.iki-preview-appbar,
+.iki-preview-foot,
+.iki-preview-card {
+  position: relative;
+  z-index: 1;
+}
+
+.iki-preview-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 10px 14px;
+  color: rgba(255,255,255,0.58);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.iki-preview-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 28px;
+  border: 1px solid rgba(240,90,0,0.9);
+  color: #fff;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.iki-preview-appbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 -18px;
+  padding: 18px 28px;
+  background: linear-gradient(90deg, var(--iki-orange), var(--iki-orange-dark));
+}
+
+.iki-preview-appbar img {
+  display: block;
+  width: 118px;
+  height: auto;
+}
+
+.iki-preview-appbar span {
+  color: rgba(255,255,255,0.86);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.iki-preview-card {
+  margin-top: 18px;
+  padding: 24px;
+  border-radius: 18px;
+  background: var(--iki-card);
+  color: #171a1b;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+}
+
+.iki-preview-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--iki-orange-dark);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.iki-preview-card h2 {
+  margin-top: 7px;
+  font-size: clamp(1.45rem, 3.5vw, 2rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.iki-preview-line {
+  width: 74%;
+  height: 7px;
+  margin-top: 12px;
+  border-radius: 99px;
+  background: #d9ddde;
+}
+
+.iki-preview-line--long { width: 94%; margin-top: 24px; }
+.iki-preview-line--short { width: 54%; }
+
+.iki-preview-swatches {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.iki-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.iki-swatch--orange { background: var(--iki-orange); }
+.iki-swatch--gunmetal { background: var(--iki-gunmetal); }
+.iki-swatch--steel { background: var(--iki-steel); }
+
+.iki-preview-foot {
+  padding: 16px 10px 4px;
+  color: rgba(255,255,255,0.68);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.iki-story,
+.iki-recipes,
+.iki-partner {
+  padding: clamp(72px, 9vw, 110px) 0;
+}
+
+.iki-story-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: clamp(44px, 8vw, 110px);
+}
+
+.iki-section-kicker {
+  color: var(--iki-orange-dark);
+  margin-bottom: 14px;
+}
+
+.iki-story h2,
+.iki-recipes h2,
+.iki-partner h2,
+.iki-claim-heading h2 {
+  font-size: clamp(2rem, 4.2vw, 3.35rem);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+.iki-story-copy p,
+.iki-recipes-copy > p,
+.iki-partner-inner > p,
+.iki-claim-heading > p {
+  font-size: 1.05rem;
+  line-height: 1.78;
+  color: var(--text-secondary);
+}
+
+.iki-story-copy p + p { margin-top: 18px; }
+
+.iki-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 24px;
+  color: var(--iki-orange-dark);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.iki-text-link:hover { text-decoration: underline; }
+
+.iki-claim {
+  padding: 18px 0 clamp(72px, 9vw, 110px);
+}
+
+.iki-claim-panel {
+  overflow: hidden;
+  border: 1px solid rgba(23,26,27,0.1);
+  border-radius: 30px;
+  background: var(--iki-paper);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+
+.iki-claim-heading {
+  max-width: 780px;
+  padding: clamp(32px, 5vw, 58px);
+}
+
+.iki-claim-heading > p { margin-top: 16px; }
+
+.iki-claim-paths {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid rgba(23,26,27,0.1);
+}
+
+.iki-claim-path {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(28px, 4vw, 44px);
+}
+
+.iki-claim-path + .iki-claim-path { border-left: 1px solid rgba(23,26,27,0.1); }
+
+.iki-step {
+  color: var(--iki-orange-dark);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.iki-claim-path h3 {
+  margin-top: 14px;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.iki-claim-path p {
+  flex: 1;
+  margin: 11px 0 24px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.iki-desktop-note {
+  padding: 18px clamp(28px, 4vw, 44px);
+  border-top: 1px solid rgba(23,26,27,0.1);
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.iki-desktop-note strong { color: var(--text-primary); }
+.iki-desktop-note span { font-weight: 700; color: var(--iki-orange-dark); }
+
+.iki-recipes {
+  background: #171a1b;
+  color: #fff;
+}
+
+.iki-recipes-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.72fr);
+  gap: clamp(54px, 9vw, 120px);
+  align-items: center;
+}
+
+.iki-recipes .iki-section-kicker { color: #ff7a29; }
+.iki-recipes-copy > p { margin-top: 20px; color: rgba(255,255,255,0.68); }
+.iki-recipes .iki-text-link { color: #ff7a29; }
+
+.iki-recipe-stack {
+  position: relative;
+  min-height: 330px;
+}
+
+.iki-recipe-sheet {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: #fff;
+}
+
+.iki-recipe-sheet--back {
+  transform: rotate(-8deg) translate(-16px, 8px);
+  background: #555e61;
+}
+
+.iki-recipe-sheet--mid {
+  transform: rotate(5deg) translate(14px, 5px);
+  background: var(--iki-orange-dark);
+}
+
+.iki-recipe-sheet--front {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 5vw, 48px);
+  color: #171a1b;
+  box-shadow: 0 24px 50px rgba(0,0,0,0.28);
+}
+
+.iki-recipe-sheet--front span {
+  color: var(--iki-orange-dark);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.iki-recipe-sheet--front strong {
+  margin-top: 12px;
+  font-size: clamp(1.65rem, 4vw, 2.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.iki-recipe-rule {
+  width: 88%;
+  height: 7px;
+  margin-top: 15px;
+  border-radius: 99px;
+  background: #d8dcdd;
+}
+
+.iki-recipe-rule:first-of-type { margin-top: 30px; }
+.iki-recipe-rule--short { width: 62%; }
+
+.iki-partner {
+  background: #f6f3ef;
+  text-align: center;
+}
+
+.iki-partner-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 760px;
+}
+
+.iki-partner-inner > p {
+  max-width: 620px;
+  margin-top: 18px;
+}
+
+.iki-btn--partner {
+  margin-top: 28px;
+  background: var(--iki-gunmetal-dark);
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(23,26,27,0.16);
+}
+
+@media (max-width: 840px) {
+  .iki-hero-inner,
+  .iki-story-grid,
+  .iki-recipes-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .iki-hero-inner { gap: 54px; }
+  .iki-theme-preview { width: min(100%, 520px); margin: 0 auto; }
+  .iki-story-grid { gap: 28px; }
+  .iki-recipes-copy { max-width: 680px; }
+  .iki-recipe-stack { width: min(100%, 460px); margin: 0 auto; }
+}
+
+@media (max-width: 620px) {
+  .iki-hero-inner {
+    padding-top: 62px;
+    padding-bottom: 70px;
+  }
+
+  .iki-hero h1 { font-size: clamp(2.45rem, 13vw, 3.8rem); }
+  .iki-hero-actions { flex-direction: column; }
+  .iki-btn { width: 100%; }
+
+  .iki-theme-preview {
+    padding: 14px;
+    border-radius: 24px;
+    transform: none;
+  }
+
+  .iki-theme-preview::after { inset: 7px; border-radius: 18px; }
+  .iki-preview-appbar { margin: 0 -14px; padding: 16px 22px; }
+  .iki-preview-appbar img { width: 104px; }
+  .iki-preview-card { padding: 21px; }
+
+  .iki-claim-paths { grid-template-columns: 1fr; }
+  .iki-claim-path + .iki-claim-path {
+    border-left: 0;
+    border-top: 1px solid rgba(23,26,27,0.1);
+  }
+
+  .iki-recipe-stack { min-height: 285px; width: calc(100% - 18px); }
+  .iki-recipe-sheet--back { transform: rotate(-5deg) translate(-8px, 5px); }
+  .iki-recipe-sheet--mid { transform: rotate(4deg) translate(8px, 4px); }
+}

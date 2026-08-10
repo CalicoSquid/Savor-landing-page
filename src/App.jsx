@@ -5,6 +5,7 @@ import Potluck from './pages/Potluck'
 import Caper from './pages/Caper'
 import Apocaleaf from './pages/Apocaleaf'
 import About from './pages/About'
+import IronKitchen from './pages/IronKitchen'
 import Faq from './pages/Faq'
 import RecipePage from './pages/RecipePage'
 import DemoBlog from './pages/DemoBlog'
@@ -35,6 +36,7 @@ export default function AppRoutes() {
         <Route path="/forage"                   element={<Navigate to="/caper/" replace />} />
         <Route path="/apocaleaf"                element={<Apocaleaf />} />
         <Route path="/about"                    element={<About />} />
+        <Route path="/iron-kitchen"             element={<IronKitchen />} />
         <Route path="/faq"                      element={<Faq />} />
         <Route path="/studio"                   element={<Studio />} />
         <Route path="/r/:id"                    element={<RecipePage />} />
