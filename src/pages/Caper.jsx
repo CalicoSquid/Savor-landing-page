@@ -76,7 +76,7 @@ export default function Caper() {
             </a>
             <a href="#guide" className="fg-btn fg-btn-ghost">Browse the field guide</a>
           </div>
-          <p className="fg-hero-note fg-fade fg-fade-4">Now in early testing on Android</p>
+          <p className="fg-hero-note fg-fade fg-fade-4">Android · Coming soon</p>
         </div>
         <div className="fg-hero-rule" aria-hidden="true" />
       </section>
