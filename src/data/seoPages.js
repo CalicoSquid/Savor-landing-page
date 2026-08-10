@@ -27,9 +27,9 @@ export const STATIC_SEO_PAGES = [
     path: '/iron-kitchen',
     file: 'iron-kitchen/index.html',
     title: 'Savor × Iron Kitchen Inc. — Forged in Fire',
-    description: 'Meet Iron Kitchen Inc., a family-run North Carolina maker, and discover its exclusive free Savor recipe-app theme — offered through Iron Kitchen.',
+    description: 'Meet Iron Kitchen Inc., a family-run North Carolina maker partnering with Savor around durable kitchen tools, practical recipes and an exclusive Savor theme.',
     canonical: `${SITE_URL}/iron-kitchen/`,
-    ogImageAlt: 'Savor × Iron Kitchen Inc. — an exclusive collaboration theme for Savor',
+    ogImageAlt: 'Savor × Iron Kitchen Inc. — kitchen tools, recipes and an exclusive Savor collaboration theme',
   }),
   page({
     path: '/about',

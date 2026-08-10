@@ -75,22 +75,6 @@
   text-align: center;
 }
 
-.iki-hero-badge {
-  width: clamp(94px, 12vw, 124px);
-  margin: 0 auto 24px;
-  padding: 8px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 14px 38px rgba(29, 20, 10, 0.1);
-}
-
-.iki-hero-badge img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
-}
-
 .iki-hero h1 {
   max-width: 760px;
   margin: 14px auto 0;
@@ -106,6 +90,20 @@
   color: var(--text-secondary);
   font-size: clamp(1.03rem, 1.7vw, 1.17rem);
   line-height: 1.75;
+}
+
+.iki-hero-note {
+  max-width: 610px;
+  margin: 16px auto 0;
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.iki-hero-action-note {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.4;
 }
 
 .iki-palette {
@@ -232,26 +230,38 @@
 .iki-story-mark {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  min-height: 390px;
-  padding: 38px;
+  min-height: 330px;
+  padding: clamp(30px, 5vw, 48px);
   border-radius: 28px;
   background: var(--iki-cream);
   border: 1px solid rgba(254, 109, 8, 0.11);
 }
 
-.iki-story-mark > img {
-  width: min(210px, 70%);
-  height: auto;
-  border-radius: 50%;
-  box-shadow: 0 14px 34px rgba(35, 24, 11, 0.08);
+.iki-story-place {
+  margin: 0;
+  color: var(--iki-orange);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.iki-story-statement {
+  max-width: 420px;
+  margin: 16px 0 0;
+  color: var(--text-primary);
+  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
 }
 
 .iki-story-facts {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   margin-top: 28px;
 }
@@ -321,9 +331,10 @@
 
 .iki-side {
   display: flex;
-  align-items: center;
-  gap: 18px;
-  min-height: 118px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 150px;
   padding: 22px;
   border-radius: 20px;
   background: var(--bg);
@@ -331,27 +342,26 @@
   text-align: left;
 }
 
-.iki-side img {
-  width: 66px;
-  height: 66px;
-  flex: 0 0 auto;
-  object-fit: contain;
+.iki-side-label {
+  color: var(--iki-orange);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
-
-.iki-side:first-child img { border-radius: 50%; }
 
 .iki-side div {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 7px;
 }
 
 .iki-side strong {
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 1.12rem;
 }
 
-.iki-side span {
+.iki-side div span {
   color: var(--text-secondary);
   font-size: 0.88rem;
   line-height: 1.5;
@@ -371,15 +381,6 @@
 .iki-partner-inner {
   max-width: 720px;
   text-align: center;
-}
-
-.iki-partner-logo {
-  display: block;
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 22px;
-  border-radius: 50%;
-  box-shadow: 0 10px 26px rgba(35, 24, 11, 0.08);
 }
 
 .iki-partner p:not(.iki-kicker) {
@@ -435,7 +436,6 @@
 @media (max-width: 820px) {
   .iki-story-grid { grid-template-columns: 1fr; }
   .iki-story-mark { min-height: 0; padding: 32px 24px; }
-  .iki-story-mark > img { width: 160px; }
 
   .iki-two-sides {
     grid-template-columns: 1fr;
@@ -478,8 +478,7 @@
   .iki-story-copy { text-align: center; }
   .iki-story-copy > p:not(.iki-kicker) { margin-left: auto; margin-right: auto; }
 
-  .iki-side { padding: 18px; }
-  .iki-side img { width: 56px; height: 56px; }
+  .iki-side { padding: 18px; min-height: 0; }
 
   .iki-test-claim {
     margin: 18px 16px;

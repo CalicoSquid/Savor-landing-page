@@ -19,15 +19,15 @@ export default function IronKitchen() {
     <main className="page iki-page">
       <section className="iki-hero">
         <div className="container iki-hero-inner">
-          <div className="iki-hero-badge" aria-hidden="true">
-            <img src="/images/iron-kitchen-logo.webp" alt="" width="512" height="512" />
-          </div>
-
           <p className="iki-kicker">Savor × Iron Kitchen Inc.</p>
-          <h1>A little something from one family kitchen to another.</h1>
+          <h1>Good tools deserve good recipes. Good recipes deserve a home.</h1>
           <p className="iki-hero-lead">
-            We teamed up with Iron Kitchen Inc. — a family-run North Carolina company making American-built
-            culinary tools — to bring a little of their kitchen into Savor.
+            Iron Kitchen makes durable culinary tools for people who actually use their kitchens. As they share
+            the recipes that go with them, Savor gives those recipes a calm place to live — saved cleanly, easy
+            to find, and ready for next time.
+          </p>
+          <p className="iki-hero-note">
+            Two small teams, building useful things carefully. A little something from one family kitchen to another.
           </p>
 
           <div className="iki-palette" aria-label="Iron Kitchen collaboration theme colors">
@@ -44,8 +44,9 @@ export default function IronKitchen() {
               rel="noopener noreferrer"
               className="iki-btn iki-btn--primary"
             >
-              Visit Iron Kitchen to claim the theme <span aria-hidden="true">↗</span>
+              Visit Iron Kitchen <span aria-hidden="true">↗</span>
             </a>
+            <span className="iki-hero-action-note">Their tools, their recipes, and the exclusive Savor theme.</span>
             <a href={PLAY_URL} target="_blank" rel="noreferrer" className="iki-secondary-link">
               Don&rsquo;t have Savor yet? Get the app →
             </a>
@@ -75,11 +76,14 @@ export default function IronKitchen() {
 
       <section className="iki-story">
         <div className="container iki-story-grid">
-          <div className="iki-story-mark" aria-hidden="true">
-            <img src="/images/iron-kitchen-logo.webp" alt="" width="512" height="512" loading="lazy" />
-            <div className="iki-story-facts">
-              <span>East Bend, North Carolina</span>
-              <span>Family-run</span>
+          <div className="iki-story-mark">
+            <p className="iki-story-place">East Bend, North Carolina</p>
+            <p className="iki-story-statement">
+              Family-run. American-made. Built with the kind of care you notice after years of use.
+            </p>
+            <div className="iki-story-facts" aria-label="Iron Kitchen company details">
+              <span>Two brothers</span>
+              <span>Engineering-led</span>
               <span>Made in America</span>
             </div>
           </div>
@@ -113,23 +117,24 @@ export default function IronKitchen() {
           <p className="iki-kicker">Why this works</p>
           <h2>Different tools. Same kitchen.</h2>
           <p className="iki-same-kitchen-lead">
-            Iron Kitchen makes the things you cook with. Savor keeps the recipes you cook from.
+            Iron Kitchen makes the things you cook with — and the recipes to put them to work. Savor keeps those
+            recipes organized, searchable, and yours.
           </p>
 
           <div className="iki-two-sides">
             <div className="iki-side">
-              <img src="/images/iron-kitchen-logo.webp" alt="" width="512" height="512" loading="lazy" />
+              <span className="iki-side-label">Iron Kitchen</span>
               <div>
-                <strong>Iron Kitchen</strong>
-                <span>Practical culinary tools designed to work hard and last.</span>
+                <strong>Make it well.</strong>
+                <span>Hard-working culinary tools, plus practical recipes built around actually using them.</span>
               </div>
             </div>
             <span className="iki-plus" aria-hidden="true">+</span>
             <div className="iki-side">
-              <img src="/icons/icon-Tangerine.webp" alt="" width="160" height="160" loading="lazy" />
+              <span className="iki-side-label">Savor</span>
               <div>
-                <strong>Savor</strong>
-                <span>A calm, ad-free home for the recipes worth keeping.</span>
+                <strong>Keep it close.</strong>
+                <span>A calm, ad-free home where those recipes stay easy to find and worth coming back to.</span>
               </div>
             </div>
           </div>
@@ -138,18 +143,10 @@ export default function IronKitchen() {
 
       <section className="iki-partner">
         <div className="container iki-partner-inner">
-          <img
-            src="/images/iron-kitchen-logo.webp"
-            alt="Iron Kitchen Inc."
-            className="iki-partner-logo"
-            width="512"
-            height="512"
-            loading="lazy"
-          />
           <p className="iki-kicker">Go meet the makers</p>
           <h2>Take a look at what the brothers are building.</h2>
           <p>
-            Explore Iron Kitchen&rsquo;s tools and story — and, if you use Savor, pick up the exclusive Iron Kitchen
+            Explore Iron Kitchen&rsquo;s tools, recipes and story — and, if you use Savor, pick up the exclusive Iron Kitchen
             theme while you&rsquo;re there.
           </p>
           <a
