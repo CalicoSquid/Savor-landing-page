@@ -242,72 +242,14 @@ export default function Potluck() {
           </div>
         </section>
 
-        {/* ── The Void ─────────────────────────────────────────────────── */}
-        <section className="pl-section pl-void">
-          <div className="pl-void-grain" aria-hidden="true" />
-          <div className="pl-container pl-void-layout">
-            <div className="pl-void-copy">
-              <span className="pl-void-signature" aria-hidden="true">
-                <span /><span /><span />
-              </span>
-              <span className="pl-eyebrow pl-eyebrow--void">The Void</span>
-              <h2 className="pl-h2 pl-void-title">You asked me to choose. You literally asked.</h2>
-              <p className="pl-void-lead">
-                Hate what landed? <strong>86 it.</strong> The dish drops out of
-                the wheel and into the Void, where Potluck keeps a quiet little
-                record of every time you overruled the universe.
-              </p>
-              <p className="pl-void-fine">
-                Changed your mind? Fine. Return a dish to circulation, or empty
-                the whole Void and pretend none of this happened. The universe
-                will pretend too. Poorly.
-              </p>
-              <blockquote className="pl-void-whisper">
-                “Pardoned. The void is disappointed; I am not.”
-              </blockquote>
-            </div>
-
-            <div className="pl-void-demo" aria-label="Example of The Void in Potluck">
-              <div className="pl-void-demo-head">
-                <div>
-                  <h3>The Void</h3>
-                  <p>Recipes you&rsquo;ve 86&rsquo;d live here, beyond the reach of the wheel.</p>
-                </div>
-                <span className="pl-void-count">3</span>
-              </div>
-
-              <div className="pl-void-well">
-                <div className="pl-void-row">
-                  <span className="pl-void-86">86</span>
-                  <span className="pl-void-row-copy">
-                    <strong>That one you absolutely rejected</strong>
-                    <small>Banished today</small>
-                  </span>
-                  <span className="pl-void-return">↶ <span>Return</span></span>
-                </div>
-                <div className="pl-void-row">
-                  <span className="pl-void-86">86</span>
-                  <span className="pl-void-row-copy">
-                    <strong>A perfectly good dish</strong>
-                    <small>Banished yesterday</small>
-                  </span>
-                  <span className="pl-void-return">↶ <span>Return</span></span>
-                </div>
-                <div className="pl-void-row">
-                  <span className="pl-void-86">86</span>
-                  <span className="pl-void-row-copy">
-                    <strong>One less star in the sky</strong>
-                    <small>Banished Aug 8</small>
-                  </span>
-                  <span className="pl-void-return">↶ <span>Return</span></span>
-                </div>
-              </div>
-
-              <div className="pl-void-empty">
-                <span aria-hidden="true">⌫</span>
-                <span>Empty the void</span>
-              </div>
-            </div>
+        {/* ── 86 / The Void teaser ───────────────────────────────────── */}
+        <section className="pl-void-teaser" aria-label="A warning from the universe">
+          <div className="pl-container pl-void-teaser-inner">
+            <span className="pl-void-teaser-86" aria-hidden="true">86</span>
+            <p className="pl-void-teaser-copy">
+              You&rsquo;ll see this on a dish. <strong>Don&rsquo;t press it.</strong> I know you will. Please don&rsquo;t.
+            </p>
+            <span className="pl-void-teaser-name" aria-hidden="true">The Void</span>
           </div>
         </section>
 
