@@ -1,9 +1,11 @@
 // src/pages/Potluck.jsx — showcase page for the (new) Potluck app.
 import './potluck.css'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck'
+const POTLUCK_STATS_URL = 'https://savor-app-server-gql-production.up.railway.app/potluck-stats'
 
 const STEPS = [
   {
@@ -33,6 +35,57 @@ const VERDICTS = [
 ]
 
 export default function Potluck() {
+  const [spinCount, setSpinCount] = useState(null)
+  const previousCount = useRef(null)
+
+  useEffect(() => {
+    let cancelled = false
+    let animationFrame = null
+
+    const animateTo = (nextCount) => {
+      const start = previousCount.current ?? nextCount
+      previousCount.current = nextCount
+
+      if (start === nextCount) {
+        setSpinCount(nextCount)
+        return
+      }
+
+      const startedAt = performance.now()
+      const duration = 650
+      const tick = (now) => {
+        if (cancelled) return
+        const progress = Math.min((now - startedAt) / duration, 1)
+        const eased = 1 - Math.pow(1 - progress, 3)
+        setSpinCount(Math.round(start + (nextCount - start) * eased))
+        if (progress < 1) animationFrame = requestAnimationFrame(tick)
+      }
+      animationFrame = requestAnimationFrame(tick)
+    }
+
+    const loadStats = async () => {
+      try {
+        const response = await fetch(POTLUCK_STATS_URL, { cache: 'no-store' })
+        if (!response.ok) return
+        const data = await response.json()
+        const nextCount = Number(data?.totalSpins)
+        if (!cancelled && Number.isFinite(nextCount) && nextCount >= 0) {
+          animateTo(nextCount)
+        }
+      } catch {
+        // Stats are decorative; a network hiccup should never damage the hero.
+      }
+    }
+
+    loadStats()
+    const interval = window.setInterval(loadStats, 30000)
+
+    return () => {
+      cancelled = true
+      window.clearInterval(interval)
+      if (animationFrame) cancelAnimationFrame(animationFrame)
+    }
+  }, [])
 
   return (
     <>
@@ -77,6 +130,13 @@ export default function Potluck() {
               <span className="pl-wheel-glass-b" />
               <span className="pl-wheel-marker l" />
               <span className="pl-wheel-marker r" />
+            </div>
+
+            <div className={`pl-spin-count${spinCount === null ? ' is-loading' : ''}`}>
+              <span className="pl-spin-count-number">
+                {spinCount === null ? '···' : spinCount.toLocaleString()}
+              </span>
+              <span className="pl-spin-count-label">spins and counting</span>
             </div>
 
             <h1 className="pl-h1">One spin. <span className="spark">Dinner, decided.</span></h1>

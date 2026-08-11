@@ -479,14 +479,102 @@
 
 .iki-test-claim span { color: #777; }
 
-.iki-test-claim a {
+.iki-test-claim button {
   flex: 0 0 auto;
   padding: 8px 11px;
+  border: 0;
   border-radius: 9px;
   background: #222;
   color: #fff;
+  font: inherit;
   font-weight: 700;
+  cursor: pointer;
   text-decoration: none;
+}
+
+.iki-claim-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(16, 16, 16, 0.58);
+  backdrop-filter: blur(5px);
+}
+
+.iki-claim-modal {
+  position: relative;
+  width: min(100%, 500px);
+  padding: 30px;
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  border-radius: 22px;
+  background: var(--iki-cream);
+  color: var(--iki-ink);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.iki-claim-modal h2 {
+  margin: 8px 42px 0 0;
+  color: var(--iki-ink);
+  font-size: clamp(1.8rem, 5vw, 2.45rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.iki-claim-modal > p:not(.iki-kicker) {
+  margin: 16px 0 0;
+  color: rgba(23, 23, 23, 0.72);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.iki-claim-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(23, 23, 23, 0.07);
+  color: var(--iki-ink);
+  font: 500 1.5rem/1 var(--font);
+  cursor: pointer;
+}
+
+.iki-claim-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.iki-claim-modal-actions a,
+.iki-claim-modal-actions button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 15px;
+  border-radius: 11px;
+  font: 750 0.86rem/1.2 var(--font);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.iki-claim-modal-actions a {
+  border: 0;
+  background: var(--iki-ink);
+  color: #fff;
+}
+
+.iki-claim-modal-actions button {
+  border: 1px solid rgba(23, 23, 23, 0.13);
+  background: transparent;
+  color: var(--iki-ink);
 }
 
 @media (max-width: 820px) {
@@ -556,5 +644,18 @@
     align-items: stretch;
   }
 
-  .iki-test-claim a { text-align: center; }
+  .iki-test-claim button { text-align: center; }
+
+  .iki-claim-modal {
+    padding: 26px 22px 22px;
+  }
+
+  .iki-claim-modal-actions {
+    flex-direction: column;
+  }
+
+  .iki-claim-modal-actions a,
+  .iki-claim-modal-actions button {
+    width: 100%;
+  }
 }

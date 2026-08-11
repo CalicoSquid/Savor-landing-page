@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import './iron-kitchen.css'
 import Footer from '../components/Footer'
@@ -9,11 +10,25 @@ const IRON_KITCHEN_STORY_URL = 'https://ironkitcheninc.com/pages/our-story'
 // Browser → production-app canary. Keep this isolated from the public CTA.
 // Open /iron-kitchen?test=1 to reveal the test control.
 const TEST_COLLAB_ID = 'IKI'
-const TEST_CLAIM_URL = `savor://collab?id=${TEST_COLLAB_ID}`
+const TEST_ANDROID_INTENT_URL = `intent://collab?id=${TEST_COLLAB_ID}#Intent;scheme=savor;package=com.calicosquid.savorrecipes;S.browser_fallback_url=${encodeURIComponent(PLAY_URL)};end`
+
+const isAndroidDevice = () => typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
 
 export default function IronKitchen() {
   const { search } = useLocation()
   const showTestClaim = new URLSearchParams(search).get('test') === '1'
+  const [showUnsupportedModal, setShowUnsupportedModal] = useState(false)
+
+  const handleTestClaim = () => {
+    if (isAndroidDevice()) {
+      // Chrome for Android can resolve the explicit Savor intent when installed,
+      // and fall back to the Play Store when it is not.
+      window.location.href = TEST_ANDROID_INTENT_URL
+      return
+    }
+
+    setShowUnsupportedModal(true)
+  }
 
   return (
     <main className="page iki-page">
@@ -179,8 +194,44 @@ export default function IronKitchen() {
             <strong>IKI test handoff</strong>
             <span>Canary only — not part of the public collaboration flow.</span>
           </div>
-          <a href={TEST_CLAIM_URL}>Open test theme in Savor</a>
+          <button type="button" onClick={handleTestClaim}>Open test theme in Savor</button>
         </aside>
+      )}
+
+      {showUnsupportedModal && (
+        <div
+          className="iki-claim-modal-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setShowUnsupportedModal(false)
+          }}
+        >
+          <section
+            className="iki-claim-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="iki-claim-modal-title"
+          >
+            <button
+              type="button"
+              className="iki-claim-modal-close"
+              onClick={() => setShowUnsupportedModal(false)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <p className="iki-kicker">Savor theme</p>
+            <h2 id="iki-claim-modal-title">Open this on Android.</h2>
+            <p>
+              Savor is currently available on Android, so this device can&rsquo;t hand the Iron Kitchen theme to the app.
+              Open this page on an Android phone with Savor installed, then tap the theme button again.
+            </p>
+            <div className="iki-claim-modal-actions">
+              <a href={PLAY_URL} target="_blank" rel="noreferrer">Get Savor on Google Play ↗</a>
+              <button type="button" onClick={() => setShowUnsupportedModal(false)}>Got it</button>
+            </div>
+          </section>
+        </div>
       )}
 
       <Footer />
