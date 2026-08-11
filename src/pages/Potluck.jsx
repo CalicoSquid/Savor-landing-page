@@ -143,6 +143,33 @@ export default function Potluck() {
           </div>
         </section>
 
+        {/* ── The Void ─────────────────────────────────────────────────── */}
+        <section className="pl-section pl-void">
+          <div className="pl-void-grain" aria-hidden="true" />
+          <div className="pl-container pl-void-inner">
+            <span className="pl-void-glyph" aria-hidden="true">⌀</span>
+            <span className="pl-eyebrow pl-eyebrow--void">The Void</span>
+            <h2 className="pl-h2 pl-void-title">Some recipes should never return.</h2>
+            <p className="pl-void-lead">
+              Didn&rsquo;t like what landed? Banish it. One swipe and it&rsquo;s
+              gone &mdash; erased from the wheel, struck from the record,
+              cast into the Void where no recipe can hurt you again.
+            </p>
+            <p className="pl-void-fine">
+              This is permanent. The universe does not appreciate being
+              second-guessed. Banished recipes are gone for good and the
+              wheel will never speak of them again.
+            </p>
+            <div className="pl-void-whisper">
+              <p>
+                (There is a door at the back of the Void. We are not
+                supposed to tell you about it. If you find it, that&rsquo;s
+                between you and the universe.)
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* ── Potluck × Savor ──────────────────────────────────────────── */}
         <section className="pl-section">
           <div className="pl-container pl-pair-inner">
