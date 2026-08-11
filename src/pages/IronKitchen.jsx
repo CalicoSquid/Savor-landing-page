@@ -8,7 +8,7 @@ const IRON_KITCHEN_STORY_URL = 'https://ironkitcheninc.com/pages/our-story'
 
 // Browser → production-app canary. Keep this isolated from the public CTA.
 // Open /iron-kitchen?test=1 to reveal the test control.
-const TEST_COLLAB_ID = 'IKI_TEST'
+const TEST_COLLAB_ID = 'IKI'
 const TEST_CLAIM_URL = `savor://collab?id=${TEST_COLLAB_ID}`
 
 export default function IronKitchen() {
