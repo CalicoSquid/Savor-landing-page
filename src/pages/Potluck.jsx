@@ -9,6 +9,7 @@ import {
   fmtMins,
   getPotluckVisitorId,
   totalMins,
+  trackPotluckEvent,
 } from '../lib/potluckWeb'
 import {
   IDLE_HEADLINES,
@@ -25,7 +26,7 @@ const POTLUCK_THEME_ID = 'POTLUCK'
 const POTLUCK_THEME_INTENT_URL = `intent://collab?id=${POTLUCK_THEME_ID}#Intent;scheme=savor;package=com.calicosquid.savorrecipes;S.browser_fallback_url=${encodeURIComponent(SAVOR_PLAY_URL)};end`
 const POTLUCK_STATS_URL = 'https://savor-app-server-gql-production.up.railway.app/potluck-stats'
 const MIN_SPIN_MS = 1800
-const APP_PITCH_KEY = 'potluck:web-app-pitch-shown:v1'
+const APP_PITCH_KEY = 'potluck:web-app-pitch-shown:v2'
 
 const isAndroidDevice = () => typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
 
@@ -47,6 +48,20 @@ const APP_FEATURES = [
     body: 'The app remembers what you chose and what you cast out. The website is merely an acquaintance.',
   },
 ]
+
+const SHARE_TEMPLATES = [
+  (name) => `The Universe says I’m making ${name}. I appealed. It was denied.`,
+  (name) => `Dinner has been assigned: ${name}. Apparently this is canon now.`,
+  (name) => `I outsourced dinner to the cosmos and got ${name}. No appeals, apparently.`,
+  (name) => `The edible multiverse has selected ${name} for me. I have questions.`,
+  (name) => `Potluck says it’s ${name} tonight. The matter is cosmically settled.`,
+  (name) => `My evening now has a plot: ${name}. Blame the universe.`,
+]
+
+const shareTextFor = (recipe) => {
+  const template = SHARE_TEMPLATES[Math.floor(Math.random() * SHARE_TEMPLATES.length)]
+  return template(recipe?.name || 'dinner')
+}
 
 const sleep = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms))
 
@@ -115,7 +130,7 @@ function TypewriterVerdict({ text, tone = 'default', onComplete }) {
   )
 }
 
-function AppPitch({ onClose }) {
+function AppPitch({ onClose, onAppClick }) {
   useEffect(() => {
     const handleKey = (event) => {
       if (event.key === 'Escape') onClose()
@@ -134,19 +149,20 @@ function AppPitch({ onClose }) {
         onMouseDown={(event) => event.stopPropagation()}
       >
         <button type="button" className="pl-pitch-close" onClick={onClose} aria-label="Close">×</button>
+        <div className="pl-pitch-signal" aria-hidden="true"><span /> TRANSMISSION // 03</div>
         <span className="pl-dots" aria-hidden="true"><span /><span /><span /></span>
         <p className="pl-pitch-eyebrow">A transmission from the universe</p>
         <h2 id="pl-pitch-title" className="pl-pitch-title">
           <TypewriterVerdict text="…Oh. You’re still here." />
         </h2>
-        <p>Three verdicts and apparently we&rsquo;re doing this properly.</p>
+        <p>Three verdicts. You have now ignored me twice. Apparently we&rsquo;re doing this properly.</p>
         <p>
           In the app I remember this week&rsquo;s dinners, let you cast recipes into <strong>The Void</strong>,
           and keep a much better record of your insolence.
         </p>
         <p className="pl-pitch-last">You may continue here. <strong>I simply won&rsquo;t remember you.</strong></p>
-        <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-btn pl-btn--orange pl-pitch-cta">
-          Let the universe remember me →
+        <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-btn pl-btn--orange pl-pitch-cta" onClick={onAppClick}>
+          Make this official →
         </a>
         <button type="button" className="pl-pitch-dismiss" onClick={onClose}>Remain anonymous to fate</button>
       </section>
@@ -157,6 +173,7 @@ function AppPitch({ onClose }) {
 export default function Potluck() {
   const [spinCount, setSpinCount] = useState(null)
   const [phase, setPhase] = useState('idle') // idle | spinning | revealed
+  const [spinStage, setSpinStage] = useState('idle') // idle | summoning | sealing
   const [recipe, setRecipe] = useState(null)
   const [verdict, setVerdict] = useState('')
   const [spinLine, setSpinLine] = useState(() => pick(SPINNING_LINES))
@@ -185,6 +202,7 @@ export default function Potluck() {
       subline: pick(IDLE_SUBLINES),
     })
     pitchHandledRef.current = localFlag(APP_PITCH_KEY)
+    trackPotluckEvent('visit')
 
     return () => {
       if (pitchTimerRef.current) window.clearTimeout(pitchTimerRef.current)
@@ -293,6 +311,7 @@ export default function Potluck() {
     if (phase === 'spinning') return
 
     setPhase('spinning')
+    setSpinStage('summoning')
     setError('')
     setShareStatus('')
     setShowVoidTease(false)
@@ -300,7 +319,12 @@ export default function Potluck() {
     setResultImageFailed(false)
     if (pitchTimerRef.current) window.clearTimeout(pitchTimerRef.current)
 
+    let chatterTimer = null
     try {
+      chatterTimer = window.setTimeout(() => {
+        setSpinLine(pick(SPINNING_LINES))
+      }, 820)
+
       const visitorId = getPotluckVisitorId()
       const [picked] = await Promise.all([
         fetchRandomRecipe({
@@ -310,14 +334,21 @@ export default function Potluck() {
         sleep(MIN_SPIN_MS),
       ])
 
+      if (chatterTimer) window.clearTimeout(chatterTimer)
+      setSpinStage('sealing')
+      setSpinLine('Sealing the timeline…')
+      await sleep(300)
+
       seenIds.current = [...seenIds.current, picked.id].slice(-30)
       setRecipe(picked)
       setVerdict(verdictFor(picked))
       setPhase('revealed')
+      setSpinStage('idle')
 
       const nextSpins = sessionSpinsRef.current + 1
       sessionSpinsRef.current = nextSpins
       setSessionSpins(nextSpins)
+      if (nextSpins === 3) trackPotluckEvent('three_spins')
       pitchPendingRef.current = pitchPendingRef.current || (
         nextSpins >= 3 && !pitchHandledRef.current && !localFlag(APP_PITCH_KEY)
       )
@@ -327,6 +358,8 @@ export default function Potluck() {
         setSpinCount(previousCount.current)
       }
     } catch {
+      if (chatterTimer) window.clearTimeout(chatterTimer)
+      setSpinStage('idle')
       setPhase(recipe ? 'revealed' : 'idle')
       setError('The universe lost the connection. Give it another spin.')
     }
@@ -343,22 +376,25 @@ export default function Potluck() {
   const handleShare = useCallback(async () => {
     if (!recipe) return
     const url = `${window.location.origin}/potluck/`
-    const text = `Potluck just decided I’m making ${recipe.name}. The universe has spoken.`
+    const text = shareTextFor(recipe)
 
     try {
       if (navigator.share) {
         await navigator.share({ title: `Potluck chose ${recipe.name}`, text, url })
-        setShareStatus('Verdict dispatched.')
+        trackPotluckEvent('share')
+        setShareStatus('Verdict dispatched into the timeline.')
         return
       }
       await navigator.clipboard.writeText(`${text} ${url}`)
-      setShareStatus('Verdict copied.')
+      trackPotluckEvent('share')
+      setShareStatus('Verdict copied. Go bother someone else with it.')
     } catch (shareError) {
       if (shareError?.name !== 'AbortError') setShareStatus('Copy the link and blame Mercury.')
     }
   }, [recipe])
 
   const handleThemeClaim = useCallback(() => {
+    trackPotluckEvent('theme_claim_click')
     if (isAndroidDevice()) {
       // Explicit Android intent: installed Savor receives savor://collab?id=POTLUCK.
       // If Savor is absent, Chrome falls back to the Play listing. The claim is
@@ -368,6 +404,16 @@ export default function Potluck() {
     }
 
     setShowThemeClaimHelp(true)
+  }, [])
+
+  const handleAppClick = useCallback(() => trackPotluckEvent('potluck_app_click'), [])
+  const handleSavorClick = useCallback(() => trackPotluckEvent('savor_click'), [])
+  const handleRecipeClick = useCallback(() => trackPotluckEvent('recipe_click'), [])
+  const handleVoidToggle = useCallback(() => {
+    setShowVoidTease((open) => {
+      if (!open) trackPotluckEvent('void_tease')
+      return !open
+    })
   }, [])
 
   const rerollLabel = REROLL_LABELS[
@@ -386,6 +432,10 @@ export default function Potluck() {
         {/* ── Potluck itself ───────────────────────────────────────────── */}
         <section className="pl-hero">
           <div className="pl-container pl-hero-inner">
+            <div className="pl-oracle-status" aria-hidden="true">
+              <span className="pl-oracle-status-light" />
+              COSMIC DINNER AUTHORITY // ONLINE
+            </div>
             <img
               src="/potluck/potluck_wordmark.webp"
               alt="Potluck"
@@ -402,7 +452,7 @@ export default function Potluck() {
               <p className="pl-sub">{idleCopy.subline}</p>
             </div>
 
-            <div className={`pl-wheel pl-wheel--${phase}`} aria-live="polite">
+            <div className={`pl-wheel pl-wheel--${phase} pl-wheel-stage--${spinStage}`} aria-live="polite">
               {phase === 'revealed' ? (
                 recipe?.image && !resultImageFailed ? (
                   <img
@@ -452,8 +502,8 @@ export default function Potluck() {
 
             <div className="pl-oracle">
               {phase === 'revealed' && recipe ? (
-                <>
-                  <p className="pl-oracle-kicker">The universe has spoken</p>
+                <div className="pl-result-panel" key={recipe.id}>
+                  <p className="pl-oracle-kicker"><span /> The universe has spoken</p>
                   <h2 className="pl-result-name">{recipe.name}</h2>
                   <p className="pl-result-verdict">
                     <TypewriterVerdict text={verdict} onComplete={handleVerdictComplete} />
@@ -467,36 +517,37 @@ export default function Potluck() {
                   )}
                   {error ? <p className="pl-spin-error">{error}</p> : null}
                   <div className="pl-result-actions">
-                    <Link to={`/r/${recipe.id}`} className="pl-btn pl-btn--teal">See the recipe →</Link>
+                    <Link to={`/r/${recipe.id}`} className="pl-btn pl-btn--teal" onClick={handleRecipeClick}>See the recipe →</Link>
                     <button type="button" className="pl-btn pl-btn--ghost" onClick={handleSpin}>{rerollLabel}</button>
                     <button
                       type="button"
                       className={`pl-86-button${showVoidTease ? ' is-open' : ''}`}
-                      onClick={() => setShowVoidTease((open) => !open)}
+                      onClick={handleVoidToggle}
                       aria-expanded={showVoidTease}
                       aria-controls="pl-web-void-tease"
+                      aria-label="86 this recipe — peek at The Void"
                     >
-                      86
+                      <span>86</span><small>VOID</small>
                     </button>
-                    <button type="button" className="pl-share-btn" onClick={handleShare}>Share the verdict</button>
+                    <button type="button" className="pl-share-btn" onClick={handleShare}>Share the verdict ↗</button>
                   </div>
 
                   {showVoidTease ? (
                     <div className="pl-web-void" id="pl-web-void-tease">
                       <div className="pl-web-void-copy">
-                        <strong>Nice try.</strong>
-                        <span>The Void is app territory. Banish it there and I&rsquo;ll keep it out of future spins.</span>
+                        <strong>Absolutely not.</strong>
+                        <span>The Void is not available to casual acquaintances. Get the app if you want me to remember what you banish.</span>
                       </div>
-                      <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-web-void-link">Enter The Void →</a>
+                      <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-web-void-link" onClick={handleAppClick}>Request clearance →</a>
                     </div>
                   ) : null}
 
                   <div className="pl-savor-nudge">
                     <img src="/icons/icon-Tangerine.webp" alt="" width="34" height="34" />
-                    <span>Fate picked it. If it&rsquo;s a keeper, the recipe page can make it permanent in <Link to="/">Savor</Link>.</span>
+                    <span>Fate picked it. If it&rsquo;s a keeper, the recipe page can make it permanent in <Link to="/" onClick={handleSavorClick}>Savor</Link>.</span>
                   </div>
                   {shareStatus ? <p className="pl-share-status" role="status">{shareStatus}</p> : null}
-                </>
+                </div>
               ) : (
                 <>
                   {phase === 'spinning' ? <p className="pl-spinning-line">{spinLine}</p> : null}
@@ -519,6 +570,7 @@ export default function Potluck() {
                 {spinCount === null ? '···' : spinCount.toLocaleString()}
               </span>
               <span className="pl-spin-count-label">cosmic verdicts issued</span>
+              <span className="pl-spin-count-aside">Most were probably appealed.</span>
             </div>
           </div>
         </section>
@@ -528,12 +580,13 @@ export default function Potluck() {
           <div className="pl-container pl-memory-inner">
             <div className="pl-memory-copy">
               <span className="pl-eyebrow">The app remembers</span>
-              <h2 className="pl-h2">A browser visit is fate. The app makes it personal.</h2>
+              <h2 className="pl-h2">The website gives a verdict. The app remembers what you did about it.</h2>
               <p>
-                Spin here as much as you like. Potluck on Android keeps a little history of your choices,
-                your rebellions, and the recipes you decided no longer deserve to exist.
+                Keep this week&rsquo;s dinners, banish recipes into The Void, and carry an unnecessarily
+                judgemental cosmic authority around in your pocket.
               </p>
-              <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-play-link">
+              <div className="pl-memory-proof">ANDROID // FREE // UNREASONABLY AUTHORITATIVE</div>
+              <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-play-link" onClick={handleAppClick}>
                 <img
                   src="/potluck/play2.webp"
                   alt="Get Potluck on Google Play"
@@ -563,7 +616,7 @@ export default function Potluck() {
           <div className="pl-container pl-void-teaser-inner">
             <span className="pl-void-teaser-86" aria-hidden="true">86</span>
             <p className="pl-void-teaser-copy">
-              The Void is real. <strong>It is in the app. You have been warned.</strong>
+              Some recipes deserve another chance. <strong>Others deserve The Void.</strong>
             </p>
             <span className="pl-void-teaser-name" aria-hidden="true">The Void</span>
           </div>
@@ -607,29 +660,31 @@ export default function Potluck() {
               <div>
                 <h3>Fate chooses. Savor keeps.</h3>
                 <p>Found a keeper? Savor saves recipes from websites, text, screenshots and the occasional act of cosmic intervention.</p>
-                <Link to="/" className="pl-btn pl-btn--teal">Meet Savor →</Link>
+                <Link to="/" className="pl-btn pl-btn--teal" onClick={handleSavorClick}>Meet Savor →</Link>
               </div>
             </div>
 
             <article className="pl-theme-gift">
-              <div className="pl-theme-gift-mark">
-                <img
-                  src="/potluck/potluck-icon.webp"
-                  alt=""
-                  width="192"
-                  height="192"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span className="pl-theme-gift-free">FREE</span>
+              <div className="pl-theme-preview" aria-label="Free Potluck theme for Savor">
+                <div className="pl-theme-preview-top">
+                  <span className="pl-dots" aria-hidden="true"><span /><span /><span /></span>
+                  <span>COMPLIMENTARY // FATE PAID</span>
+                </div>
+                <div className="pl-theme-preview-body">
+                  <img src="/potluck/potluck-icon.webp" alt="" width="192" height="192" loading="lazy" decoding="async" />
+                  <span className="pl-theme-preview-name">POTLUCK</span>
+                  <strong>SAVOR THEME</strong>
+                  <span className="pl-theme-preview-note">THE UNIVERSE HAS REDECORATED</span>
+                </div>
+                <div className="pl-theme-preview-stripe" aria-hidden="true"><span /><span /><span /></div>
               </div>
 
               <div className="pl-theme-gift-copy">
                 <span className="pl-eyebrow">A gift from the universe</span>
                 <h3>The universe has redecorated.</h3>
                 <p>
-                  Potluck escaped into Savor: cosmic orange, deep teal and just enough green to imply this was planned.
-                  The theme is yours for free. Fate has covered the bill.
+                  Potluck escaped into Savor: deep cosmic teal, fate-orange, and the wheel colours where they belong.
+                  It&rsquo;s a real Savor theme, it&rsquo;s free, and apparently the cosmos has a branding department now.
                 </p>
                 <div className="pl-theme-swatches" aria-label="Potluck theme colours">
                   <span className="pl-theme-swatch pl-theme-swatch--orange" />
@@ -639,12 +694,13 @@ export default function Potluck() {
                 </div>
                 <div className="pl-theme-gift-actions">
                   <button type="button" className="pl-btn pl-btn--orange" onClick={handleThemeClaim}>
-                    Claim the Potluck theme →
+                    Accept the gift →
                   </button>
-                  <span>Already have Savor? This opens it directly.</span>
+                  <span>On Android, Savor opens straight to the gift.</span>
                 </div>
               </div>
             </article>
+
           </div>
         </section>
 
@@ -653,8 +709,8 @@ export default function Potluck() {
           <div className="pl-container pl-section pl-download-inner">
             <span className="pl-dots"><span /><span /><span /></span>
             <h2>Still defying me in a browser?</h2>
-            <p>Fine. Put the universe in your pocket. I&rsquo;ll remember what happened.</p>
-            <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-play-link">
+            <p>Fine. Put the universe in your pocket. I&rsquo;ll remember what happened. Unfortunately for both of us.</p>
+            <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-play-link" onClick={handleAppClick}>
               <img
                 src="/potluck/play2.webp"
                 alt="Get Potluck on Google Play"
@@ -670,7 +726,7 @@ export default function Potluck() {
 
       </main>
       <Footer />
-      {showAppPitch ? <AppPitch onClose={() => setShowAppPitch(false)} /> : null}
+      {showAppPitch ? <AppPitch onClose={() => setShowAppPitch(false)} onAppClick={handleAppClick} /> : null}
       {showThemeClaimHelp ? (
         <div
           className="pl-theme-modal-backdrop"
@@ -685,11 +741,11 @@ export default function Potluck() {
             <span className="pl-eyebrow">Potluck × Savor</span>
             <h2 id="pl-theme-modal-title">This particular cosmic gift needs Android.</h2>
             <p>
-              Savor is on Android right now. Open Potluck on your Android phone and tap <strong>Claim the Potluck theme</strong> again.
+              Savor is on Android right now. Open this page on your Android phone and tap <strong>Accept the gift</strong> again.
               If Savor is installed, it opens straight to the gift. If not, Google Play will take it from there.
             </p>
             <div className="pl-theme-modal-actions">
-              <a href={SAVOR_PLAY_URL} target="_blank" rel="noreferrer" className="pl-btn pl-btn--orange">Get Savor →</a>
+              <a href={SAVOR_PLAY_URL} target="_blank" rel="noreferrer" className="pl-btn pl-btn--orange" onClick={handleSavorClick}>Get Savor →</a>
               <button type="button" className="pl-btn pl-btn--ghost" onClick={() => setShowThemeClaimHelp(false)}>Got it</button>
             </div>
           </section>

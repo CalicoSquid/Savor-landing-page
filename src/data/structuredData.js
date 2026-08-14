@@ -225,7 +225,7 @@ export function structuredDataForPage(seo) {
         name: 'Potluck by Savor',
         url: `${SITE_URL}/potluck/`,
         downloadUrl: 'https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck',
-        description: 'A playful dinner picker you can spin free in the browser or install on Android. One spin chooses a real recipe, with an easy path to save keepers in Savor.',
+        description: 'A free random dinner generator with a cosmic attitude. Spin in the browser for a real recipe, or install Potluck on Android for This Week, The Void and persistent dinner memory.',
         operatingSystem: 'Web browser, Android',
         image: `${SITE_URL}/potluck/potluck-og.jpg`,
       }),

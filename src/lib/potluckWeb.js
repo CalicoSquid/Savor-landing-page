@@ -64,6 +64,34 @@ export function decodeRecipe(recipe) {
   }
 }
 
+export function trackPotluckEvent(event) {
+  if (typeof window === 'undefined' || !event) return
+  const visitorId = getPotluckVisitorId()
+  const endpoint = `${String(POTLUCK_API).replace(/\/+$/, '')}/potluck-event`
+  const body = JSON.stringify({ event, visitorId })
+
+  try {
+    // sendBeacon is ideal for outbound CTA clicks because navigation can start
+    // immediately without waiting for analytics. It deliberately carries no
+    // account, IP-derived identifier, or fingerprint — only the random local
+    // Potluck token already used for unique spinner counting.
+    if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+      const blob = new Blob([body], { type: 'application/json' })
+      if (navigator.sendBeacon(endpoint, blob)) return
+    }
+  } catch {
+    // Fall through to fetch. Tracking must never block the actual product.
+  }
+
+  fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+    keepalive: true,
+    cache: 'no-store',
+  }).catch(() => {})
+}
+
 export function getPotluckVisitorId() {
   if (typeof window === 'undefined') return null
   const key = 'potluck:web-visitor-id:v1'
