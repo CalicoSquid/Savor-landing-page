@@ -296,7 +296,6 @@ export default function Potluck() {
     setPhase('spinning')
     setSpinStage('summoning')
     setError('')
-    setShareStatus('')
     setSpinLine(pick(SPINNING_LINES))
     setResultImageFailed(false)
     if (pitchTimerRef.current) window.clearTimeout(pitchTimerRef.current)
