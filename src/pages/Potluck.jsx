@@ -20,9 +20,14 @@ import {
 } from '../lib/potluckVoice'
 
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck&utm_source=potluck_web&utm_medium=web&utm_campaign=the_universe_remembers'
+const SAVOR_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes&utm_source=potluck_web&utm_medium=theme_claim&utm_campaign=potluck_theme'
+const POTLUCK_THEME_ID = 'POTLUCK'
+const POTLUCK_THEME_INTENT_URL = `intent://collab?id=${POTLUCK_THEME_ID}#Intent;scheme=savor;package=com.calicosquid.savorrecipes;S.browser_fallback_url=${encodeURIComponent(SAVOR_PLAY_URL)};end`
 const POTLUCK_STATS_URL = 'https://savor-app-server-gql-production.up.railway.app/potluck-stats'
 const MIN_SPIN_MS = 1800
 const APP_PITCH_KEY = 'potluck:web-app-pitch-shown:v1'
+
+const isAndroidDevice = () => typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
 
 const APP_FEATURES = [
   {
@@ -162,6 +167,7 @@ export default function Potluck() {
   const [sessionSpins, setSessionSpins] = useState(0)
   const [showAppPitch, setShowAppPitch] = useState(false)
   const [showVoidTease, setShowVoidTease] = useState(false)
+  const [showThemeClaimHelp, setShowThemeClaimHelp] = useState(false)
   const [idleCopy, setIdleCopy] = useState({
     headline: IDLE_HEADLINES[0],
     subline: IDLE_SUBLINES[0],
@@ -351,6 +357,18 @@ export default function Potluck() {
       if (shareError?.name !== 'AbortError') setShareStatus('Copy the link and blame Mercury.')
     }
   }, [recipe])
+
+  const handleThemeClaim = useCallback(() => {
+    if (isAndroidDevice()) {
+      // Explicit Android intent: installed Savor receives savor://collab?id=POTLUCK.
+      // If Savor is absent, Chrome falls back to the Play listing. The claim is
+      // intentionally handled by Savor's existing generic collab route.
+      window.location.href = POTLUCK_THEME_INTENT_URL
+      return
+    }
+
+    setShowThemeClaimHelp(true)
+  }, [])
 
   const rerollLabel = REROLL_LABELS[
     Math.min(Math.max(sessionSpins - 1, 0), REROLL_LABELS.length - 1)
@@ -593,8 +611,40 @@ export default function Potluck() {
               </div>
             </div>
 
-            {/* Pass 2: the free Potluck Savor theme claim lands here once the
-                existing Savor collab-theme deep-link path is wired. */}
+            <article className="pl-theme-gift">
+              <div className="pl-theme-gift-mark">
+                <img
+                  src="/potluck/potluck-icon.webp"
+                  alt=""
+                  width="192"
+                  height="192"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="pl-theme-gift-free">FREE</span>
+              </div>
+
+              <div className="pl-theme-gift-copy">
+                <span className="pl-eyebrow">A gift from the universe</span>
+                <h3>The universe has redecorated.</h3>
+                <p>
+                  Potluck escaped into Savor: cosmic orange, deep teal and just enough green to imply this was planned.
+                  The theme is yours for free. Fate has covered the bill.
+                </p>
+                <div className="pl-theme-swatches" aria-label="Potluck theme colours">
+                  <span className="pl-theme-swatch pl-theme-swatch--orange" />
+                  <span className="pl-theme-swatch pl-theme-swatch--teal" />
+                  <span className="pl-theme-swatch pl-theme-swatch--green" />
+                  <span className="pl-theme-swatch pl-theme-swatch--cream" />
+                </div>
+                <div className="pl-theme-gift-actions">
+                  <button type="button" className="pl-btn pl-btn--orange" onClick={handleThemeClaim}>
+                    Claim the Potluck theme →
+                  </button>
+                  <span>Already have Savor? This opens it directly.</span>
+                </div>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -621,6 +671,30 @@ export default function Potluck() {
       </main>
       <Footer />
       {showAppPitch ? <AppPitch onClose={() => setShowAppPitch(false)} /> : null}
+      {showThemeClaimHelp ? (
+        <div
+          className="pl-theme-modal-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setShowThemeClaimHelp(false)
+          }}
+        >
+          <section className="pl-theme-modal" role="dialog" aria-modal="true" aria-labelledby="pl-theme-modal-title">
+            <button type="button" className="pl-theme-modal-close" onClick={() => setShowThemeClaimHelp(false)} aria-label="Close">×</button>
+            <img src="/potluck/potluck-icon.webp" alt="" width="72" height="72" />
+            <span className="pl-eyebrow">Potluck × Savor</span>
+            <h2 id="pl-theme-modal-title">This particular cosmic gift needs Android.</h2>
+            <p>
+              Savor is on Android right now. Open Potluck on your Android phone and tap <strong>Claim the Potluck theme</strong> again.
+              If Savor is installed, it opens straight to the gift. If not, Google Play will take it from there.
+            </p>
+            <div className="pl-theme-modal-actions">
+              <a href={SAVOR_PLAY_URL} target="_blank" rel="noreferrer" className="pl-btn pl-btn--orange">Get Savor →</a>
+              <button type="button" className="pl-btn pl-btn--ghost" onClick={() => setShowThemeClaimHelp(false)}>Got it</button>
+            </div>
+          </section>
+        </div>
+      ) : null}
     </>
   )
 }
