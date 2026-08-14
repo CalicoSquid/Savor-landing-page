@@ -49,20 +49,6 @@ const APP_FEATURES = [
   },
 ]
 
-const SHARE_TEMPLATES = [
-  (name) => `The Universe says I’m making ${name}. I appealed. It was denied.`,
-  (name) => `Dinner has been assigned: ${name}. Apparently this is canon now.`,
-  (name) => `I outsourced dinner to the cosmos and got ${name}. No appeals, apparently.`,
-  (name) => `The edible multiverse has selected ${name} for me. I have questions.`,
-  (name) => `Potluck says it’s ${name} tonight. The matter is cosmically settled.`,
-  (name) => `My evening now has a plot: ${name}. Blame the universe.`,
-]
-
-const shareTextFor = (recipe) => {
-  const template = SHARE_TEMPLATES[Math.floor(Math.random() * SHARE_TEMPLATES.length)]
-  return template(recipe?.name || 'dinner')
-}
-
 const sleep = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms))
 
 function localFlag(key) {
@@ -178,7 +164,6 @@ export default function Potluck() {
   const [spinLine, setSpinLine] = useState(() => pick(SPINNING_LINES))
   const [reelSymbol, setReelSymbol] = useState(REEL_SYMBOLS[0])
   const [error, setError] = useState('')
-  const [shareStatus, setShareStatus] = useState('')
   const [resultImageFailed, setResultImageFailed] = useState(false)
   const [sessionSpins, setSessionSpins] = useState(0)
   const [showAppPitch, setShowAppPitch] = useState(false)
@@ -370,25 +355,6 @@ export default function Potluck() {
     pitchTimerRef.current = window.setTimeout(() => setShowAppPitch(true), 750)
   }, [])
 
-  const handleShare = useCallback(async () => {
-    if (!recipe) return
-    const url = `${window.location.origin}/potluck/`
-    const text = shareTextFor(recipe)
-
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: `Potluck chose ${recipe.name}`, text, url })
-        trackPotluckEvent('share')
-        setShareStatus('Verdict dispatched into the timeline.')
-        return
-      }
-      await navigator.clipboard.writeText(`${text} ${url}`)
-      trackPotluckEvent('share')
-      setShareStatus('Verdict copied. Go bother someone else with it.')
-    } catch (shareError) {
-      if (shareError?.name !== 'AbortError') setShareStatus('Copy the link and blame Mercury.')
-    }
-  }, [recipe])
 
   const handleThemeClaim = useCallback(() => {
     trackPotluckEvent('theme_claim_click')
@@ -515,49 +481,51 @@ export default function Potluck() {
                     </div>
                   )}
                   {error ? <p className="pl-spin-error">{error}</p> : null}
-                  <div className="pl-result-actions">
-                    <Link to={`/r/${recipe.id}`} className="pl-btn pl-btn--teal pl-result-primary" onClick={handleRecipeClick}>
-                      <span className="pl-result-primary-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <path d="M5.5 3v5.5a3 3 0 0 0 6 0V3M8.5 3v8M8.5 11v10" />
-                          <path d="M16 3c2.6 2.7 2.6 7.1 0 10v8M16 3v10h3" />
-                        </svg>
-                      </span>
-                      <span className="pl-result-primary-copy">
-                        <strong>See the recipe</strong>
-                        <small>Ingredients, steps, the lot</small>
-                      </span>
-                      <span className="pl-result-primary-arrow" aria-hidden="true">›</span>
-                    </Link>
-                    <button type="button" className="pl-btn pl-btn--ghost" onClick={handleSpin}>{rerollLabel}</button>
-                    <button type="button" className="pl-share-btn" onClick={handleShare}>Share</button>
-                  </div>
-
-                  {shareStatus ? <p className="pl-share-status" role="status">{shareStatus}</p> : null}
                 </div>
               ) : (
                 <>
                   {phase === 'spinning' ? <p className="pl-spinning-line">{spinLine}</p> : null}
-                  <button
-                    type="button"
-                    className="pl-spin-button"
-                    onClick={handleSpin}
-                    disabled={phase === 'spinning'}
-                  >
-                    <span className="pl-spin-button-title">{phase === 'spinning' ? 'Deciding…' : 'Spin'}</span>
-                    <span className="pl-spin-button-sub">{phase === 'spinning' ? 'The cosmos is checking its notes' : 'Hand dinner over to fate'}</span>
-                  </button>
                   {error ? <p className="pl-spin-error">{error}</p> : null}
                 </>
               )}
             </div>
 
-            <div className={`pl-spin-count${spinCount === null ? ' is-loading' : ''}`}>
-              <span className="pl-spin-count-number">
-                {spinCount === null ? '···' : spinCount.toLocaleString()}
-              </span>
-              <span className="pl-spin-count-label">cosmic verdicts issued</span>
-              <span className="pl-spin-count-aside">Most were probably appealed.</span>
+            <div className={`pl-cta-dock pl-cta-dock--${phase}`}>
+              {phase === 'revealed' && recipe ? (
+                <div className="pl-result-actions">
+                  <Link to={`/r/${recipe.id}`} className="pl-dock-action pl-dock-action--primary" onClick={handleRecipeClick}>
+                    <span className="pl-dock-action-copy">
+                      <strong>See the recipe</strong>
+                      <small>Ingredients, steps, the lot</small>
+                    </span>
+                    <span className="pl-dock-action-arrow" aria-hidden="true">›</span>
+                  </Link>
+                  <button type="button" className="pl-dock-action pl-dock-action--reroll" onClick={handleSpin}>
+                    <span className="pl-dock-action-copy">
+                      <strong>{rerollLabel}</strong>
+                      <small>Defy fate</small>
+                    </span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  className="pl-spin-button"
+                  onClick={handleSpin}
+                  disabled={phase === 'spinning'}
+                >
+                  <span className="pl-spin-button-title">{phase === 'spinning' ? 'Deciding…' : 'Spin'}</span>
+                  <span className="pl-spin-button-sub">{phase === 'spinning' ? 'The cosmos is checking its notes' : 'Hand dinner over to fate'}</span>
+                </button>
+              )}
+
+              <div className={`pl-spin-count${spinCount === null ? ' is-loading' : ''}`}>
+                <span className="pl-spin-count-number">
+                  {spinCount === null ? '···' : spinCount.toLocaleString()}
+                </span>
+                <span className="pl-spin-count-label">cosmic verdicts issued</span>
+                <span className="pl-spin-count-aside">Most were probably appealed.</span>
+              </div>
             </div>
           </div>
         </section>

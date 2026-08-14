@@ -3205,3 +3205,166 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   CTA dock — web parity with Potluck's fixed control shelf
+   Only the control area changes between idle/spinning/revealed. Its geometry
+   does not, so landing a recipe never pushes the controls around.
+   ───────────────────────────────────────────────────────────────────────── */
+.pl-cta-dock {
+  width: min(100%, 420px);
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.pl-cta-dock .pl-spin-button {
+  width: 100% !important;
+  min-height: 76px !important;
+  margin: 0 !important;
+}
+
+.pl-cta-dock .pl-result-actions {
+  width: 100%;
+  min-height: 76px;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr) !important;
+  align-items: stretch;
+  gap: 9px !important;
+  margin: 0 !important;
+}
+
+.pl-dock-action {
+  min-width: 0;
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border-radius: 18px;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pl-dock-action--primary {
+  justify-content: flex-start;
+  border: 1px solid #10292a;
+  background: linear-gradient(135deg, #17393a, #10292a);
+  color: #fff;
+}
+
+.pl-dock-action--primary:hover {
+  color: #fff;
+  background: linear-gradient(135deg, #1a4041, #123031);
+  transform: none;
+  opacity: 1;
+}
+
+.pl-dock-action--reroll {
+  border: 1.5px solid rgba(20,40,41,.20);
+  background: #fff8f4;
+  color: var(--pl-teal);
+}
+
+.pl-dock-action--reroll:hover {
+  background: #fff2e8;
+  transform: none;
+}
+
+.pl-dock-action:active {
+  transform: scale(.99);
+}
+
+.pl-dock-action-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+}
+
+.pl-dock-action--reroll .pl-dock-action-copy {
+  align-items: center;
+  text-align: center;
+}
+
+.pl-dock-action-copy strong {
+  font-size: .94rem;
+  line-height: 1.05;
+  font-weight: 850;
+}
+
+.pl-dock-action-copy small {
+  font-size: .68rem;
+  line-height: 1.05;
+  font-weight: 600;
+  opacity: .68;
+  white-space: nowrap;
+}
+
+.pl-dock-action-arrow {
+  margin-left: auto;
+  color: rgba(255,255,255,.55);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* The counter belongs to the dock. It stays directly under the controls in
+   every state rather than participating in the hero's vertical reflow. */
+.pl-cta-dock .pl-spin-count {
+  align-self: center;
+  margin: 0 !important;
+}
+
+/* The old result-actions rules assumed a stacked primary + two secondary
+   controls. The dock replaces that layout completely. */
+.pl-cta-dock .pl-result-actions .pl-result-primary,
+.pl-cta-dock .pl-result-actions .pl-btn--ghost,
+.pl-cta-dock .pl-result-actions .pl-share-btn {
+  display: none !important;
+}
+
+@media (max-width: 620px) {
+  .pl-cta-dock {
+    width: min(100%, 374px);
+    gap: 9px;
+  }
+
+  .pl-cta-dock .pl-spin-button,
+  .pl-cta-dock .pl-result-actions,
+  .pl-dock-action {
+    min-height: clamp(66px, 9.5svh, 76px) !important;
+  }
+
+  .pl-dock-action {
+    padding: 10px 12px;
+    border-radius: 18px;
+  }
+
+  .pl-dock-action-copy strong {
+    font-size: clamp(.78rem, 3.45vw, .92rem);
+  }
+
+  .pl-dock-action-copy small {
+    font-size: clamp(.58rem, 2.55vw, .67rem);
+  }
+
+  .pl-cta-dock .pl-spin-count {
+    padding: 7px 13px 8px !important;
+  }
+
+  @media (max-height: 680px) {
+    .pl-cta-dock .pl-spin-button,
+    .pl-cta-dock .pl-result-actions,
+    .pl-dock-action {
+      min-height: 62px !important;
+    }
+  }
+}
