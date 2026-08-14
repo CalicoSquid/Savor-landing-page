@@ -118,13 +118,13 @@ function blogPostNode(post, seo) {
   }
 }
 
-function appNode({ id, name, url, downloadUrl, description, image, price, priceCurrency = 'GBP' }) {
+function appNode({ id, name, url, downloadUrl, description, image, price, priceCurrency = 'GBP', operatingSystem = 'Android' }) {
   const node = {
     '@type': 'SoftwareApplication',
     '@id': id,
     name,
     applicationCategory: 'LifestyleApplication',
-    operatingSystem: 'Android',
+    operatingSystem,
     url,
     image,
     description,
@@ -225,7 +225,8 @@ export function structuredDataForPage(seo) {
         name: 'Potluck by Savor',
         url: `${SITE_URL}/potluck/`,
         downloadUrl: 'https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck',
-        description: 'A playful dinner picker that spins once and chooses a recipe, with one-tap saving to Savor.',
+        description: 'A playful dinner picker you can spin free in the browser or install on Android. One spin chooses a real recipe, with an easy path to save keepers in Savor.',
+        operatingSystem: 'Web browser, Android',
         image: `${SITE_URL}/potluck/potluck-og.jpg`,
       }),
     )

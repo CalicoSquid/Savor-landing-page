@@ -59,7 +59,7 @@ export const STATIC_SEO_PAGES = [
     path: '/potluck',
     file: 'potluck/index.html',
     title: 'Potluck — Spin for Your Supper | A Savor App',
-    description: 'Can’t decide what to cook? Potluck spins the wheel and picks tonight’s dinner — one tap, one recipe, no scrolling. Save what you love to Savor.',
+    description: 'Can’t decide what to cook? Spin Potluck free in your browser and get a real recipe for tonight — no signup, no scrolling, no deciding.',
     canonical: `${SITE_URL}/potluck/`,
     ogImage: `${SITE_URL}/potluck/potluck-og.jpg`,
     ogImageAlt: 'Potluck by Savor — spin once and let it choose dinner',
