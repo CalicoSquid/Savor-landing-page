@@ -518,6 +518,7 @@ export default function Potluck() {
                     disabled={phase === 'spinning'}
                   >
                     <span className="pl-spin-button-title">{phase === 'spinning' ? 'Deciding…' : 'Spin'}</span>
+                    <span className="pl-spin-button-sub">{phase === 'spinning' ? 'The cosmos is checking its notes' : 'Hand dinner over to fate'}</span>
                   </button>
                   {error ? <p className="pl-spin-error">{error}</p> : null}
                 </>
