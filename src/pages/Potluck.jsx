@@ -454,6 +454,21 @@ export default function Potluck() {
                 )
               ) : null}
 
+              {phase === 'revealed' && recipe ? (
+                <Link
+                  to={`/r/${recipe.id}`}
+                  className="pl-wheel-card-link"
+                  onClick={handleRecipeClick}
+                  aria-label={`See recipe: ${recipe.name}`}
+                >
+                  <span className="pl-wheel-card-scrim" aria-hidden="true" />
+                  <span className="pl-wheel-card-footer">
+                    <span className="pl-wheel-card-hint">Tap for the recipe&nbsp; ›</span>
+                    <span className="pl-wheel-card-title">{recipe.name}</span>
+                  </span>
+                </Link>
+              ) : null}
+
               {phase === 'spinning' ? (
                 <span className="pl-reel-symbol" aria-hidden="true">{reelSymbol}</span>
               ) : null}
@@ -501,9 +516,21 @@ export default function Potluck() {
                   )}
                   {error ? <p className="pl-spin-error">{error}</p> : null}
                   <div className="pl-result-actions">
-                    <Link to={`/r/${recipe.id}`} className="pl-btn pl-btn--teal" onClick={handleRecipeClick}>See the recipe →</Link>
+                    <Link to={`/r/${recipe.id}`} className="pl-btn pl-btn--teal pl-result-primary" onClick={handleRecipeClick}>
+                      <span className="pl-result-primary-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                          <path d="M5.5 3v5.5a3 3 0 0 0 6 0V3M8.5 3v8M8.5 11v10" />
+                          <path d="M16 3c2.6 2.7 2.6 7.1 0 10v8M16 3v10h3" />
+                        </svg>
+                      </span>
+                      <span className="pl-result-primary-copy">
+                        <strong>See the recipe</strong>
+                        <small>Ingredients, steps, the lot</small>
+                      </span>
+                      <span className="pl-result-primary-arrow" aria-hidden="true">›</span>
+                    </Link>
                     <button type="button" className="pl-btn pl-btn--ghost" onClick={handleSpin}>{rerollLabel}</button>
-                    <button type="button" className="pl-share-btn" onClick={handleShare}>Share the verdict ↗</button>
+                    <button type="button" className="pl-share-btn" onClick={handleShare}>Share</button>
                   </div>
 
                   {shareStatus ? <p className="pl-share-status" role="status">{shareStatus}</p> : null}

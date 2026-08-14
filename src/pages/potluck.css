@@ -2880,3 +2880,328 @@
     .pl-hero--revealed .pl-result-verdict { font-size: .76rem !important; }
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Post-spin hero — native Potluck parity
+   Idle / pre-spin hero is intentionally untouched. Once a recipe lands, keep
+   the same logo and centerpiece scale, then let the landed card carry the dish
+   name just like the Android app. The verdict and controls occupy the fixed
+   space beneath it instead of shrinking the whole composition to make room.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Landed card footer: same hierarchy as the native Centerpiece. */
+.pl-wheel-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  display: block;
+  color: #fff;
+  text-align: left;
+  text-decoration: none;
+}
+.pl-wheel-card-scrim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 62%;
+  background: linear-gradient(to bottom, rgba(20,40,41,0), rgba(20,40,41,.92));
+  pointer-events: none;
+}
+.pl-wheel-card-footer {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  pointer-events: none;
+}
+.pl-wheel-card-hint {
+  color: rgba(255,255,255,.72);
+  font-size: .68rem;
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: .025em;
+}
+.pl-wheel-card-title {
+  width: 100%;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: #fff;
+  font-size: clamp(1.15rem, 2.25vw, 1.45rem);
+  line-height: 1.14;
+  font-weight: 850;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.pl-wheel--revealed .pl-wheel-marker { z-index: 12; }
+
+/* The native spin screen does not repeat the recipe name below the card or add
+   a second "universe has spoken" heading. The typed verdict is the voice. */
+.pl-hero--revealed .pl-hero-copy,
+.pl-hero--revealed .pl-oracle-kicker,
+.pl-hero--revealed .pl-result-name {
+  display: none !important;
+}
+
+/* Crucially: landing a recipe must NOT make the brand or cabinet shrink. */
+.pl-hero--revealed .pl-wordmark {
+  width: clamp(250px, 25vw, 330px) !important;
+  max-width: 330px !important;
+}
+.pl-hero--revealed .pl-wheel {
+  width: clamp(230px, 27vw, 292px) !important;
+}
+.pl-hero--revealed .pl-hero-inner {
+  gap: 16px;
+}
+.pl-hero--revealed .pl-oracle {
+  width: min(100%, 420px);
+  min-height: 0 !important;
+  gap: 0;
+}
+.pl-hero--revealed .pl-result-panel {
+  gap: 8px !important;
+}
+.pl-hero--revealed .pl-result-verdict {
+  width: 100%;
+  max-width: 410px;
+  min-height: 0;
+  margin: 0;
+  color: var(--pl-teal);
+  font-size: 1.06rem !important;
+  line-height: 1.38;
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Native-style metadata: quiet text and a dot, not a row of UI pills. */
+.pl-hero--revealed .pl-result-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap !important;
+  gap: 0 !important;
+  min-height: 18px;
+  margin: 0 !important;
+  color: var(--pl-teal);
+}
+.pl-hero--revealed .pl-result-meta span {
+  position: relative;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--pl-teal);
+  font-size: .76rem !important;
+  line-height: 1.2;
+  font-weight: 650;
+  opacity: .58;
+  white-space: nowrap;
+}
+.pl-hero--revealed .pl-result-meta span + span {
+  margin-left: 23px;
+}
+.pl-hero--revealed .pl-result-meta span + span::before {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  margin-top: -1.5px;
+  border-radius: 50%;
+  background: var(--pl-teal);
+  opacity: .45;
+}
+
+/* Web analogue of Potluck's fixed revealed dock:
+   one strong recipe action, then two quiet secondary controls. */
+.pl-hero--revealed .pl-result-actions {
+  width: 100%;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px !important;
+  margin-top: 2px !important;
+}
+.pl-hero--revealed .pl-result-primary {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 66px;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 10px 14px !important;
+  border: 0;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(circle at 94% 16%, rgba(255,255,255,.14) 0 1.7px, transparent 2px) 0 0/10px 10px,
+    linear-gradient(135deg, #17393a, #10292a) !important;
+  color: #fff !important;
+  box-shadow: 0 7px 16px rgba(16,41,42,.17);
+  text-align: left;
+  text-decoration: none;
+  transform: none !important;
+}
+.pl-hero--revealed .pl-result-primary:hover {
+  transform: translateY(-1px) !important;
+  opacity: 1;
+}
+.pl-result-primary-icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: rgba(255,255,255,.16);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.pl-result-primary-copy {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pl-result-primary-copy strong {
+  color: #fff;
+  font-size: .98rem;
+  line-height: 1.08;
+  font-weight: 850;
+}
+.pl-result-primary-copy small {
+  overflow: hidden;
+  color: rgba(255,255,255,.7);
+  font-size: .7rem;
+  line-height: 1.15;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pl-result-primary-arrow {
+  color: rgba(255,255,255,.55);
+  font-size: 1.45rem;
+  line-height: 1;
+}
+.pl-hero--revealed .pl-result-actions > .pl-btn--ghost,
+.pl-hero--revealed .pl-result-actions > .pl-share-btn {
+  width: 100%;
+  min-width: 0 !important;
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 10px 12px !important;
+  border: 1.5px solid rgba(20,40,41,.18) !important;
+  border-radius: 18px !important;
+  background: rgba(20,40,41,.035) !important;
+  color: var(--pl-teal) !important;
+  font: inherit;
+  font-size: .78rem !important;
+  line-height: 1.1;
+  font-weight: 750;
+  text-decoration: none !important;
+  white-space: nowrap;
+  box-shadow: none !important;
+}
+.pl-hero--revealed .pl-result-actions > .pl-btn--ghost:hover,
+.pl-hero--revealed .pl-result-actions > .pl-share-btn:hover {
+  background: rgba(20,40,41,.07) !important;
+  transform: none !important;
+  opacity: 1;
+}
+
+@media (max-width: 620px) {
+  .pl-hero--revealed .pl-hero-inner {
+    justify-content: space-between;
+    gap: clamp(8px, 1.45svh, 13px);
+  }
+
+  /* Exact same logo and centerpiece scale as the approved pre-spin state. */
+  .pl-hero--revealed .pl-wordmark {
+    width: clamp(228px, 66vw, 286px) !important;
+    max-width: 286px !important;
+  }
+  .pl-hero--revealed .pl-wheel {
+    width: clamp(190px, 35svh, 248px) !important;
+  }
+
+  .pl-wheel-card-footer {
+    left: 14px;
+    right: 14px;
+    bottom: 13px;
+  }
+  .pl-wheel-card-hint { font-size: .62rem; }
+  .pl-wheel-card-title {
+    font-size: clamp(1.08rem, 5.1vw, 1.34rem);
+    line-height: 1.12;
+  }
+
+  .pl-hero--revealed .pl-oracle {
+    width: min(100%, 390px);
+  }
+  .pl-hero--revealed .pl-result-panel {
+    gap: clamp(6px, 1svh, 8px) !important;
+  }
+  .pl-hero--revealed .pl-result-verdict {
+    max-width: 365px;
+    font-size: clamp(.92rem, 4.25vw, 1.08rem) !important;
+    line-height: 1.32;
+  }
+  .pl-hero--revealed .pl-result-meta span {
+    font-size: .7rem !important;
+  }
+  .pl-hero--revealed .pl-result-primary {
+    min-height: clamp(60px, 8.2svh, 66px);
+    padding: 8px 12px !important;
+  }
+  .pl-result-primary-icon {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+  }
+  .pl-result-primary-copy strong { font-size: .94rem; }
+  .pl-result-primary-copy small { font-size: .67rem; }
+  .pl-hero--revealed .pl-result-actions > .pl-btn--ghost,
+  .pl-hero--revealed .pl-result-actions > .pl-share-btn {
+    min-height: 43px;
+    padding: 9px 10px !important;
+    font-size: .74rem !important;
+  }
+
+  /* The counter belongs to both states, so its geometry stays unchanged. */
+  .pl-hero--revealed .pl-spin-count {
+    padding: 7px 13px 8px !important;
+  }
+
+  @media (max-height: 680px) {
+    /* Short screens use the SAME compact scale in idle and revealed states. */
+    .pl-hero--revealed .pl-wordmark { width: 214px !important; }
+    .pl-hero--revealed .pl-wheel { width: 180px !important; }
+    .pl-hero--revealed .pl-result-verdict { font-size: .9rem !important; }
+    .pl-hero--revealed .pl-result-primary { min-height: 58px; }
+    .pl-hero--revealed .pl-result-actions > .pl-btn--ghost,
+    .pl-hero--revealed .pl-result-actions > .pl-share-btn { min-height: 40px; }
+  }
+}
+.pl-result-primary-icon svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
