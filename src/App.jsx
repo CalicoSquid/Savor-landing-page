@@ -21,6 +21,7 @@ import NotFound from './pages/NotFound'
 import { ThemeProvider } from './context/ThemeProvider'
 import Nav from './components/Nav'
 import SeoManager from './components/SeoManager'
+import ScrollToTop from './components/ScrollToTop'
 
 // Router-agnostic app tree. The Router (BrowserRouter for the client,
 // StaticRouter for the prerender build) is supplied by the entry files.
@@ -28,6 +29,7 @@ export default function AppRoutes() {
   return (
     <ThemeProvider>
       <SeoManager />
+      <ScrollToTop />
       <Nav />
       <Routes>
         <Route path="/"                         element={<Savor />} />

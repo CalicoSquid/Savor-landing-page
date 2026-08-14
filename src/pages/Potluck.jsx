@@ -63,6 +63,7 @@ export default function Potluck() {
   const [reelSymbol, setReelSymbol] = useState(REEL_SYMBOLS[0])
   const [error, setError] = useState('')
   const [shareStatus, setShareStatus] = useState('')
+  const [resultImageFailed, setResultImageFailed] = useState(false)
   const seenIds = useRef([])
   const previousCount = useRef(null)
 
@@ -176,6 +177,7 @@ export default function Potluck() {
     setError('')
     setShareStatus('')
     setSpinLine(SPINNING_LINES[Math.floor(Math.random() * SPINNING_LINES.length)])
+    setResultImageFailed(false)
 
     try {
       const visitorId = getPotluckVisitorId()
@@ -251,8 +253,18 @@ export default function Potluck() {
             </div>
 
             <div className={`pl-wheel pl-wheel--${phase}`} aria-live="polite">
-              {phase === 'revealed' && recipe?.image ? (
-                <img src={recipe.image} alt="" className="pl-wheel-result" />
+              {phase === 'revealed' ? (
+                recipe?.image && !resultImageFailed ? (
+                  <img
+                    src={recipe.image}
+                    alt=""
+                    className="pl-wheel-result"
+                    referrerPolicy="no-referrer"
+                    onError={() => setResultImageFailed(true)}
+                  />
+                ) : (
+                  <span className="pl-wheel-result-placeholder" aria-hidden="true">🍽️</span>
+                )
               ) : null}
 
               {phase === 'spinning' ? (
@@ -271,7 +283,6 @@ export default function Potluck() {
                 />
               </span>
 
-              {phase === 'revealed' ? <span className="pl-wheel-scrim" aria-hidden="true" /> : null}
 
               <img
                 src="/potluck/outer.webp"

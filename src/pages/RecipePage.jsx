@@ -86,6 +86,13 @@ export default function RecipePage() {
   const [recipe, setRecipe] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [imageFailed, setImageFailed] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
+
+  useEffect(() => {
+    setImageFailed(false)
+    setImageLoaded(false)
+  }, [id])
 
   // Screen Wake Lock — keeps screen on while cooking, re-acquires on visibility change
   useEffect(() => {
@@ -213,31 +220,39 @@ export default function RecipePage() {
     <div className="rp-root">
       <div className="rp-body">
 
-        {/* Hero — padded, rounded, tasteful */}
-        {recipe.image && (
-          <div className="rp-hero-wrap">
-            <img
-              src={recipe.image}
-              alt={recipe.name}
-              className="rp-hero-img"
-              width="1200"
-              height="800"
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
-            />
-            {recipe.imageCredit?.photographer && (
-              <a
-                className="rp-credit"
-                href={recipe.imageCredit.photographerUrl || '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                📷 {recipe.imageCredit.photographer}
-              </a>
-            )}
-          </div>
-        )}
+        {/* External recipe photos are best-effort in a browser. */}
+        <div className={`rp-hero-wrap${!recipe.image || imageFailed ? ' rp-hero-wrap--placeholder' : ''}`}>
+          {recipe.image && !imageFailed ? (
+            <>
+              <img
+                src={recipe.image}
+                alt={recipe.name}
+                className={`rp-hero-img${imageLoaded ? ' is-loaded' : ''}`}
+                width="1200"
+                height="800"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+                referrerPolicy="no-referrer"
+                onLoad={() => setImageLoaded(true)}
+                onError={() => { setImageLoaded(false); setImageFailed(true) }}
+              />
+              {!imageLoaded && <span className="rp-hero-loading" aria-hidden="true" />}
+              {imageLoaded && recipe.imageCredit?.photographer && (
+                <a
+                  className="rp-credit"
+                  href={recipe.imageCredit.photographerUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  📷 {recipe.imageCredit.photographer}
+                </a>
+              )}
+            </>
+          ) : (
+            <span className="rp-hero-placeholder" aria-hidden="true">🍽️</span>
+          )}
+        </div>
 
         {/* Header */}
         <div className="rp-header">
