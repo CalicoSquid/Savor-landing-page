@@ -149,7 +149,6 @@ function AppPitch({ onClose, onAppClick }) {
         onMouseDown={(event) => event.stopPropagation()}
       >
         <button type="button" className="pl-pitch-close" onClick={onClose} aria-label="Close">×</button>
-        <div className="pl-pitch-signal" aria-hidden="true"><span /> TRANSMISSION // 03</div>
         <span className="pl-dots" aria-hidden="true"><span /><span /><span /></span>
         <p className="pl-pitch-eyebrow">A transmission from the universe</p>
         <h2 id="pl-pitch-title" className="pl-pitch-title">
@@ -183,7 +182,6 @@ export default function Potluck() {
   const [resultImageFailed, setResultImageFailed] = useState(false)
   const [sessionSpins, setSessionSpins] = useState(0)
   const [showAppPitch, setShowAppPitch] = useState(false)
-  const [showVoidTease, setShowVoidTease] = useState(false)
   const [showThemeClaimHelp, setShowThemeClaimHelp] = useState(false)
   const [idleCopy, setIdleCopy] = useState({
     headline: IDLE_HEADLINES[0],
@@ -314,7 +312,6 @@ export default function Potluck() {
     setSpinStage('summoning')
     setError('')
     setShareStatus('')
-    setShowVoidTease(false)
     setSpinLine(pick(SPINNING_LINES))
     setResultImageFailed(false)
     if (pitchTimerRef.current) window.clearTimeout(pitchTimerRef.current)
@@ -409,13 +406,6 @@ export default function Potluck() {
   const handleAppClick = useCallback(() => trackPotluckEvent('potluck_app_click'), [])
   const handleSavorClick = useCallback(() => trackPotluckEvent('savor_click'), [])
   const handleRecipeClick = useCallback(() => trackPotluckEvent('recipe_click'), [])
-  const handleVoidToggle = useCallback(() => {
-    setShowVoidTease((open) => {
-      if (!open) trackPotluckEvent('void_tease')
-      return !open
-    })
-  }, [])
-
   const rerollLabel = REROLL_LABELS[
     Math.min(Math.max(sessionSpins - 1, 0), REROLL_LABELS.length - 1)
   ] || 'Spin again'
@@ -432,10 +422,6 @@ export default function Potluck() {
         {/* ── Potluck itself ───────────────────────────────────────────── */}
         <section className="pl-hero">
           <div className="pl-container pl-hero-inner">
-            <div className="pl-oracle-status" aria-hidden="true">
-              <span className="pl-oracle-status-light" />
-              COSMIC DINNER AUTHORITY // ONLINE
-            </div>
             <img
               src="/potluck/potluck_wordmark.webp"
               alt="Potluck"
@@ -519,28 +505,9 @@ export default function Potluck() {
                   <div className="pl-result-actions">
                     <Link to={`/r/${recipe.id}`} className="pl-btn pl-btn--teal" onClick={handleRecipeClick}>See the recipe →</Link>
                     <button type="button" className="pl-btn pl-btn--ghost" onClick={handleSpin}>{rerollLabel}</button>
-                    <button
-                      type="button"
-                      className={`pl-86-button${showVoidTease ? ' is-open' : ''}`}
-                      onClick={handleVoidToggle}
-                      aria-expanded={showVoidTease}
-                      aria-controls="pl-web-void-tease"
-                      aria-label="86 this recipe — peek at The Void"
-                    >
-                      <span>86</span><small>VOID</small>
-                    </button>
                     <button type="button" className="pl-share-btn" onClick={handleShare}>Share the verdict ↗</button>
                   </div>
 
-                  {showVoidTease ? (
-                    <div className="pl-web-void" id="pl-web-void-tease">
-                      <div className="pl-web-void-copy">
-                        <strong>Absolutely not.</strong>
-                        <span>The Void is not available to casual acquaintances. Get the app if you want me to remember what you banish.</span>
-                      </div>
-                      <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-web-void-link" onClick={handleAppClick}>Request clearance →</a>
-                    </div>
-                  ) : null}
 
                   <div className="pl-savor-nudge">
                     <img src="/icons/icon-Tangerine.webp" alt="" width="34" height="34" />
@@ -585,7 +552,6 @@ export default function Potluck() {
                 Keep this week&rsquo;s dinners, banish recipes into The Void, and carry an unnecessarily
                 judgemental cosmic authority around in your pocket.
               </p>
-              <div className="pl-memory-proof">ANDROID // FREE // UNREASONABLY AUTHORITATIVE</div>
               <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-play-link" onClick={handleAppClick}>
                 <img
                   src="/potluck/play2.webp"
@@ -608,17 +574,6 @@ export default function Potluck() {
                 </article>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ── 86 / The Void teaser ───────────────────────────────────── */}
-        <section className="pl-void-teaser" aria-label="A warning from the universe">
-          <div className="pl-container pl-void-teaser-inner">
-            <span className="pl-void-teaser-86" aria-hidden="true">86</span>
-            <p className="pl-void-teaser-copy">
-              Some recipes deserve another chance. <strong>Others deserve The Void.</strong>
-            </p>
-            <span className="pl-void-teaser-name" aria-hidden="true">The Void</span>
           </div>
         </section>
 
@@ -651,24 +606,10 @@ export default function Potluck() {
               </article>
             </div>
 
-            <div className="pl-pair-cta">
-              <div className="pl-pair-icons">
-                <img src="/potluck/potluck-icon.webp" alt="Potluck" className="pl-pair-icon" width="192" height="192" loading="lazy" decoding="async" />
-                <span className="pl-pair-x">×</span>
-                <img src="/icons/icon-Tangerine.webp" alt="Savor" className="pl-pair-icon" width="160" height="160" loading="lazy" decoding="async" />
-              </div>
-              <div>
-                <h3>Fate chooses. Savor keeps.</h3>
-                <p>Found a keeper? Savor saves recipes from websites, text, screenshots and the occasional act of cosmic intervention.</p>
-                <Link to="/" className="pl-btn pl-btn--teal" onClick={handleSavorClick}>Meet Savor →</Link>
-              </div>
-            </div>
-
             <article className="pl-theme-gift">
               <div className="pl-theme-preview" aria-label="Free Potluck theme for Savor">
                 <div className="pl-theme-preview-top">
                   <span className="pl-dots" aria-hidden="true"><span /><span /><span /></span>
-                  <span>COMPLIMENTARY // FATE PAID</span>
                 </div>
                 <div className="pl-theme-preview-body">
                   <img src="/potluck/potluck-icon.webp" alt="" width="192" height="192" loading="lazy" decoding="async" />
@@ -683,15 +624,8 @@ export default function Potluck() {
                 <span className="pl-eyebrow">A gift from the universe</span>
                 <h3>The universe has redecorated.</h3>
                 <p>
-                  Potluck escaped into Savor: deep cosmic teal, fate-orange, and the wheel colours where they belong.
-                  It&rsquo;s a real Savor theme, it&rsquo;s free, and apparently the cosmos has a branding department now.
+                  Potluck escaped into Savor. The theme is free. Fate covered the bill.
                 </p>
-                <div className="pl-theme-swatches" aria-label="Potluck theme colours">
-                  <span className="pl-theme-swatch pl-theme-swatch--orange" />
-                  <span className="pl-theme-swatch pl-theme-swatch--teal" />
-                  <span className="pl-theme-swatch pl-theme-swatch--green" />
-                  <span className="pl-theme-swatch pl-theme-swatch--cream" />
-                </div>
                 <div className="pl-theme-gift-actions">
                   <button type="button" className="pl-btn pl-btn--orange" onClick={handleThemeClaim}>
                     Accept the gift →
@@ -704,25 +638,6 @@ export default function Potluck() {
           </div>
         </section>
 
-        {/* ── Final app pull ───────────────────────────────────────────── */}
-        <section className="pl-download">
-          <div className="pl-container pl-section pl-download-inner">
-            <span className="pl-dots"><span /><span /><span /></span>
-            <h2>Still defying me in a browser?</h2>
-            <p>Fine. Put the universe in your pocket. I&rsquo;ll remember what happened. Unfortunately for both of us.</p>
-            <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-play-link" onClick={handleAppClick}>
-              <img
-                src="/potluck/play2.webp"
-                alt="Get Potluck on Google Play"
-                className="pl-play-badge"
-                width="440"
-                height="121"
-                loading="lazy"
-                decoding="async"
-              />
-            </a>
-          </div>
-        </section>
 
       </main>
       <Footer />
