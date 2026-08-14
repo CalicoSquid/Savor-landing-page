@@ -2412,3 +2412,238 @@
 @supports not (overflow: clip) {
   .potluck-page { overflow-x: hidden; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Hero surgical pass — 2026-08-15
+   Everything below the hero is intentionally untouched. Keep the opening
+   screen sparse, viewport-fitted and centred on the actual Potluck loop.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Lose the concentric illustration from the launch-polish pass. The original
+   dotted Potluck field remains, but there is no second decorative layer. */
+.pl-hero::after {
+  content: none !important;
+}
+
+/* One phrase only. No explanatory subline beneath the headline. */
+.pl-hero-copy .pl-sub {
+  display: none !important;
+}
+
+/* Flat Potluck CTA: dark teal, no orange, no faux depth, no decorative
+   internal furniture. */
+.pl-spin-button {
+  width: min(100%, 420px);
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 24px;
+  border-radius: 17px;
+  background: var(--pl-teal) !important;
+  color: #fff;
+  text-align: center;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.pl-spin-button:hover:not(:disabled) {
+  background: #193536 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.pl-spin-button:active:not(:disabled) {
+  background: #0d1c1d !important;
+  box-shadow: none !important;
+  transform: scale(0.985) !important;
+}
+.pl-spin-button-title {
+  font-size: 1.14rem;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Results never create a second row of metadata. Keep the two useful facts
+   on one compact line. */
+.pl-result-meta {
+  flex-wrap: nowrap !important;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.pl-result-meta span {
+  white-space: nowrap;
+}
+
+/* The hero dots should not visually bleed through translucent/ghost result
+   actions. These are deliberately opaque while keeping their hierarchy. */
+.pl-result-actions .pl-btn--ghost {
+  background: #fff8f4;
+}
+.pl-result-actions .pl-share-btn {
+  background: #fff2e8;
+}
+
+/* The Savor nudge was useful during funnel design, but it makes a landed
+   verdict fall below the fold. Savor still exists on the recipe page and in
+   the dedicated section below the hero. */
+.pl-savor-nudge {
+  display: none !important;
+}
+
+@media (max-width: 620px) {
+  /* The page itself already owns 64px of fixed-nav offset. Fill precisely the
+     remaining dynamic viewport, including when mobile browser chrome moves. */
+  .pl-hero {
+    height: calc(100dvh - 64px);
+    min-height: calc(100svh - 64px);
+    padding: clamp(10px, 1.8svh, 18px) 0 clamp(12px, 2svh, 20px);
+    overflow: hidden;
+  }
+  .pl-hero-inner {
+    height: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    gap: clamp(7px, 1.35svh, 13px);
+  }
+
+  .pl-wordmark {
+    width: auto;
+    max-width: none;
+    height: clamp(54px, 9.3svh, 72px);
+    flex: 0 0 auto;
+  }
+
+  .pl-hero-copy {
+    gap: 0;
+    flex: 0 0 auto;
+  }
+  .pl-h1 {
+    max-width: 360px;
+    margin-inline: auto;
+    font-size: clamp(1.62rem, 4.5svh, 2.12rem);
+    line-height: 1.04;
+  }
+
+  .pl-wheel {
+    width: clamp(176px, 31svh, 232px);
+    flex: 0 0 auto;
+  }
+
+  .pl-oracle {
+    width: min(100%, 420px);
+    min-height: 0;
+    gap: clamp(6px, 1.05svh, 10px);
+    flex: 0 0 auto;
+  }
+  .pl-spin-button {
+    width: min(100%, 374px);
+    min-height: clamp(56px, 8.5svh, 64px);
+    padding: 13px 20px;
+    border-radius: 16px;
+  }
+  .pl-spin-button-title {
+    font-size: clamp(1.02rem, 2.55svh, 1.15rem);
+  }
+
+  .pl-spin-count {
+    flex: 0 0 auto;
+    margin-top: 0;
+    padding: 6px 12px 7px;
+  }
+  .pl-spin-count-number {
+    font-size: 1rem;
+  }
+  .pl-spin-count-label {
+    font-size: 0.66rem;
+  }
+
+  /* Once fate lands, the recipe title/verdict replaces the idle headline as
+     the information hierarchy. Dropping the now-redundant idle phrase keeps
+     the complete landed state in the same viewport. */
+  .pl-hero--revealed .pl-hero-copy {
+    display: none;
+  }
+  .pl-hero--revealed .pl-wordmark {
+    height: clamp(44px, 7.2svh, 58px);
+  }
+  .pl-hero--revealed .pl-wheel {
+    width: clamp(158px, 27svh, 208px);
+  }
+  .pl-hero--revealed .pl-result-panel {
+    gap: clamp(5px, 0.85svh, 8px);
+  }
+  .pl-hero--revealed .pl-oracle-kicker {
+    font-size: 0.62rem;
+  }
+  .pl-hero--revealed .pl-result-name {
+    max-width: 360px;
+    font-size: clamp(1.42rem, 4.7svh, 1.95rem);
+    line-height: 1.02;
+  }
+  .pl-hero--revealed .pl-result-verdict {
+    max-width: 350px;
+    font-size: clamp(0.79rem, 2.15svh, 0.92rem);
+    line-height: 1.3;
+  }
+  .pl-hero--revealed .pl-result-meta {
+    margin-top: 0;
+    gap: 6px;
+  }
+  .pl-hero--revealed .pl-result-meta span {
+    padding: 4px 8px;
+    font-size: 0.63rem;
+  }
+  .pl-hero--revealed .pl-result-actions {
+    flex-wrap: nowrap;
+    gap: 7px;
+    width: 100%;
+    margin-top: 2px;
+  }
+  .pl-hero--revealed .pl-result-actions .pl-btn,
+  .pl-hero--revealed .pl-share-btn {
+    min-width: 0;
+    padding: 9px 10px;
+    font-size: 0.74rem;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .pl-hero--revealed .pl-result-actions .pl-btn {
+    flex: 1 1 auto;
+  }
+  .pl-hero--revealed .pl-share-btn {
+    flex: 0 1 auto;
+  }
+  .pl-hero--revealed .pl-spin-count {
+    padding-top: 5px;
+    padding-bottom: 6px;
+  }
+
+  /* Very short phones: trade cabinet size before sacrificing controls. */
+  @media (max-height: 650px) {
+    .pl-wordmark {
+      height: 48px;
+    }
+    .pl-h1 {
+      font-size: 1.55rem;
+    }
+    .pl-wheel {
+      width: 164px;
+    }
+    .pl-spin-button {
+      min-height: 52px;
+    }
+    .pl-hero--revealed .pl-wordmark {
+      height: 40px;
+    }
+    .pl-hero--revealed .pl-wheel {
+      width: 145px;
+    }
+    .pl-hero--revealed .pl-result-name {
+      font-size: 1.32rem;
+    }
+    .pl-hero--revealed .pl-result-verdict {
+      font-size: 0.76rem;
+    }
+  }
+}

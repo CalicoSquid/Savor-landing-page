@@ -420,7 +420,7 @@ export default function Potluck() {
       <main className="page potluck-page">
 
         {/* ── Potluck itself ───────────────────────────────────────────── */}
-        <section className="pl-hero">
+        <section className={`pl-hero pl-hero--${phase}`}>
           <div className="pl-container pl-hero-inner">
             <img
               src="/potluck/potluck_wordmark.webp"
@@ -435,7 +435,6 @@ export default function Potluck() {
 
             <div className="pl-hero-copy">
               <h1 className="pl-h1">{idleCopy.headline}</h1>
-              <p className="pl-sub">{idleCopy.subline}</p>
             </div>
 
             <div className={`pl-wheel pl-wheel--${phase} pl-wheel-stage--${spinStage}`} aria-live="polite">
@@ -494,11 +493,10 @@ export default function Potluck() {
                   <p className="pl-result-verdict">
                     <TypewriterVerdict text={verdict} onComplete={handleVerdictComplete} />
                   </p>
-                  {(time || recipe.recipeYield || meta.length > 0) && (
+                  {(time || meta.length > 0) && (
                     <div className="pl-result-meta">
                       {time ? <span>⏱ {time}</span> : null}
-                      {recipe.recipeYield ? <span>🍽 {recipe.recipeYield}</span> : null}
-                      {meta.slice(0, 2).map((item) => <span key={item}>{item}</span>)}
+                      {meta.slice(0, 1).map((item) => <span key={item}>{item}</span>)}
                     </div>
                   )}
                   {error ? <p className="pl-spin-error">{error}</p> : null}
@@ -508,11 +506,6 @@ export default function Potluck() {
                     <button type="button" className="pl-share-btn" onClick={handleShare}>Share the verdict ↗</button>
                   </div>
 
-
-                  <div className="pl-savor-nudge">
-                    <img src="/icons/icon-Tangerine.webp" alt="" width="34" height="34" />
-                    <span>Fate picked it. If it&rsquo;s a keeper, the recipe page can make it permanent in <Link to="/" onClick={handleSavorClick}>Savor</Link>.</span>
-                  </div>
                   {shareStatus ? <p className="pl-share-status" role="status">{shareStatus}</p> : null}
                 </div>
               ) : (
@@ -524,22 +517,7 @@ export default function Potluck() {
                     onClick={handleSpin}
                     disabled={phase === 'spinning'}
                   >
-                    <span className="pl-spin-button-dots" aria-hidden="true" />
-                    <span className="pl-spin-button-icon" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" focusable="false">
-                        <rect x="4" y="4" width="16" height="16" rx="3" />
-                        <circle cx="8.5" cy="8.5" r="1.15" />
-                        <circle cx="15.5" cy="8.5" r="1.15" />
-                        <circle cx="12" cy="12" r="1.15" />
-                        <circle cx="8.5" cy="15.5" r="1.15" />
-                        <circle cx="15.5" cy="15.5" r="1.15" />
-                      </svg>
-                    </span>
-                    <span className="pl-spin-button-copy">
-                      <span className="pl-spin-button-title">{phase === 'spinning' ? 'Deciding…' : 'Spin'}</span>
-                      <span className="pl-spin-button-sub">{phase === 'spinning' ? 'The wheel decides…' : 'Let the universe pick dinner'}</span>
-                    </span>
-                    <span className="pl-spin-button-chevron" aria-hidden="true">›</span>
+                    <span className="pl-spin-button-title">{phase === 'spinning' ? 'Deciding…' : 'Spin'}</span>
                   </button>
                   {error ? <p className="pl-spin-error">{error}</p> : null}
                 </>
