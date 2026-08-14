@@ -39,55 +39,9 @@ export const REEL_SYMBOLS = [
   '🥐', '🍣', '🍲', '🥩', '🍰', '🦞', '🌯', '🍛', '🫕',
 ]
 
-const GENERAL_VERDICTS = [
-  'The universe has spoken.',
-  'No notes. Go cook.',
-  'That’s dinner. No appeals.',
-  'Argue with it later.',
-  'Resistance is futile. Also delicious.',
-  'Stop scrolling. Start cooking.',
-  'Dinner has been assigned.',
-  'I checked the timelines. This one’s best.',
-  'The universe has done its bit. Your turn.',
-  'Proceed directly to the kitchen.',
-  'Enough democracy.',
-  'You outsourced dinner to fate. Fate delivered.',
-]
-
-const CONTEXT = [
-  { words: ['dessert', 'cake', 'cookie', 'brownie', 'pudding', 'cheesecake', 'ice cream', 'chocolate'],
-    lines: ['Dessert. No notes.', 'The universe wants you to have cake.', 'Nutrition declined to comment.', 'Sweet destiny. Literally.'] },
-  { words: ['pasta', 'spaghetti', 'linguine', 'penne', 'rigatoni', 'ravioli', 'lasagna', 'lasagne', 'gnocchi', 'noodle'],
-    lines: ['Boil water. The rest is destiny.', 'Carbs have won. Again.', 'Fate says al dente.', 'Your future is pleasantly tangled.'] },
-  { words: ['soup', 'broth', 'chowder', 'bisque', 'ramen', 'pho', 'stew'],
-    lines: ['The universe recommends a bowl.', 'Liquid dinner. Solid decision.', 'A spoon has been summoned.', 'Destiny appears to be steaming.'] },
-  { words: ['spicy', 'chilli', 'chili', 'jalapeño', 'jalapeno', 'harissa', 'sriracha', 'cajun', 'buffalo', 'gochujang'],
-    lines: ['The universe chose violence. Delicious violence.', 'Fate brought heat.', 'Spice has entered the timeline.', 'Keep water nearby.'] },
-  { words: ['salad', 'slaw', 'greens', 'tabbouleh'],
-    lines: ['The universe remembers vegetables.', 'Apparently fate wants crunch.', 'A suspiciously sensible outcome.', 'Virtue, but with dressing.'] },
-  { words: ['grilled', 'grill', 'barbecue', 'barbeque', 'bbq', 'kebab', 'skewer'],
-    lines: ['Apply fire. Become powerful.', 'The universe has granted you flame.', 'Smoke is now a seasoning.', 'Your ancestors approve.'] },
-  { words: ['cheese', 'cheesy', 'mozzarella', 'cheddar', 'parmesan', 'halloumi'],
-    lines: ['Cheese has resolved the matter.', 'Your fate is melty.', 'Dairy has seized control.', 'Cosmic law permits extra cheese.'] },
-  { words: ['fish', 'salmon', 'tuna', 'cod', 'prawn', 'shrimp', 'crab', 'seafood'],
-    lines: ['The tide has spoken.', 'The universe says seafood.', 'Tonight’s fate comes with lemon.', 'The ocean has entered the timeline.'] },
-]
-
-const pick = (items) => items[Math.floor(Math.random() * items.length)]
-
 export function daypartNow() {
   const hour = new Date().getHours()
   return hour >= 5 && hour < 11 ? 'breakfast' : 'dinner'
-}
-
-export function verdictFor(recipe) {
-  const haystack = [recipe?.category, recipe?.cuisine, recipe?.name]
-    .filter(Boolean)
-    .join(' ')
-    .toLowerCase()
-  const matching = CONTEXT.filter(({ words }) => words.some((word) => haystack.includes(word)))
-  if (matching.length && Math.random() < 0.65) return pick(pick(matching).lines)
-  return pick(GENERAL_VERDICTS)
 }
 
 export function decodeRecipe(recipe) {
