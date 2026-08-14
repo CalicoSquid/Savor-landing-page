@@ -2202,3 +2202,213 @@
     width: min(68vw, 184px);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Mobile tightening v2 — fix the two-column gift regression, remove page
+   overflow, and bring the web spin CTA back in line with the native app.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.potluck-page {
+  overflow-x: clip;
+}
+
+/* Native PotluckButton language: orange gradient, translucent icon badge,
+   halftone texture on the right, left-aligned copy and a quiet chevron. */
+.pl-spin-button {
+  position: relative;
+  width: min(100%, 420px);
+  min-height: 82px;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--pl-orange-1), var(--pl-orange-2));
+  color: #fff;
+  text-align: left;
+  box-shadow: 0 7px 0 #d94a1d, 0 14px 28px rgba(255, 87, 34, 0.24);
+}
+.pl-spin-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 0 #d94a1d, 0 17px 31px rgba(255, 87, 34, 0.27);
+}
+.pl-spin-button:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 3px 0 #d94a1d, 0 9px 18px rgba(255, 87, 34, 0.22);
+}
+.pl-spin-button-dots {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 104px;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image: radial-gradient(rgba(255,255,255,0.85) 1.5px, transparent 1.8px);
+  background-size: 10px 10px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 55%);
+  mask-image: linear-gradient(90deg, transparent, #000 55%);
+}
+.pl-spin-button-icon {
+  position: relative;
+  z-index: 1;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.2);
+}
+.pl-spin-button-icon svg {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+}
+.pl-spin-button-icon svg circle {
+  fill: #fff;
+  stroke: none;
+}
+.pl-spin-button-copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.pl-spin-button-title {
+  font-size: 1.16rem;
+  line-height: 1.05;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+.pl-spin-button-sub {
+  font-size: 0.8rem;
+  line-height: 1.25;
+  font-weight: 600;
+  color: rgba(255,255,255,0.76);
+}
+.pl-spin-button-chevron {
+  position: relative;
+  z-index: 1;
+  justify-self: end;
+  color: rgba(255,255,255,0.6);
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* The tightened desktop rule was appended after the original mobile rule and
+   accidentally reintroduced two columns below 620px. Keep the gift genuinely
+   single-column on phones, and allow every child to shrink. */
+.pl-theme-gift,
+.pl-theme-gift-copy,
+.pl-theme-gift-actions,
+.pl-theme-preview {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 620px) {
+  .pl-hero {
+    min-height: 0;
+    padding: 10px 0 30px;
+  }
+  .pl-hero-inner {
+    gap: 10px;
+  }
+  .pl-wordmark {
+    max-width: 198px;
+  }
+  .pl-hero-copy {
+    gap: 3px;
+  }
+  .pl-h1 {
+    font-size: clamp(1.82rem, 8.9vw, 2.25rem);
+    line-height: 1.02;
+  }
+  .pl-sub {
+    max-width: 320px;
+    font-size: 0.89rem;
+    line-height: 1.35;
+  }
+  .pl-wheel {
+    width: clamp(198px, 56vw, 224px);
+  }
+  .pl-oracle {
+    min-height: 0;
+    gap: 7px;
+  }
+  .pl-spin-button {
+    min-height: 74px;
+    grid-template-columns: 42px minmax(0, 1fr) 18px;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: 19px;
+  }
+  .pl-spin-button-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+  }
+  .pl-spin-button-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+  .pl-spin-button-title {
+    font-size: 1.08rem;
+  }
+  .pl-spin-button-sub {
+    font-size: 0.76rem;
+  }
+  .pl-spin-count {
+    margin-top: 1px;
+  }
+
+  .pl-theme-gift {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 22px 18px 24px;
+    text-align: center;
+  }
+  .pl-theme-preview {
+    width: min(62vw, 178px);
+    margin-inline: auto;
+  }
+  .pl-theme-gift-copy {
+    width: 100%;
+    text-align: center;
+  }
+  .pl-theme-gift-copy .pl-eyebrow {
+    justify-content: center;
+  }
+  .pl-theme-gift-copy > p {
+    max-width: 330px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .pl-theme-gift-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 9px;
+  }
+  .pl-theme-gift-actions .pl-btn {
+    width: 100%;
+    max-width: 300px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .pl-theme-gift-actions > span {
+    max-width: 300px;
+    margin-inline: auto;
+  }
+}
+
+@supports not (overflow: clip) {
+  .potluck-page { overflow-x: hidden; }
+}

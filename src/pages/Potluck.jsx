@@ -524,8 +524,22 @@ export default function Potluck() {
                     onClick={handleSpin}
                     disabled={phase === 'spinning'}
                   >
-                    <span className="pl-spin-button-title">{phase === 'spinning' ? 'DECIDING…' : 'SPIN'}</span>
-                    <span className="pl-spin-button-sub">{phase === 'spinning' ? 'Do not interfere with the timeline' : 'Hand dinner over to fate'}</span>
+                    <span className="pl-spin-button-dots" aria-hidden="true" />
+                    <span className="pl-spin-button-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <rect x="4" y="4" width="16" height="16" rx="3" />
+                        <circle cx="8.5" cy="8.5" r="1.15" />
+                        <circle cx="15.5" cy="8.5" r="1.15" />
+                        <circle cx="12" cy="12" r="1.15" />
+                        <circle cx="8.5" cy="15.5" r="1.15" />
+                        <circle cx="15.5" cy="15.5" r="1.15" />
+                      </svg>
+                    </span>
+                    <span className="pl-spin-button-copy">
+                      <span className="pl-spin-button-title">{phase === 'spinning' ? 'Deciding…' : 'Spin'}</span>
+                      <span className="pl-spin-button-sub">{phase === 'spinning' ? 'The wheel decides…' : 'Let the universe pick dinner'}</span>
+                    </span>
+                    <span className="pl-spin-button-chevron" aria-hidden="true">›</span>
                   </button>
                   {error ? <p className="pl-spin-error">{error}</p> : null}
                 </>
