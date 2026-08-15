@@ -953,9 +953,9 @@
   box-shadow: 0 8px 20px rgba(255, 87, 34, 0.22);
 }
 
-/* The native reel reads as a quick symbol flash, not a giant emoji poster. */
+/* Bring the reel symbols closer to the native Android centerpiece scale. */
 .pl-reel-symbol {
-  font-size: clamp(2.35rem, 7vw, 3.15rem);
+  font-size: clamp(4rem, 18vw, 4.75rem);
 }
 
 .pl-spinning-line {
@@ -1654,24 +1654,7 @@
 .pl-hero-copy { gap: 7px; }
 .pl-hero-copy .pl-sub { max-width: 520px; }
 
-/* The cabinet gets a brief scan / sealing beat before the result lands. */
-.pl-wheel::after {
-  content: '';
-  position: absolute;
-  z-index: 9;
-  left: 7%;
-  right: 7%;
-  top: 8%;
-  height: 2px;
-  opacity: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,179,0,0.9), transparent);
-  box-shadow: 0 0 14px rgba(255,179,0,0.55);
-  pointer-events: none;
-}
-.pl-wheel--spinning::after {
-  opacity: 0.9;
-  animation: pl-cosmic-scan 880ms ease-in-out infinite;
-}
+/* Keep the cabinet movement, but no scan line across the reel. */
 .pl-wheel-stage--summoning {
   animation: pl-cabinet-hum 520ms ease-in-out infinite alternate;
 }
@@ -1679,19 +1662,9 @@
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 26px 68px rgba(20,40,41,0.33), 0 0 0 5px rgba(255,179,0,0.08);
 }
-.pl-wheel-stage--sealing::after {
-  animation-duration: 240ms;
-  opacity: 1;
-}
 .pl-wheel-stage--sealing .pl-reel-symbol {
   transform: scale(0.88);
   filter: blur(1.6px) drop-shadow(0 5px 12px rgba(20,40,41,0.18));
-}
-@keyframes pl-cosmic-scan {
-  0% { top: 10%; opacity: 0; }
-  18% { opacity: 0.95; }
-  82% { opacity: 0.95; }
-  100% { top: 88%; opacity: 0; }
 }
 @keyframes pl-cabinet-hum {
   from { transform: translateY(-3px) rotate(-0.25deg) scale(1.012); }
@@ -1987,7 +1960,6 @@
 @media (prefers-reduced-motion: reduce) {
   .pl-oracle-status-light,
   .pl-wheel-stage--summoning,
-  .pl-wheel--spinning::after,
   .pl-spinning-line,
   .pl-result-panel,
   .pl-pitch-signal > span {
@@ -2890,6 +2862,7 @@
     .pl-hero-copy .pl-h1 { font-size: 1.82rem; }
     .pl-wheel,
     .pl-hero--revealed .pl-wheel { width: 172px !important; }
+    .pl-reel-symbol { font-size: 4rem; }
     .pl-hero--revealed .pl-result-verdict { font-size: .86rem !important; }
     .pl-cta-shelf,
     .pl-result-actions { min-height: 120px; }
