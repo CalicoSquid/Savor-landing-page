@@ -490,33 +490,61 @@ export default function Potluck() {
             </div>
 
             <div className={`pl-cta-dock pl-cta-dock--${phase}`}>
-              {phase === 'revealed' && recipe ? (
-                <div className="pl-result-actions">
-                  <Link to={`/r/${recipe.id}`} className="pl-dock-action pl-dock-action--primary" onClick={handleRecipeClick}>
-                    <span className="pl-dock-action-copy">
-                      <strong>See the recipe</strong>
-                      <small>Ingredients, steps, the lot</small>
-                    </span>
-                    <span className="pl-dock-action-arrow" aria-hidden="true">›</span>
-                  </Link>
-                  <button type="button" className="pl-dock-action pl-dock-action--reroll" onClick={handleSpin}>
-                    <span className="pl-dock-action-copy">
-                      <strong>{rerollLabel}</strong>
-                      <small>Defy fate</small>
-                    </span>
-                  </button>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  className="pl-spin-button"
-                  onClick={handleSpin}
-                  disabled={phase === 'spinning'}
-                >
-                  <span className="pl-spin-button-title">{phase === 'spinning' ? 'Deciding…' : 'Spin'}</span>
-                  <span className="pl-spin-button-sub">{phase === 'spinning' ? 'The cosmos is checking its notes' : 'Hand dinner over to fate'}</span>
-                </button>
-              )}
+              <div className="pl-cta-shelf">
+                {phase === 'revealed' && recipe ? (
+                  <div className="pl-result-actions">
+                    <Link to={`/r/${recipe.id}`} className="pl-native-cta" onClick={handleRecipeClick}>
+                      <span className="pl-native-cta-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                          <path d="M7 3v7M4.5 3v4.2A2.8 2.8 0 0 0 7.3 10H9.5V3M7.3 10v11" />
+                          <path d="M15.5 3v18M15.5 3c2.6 1.8 4 4.2 4 7.2 0 2.2-1.4 3.8-4 3.8" />
+                        </svg>
+                      </span>
+                      <span className="pl-native-cta-copy">
+                        <strong>See the recipe</strong>
+                        <small>Ingredients, steps, the lot</small>
+                      </span>
+                      <span className="pl-native-cta-chevron" aria-hidden="true">›</span>
+                    </Link>
+
+                    <button type="button" className="pl-native-secondary" onClick={handleSpin}>
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M20 7v5h-5" />
+                        <path d="M18.2 16.3A7.5 7.5 0 1 1 19.6 9" />
+                      </svg>
+                      <span>{rerollLabel}</span>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      className="pl-native-cta pl-native-cta--spin"
+                      onClick={handleSpin}
+                      disabled={phase === 'spinning'}
+                    >
+                      <span className="pl-native-cta-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                          <rect x="4" y="4" width="16" height="16" rx="3" />
+                          <circle cx="8" cy="8" r=".85" />
+                          <circle cx="16" cy="8" r=".85" />
+                          <circle cx="12" cy="12" r=".85" />
+                          <circle cx="8" cy="16" r=".85" />
+                          <circle cx="16" cy="16" r=".85" />
+                        </svg>
+                      </span>
+                      <span className="pl-native-cta-copy">
+                        <strong>{phase === 'spinning' ? 'Please wait…' : 'Spin'}</strong>
+                        <small>{phase === 'spinning' ? 'The wheel decides…' : 'Let the universe pick dinner'}</small>
+                      </span>
+                      {phase === 'spinning' ? null : <span className="pl-native-cta-chevron" aria-hidden="true">›</span>}
+                    </button>
+                    <div className="pl-dock-subline-slot" aria-hidden={phase === 'spinning'}>
+                      <p>{phase === 'spinning' ? '\u00A0' : idleCopy.subline}</p>
+                    </div>
+                  </>
+                )}
+              </div>
 
               <div className={`pl-spin-count${spinCount === null ? ' is-loading' : ''}`}>
                 <span className="pl-spin-count-number">
