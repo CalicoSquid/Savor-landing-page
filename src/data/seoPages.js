@@ -6,6 +6,7 @@ export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/images/savor-og.jpg`
 
 const page = (config) => ({
   ogType: 'website',
+  themeColor: '#FF6D00',
   ogImage: DEFAULT_SOCIAL_IMAGE,
   ogImageWidth: 1200,
   ogImageHeight: 630,
@@ -63,6 +64,7 @@ export const STATIC_SEO_PAGES = [
     canonical: `${SITE_URL}/potluck/`,
     ogImage: `${SITE_URL}/potluck/potluck-og.jpg`,
     ogImageAlt: 'Potluck by Savor — spin once and let it choose dinner',
+    themeColor: '#142829',
   }),
   page({
     path: '/caper',

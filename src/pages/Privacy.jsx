@@ -1,7 +1,7 @@
 import Footer from '../components/Footer'
 
 export default function Privacy() {
-  const LAST_UPDATED = "May 2026";
+  const LAST_UPDATED = "August 15, 2026";
 
   const section = (title, children) => (
     <div style={{ marginBottom: 48 }}>
@@ -105,12 +105,12 @@ export default function Privacy() {
             borderLeft: '3px solid var(--accent)',
           }}>
             <p style={{ fontWeight: 700, color: 'var(--text-primary)', marginBottom: 6, fontSize: '0.95rem' }}>
-              Potluck by Savor — no account, no data
+              Potluck by Savor — no account, minimal anonymous usage data
             </p>
             <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.7, margin: 0 }}>
-              Potluck requires no account and collects no personal information whatsoever.
-              It fetches random recipes from our server and stores your session locally
-              on your device only. Nothing is sent to us about you or your usage.
+              Potluck requires no account and does not collect your name, email address, or profile information.
+              The web version creates a random identifier in your browser so we can count spins and understand a few basic
+              Potluck actions. It is not linked to a Savor account or to a personal profile.
             </p>
           </div>
 
@@ -128,9 +128,10 @@ export default function Privacy() {
           </>)}
 
           {section("What we collect — Potluck by Savor", <>
-            {p("Potluck has no accounts and no sign-in. We collect nothing about you personally.")}
-            {p("When you spin, your device makes a network request to our server to fetch a random recipe. This request contains no identifying information — it is indistinguishable from any anonymous web request.")}
-            {p("Your spin session (which recipes you've seen) is stored locally on your device using AsyncStorage and is never sent to us.")}
+            {p("Potluck has no accounts and no sign-in. We do not collect your name, email address, phone number, or a Savor profile.")}
+            {p("On the Potluck website, your browser creates a random local identifier. We send that identifier with random-recipe requests and a small set of product events such as visits, spin milestones, recipe opens, and Potluck/Savor link clicks. This lets us count spins and understand whether the product is being used. The identifier is not linked to a Savor account or to information that directly identifies you.")}
+            {p("The web page also sends recently seen recipe IDs with a spin request so the server can avoid immediate repeats. Those IDs describe recipes, not you. Clearing this site's browser storage resets the local Potluck identifier.")}
+            {p("The Android app keeps its Potluck history and weekly choices locally on your device. Normal network requests still reach our server to fetch recipe data and may include standard technical request information such as IP address and user agent in infrastructure logs.")}
           </>)}
 
           {section("Camera and scan", <>
@@ -155,6 +156,7 @@ export default function Privacy() {
               "Shared recipes are displayed in the community feed as you intended.",
               "Subscription status unlocks Pro features in the app.",
             ])}
+            {p("Potluck's anonymous web identifier and basic event data are used only to operate the random-recipe service, count spins, diagnose problems, and understand basic feature use. They are not used to build an advertising profile.")}
             {p("We do not sell your data. We do not use your data for advertising. We do not share your data with third parties except the infrastructure providers listed below.")}
           </>)}
 
@@ -173,7 +175,7 @@ export default function Privacy() {
           {section("Data retention and deletion", <>
             {p("You can delete your Savor account at any time from within the app (Settings → Privacy & Data → Delete Account). This permanently deletes your account, email address, and all saved recipes immediately.")}
             {p("Recipes you have shared to the community feed remain as anonymous contributions after account deletion — your username is removed but the recipe stays. This is intentional so the community isn't disrupted when someone leaves. If you want a specific shared recipe removed, contact us.")}
-            {p("Potluck stores nothing on our servers tied to you, so there is nothing to delete.")}
+            {p("Potluck does not maintain a user account or personal profile to delete. Anonymous operational and product-event records are not linked to a known person or Savor account.")}
           </>)}
 
           {section("Children's privacy", <>

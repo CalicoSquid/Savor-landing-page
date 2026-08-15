@@ -46,6 +46,7 @@ function applySeo(templateHtml, seo) {
 
   html = replaceMeta(html, 'name', 'description', seo.description)
   html = replaceMeta(html, 'name', 'robots', seo.robots)
+  html = replaceMeta(html, 'name', 'theme-color', seo.themeColor || '#FF6D00')
   html = replaceCanonical(html, seo.canonical)
 
   html = replaceMeta(html, 'property', 'og:type', seo.ogType)

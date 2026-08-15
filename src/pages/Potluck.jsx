@@ -12,7 +12,6 @@ import {
   trackPotluckEvent,
 } from '../lib/potluckWeb'
 import {
-  IDLE_HEADLINES,
   IDLE_SUBLINES,
   REROLL_LABELS,
   SPINNING_LINES,
@@ -69,6 +68,69 @@ function setLocalFlag(key) {
   }
 }
 
+function useModalFocus(onClose) {
+  const dialogRef = useRef(null)
+  const initialFocusRef = useRef(null)
+  const onCloseRef = useRef(onClose)
+
+  useEffect(() => {
+    onCloseRef.current = onClose
+  }, [onClose])
+
+  useEffect(() => {
+    const previousFocus = document.activeElement
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const focusTimer = window.setTimeout(() => {
+      const target = initialFocusRef.current || dialogRef.current
+      target?.focus?.()
+    }, 0)
+
+    const handleKey = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        onCloseRef.current?.()
+        return
+      }
+
+      if (event.key !== 'Tab') return
+      const dialog = dialogRef.current
+      if (!dialog) return
+
+      const focusable = [...dialog.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )].filter((element) => !element.hasAttribute('hidden') && element.getAttribute('aria-hidden') !== 'true')
+
+      if (!focusable.length) {
+        event.preventDefault()
+        dialog.focus()
+        return
+      }
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKey)
+    return () => {
+      window.clearTimeout(focusTimer)
+      document.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = previousOverflow
+      previousFocus?.focus?.()
+    }
+  }, [])
+
+  return { dialogRef, initialFocusRef }
+}
+
 function TypewriterVerdict({ text, tone = 'default', onComplete }) {
   const [count, setCount] = useState(0)
   const callbackRef = useRef(onComplete)
@@ -117,24 +179,20 @@ function TypewriterVerdict({ text, tone = 'default', onComplete }) {
 }
 
 function AppPitch({ onClose, onAppClick }) {
-  useEffect(() => {
-    const handleKey = (event) => {
-      if (event.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', handleKey)
-    return () => document.removeEventListener('keydown', handleKey)
-  }, [onClose])
+  const { dialogRef, initialFocusRef } = useModalFocus(onClose)
 
   return (
-    <div className="pl-pitch-backdrop" role="presentation" onMouseDown={onClose}>
+    <div className="pl-pitch-backdrop" onMouseDown={onClose}>
       <section
+        ref={dialogRef}
         className="pl-pitch"
         role="dialog"
         aria-modal="true"
         aria-labelledby="pl-pitch-title"
+        tabIndex={-1}
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <button type="button" className="pl-pitch-close" onClick={onClose} aria-label="Close">×</button>
+        <button ref={initialFocusRef} type="button" className="pl-pitch-close" onClick={onClose} aria-label="Close">×</button>
         <span className="pl-dots" aria-hidden="true"><span /><span /><span /></span>
         <p className="pl-pitch-eyebrow">A transmission from the universe</p>
         <h2 id="pl-pitch-title" className="pl-pitch-title">
@@ -155,8 +213,44 @@ function AppPitch({ onClose, onAppClick }) {
   )
 }
 
+function ThemeClaimHelp({ onClose, onSavorClick }) {
+  const { dialogRef, initialFocusRef } = useModalFocus(onClose)
+
+  return (
+    <div
+      className="pl-theme-modal-backdrop"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose()
+      }}
+    >
+      <section
+        ref={dialogRef}
+        className="pl-theme-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pl-theme-modal-title"
+        tabIndex={-1}
+      >
+        <button ref={initialFocusRef} type="button" className="pl-theme-modal-close" onClick={onClose} aria-label="Close">×</button>
+        <img src="/potluck/potluck-icon.webp" alt="" width="72" height="72" decoding="async" />
+        <span className="pl-eyebrow">Potluck × Savor</span>
+        <h2 id="pl-theme-modal-title">This particular cosmic gift needs Android.</h2>
+        <p>
+          Savor is on Android right now. Open this page on your Android phone and tap <strong>Accept the gift</strong> again.
+          If Savor is installed, it opens straight to the gift. If not, Google Play will take it from there.
+        </p>
+        <div className="pl-theme-modal-actions">
+          <a href={SAVOR_PLAY_URL} target="_blank" rel="noreferrer" className="pl-btn pl-btn--orange" onClick={onSavorClick}>Get Savor →</a>
+          <button type="button" className="pl-btn pl-btn--ghost" onClick={onClose}>Got it</button>
+        </div>
+      </section>
+    </div>
+  )
+}
+
 export default function Potluck() {
   const [spinCount, setSpinCount] = useState(null)
+  const [statsUnavailable, setStatsUnavailable] = useState(false)
   const [phase, setPhase] = useState('idle') // idle | spinning | revealed
   const [spinStage, setSpinStage] = useState('idle') // idle | summoning | sealing
   const [recipe, setRecipe] = useState(null)
@@ -168,10 +262,7 @@ export default function Potluck() {
   const [sessionSpins, setSessionSpins] = useState(0)
   const [showAppPitch, setShowAppPitch] = useState(false)
   const [showThemeClaimHelp, setShowThemeClaimHelp] = useState(false)
-  const [idleCopy, setIdleCopy] = useState({
-    headline: IDLE_HEADLINES[0],
-    subline: IDLE_SUBLINES[0],
-  })
+  const [idleSubline, setIdleSubline] = useState(IDLE_SUBLINES[0])
   const seenIds = useRef([])
   const previousCount = useRef(null)
   const sessionSpinsRef = useRef(0)
@@ -180,10 +271,7 @@ export default function Potluck() {
   const pitchTimerRef = useRef(null)
 
   useEffect(() => {
-    setIdleCopy({
-      headline: pick(IDLE_HEADLINES),
-      subline: pick(IDLE_SUBLINES),
-    })
+    setIdleSubline(pick(IDLE_SUBLINES))
     pitchHandledRef.current = localFlag(APP_PITCH_KEY)
     trackPotluckEvent('visit')
 
@@ -252,9 +340,15 @@ export default function Potluck() {
         if (!Number.isFinite(nextCount) || nextCount < 0) throw new Error('Invalid Potluck stats payload')
 
         failures = 0
-        if (!cancelled) animateTo(nextCount)
+        if (!cancelled) {
+          setStatsUnavailable(false)
+          animateTo(nextCount)
+        }
       } catch {
         failures += 1
+        if (!cancelled && failures >= 3 && previousCount.current === null) {
+          setStatsUnavailable(true)
+        }
       } finally {
         inFlight = false
         const backoff = failures
@@ -399,7 +493,8 @@ export default function Potluck() {
             />
 
             <div className="pl-hero-copy">
-              <h1 className="pl-h1">{idleCopy.headline}</h1>
+              <h1 className="pl-h1">What&rsquo;s for dinner? Let the universe decide.</h1>
+              <p className="pl-hero-descriptor">A free random dinner generator that picks a real recipe. No signup. No install.</p>
             </div>
 
             <div className={`pl-wheel pl-wheel--${phase} pl-wheel-stage--${spinStage}`} aria-live="polite">
@@ -411,6 +506,7 @@ export default function Potluck() {
                     className="pl-wheel-result"
                     width="640"
                     height="640"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     onError={() => setResultImageFailed(true)}
                   />
@@ -540,18 +636,27 @@ export default function Potluck() {
                       {phase === 'spinning' ? null : <span className="pl-native-cta-chevron" aria-hidden="true">›</span>}
                     </button>
                     <div className="pl-dock-subline-slot" aria-hidden={phase === 'spinning'}>
-                      <p>{phase === 'spinning' ? '\u00A0' : idleCopy.subline}</p>
+                      <p>{phase === 'spinning' ? '\u00A0' : idleSubline}</p>
                     </div>
                   </>
                 )}
               </div>
 
-              <div className={`pl-spin-count${spinCount === null ? ' is-loading' : ''}`}>
-                <span className="pl-spin-count-number">
-                  {spinCount === null ? '···' : spinCount.toLocaleString()}
-                </span>
-                <span className="pl-spin-count-label">cosmic verdicts issued</span>
-                <span className="pl-spin-count-aside">Most were probably appealed.</span>
+              <div className={`pl-spin-count${spinCount === null && !statsUnavailable ? ' is-loading' : ''}${statsUnavailable ? ' is-unavailable' : ''}`}>
+                {statsUnavailable && spinCount === null ? (
+                  <>
+                    <span className="pl-spin-count-number">Signal lost</span>
+                    <span className="pl-spin-count-label">cosmic counter temporarily offline</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="pl-spin-count-number">
+                      {spinCount === null ? '···' : spinCount.toLocaleString()}
+                    </span>
+                    <span className="pl-spin-count-label">cosmic verdicts issued</span>
+                    <span className="pl-spin-count-aside">Most were probably appealed.</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -658,28 +763,10 @@ export default function Potluck() {
       <Footer />
       {showAppPitch ? <AppPitch onClose={() => setShowAppPitch(false)} onAppClick={handleAppClick} /> : null}
       {showThemeClaimHelp ? (
-        <div
-          className="pl-theme-modal-backdrop"
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setShowThemeClaimHelp(false)
-          }}
-        >
-          <section className="pl-theme-modal" role="dialog" aria-modal="true" aria-labelledby="pl-theme-modal-title">
-            <button type="button" className="pl-theme-modal-close" onClick={() => setShowThemeClaimHelp(false)} aria-label="Close">×</button>
-            <img src="/potluck/potluck-icon.webp" alt="" width="72" height="72" />
-            <span className="pl-eyebrow">Potluck × Savor</span>
-            <h2 id="pl-theme-modal-title">This particular cosmic gift needs Android.</h2>
-            <p>
-              Savor is on Android right now. Open this page on your Android phone and tap <strong>Accept the gift</strong> again.
-              If Savor is installed, it opens straight to the gift. If not, Google Play will take it from there.
-            </p>
-            <div className="pl-theme-modal-actions">
-              <a href={SAVOR_PLAY_URL} target="_blank" rel="noreferrer" className="pl-btn pl-btn--orange" onClick={handleSavorClick}>Get Savor →</a>
-              <button type="button" className="pl-btn pl-btn--ghost" onClick={() => setShowThemeClaimHelp(false)}>Got it</button>
-            </div>
-          </section>
-        </div>
+        <ThemeClaimHelp
+          onClose={() => setShowThemeClaimHelp(false)}
+          onSavorClick={handleSavorClick}
+        />
       ) : null}
     </>
   )

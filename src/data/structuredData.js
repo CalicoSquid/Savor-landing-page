@@ -228,6 +228,7 @@ export function structuredDataForPage(seo) {
         description: 'A free random dinner generator with a cosmic attitude. Spin in the browser for a real recipe, or install Potluck on Android for This Week, The Void and persistent dinner memory.',
         operatingSystem: 'Web browser, Android',
         image: `${SITE_URL}/potluck/potluck-og.jpg`,
+        price: 0,
       }),
     )
   } else if (seo.path === '/caper') {

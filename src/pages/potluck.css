@@ -2420,11 +2420,21 @@
   flex: 0 0 auto;
 }
 .pl-hero-copy .pl-h1 {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
-  font-size: clamp(2.25rem, 4.8vw, 4rem);
+  font-size: clamp(2.1rem, 4.3vw, 3.65rem);
   line-height: .98;
   letter-spacing: -.045em;
+  text-wrap: balance;
+}
+.pl-hero-descriptor {
+  max-width: 520px;
+  margin: 8px auto 0;
+  color: var(--pl-teal);
+  font-size: .88rem;
+  line-height: 1.35;
+  font-weight: 600;
+  opacity: .62;
   text-wrap: balance;
 }
 .pl-wheel {
@@ -2566,6 +2576,21 @@
   flex: 0 0 auto;
 }
 .pl-spin-count-aside { display: none !important; }
+.pl-spin-count.is-unavailable {
+  gap: 7px;
+  opacity: .72;
+}
+.pl-spin-count.is-unavailable .pl-spin-count-number {
+  min-width: 0;
+  color: var(--pl-teal);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.pl-spin-count.is-unavailable .pl-spin-count-label {
+  font-size: .66rem;
+  letter-spacing: .045em;
+}
 .pl-savor-nudge { display: none !important; }
 
 /* ── Native Potluck control shelf ────────────────────────────────────────
@@ -2768,6 +2793,20 @@
   margin: 0 !important;
 }
 
+
+/* Keyboard users get an explicit Potluck focus ring without changing pointer UI. */
+.pl-native-cta:focus-visible,
+.pl-native-secondary:focus-visible,
+.pl-wheel-card-link:focus-visible,
+.pl-play-link:focus-visible,
+.pl-btn:focus-visible,
+.pl-pitch-close:focus-visible,
+.pl-pitch-dismiss:focus-visible,
+.pl-theme-modal-close:focus-visible {
+  outline: 3px solid var(--pl-primary);
+  outline-offset: 3px;
+}
+
 @media (max-width: 620px) {
   /* Keep the whole game inside the visible phone viewport. The primary CTA
      occupies the same shelf in idle, spinning and revealed states. */
@@ -2790,9 +2829,15 @@
     max-width: 286px !important;
   }
   .pl-hero-copy .pl-h1 {
-    max-width: 360px;
-    font-size: clamp(2rem, 9.5vw, 2.75rem);
+    max-width: 380px;
+    font-size: clamp(1.75rem, 7.8vw, 2.35rem);
     line-height: .98;
+  }
+  .pl-hero-descriptor {
+    max-width: 340px;
+    margin-top: 6px;
+    font-size: clamp(.7rem, 2.8vw, .8rem);
+    line-height: 1.28;
   }
   .pl-wheel,
   .pl-hero--revealed .pl-wheel {
@@ -2859,7 +2904,8 @@
   @media (max-height: 680px) {
     .pl-wordmark,
     .pl-hero--revealed .pl-wordmark { width: 210px !important; }
-    .pl-hero-copy .pl-h1 { font-size: 1.82rem; }
+    .pl-hero-copy .pl-h1 { font-size: 1.62rem; }
+    .pl-hero-descriptor { font-size: .68rem; line-height: 1.2; margin-top: 4px; }
     .pl-wheel,
     .pl-hero--revealed .pl-wheel { width: 172px !important; }
     .pl-reel-symbol { font-size: 4rem; }

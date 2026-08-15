@@ -34,7 +34,10 @@ export default function SeoManager() {
   useEffect(() => {
     // Shared recipe pages own their metadata after their API payload arrives.
     // Their server shell is noindex and the Netlify edge function handles bots.
-    if (pathname.startsWith('/r/')) return
+    if (pathname.startsWith('/r/')) {
+      setMeta('name', 'theme-color', '#FF6D00')
+      return
+    }
 
     const seo = seoForPath(pathname)
 
@@ -42,6 +45,7 @@ export default function SeoManager() {
       document.title = 'Page not found — Savor'
       setMeta('name', 'description', 'This page does not exist on Savor.')
       setMeta('name', 'robots', 'noindex, follow')
+      setMeta('name', 'theme-color', '#FF6D00')
       document.querySelector('link[rel="canonical"]')?.remove()
       setMeta('property', 'og:type', 'website')
       setMeta('property', 'og:title', 'Page not found — Savor')
@@ -59,6 +63,7 @@ export default function SeoManager() {
     document.title = seo.title
     setMeta('name', 'description', seo.description)
     setMeta('name', 'robots', seo.robots)
+    setMeta('name', 'theme-color', seo.themeColor || '#FF6D00')
     setCanonical(seo.canonical)
 
     setMeta('property', 'og:type', seo.ogType)
