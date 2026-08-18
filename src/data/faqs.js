@@ -8,7 +8,7 @@ export const FAQS = [
   },
   {
     q: 'Is Savor free?',
-    a: 'Yes. Savor is free to download and use, and the free version lets you build a generous library of recipes. There is an optional Pro subscription that unlocks unlimited recipes and all of the colour themes, but you never have to pay to get started.',
+    a: 'Yes. Savor is free to download and use, and the free version lets you build a generous library of recipes. There is an optional Savor Pro upgrade that unlocks unlimited recipes and all of the colour themes, available as a subscription or a one-time lifetime purchase. You never have to pay to get started.',
   },
   {
     q: 'How do I save a recipe from a website?',

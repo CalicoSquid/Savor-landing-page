@@ -128,13 +128,14 @@ export default function Terms() {
             ])}
           </>)}
 
-          {section("Subscriptions and billing", <>
-            {p("Certain features of Savor require a paid subscription (Savor Pro).")}
+          {section("Purchases and billing", <>
+            {p("Certain features of Savor require Savor Pro, which may be offered as a recurring subscription or a one-time lifetime purchase.")}
             {li([
-              "Subscriptions are billed through Google Play in accordance with their billing policies.",
-              "Subscription management, cancellation, and refunds are handled by Google Play.",
-              "We reserve the right to change subscription pricing with reasonable notice.",
-              "Free tier features remain available without a subscription.",
+              "Savor Pro purchases are billed through Google Play in accordance with Google Play's billing policies.",
+              "Recurring subscriptions can be managed or cancelled through Google Play. A one-time lifetime purchase does not renew.",
+              "Refunds and other purchase issues are handled in accordance with Google Play's policies and applicable law.",
+              "We may change the prices or purchase options offered for Savor Pro. Any changes to recurring subscription pricing are handled through Google Play's applicable processes.",
+              "Free tier features remain available without a Savor Pro purchase.",
             ])}
           </>)}
 

@@ -122,7 +122,7 @@ export default function Privacy() {
               "Your username — displayed alongside recipes you share to the community feed.",
               "Recipes you save — stored in your personal recipe box on our servers.",
               "Recipes you choose to share — visible to other Savor users in the community feed.",
-              "Subscription status — if you subscribe to Savor Pro, we receive your subscription status from RevenueCat and Google Play. We never see your payment details.",
+              "Savor Pro purchase status — if you buy Savor Pro through a subscription or one-time lifetime purchase, we receive the purchase and entitlement status from RevenueCat and Google Play. We never see your payment card details.",
             ])}
             {p("We do not collect your real name (beyond what Google provides), phone number, location, contacts, or any other personal information.")}
           </>)}
@@ -154,7 +154,7 @@ export default function Privacy() {
               "Your email and Google profile authenticate you and keep your recipe box synced across devices.",
               "Your username is displayed alongside recipes you share to the community feed.",
               "Shared recipes are displayed in the community feed as you intended.",
-              "Subscription status unlocks Pro features in the app.",
+              "Savor Pro purchase and entitlement status unlocks Pro features in the app.",
             ])}
             {p("Potluck's anonymous web identifier and basic event data are used only to operate the random-recipe service, count spins, diagnose problems, and understand basic feature use. They are not used to build an advertising profile.")}
             {p("We do not sell your data. We do not use your data for advertising. We do not share your data with third parties except the infrastructure providers listed below.")}
@@ -166,7 +166,7 @@ export default function Privacy() {
               "Firebase Authentication (Google) — handles sign-in for Savor. Your email and Google profile are stored with Firebase.",
               "MongoDB Atlas — stores your recipes and account data on our behalf.",
               "Railway — hosts our server that both apps communicate with.",
-              "RevenueCat — manages subscription billing for Savor Pro. RevenueCat receives your subscription status and purchase history via Google Play. We never receive your payment card details.",
+              "RevenueCat — manages Savor Pro purchase entitlements. RevenueCat receives purchase and subscription status and purchase history via Google Play. We never receive your payment card details.",
               "Expo / EAS — used to deliver over-the-air app updates. No personal data is transmitted.",
             ])}
             {p("Each of these services has their own privacy policy. We have chosen providers who take data seriously and do not use your data for their own advertising or profiling.")}

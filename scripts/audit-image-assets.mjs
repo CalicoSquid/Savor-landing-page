@@ -26,7 +26,10 @@ function walk(target) {
 
 const publicFiles = walk(PUBLIC)
 const rasterFiles = publicFiles.filter((file) => RASTER_EXTENSIONS.has(path.extname(file).toLowerCase()))
-const legacyFiles = publicFiles.filter((file) => LEGACY_EXTENSIONS.has(path.extname(file).toLowerCase()))
+const isSocialCardJpeg = (file) => /-og\.jpe?g$/i.test(file)
+const legacyFiles = publicFiles.filter((file) =>
+  LEGACY_EXTENSIONS.has(path.extname(file).toLowerCase()) && !isSocialCardJpeg(file),
+)
 const textFiles = SOURCE_ROOTS.flatMap(walk).filter((file) =>
   /\.(?:jsx?|css|html|json|toml|md)$/i.test(file),
 )
@@ -150,4 +153,4 @@ if (errors.length) {
   errors.forEach((error) => console.error(`  - ${error}`))
   process.exit(1)
 }
-console.log('\nAsset audit passed: modern formats, valid references, explicit dimensions, and no duplicate files.\n')
+console.log('\nAsset audit passed: modern UI formats, intentional OG JPEGs, valid references, explicit dimensions, and no duplicate files.\n')

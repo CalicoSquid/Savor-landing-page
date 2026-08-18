@@ -163,9 +163,6 @@ export const STATIC_SEO_PAGES = [
     ogImageWidth: 1200,
     ogImageHeight: 630,
     ogImageAlt: 'A pan of lasagne on the Savor demo recipe blog',
-    publishedTime: '2016-03-11',
-    modifiedTime: '2026-07-02',
-    author: 'Marguerite Hollow',
   }),
 ]
 

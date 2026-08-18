@@ -9,9 +9,6 @@ export const demoRecipeSchema = {
   '@type': 'Recipe',
   name: "The Only Lasagne Recipe You'll Ever Need (An Odyssey)",
   image: ['https://getsavor.recipes/images/lasagne.webp'],
-  author: { '@type': 'Person', name: 'Marguerite Hollow' },
-  datePublished: '2016-03-11',
-  dateModified: '2026-07-02',
   description: 'A classic layered lasagne with ragù and béchamel, arrived at after considerable detour.',
   prepTime: 'PT30M',
   cookTime: 'PT2H30M',
@@ -78,7 +75,6 @@ export const demoRecipeSchema = {
       ],
     },
   ],
-  aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.98', ratingCount: '1247' },
 }
 
 // Grouped for the Savor-style reveal display (src/pages/DemoBlog.jsx). The
