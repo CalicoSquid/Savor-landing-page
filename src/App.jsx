@@ -12,6 +12,8 @@ import DemoBlog from './pages/DemoBlog'
 import BlogIndex from './pages/blog/BlogIndex'
 import SaveHandwrittenRecipeCards from './pages/blog/SaveHandwrittenRecipeCards'
 import LifeStoryBeforeTheRecipe from './pages/blog/LifeStoryBeforeTheRecipe'
+import SaveRecipesFromWebsites from './pages/blog/SaveRecipesFromWebsites'
+import ScaleARecipe from './pages/blog/ScaleARecipe'
 import DeleteAccount from './pages/DeleteAccount'
 import DeleteCaperAccount from './pages/DeleteCaperAccount'
 import Privacy from './pages/Privacy'
@@ -46,6 +48,8 @@ export default function AppRoutes() {
         <Route path="/blog"                     element={<BlogIndex />} />
         <Route path="/blog/save-handwritten-recipe-cards" element={<SaveHandwrittenRecipeCards />} />
         <Route path="/blog/life-story-before-the-recipe" element={<LifeStoryBeforeTheRecipe />} />
+        <Route path="/blog/save-recipes-from-websites" element={<SaveRecipesFromWebsites />} />
+        <Route path="/blog/how-to-scale-a-recipe" element={<ScaleARecipe />} />
         <Route path="/delete-account"           element={<DeleteAccount />} />
         <Route path="/caper/delete-account"     element={<DeleteCaperAccount />} />
         <Route path="/forage/delete-account"    element={<Navigate to="/caper/delete-account/" replace />} />

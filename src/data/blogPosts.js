@@ -13,6 +13,30 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'save-recipes-from-websites',
+    title: 'How to Save Recipes From Websites Without Losing Them',
+    dek: 'Bookmarks, screenshots and open tabs all work — until they don’t. Here’s a simple way to keep online recipes findable, cookable and connected to the original source.',
+    metaTitle: 'How to Save Recipes From Websites | Savor',
+    metaDesc: 'Learn how to save recipes from websites so they stay searchable, cookable and linked to the original source — without relying on bookmarks or screenshots.',
+    date: '2026-08-18',
+    readTime: '6 min read',
+    ogImage: 'https://getsavor.recipes/images/savor-og.jpg',
+    ogImageAlt: 'Savor Blog — How to save recipes from websites without losing them',
+    author: 'Caleb',
+  },
+  {
+    slug: 'how-to-scale-a-recipe',
+    title: 'How to Scale a Recipe Up or Down Without Wrecking It',
+    dek: 'Recipe maths is easy. Pans, salt, heat and baking are where it goes wrong. A chef’s guide to doubling, halving and feeding the number of people actually coming.',
+    metaTitle: 'How to Scale a Recipe Up or Down | Savor',
+    metaDesc: 'A chef’s guide to scaling recipes up or down: the basic formula, what not to multiply blindly, pan sizes, cooking times, baking and awkward fractions.',
+    date: '2026-08-18',
+    readTime: '7 min read',
+    ogImage: 'https://getsavor.recipes/images/savor-og.jpg',
+    ogImageAlt: 'Savor Blog — How to scale a recipe up or down without wrecking it',
+    author: 'Caleb',
+  },
+  {
     slug: 'save-handwritten-recipe-cards',
     title: 'How to Save Handwritten Recipe Cards Before They\u2019re Gone',
     dek: 'A real preservation checklist for the recipe cards, cookbook margins, and torn-out clippings that only exist in one copy \u2014 on paper, in someone\u2019s handwriting.',
