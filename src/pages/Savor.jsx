@@ -94,37 +94,12 @@ export default function Savor() {
                         ))}
                     </div>
                     <p className="hero-sub hero-sub--definition fade-up fade-up-3">
-                        Savor is a recipe organiser for people who actually cook — save recipes from websites, screenshots, cookbook pages and handwritten cards, then keep them as clean, cookable recipe cards.
-                    </p>
-                    <p className="hero-sub fade-up fade-up-3">
-                        I built this because I thought it was cool. Because I wanted to build something
-                        I liked. And because even though I've long since retired my chef whites, I still
-                        cook. A lot. I thought it'd be fun to make somewhere people like me could find
-                        things worth cooking, and pass them on.
-                    </p>
-
-                    <p className="hero-sub fade-up fade-up-3">
-                        So that's what I did.
-                    </p>
-
-                    <p className="hero-sub fade-up fade-up-3">
-                        Have a look if you fancy it. If not &mdash; I've had a good time building it, and
-                        my mum told me it's amazing (and that I'm very handsome), so that's fine too.
-                        🧡
+                        Save recipes from websites, screenshots, cookbook pages and handwritten cards — then keep them as clean, cookable recipe cards in one colorful place.
                     </p>
                     <div className="hero-cta-row fade-up fade-up-4">
-                        <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes" className="btn btn-fruit" target="_blank" rel="noreferrer">Get the App</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes" className="btn btn-fruit" target="_blank" rel="noreferrer">Get Savor</a>
                         <a href="#preserve" className="hero-secondary-link">See how it started ↓</a>
                     </div>
-                </div>
-            </section>
-
-            {/* ── Name disambiguation ─────────────────────────────────── */}
-            <section className="name-note">
-                <div className="container">
-                    <p className="name-note-text">
-                        <strong>Quick note:</strong> there are a few apps out there called Savor. This is the recipe organiser with one-tap web imports, a scanner for handwritten cards, zero ads, and no algorithm — built solo by a chef, on a farm in Montenegro.
-                    </p>
                 </div>
             </section>
 
@@ -201,6 +176,46 @@ export default function Savor() {
                     </div>
                 </div>
             </section>
+
+            {/* ── Download CTA ───────────────────────────────────────── */}
+            <section className="download-cta" id="download">
+                <div className="download-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
+                <div className="container download-cta-inner">
+                    <img
+                        src={getIcon(activeTheme.name)}
+                        alt="Savor"
+                        className="download-cta-icon"
+                        width="160"
+                        height="160"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                    <h2 className="download-cta-title">A home for every recipe that matters.</h2>
+                    <p className="download-cta-sub">
+                        Free to start. No ads, ever. Available now on Android.
+                    </p>
+                    <a
+                        href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="download-play-link"
+                    >
+                        <img
+                            src="/potluck/play2.webp"
+                            alt="Get it on Google Play"
+                            className="download-play-badge"
+                            width="440"
+                            height="121"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    </a>
+                    <p className="download-name-note">
+                        A few apps share the Savor name. This is the ad-free recipe organiser with the fruit themes, one-tap web imports and handwritten recipe scanning.
+                    </p>
+                </div>
+            </section>
+
 
             {/* ── From the same kitchen ───────────────────────────────── */}
             <section className="same-kitchen">
@@ -285,42 +300,6 @@ export default function Savor() {
                     <p className="same-kitchen-disclaimer">
                         Potluck is live on Google Play. Caper and Apocaleaf are still in the kitchen.
                     </p>
-                </div>
-            </section>
-
-            {/* ── Download CTA ───────────────────────────────────────── */}
-            <section className="download-cta" id="download">
-                <div className="download-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
-                <div className="container download-cta-inner">
-                    <img
-                        src={getIcon(activeTheme.name)}
-                        alt="Savor"
-                        className="download-cta-icon"
-                        width="160"
-                        height="160"
-                        loading="lazy"
-                        decoding="async"
-                    />
-                    <h2 className="download-cta-title">A home for every recipe that matters.</h2>
-                    <p className="download-cta-sub">
-                        Free to start. No ads, ever. Available now on Android.
-                    </p>
-                    <a
-                        href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="download-play-link"
-                    >
-                        <img
-                            src="/potluck/play2.webp"
-                            alt="Get it on Google Play"
-                            className="download-play-badge"
-                            width="440"
-                            height="121"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                    </a>
                 </div>
             </section>
 

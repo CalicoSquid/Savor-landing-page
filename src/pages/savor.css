@@ -4,19 +4,10 @@
 /* ── Hero ──────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  padding: 15px 0 70px;
+  padding: 42px 0 96px;
   background: var(--bg);
   border-bottom: 1px solid rgba(0,0,0,0.06);
   overflow: hidden;
-}
-
-/* Hero is sized to sit close to a full first-viewport on phones — close
-   enough that the name-note disclaimer directly below it was peeking in
-   by a sliver on load, undercutting the opening impression. Padding out
-   the boundary here (rather than shrinking hero content) pushes that
-   sliver fully below the fold so the first screen is just the hero. */
-@media (max-height: 800px) {
-  .hero { padding-bottom: 100px; }
 }
 
 .hero-glow {
@@ -33,8 +24,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 20px;
-  max-width: 520px;
+  gap: 22px;
+  max-width: 760px;
   margin: 0 auto;
 }
 
@@ -42,13 +33,13 @@
 
 .hero-wordmark {
   width: 100%;
-  max-width: 340px;
+  max-width: 420px;
   height: auto;
   display: block;
 }
 
 .hero-tagline {
-  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  font-size: clamp(2.75rem, 6vw, 4.7rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.0;
@@ -56,8 +47,8 @@
 
 .hero-colorstrip {
   display: flex;
-  width: 220px;
-  max-width: 60%;
+  width: 260px;
+  max-width: 64%;
   height: 7px;
   border-radius: var(--radius-pill);
   overflow: hidden;
@@ -87,9 +78,11 @@
 }
 
 .hero-sub--definition {
-  max-width: 470px;
+  max-width: 650px;
   color: var(--text-primary);
+  font-size: clamp(1.04rem, 1.7vw, 1.18rem);
   font-weight: 600;
+  line-height: 1.75;
 }
 
 .action-row {
@@ -105,7 +98,7 @@
   align-items: center;
   gap: 16px;
   width: 100%;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .hero-play-link {
@@ -130,26 +123,6 @@
   transition: color 0.15s, border-color 0.15s;
 }
 .hero-secondary-link:hover { color: var(--primary); border-color: var(--primary); }
-
-/* ── Name disambiguation strip ────────────────────────────────────── */
-.name-note {
-  background: var(--surface-2);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  padding: 18px 0;
-}
-
-.name-note-text {
-  max-width: 620px;
-  margin: 0 auto;
-  text-align: center;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-}
-
-.name-note-text strong {
-  color: var(--text-primary);
-}
 
 /* ── Pillars ────────────────────────────────────────────────────── */
 .pillars {
@@ -729,6 +702,14 @@
   object-fit: contain;
 }
 
+.download-name-note {
+  max-width: 470px;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
 .download-cta-title {
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 800;
@@ -868,6 +849,22 @@
   background-size: 200% auto;
  
   animation: shimmer 1.8s ease forwards;
+}
+
+@media (min-width: 700px) {
+  .hero-cta-row {
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 20px 0 76px; }
+  .hero-inner { gap: 18px; }
+  .hero-wordmark { max-width: 330px; }
+  .hero-tagline { font-size: clamp(2.45rem, 13vw, 3.25rem); }
+  .hero-sub--definition { max-width: 34rem; font-size: 1rem; line-height: 1.68; }
 }
 
 /* ── Responsive ────────────────────────────────────────────────── */
