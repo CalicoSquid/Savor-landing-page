@@ -2918,3 +2918,80 @@
     .pl-native-secondary { min-height: 43px; padding-block: 10px; }
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Potluck landing pass — 2026-08-18
+   Keep the web spinner first, let the app earn its pitch, and give search
+   engines one concise natural-language answer without turning Potluck into
+   an SEO brochure.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.pl-answer-section {
+  position: relative;
+  padding: 52px 0 56px;
+  background: #fff;
+  border-top: 1px solid rgba(20, 40, 41, 0.08);
+  border-bottom: 1px solid rgba(20, 40, 41, 0.08);
+}
+.pl-answer-inner {
+  width: min(100%, 760px);
+  text-align: center;
+}
+.pl-answer-inner .pl-eyebrow {
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.pl-answer-inner .pl-h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 2.55rem);
+}
+.pl-answer-punch {
+  margin: 10px 0 12px;
+  color: var(--pl-primary) !important;
+  font-size: clamp(1rem, 2.2vw, 1.14rem) !important;
+  line-height: 1.35 !important;
+  font-weight: 850 !important;
+}
+.pl-answer-inner > p:last-child {
+  max-width: 680px;
+  margin: 0 auto;
+  color: var(--pl-mid);
+  font-size: 0.96rem;
+  line-height: 1.68;
+  text-wrap: pretty;
+}
+
+/* Let The Void remain an easter egg, not a feature manual. */
+.pl-memory-card--void h3 {
+  letter-spacing: 0.035em;
+}
+.pl-memory-card--void p {
+  color: rgba(255, 248, 244, 0.54);
+  font-style: italic;
+}
+
+@media (max-width: 620px) {
+  /* A fixed 100dvh hero clipped the counter while mobile browser chrome was
+     settling. Use the stable small viewport as a minimum instead: the hero
+     still fills the initial screen, but it is allowed to grow when its real
+     contents need a few extra pixels. */
+  .pl-hero {
+    height: auto;
+    min-height: calc(100svh - 64px);
+    overflow: hidden;
+  }
+  .pl-hero-inner {
+    height: auto;
+    min-height: calc(100svh - 64px - 28px);
+  }
+  .pl-answer-section {
+    padding: 40px 0 42px;
+  }
+  .pl-answer-inner {
+    width: 100%;
+  }
+  .pl-answer-inner > p:last-child {
+    font-size: 0.91rem;
+    line-height: 1.62;
+  }
+}

@@ -38,13 +38,13 @@ const APP_FEATURES = [
   {
     sigil: '86',
     title: 'The Void',
-    body: 'Banish a recipe from future spins. Reversible, technically. Emotionally? We’ll see.',
+    body: 'Some dinners do not get a second chance.',
     void: true,
   },
   {
     sigil: '∞',
-    title: 'I remember',
-    body: 'The app remembers what you chose and what you cast out. The website is merely an acquaintance.',
+    title: 'It remembers',
+    body: 'What landed. What you cooked. What you politely declined to acknowledge.',
   },
 ]
 
@@ -662,15 +662,27 @@ export default function Potluck() {
           </div>
         </section>
 
+        {/* ── Search answer, still in Potluck's voice ─────────────────── */}
+        <section className="pl-section pl-answer-section" aria-labelledby="pl-dinner-answer-title">
+          <div className="pl-container pl-answer-inner">
+            <span className="pl-eyebrow">Tonight&rsquo;s problem</span>
+            <h2 id="pl-dinner-answer-title" className="pl-h2">What should I cook tonight?</h2>
+            <p className="pl-answer-punch">No idea. That&rsquo;s why there&rsquo;s a wheel.</p>
+            <p>
+              For the nights when &ldquo;what should we eat?&rdquo; has become a committee meeting, Potluck picks a real recipe at random and gets you moving.
+              Spin once, open the recipe, cook. If fate has clearly made a mistake, spin again. It works free in the browser&mdash;no account, no install, no feed to scroll.
+            </p>
+          </div>
+        </section>
+
         {/* ── The app remembers ───────────────────────────────────────── */}
         <section className="pl-section pl-memory-section">
           <div className="pl-container pl-memory-inner">
             <div className="pl-memory-copy">
-              <span className="pl-eyebrow">The app remembers</span>
-              <h2 className="pl-h2">The website gives a verdict. The app remembers what you did about it.</h2>
+              <span className="pl-eyebrow">Potluck on Android</span>
+              <h2 className="pl-h2">The app remembers what the website forgets.</h2>
               <p>
-                Keep this week&rsquo;s dinners, banish recipes into The Void, and carry an unnecessarily
-                judgemental cosmic authority around in your pocket.
+                Keep this week&rsquo;s verdicts, carry Potluck in your pocket, and give the universe just enough memory to become judgemental.
               </p>
               <a href={PLAY_URL} target="_blank" rel="noreferrer" className="pl-play-link" onClick={handleAppClick}>
                 <img

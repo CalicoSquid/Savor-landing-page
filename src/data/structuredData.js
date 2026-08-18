@@ -218,18 +218,39 @@ export function structuredDataForPage(seo) {
       )
     }
   } else if (seo.path === '/potluck') {
+    const potluckAppId = `${SITE_URL}/potluck/#app`
     graph.push(
-      webPageNode(seo),
-      appNode({
-        id: `${SITE_URL}/potluck/#app`,
-        name: 'Potluck by Savor',
-        url: `${SITE_URL}/potluck/`,
-        downloadUrl: 'https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck',
-        description: 'A free random dinner generator with a cosmic attitude. Spin in the browser for a real recipe, or install Potluck on Android for This Week, The Void and persistent dinner memory.',
-        operatingSystem: 'Web browser, Android',
-        image: `${SITE_URL}/potluck/potluck-og.jpg`,
-        price: 0,
-      }),
+      {
+        ...webPageNode(seo),
+        mainEntity: { '@id': potluckAppId },
+      },
+      {
+        ...appNode({
+          id: potluckAppId,
+          name: 'Potluck by Savor',
+          url: `${SITE_URL}/potluck/`,
+          downloadUrl: 'https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck',
+          description: 'A free random dinner and recipe generator with a cosmic attitude. Spin in the browser for a real recipe, or install Potluck on Android for weekly dinner memory and more.',
+          operatingSystem: 'Web browser, Android',
+          image: `${SITE_URL}/potluck/potluck-og.jpg`,
+          price: 0,
+        }),
+        alternateName: ['Potluck', 'Potluck Random Dinner Generator'],
+        applicationSubCategory: 'Random dinner and recipe generator',
+        isAccessibleForFree: true,
+        browserRequirements: 'Requires JavaScript',
+        featureList: [
+          'Pick a random dinner recipe in the browser',
+          'Open the selected recipe with ingredients and method',
+          'Reroll when the first dinner suggestion is not right',
+          'No signup required for the web spinner',
+          'Remember recent dinner choices in the Android app',
+        ],
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Potluck', url: seo.canonical },
+      ]),
     )
   } else if (seo.path === '/caper') {
     graph.push(
