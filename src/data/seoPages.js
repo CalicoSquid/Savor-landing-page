@@ -57,10 +57,18 @@ export const STATIC_SEO_PAGES = [
     ogImageAlt: 'Savor Blog — notes on recipes, cooking, paper and screens',
   }),
   page({
+    path: '/recipes',
+    file: 'recipes/index.html',
+    title: 'Savor Community Recipes — Original Recipes to Cook',
+    description: 'Browse original recipes shared by Savor cooks. These are recipes made or written in Savor, with ingredients and instructions ready to cook.',
+    canonical: `${SITE_URL}/recipes/`,
+    ogImageAlt: 'Original community recipes shared on Savor',
+  }),
+  page({
     path: '/potluck',
     file: 'potluck/index.html',
     title: 'Potluck — Random Dinner Generator | Let the Universe Decide',
-    description: 'Can’t decide what to cook tonight? Spin Potluck, a free random dinner generator that lets the universe pick a real recipe — no signup, no install, no committee meeting.',
+    description: 'Spin Potluck, a free random dinner generator that picks a real recipe when nobody can decide what to cook. No signup, no install, no committee meeting.',
     canonical: `${SITE_URL}/potluck/`,
     ogImage: `${SITE_URL}/potluck/potluck-og.jpg`,
     ogImageAlt: 'Potluck by Savor — spin once and let it choose dinner',
@@ -153,7 +161,7 @@ export const STATIC_SEO_PAGES = [
   page({
     path: '/demo',
     file: 'demo/index.html',
-    title: "The Only Lasagne Recipe You'll Ever Need (An Odyssey) | The Hearth & Hollow",
+    title: 'Lasagne Recipe Demo — The Hearth & Hollow | Savor',
     description: 'A classic layered lasagne with slow-cooked ragù and béchamel — buried under a deliberately over-the-top recipe blog. See how Savor rescues it.',
     canonical: `${SITE_URL}/demo/`,
     robots: 'index, follow',

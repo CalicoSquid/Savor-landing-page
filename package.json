@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir .ssr && node prerender.js && node generate-sitemap.js && node scripts/validate-seo.mjs",
+    "build": "node scripts/prepare-seo-data.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir .ssr && node prerender.js && node generate-sitemap.js && node scripts/validate-seo.mjs && node scripts/validate-recipe-edge.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "audit:assets": "node scripts/audit-image-assets.mjs",
-    "validate:seo": "node scripts/validate-seo.mjs"
+    "validate:seo": "node scripts/validate-seo.mjs",
+    "prepare:seo-data": "node scripts/prepare-seo-data.mjs",
+    "validate:recipe-edge": "node scripts/validate-recipe-edge.mjs"
   },
   "dependencies": {
     "@fontsource/caveat": "^5.2.8",

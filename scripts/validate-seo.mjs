@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SEO_PAGES, SITE_URL } from '../src/data/seoPages.js'
+import { PUBLIC_RECIPE_INDEX } from '../src/data/publicRecipeIndex.generated.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
@@ -107,6 +108,30 @@ if (fs.existsSync(dist)) {
     if (locs.some((url) => url === `${SITE_URL}/forage` || url.startsWith(`${SITE_URL}/forage/`))) {
       fail('sitemap.xml: legacy /forage URL included')
     }
+
+    const recipeIds = PUBLIC_RECIPE_INDEX.map((recipe) => recipe.id)
+    if (new Set(recipeIds).size !== recipeIds.length) fail('public recipe SEO manifest: duplicate recipe ids found')
+    for (const recipe of PUBLIC_RECIPE_INDEX) {
+      const recipeUrl = `${SITE_URL}/r/${encodeURIComponent(recipe.id)}`
+      if (!locs.includes(recipeUrl)) fail(`sitemap.xml: missing original recipe ${recipeUrl}`)
+    }
+    const manifestRecipeUrls = new Set(PUBLIC_RECIPE_INDEX.map((recipe) => `${SITE_URL}/r/${encodeURIComponent(recipe.id)}`))
+    for (const url of locs.filter((url) => url.startsWith(`${SITE_URL}/r/`))) {
+      if (!manifestRecipeUrls.has(url)) fail(`sitemap.xml: recipe not present in indexable manifest: ${url}`)
+    }
+  }
+
+  const recipesIndexPath = path.join(dist, 'recipes', 'index.html')
+  if (!fs.existsSync(recipesIndexPath)) {
+    fail('missing dist/recipes/index.html')
+  } else {
+    const recipesHtml = fs.readFileSync(recipesIndexPath, 'utf8')
+    for (const recipe of PUBLIC_RECIPE_INDEX) {
+      const href = `/r/${encodeURIComponent(recipe.id)}`
+      if (!recipesHtml.includes(`href=\"${href}\"`)) {
+        fail(`/recipes: missing internal link to ${href}`)
+      }
+    }
   }
 
   const robotsPath = path.join(dist, 'robots.txt')
@@ -125,4 +150,4 @@ if (errors.length) {
   process.exit(1)
 }
 
-console.log(`✓ SEO validation passed for ${SEO_PAGES.length} fixed route(s), sitemap, robots, 404 and recipe shell`)
+console.log(`✓ SEO validation passed for ${SEO_PAGES.length} fixed route(s), ${PUBLIC_RECIPE_INDEX.length} original recipe(s), sitemap, robots, 404 and recipe shell`)

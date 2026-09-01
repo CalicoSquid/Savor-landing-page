@@ -220,3 +220,36 @@
 .nf-lead { font-size: 1.1rem; line-height: 1.7; color: var(--text-secondary); max-width: 460px; }
 .nf-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 10px; }
 @media (max-width: 560px) { .nf-wrap { padding: 56px 20px 76px; } }
+/* ── Public recipe index ─────────────────────────────────────────── */
+.recipe-index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.15rem;
+}
+
+.recipe-index-item {
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.recipe-index-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.recipe-index-link {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.recipe-index-link:hover {
+  text-decoration: underline;
+}
+
+.recipe-index-desc {
+  margin: 0.35rem 0 0;
+  color: var(--text-muted, #666);
+}

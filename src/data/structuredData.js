@@ -1,6 +1,7 @@
 import { FAQS } from './faqs.js'
 import { BLOG_POSTS } from './blogPosts.js'
 import { SITE_URL, PLAY_URL } from './seoPages.js'
+import { PUBLIC_RECIPE_INDEX } from './publicRecipeIndex.generated.js'
 
 const ORG_ID = `${SITE_URL}/#organisation`
 const WEBSITE_ID = `${SITE_URL}/#website`
@@ -217,6 +218,29 @@ export function structuredDataForPage(seo) {
         ]),
       )
     }
+  } else if (seo.path === '/recipes') {
+    graph.push(
+      {
+        ...webPageNode(seo, 'CollectionPage'),
+        mainEntity: { '@id': `${SITE_URL}/recipes/#list` },
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${SITE_URL}/recipes/#list`,
+        name: 'Original recipes shared on Savor',
+        numberOfItems: PUBLIC_RECIPE_INDEX.length,
+        itemListElement: PUBLIC_RECIPE_INDEX.map((recipe, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: recipe.name,
+          url: `${SITE_URL}/r/${encodeURIComponent(recipe.id)}`,
+        })),
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Community recipes', url: seo.canonical },
+      ]),
+    )
   } else if (seo.path === '/potluck') {
     const potluckAppId = `${SITE_URL}/potluck/#app`
     graph.push(
