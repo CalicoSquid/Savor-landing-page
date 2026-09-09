@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import './RecipePage.css'
 
 const APOLLO_URI = import.meta.env.VITE_APOLLO_URI || 'https://savor-production.up.railway.app/graphql'
@@ -83,16 +83,16 @@ function decode(str) {
 
 export default function RecipePage() {
   const { id } = useParams()
+  const [attempt, setAttempt] = useState(0)
+  return <RecipeContent key={`${id}:${attempt}`} id={id} onRetry={() => setAttempt(value => value + 1)} />
+}
+
+function RecipeContent({ id, onRetry }) {
   const [recipe, setRecipe] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [imageFailed, setImageFailed] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
-
-  useEffect(() => {
-    setImageFailed(false)
-    setImageLoaded(false)
-  }, [id])
 
   // Screen Wake Lock — keeps screen on while cooking, re-acquires on visibility change
   useEffect(() => {
@@ -116,18 +116,30 @@ export default function RecipePage() {
   }, [])
 
   useEffect(() => {
+    const controller = new AbortController()
     fetch(APOLLO_URI, {
+      signal: controller.signal,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: QUERY, variables: { id } }),
     })
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error('Unable to load recipe')
+        return r.json()
+      })
       .then(({ data, errors }) => {
-        if (errors?.length || !data?.publicRecipe) throw new Error('Recipe not found')
+        if (controller.signal.aborted) return
+        if (errors?.length) throw new Error('Unable to load recipe')
+        if (data?.publicRecipe === null) {
+          setError('not-found')
+          return
+        }
+        if (!data?.publicRecipe) throw new Error('Unable to load recipe')
         setRecipe(data.publicRecipe)
       })
-      .catch(e => setError(e.message))
-      .finally(() => setLoading(false))
+      .catch(() => { if (!controller.signal.aborted) setError('network') })
+      .finally(() => { if (!controller.signal.aborted) setLoading(false) })
+    return () => controller.abort()
   }, [id])
 
   useEffect(() => {
@@ -183,7 +195,7 @@ export default function RecipePage() {
       const link = document.querySelector('link[rel="canonical"]')
       if (link) link.setAttribute('href', window.location.origin + '/')
     }
-  }, [recipe])
+  }, [recipe, id])
 
   const prepTime = recipe && formatTime(recipe.times?.prep)
   const cookTime = recipe && formatTime(recipe.times?.cook)
@@ -207,8 +219,11 @@ export default function RecipePage() {
           height="148"
           decoding="async"
         />
-        <h2>Recipe not found</h2>
-        <p>This recipe may have been removed or the link is incorrect.</p>
+        <h2>{error === 'not-found' ? 'Recipe not found' : 'Could not load recipe'}</h2>
+        <p>{error === 'not-found'
+          ? 'This recipe may have been removed or the link is incorrect.'
+          : 'Something went wrong loading this recipe. Please try again.'}</p>
+        {error !== 'not-found' && <button className="rp-store-btn" onClick={onRetry}>Try again</button>}
         <a href={PLAY_STORE} className="rp-store-btn" target="_blank" rel="noopener noreferrer">
           Get Savor on Android
         </a>
@@ -221,7 +236,9 @@ export default function RecipePage() {
       <aside className="rp-download-bar" aria-label="Get the Savor app">
         <div className="rp-download-inner">
           <div className="rp-download-brand">
-            <img src="/images/savor-final-ui.webp" alt="Savor" width="480" height="148" />
+            <Link to="/" aria-label="Savor home">
+              <img src="/images/savor-final-ui.webp" alt="Savor" width="480" height="148" />
+            </Link>
             <span>Your recipes, all together.</span>
           </div>
           <div className="rp-download-action">
@@ -276,8 +293,9 @@ export default function RecipePage() {
           </div>
           <h1 className="rp-title">{decode(recipe.name)}</h1>
           {recipe.description && <p className="rp-desc">{decode(recipe.description)}</p>}
-          {recipe.user && (
-            <div className="rp-author">
+          <div className="rp-author">
+            {recipe.user && (
+              <div className="rp-author-identity">
               <img
                 src={getThemeIcon(recipe.user.theme)}
                 alt=""
@@ -294,11 +312,12 @@ export default function RecipePage() {
               <span className="rp-author-name">
                 Saved by {recipe.user.name || recipe.user.username}
               </span>
+              </div>
+            )}
               <button className="rp-print-btn" onClick={() => window.print()}>
                 🖨 Print recipe
               </button>
             </div>
-          )}
         </div>
 
         {/* Stats */}

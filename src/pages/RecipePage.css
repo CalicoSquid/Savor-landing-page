@@ -42,12 +42,14 @@
   gap: 5px;
 }
 .rp-download-brand { min-width: 0; }
-.rp-download-brand img { width: 100px; max-width: 100%; height: auto; }
+.rp-download-brand img { display: block; width: 100px; max-width: 100%; height: auto; }
 .rp-download-brand span { font-size: 0.75rem; color: var(--text-secondary); }
 .rp-download-action { align-items: center; flex-shrink: 0; }
 .rp-download-action span { font-size: 0.7rem; color: var(--text-secondary); }
 .rp-download-action .rp-store-btn { padding: 12px 22px; }
-.rp-root a:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 4px; }
+.rp-root a:focus-visible,
+.rp-root button:focus-visible,
+.rp-state button:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 4px; }
 
 .rp-spinner {
   width: 36px;
@@ -173,19 +175,28 @@
   flex-wrap: wrap;
 }
 .rp-avatar {
-  width: 28px;
-  height: 28px;
-  object-fit: cover;
+  width: 36px;
+  height: 36px;
+  padding: 5px;
+  object-fit: contain;
   border-radius: 50%;
   background: #f3f1eb;
   flex-shrink: 0;
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
 }
+.rp-author-identity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 180px;
+}
 .rp-author-name {
   font-family: var(--font);
   font-size: 0.82rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .rp-stats {
@@ -199,6 +210,9 @@
 }
 .rp-stat {
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -208,11 +222,11 @@
 .rp-stat:last-child { border-right: none; }
 .rp-stat-label {
   font-family: var(--font);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-bottom: 4px;
 }
 .rp-stat-val {
@@ -363,6 +377,8 @@
 }
 
 .rp-store-btn {
+  border: 0;
+  cursor: pointer;
   display: inline-block;
   padding: 12px 28px;
   border-radius: 999px;
@@ -403,14 +419,16 @@
   align-items: center;
   gap: 5px;
   margin-left: auto;
-  padding: 5px 13px;
+  padding: 12px 14px;
+  min-height: 44px;
+  flex-shrink: 0;
   border: 1.5px solid #FF5722;
   border-radius: 8px;
   background: #fff;
   font-size: 0.78rem;
   font-family: var(--font);
   font-weight: 700;
-  color: #FF5722;
+  color: #b93810;
   cursor: pointer;
   line-height: 1;
   transition: background 0.15s, color 0.15s;
@@ -473,7 +491,7 @@
   .rp-header { margin-bottom: 12px; }
   .rp-title  { font-size: 20pt; line-height: 1.1; margin-bottom: 5px; color: #1a1a1a; }
   .rp-desc   { font-size: 9.5pt; color: #555; line-height: 1.5; margin-bottom: 6px; }
-  .rp-avatar { width: 18px; height: 18px; }
+  .rp-avatar { width: 18px; height: 18px; padding: 2px; }
   .rp-author-name { font-size: 8.5pt; color: #999; }
 
   /* ── Stats row ─────────────────────────────────────────────────── */
