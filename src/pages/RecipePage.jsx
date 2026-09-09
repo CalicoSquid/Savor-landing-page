@@ -218,6 +218,20 @@ export default function RecipePage() {
 
   return (
     <div className="rp-root">
+      <aside className="rp-download-bar" aria-label="Get the Savor app">
+        <div className="rp-download-inner">
+          <div className="rp-download-brand">
+            <img src="/images/savor-final-ui.webp" alt="Savor" width="480" height="148" />
+            <span>Your recipes, all together.</span>
+          </div>
+          <div className="rp-download-action">
+            <a href={PLAY_STORE} className="rp-store-btn" target="_blank" rel="noopener noreferrer">
+              Get Savor
+            </a>
+            <span>Free on Android</span>
+          </div>
+        </div>
+      </aside>
       <div className="rp-body">
 
         {/* External recipe photos are best-effort in a browser. */}
@@ -364,14 +378,14 @@ export default function RecipePage() {
             decoding="async"
           />
           <p className="rp-cta-text">Save recipes from anywhere. Cook without the clutter.</p>
+          <a href={PLAY_STORE} className="rp-store-btn" target="_blank" rel="noopener noreferrer">
+            Get Savor free for Android
+          </a>
           <a
             href={`savor://create?url=${encodeURIComponent(`${SITE_URL}/r/${encodeURIComponent(id)}`)}`}
-            className="rp-store-btn"
+            className="rp-get-savor-link"
           >
-           Save to Savor
-          </a>
-          <a href={PLAY_STORE} className="rp-get-savor-link" target="_blank" rel="noopener noreferrer">
-            Don't have Savor? Get it free →
+            Already have Savor? Save this recipe
           </a>
         </div>
 

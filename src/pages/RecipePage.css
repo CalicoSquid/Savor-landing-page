@@ -17,6 +17,38 @@
   font-family: var(--font);
 }
 
+.rp-download-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
+  border-bottom: 1px solid #e8e8e4;
+  box-shadow: var(--shadow-sm);
+}
+.rp-download-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font);
+}
+.rp-download-brand,
+.rp-download-action {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.rp-download-brand { min-width: 0; }
+.rp-download-brand img { width: 100px; max-width: 100%; height: auto; }
+.rp-download-brand span { font-size: 0.75rem; color: var(--text-secondary); }
+.rp-download-action { align-items: center; flex-shrink: 0; }
+.rp-download-action span { font-size: 0.7rem; color: var(--text-secondary); }
+.rp-download-action .rp-store-btn { padding: 12px 22px; }
+.rp-root a:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 4px; }
+
 .rp-spinner {
   width: 36px;
   height: 36px;
@@ -349,16 +381,17 @@
 .rp-get-savor-link {
   font-family: var(--font);
   font-size: 0.8rem;
-  color: var(--text-muted);
-  text-decoration: none;
-  opacity: 0.7;
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 12px 0;
   transition: opacity 0.15s;
 }
 .rp-get-savor-link:hover { opacity: 1; }
 
 @media (max-width: 480px) {
   .rp-body { padding: 16px 14px 0; }
-  .rp-root { padding-top: 8px; }
+  .rp-download-inner { padding: 10px 14px; gap: 12px; }
   .rp-hero-wrap { border-radius: 14px; margin-bottom: 18px; }
   .rp-stat-val { font-size: 0.88rem; }
   .rp-ingredient, .rp-step { padding: 10px 12px; }
@@ -393,6 +426,7 @@
 @media print {
   /* ── Hide screen-only chrome ───────────────────────────────────── */
   .rp-print-btn,
+  .rp-download-bar,
   .rp-cta,
   .rp-source,
   .rp-credit,
