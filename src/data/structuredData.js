@@ -2,6 +2,7 @@ import { FAQS } from './faqs.js'
 import { BLOG_POSTS } from './blogPosts.js'
 import { SITE_URL, PLAY_URL } from './seoPages.js'
 import { PUBLIC_RECIPE_INDEX } from './publicRecipeIndex.generated.js'
+import { TOOL_PAGES } from './toolPages.js'
 
 const ORG_ID = `${SITE_URL}/#organisation`
 const WEBSITE_ID = `${SITE_URL}/#website`
@@ -218,6 +219,268 @@ export function structuredDataForPage(seo) {
         ]),
       )
     }
+  } else if (seo.path === '/tools') {
+    graph.push(
+      {
+        ...webPageNode(seo, 'CollectionPage'),
+        mainEntity: { '@id': `${SITE_URL}/tools/#list` },
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${SITE_URL}/tools/#list`,
+        name: 'Free kitchen tools by Savor',
+        numberOfItems: TOOL_PAGES.length,
+        itemListElement: TOOL_PAGES.map((tool, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: tool.title,
+          url: `${SITE_URL}${tool.href}`,
+        })),
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Kitchen Tools', url: seo.canonical },
+      ]),
+    )
+  } else if (seo.path === '/tools/recipe-scaler') {
+    const scalerId = `${SITE_URL}/tools/recipe-scaler/#app`
+    graph.push(
+      {
+        ...webPageNode(seo),
+        mainEntity: { '@id': scalerId },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': scalerId,
+        name: 'Savor Recipe Scaler',
+        url: seo.canonical,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web browser',
+        browserRequirements: 'Requires JavaScript',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+        description: seo.description,
+        publisher: { '@id': ORG_ID },
+        featureList: [
+          'Scale ingredient quantities to a new serving size',
+          'Understand whole numbers, decimals and common fractions',
+          'Scale quantity ranges',
+          'Leave ingredient lines without a quantity unchanged',
+          'Copy the scaled ingredient list',
+          'Show chef notes for seasoning, eggs, baking and cooking time',
+        ],
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Kitchen Tools', url: `${SITE_URL}/tools/` },
+        { name: 'Recipe Scaler', url: seo.canonical },
+      ]),
+    )
+  } else if (seo.path === '/tools/measurement-converter') {
+    const converterId = `${SITE_URL}/tools/measurement-converter/#app`
+    graph.push(
+      {
+        ...webPageNode(seo),
+        mainEntity: { '@id': converterId },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': converterId,
+        name: 'Savor Cooking Measurement Converter',
+        url: seo.canonical,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web browser',
+        browserRequirements: 'Requires JavaScript',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+        description: seo.description,
+        publisher: { '@id': ORG_ID },
+        featureList: [
+          'Convert cooking weights between grams, kilograms, ounces and pounds',
+          'Convert cooking volumes between millilitres, litres, teaspoons, tablespoons, cups, fluid ounces, pints and quarts',
+          'Convert Celsius and Fahrenheit temperatures',
+          'Use the same ingredient conversion library as the Savor app when converting between cups and grams',
+          'Convert a whole ingredient list between US and metric measurements',
+          'Copy the converted recipe ingredient list',
+        ],
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Kitchen Tools', url: `${SITE_URL}/tools/` },
+        { name: 'Cooking Measurement Converter', url: seo.canonical },
+      ]),
+    )
+  } else if (seo.path === '/tools/pan-converter') {
+    const panConverterId = `${SITE_URL}/tools/pan-converter/#app`
+    graph.push(
+      {
+        ...webPageNode(seo),
+        mainEntity: { '@id': panConverterId },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': panConverterId,
+        name: 'Savor Baking Pan Converter',
+        url: seo.canonical,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web browser',
+        browserRequirements: 'Requires JavaScript',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+        description: seo.description,
+        publisher: { '@id': ORG_ID },
+        featureList: [
+          'Compare round, square and rectangular baking pan sizes',
+          'Choose common cake, loaf and sheet-pan presets or enter custom dimensions',
+          'Switch pan dimensions between inches and centimetres',
+          'Calculate the recipe multiplier needed to preserve batter depth',
+          'Show how much shallower or deeper the original batter would sit in the new pan',
+          'Scale a pasted ingredient list using the calculated pan-size multiplier',
+          'Give practical baking-time and loaf-pan caveats without pretending bake time scales linearly',
+        ],
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Kitchen Tools', url: `${SITE_URL}/tools/` },
+        { name: 'Baking Pan Converter', url: seo.canonical },
+      ]),
+    )
+  } else if (seo.path === '/tools/portion-planner') {
+    const portionPlannerId = `${SITE_URL}/tools/portion-planner/#app`
+    graph.push(
+      {
+        ...webPageNode(seo),
+        mainEntity: { '@id': portionPlannerId },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': portionPlannerId,
+        name: 'Savor Food Portion Planner',
+        url: seo.canonical,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web browser',
+        browserRequirements: 'Requires JavaScript',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+        description: seo.description,
+        publisher: { '@id': ORG_ID },
+        featureList: [
+          'Calculate practical food quantities for adults and children',
+          'Adjust portions for main dishes, side dishes and buffet spreads',
+          'Adjust for light, normal and hungry appetites',
+          'Add a buffer for a little or plenty of leftovers',
+          'Plan portions for pasta, rice, potatoes, meat, fish, vegetables, salad, bread, soup, sauce and cheese',
+          'Display shopping quantities in metric or US units',
+        ],
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Kitchen Tools', url: `${SITE_URL}/tools/` },
+        { name: 'Food Portion Planner', url: seo.canonical },
+      ]),
+    )
+  } else if (seo.path === '/tools/ingredient-substitutions') {
+    const substitutionsId = `${SITE_URL}/tools/ingredient-substitutions/#app`
+    graph.push(
+      {
+        ...webPageNode(seo),
+        mainEntity: { '@id': substitutionsId },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': substitutionsId,
+        name: 'Savor Ingredient Substitution Finder',
+        url: seo.canonical,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web browser',
+        browserRequirements: 'Requires JavaScript',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+        description: seo.description,
+        publisher: { '@id': ORG_ID },
+        featureList: [
+          'Search common cooking and baking ingredients for practical substitutes',
+          'Choose substitutions based on how the ingredient is used in the recipe',
+          'Show practical replacement ratios and preparation instructions',
+          'Explain expected flavour and texture changes',
+          'Warn when a substitute is a poor fit for a particular technique',
+          'Cover common dairy, egg, flour, leavening, thickener, seasoning and pantry substitutions',
+        ],
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Kitchen Tools', url: `${SITE_URL}/tools/` },
+        { name: 'Ingredient Substitution Finder', url: seo.canonical },
+      ]),
+    )
+  } else if (seo.path === '/tools/brine-calculator') {
+    const brineCalculatorId = `${SITE_URL}/tools/brine-calculator/#app`
+    graph.push(
+      {
+        ...webPageNode(seo),
+        mainEntity: { '@id': brineCalculatorId },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': brineCalculatorId,
+        name: 'Savor Fermentation Brine Calculator',
+        url: seo.canonical,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web browser',
+        browserRequirements: 'Requires JavaScript',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+        description: seo.description,
+        publisher: { '@id': ORG_ID },
+        featureList: [
+          'Calculate fermentation salt as a percentage of total vegetable and water weight',
+          'Calculate water-only brine percentages when a recipe uses that convention',
+          'Enter produce in grams or ounces and water in millilitres or US fluid ounces',
+          'Show the exact salt amount in grams and ounces',
+          'Keep total-weight and water-only percentage conventions visibly separate',
+          'Explain the calculation formula and preservation limitations',
+        ],
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Kitchen Tools', url: `${SITE_URL}/tools/` },
+        { name: 'Fermentation Brine Calculator', url: seo.canonical },
+      ]),
+    )
+  } else if (seo.path === '/tools/bakers-percentage') {
+    const bakersPercentageId = `${SITE_URL}/tools/bakers-percentage/#app`
+    graph.push(
+      {
+        ...webPageNode(seo),
+        mainEntity: { '@id': bakersPercentageId },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': bakersPercentageId,
+        name: 'Savor Baker’s Percentage & Dough Hydration Calculator',
+        url: seo.canonical,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web browser',
+        browserRequirements: 'Requires JavaScript',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+        description: seo.description,
+        publisher: { '@id': ORG_ID },
+        featureList: [
+          'Calculate true dough hydration by weight',
+          'Include the flour and water inside sourdough starter or preferment',
+          'Calculate salt percentage and prefermented flour percentage',
+          'Show total flour, total water and total dough weight',
+          'Scale bread or pizza dough to a chosen number of loaves or dough balls',
+          'Use grams or ounces and copy the scaled formula',
+        ],
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Kitchen Tools', url: `${SITE_URL}/tools/` },
+        { name: 'Baker’s Percentage & Dough Hydration', url: seo.canonical },
+      ]),
+    )
   } else if (seo.path === '/recipes') {
     graph.push(
       {

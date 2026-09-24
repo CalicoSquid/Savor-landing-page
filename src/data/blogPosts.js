@@ -31,6 +31,7 @@ export const BLOG_POSTS = [
     metaTitle: 'How to Scale a Recipe Up or Down | Savor',
     metaDesc: 'A chef’s guide to scaling recipes up or down: the basic formula, what not to multiply blindly, pan sizes, cooking times, baking and awkward fractions.',
     date: '2026-08-18',
+    modified: '2026-09-24',
     readTime: '7 min read',
     ogImage: 'https://getsavor.recipes/images/savor-og.jpg',
     ogImageAlt: 'Savor Blog — How to scale a recipe up or down without wrecking it',

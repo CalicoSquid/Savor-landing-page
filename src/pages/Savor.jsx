@@ -2,6 +2,7 @@ import './savor.css'
 import { useTheme } from '../context/useTheme'
 import { getIcon } from '../utils/themeUtils'
 import Footer from '../components/Footer'
+import { TOOL_PAGE_BY_ID } from '../data/toolPages'
 
 const PILLARS = [
     {
@@ -26,6 +27,13 @@ const PILLARS = [
         bg: 'linear-gradient(135deg, #8BC34A, #689F38)',
         sub: 'A calm, algorithm-free feed of people who actually love food. No viral five-second reels. No endless smash cuts. Just cooks sharing what they made for lunch today.'
     },
+]
+
+const FEATURED_TOOLS = [
+    TOOL_PAGE_BY_ID['recipe-scaler'],
+    TOOL_PAGE_BY_ID['measurement-converter'],
+    TOOL_PAGE_BY_ID['pan-converter'],
+    TOOL_PAGE_BY_ID['portion-planner'],
 ]
 
 
@@ -158,6 +166,35 @@ export default function Savor() {
                     ))}
                 </div>
             </section>
+
+
+
+            {/* ── Free kitchen tools ────────────────────────────────── */}
+            <section className="home-tools" aria-labelledby="home-tools-title">
+                <div className="container home-tools-inner">
+                    <div className="home-tools-heading">
+                        <div>
+                            <p className="home-tools-eyebrow">Free kitchen tools</p>
+                            <h2 id="home-tools-title">The annoying kitchen maths drawer.</h2>
+                        </div>
+                        <p>
+                            Scale a recipe, convert cups and grams, fit a bake to another pan or work out food for a crowd. No account, no ads — just the answer and enough chef context to use it sensibly.
+                        </p>
+                    </div>
+                    <div className="home-tools-grid">
+                        {FEATURED_TOOLS.map((tool) => (
+                            <a href={tool.href} className="home-tool-card" key={tool.id}>
+                                <span>{tool.category}</span>
+                                <strong>{tool.title}</strong>
+                                <p>{tool.description}</p>
+                                <em>{tool.action} →</em>
+                            </a>
+                        ))}
+                    </div>
+                    <a href="/tools/" className="home-tools-all">See all seven free kitchen tools →</a>
+                </div>
+            </section>
+
 
             {/* ── Pick Your Flavor ───────────────────────────────────── */}
             <section className="flavors" id="flavors">

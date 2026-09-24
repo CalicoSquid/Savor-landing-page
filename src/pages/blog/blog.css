@@ -186,3 +186,12 @@
 @media (max-width: 560px) {
   .blog-index-card { padding: 22px 2px; }
 }
+.blog-post-body p a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.blog-post-body p a:hover { text-decoration-thickness: 2px; }

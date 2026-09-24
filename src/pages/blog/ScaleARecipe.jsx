@@ -18,6 +18,13 @@ export default function ScaleARecipe() {
         halve or otherwise bully a recipe into feeding a different number of people.
       </p>
 
+      <div className="blog-post-callout">
+        <div className="blog-post-callout-title">Want the maths done for you?</div>
+        <p>Paste your ingredient list into Savor&rsquo;s free Recipe Scaler, choose the original and target servings, and copy the scaled amounts straight back out.</p>
+        <a className="blog-post-callout-link" href="/tools/recipe-scaler/">Open the free Recipe Scaler →</a>
+        <div className="blog-post-callout-caption">No signup. No API. It runs entirely in your browser.</div>
+      </div>
+
       <h2>How to scale a recipe: the basic formula</h2>
       <p>
         Divide the number of servings you want by the number the original recipe makes. That gives you your scaling factor.
@@ -68,7 +75,7 @@ export default function ScaleARecipe() {
         The middle now takes longer to heat, the edges spend longer cooking, and the top may be finished before the centre is.
       </p>
       <p>
-        When possible, keep the depth of baked dishes close to the original. For big increases, two normal pans are often better than one heroic pan.
+        When possible, keep the depth of baked dishes close to the original. For big increases, two normal pans are often better than one heroic pan. If you are changing pan shape or size, the <a href="/tools/pan-converter/">free Baking Pan Converter</a> compares the surface areas and gives you a batter multiplier.
       </p>
 
       <h2>Baking deserves more respect</h2>
@@ -76,8 +83,7 @@ export default function ScaleARecipe() {
         Soups and stews are forgiving. Cakes are keeping records.
       </p>
       <p>
-        For baking, weigh ingredients if you can. A digital scale makes halving and multiplying far cleaner than trying to work out what 1.375 cups of flour looks like.
-        Keep the proportions accurate, and pay particular attention to pan size and batter depth.
+        For baking, weigh ingredients if you can. A digital scale makes halving and multiplying far cleaner than trying to work out what 1.375 cups of flour looks like. If the original recipe is written in cups, the <a href="/tools/measurement-converter/">Cooking Measurement Converter</a> can convert the ingredient list before you scale it. Keep the proportions accurate, and pay particular attention to pan size and batter depth.
       </p>
       <p>
         If you want twice as much cake, two pans made from the original recipe size are usually a safer bet than one cake twice as deep.
@@ -127,7 +133,7 @@ export default function ScaleARecipe() {
         Multiply the ingredients. Keep an eye on the size and depth of the pan. Start checking around the original cooking time.
         Add aggressive seasonings in stages. Taste your food.
       </p>
-      <p>That is most of recipe scaling, and it is far more reliable than pretending a dinner for twelve is just a dinner for four with bigger numbers.</p>
+      <p>That is most of recipe scaling, and it is far more reliable than pretending a dinner for twelve is just a dinner for four with bigger numbers. If the hard part is deciding how much food twelve people need in the first place, start with the <a href="/tools/portion-planner/">Food Portion Planner</a>, then scale the recipe to match.</p>
     </BlogPostLayout>
   )
 }

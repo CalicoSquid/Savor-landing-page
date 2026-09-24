@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SEO_PAGES, SITE_URL } from '../src/data/seoPages.js'
 import { PUBLIC_RECIPE_INDEX } from '../src/data/publicRecipeIndex.generated.js'
+import { TOOL_PAGES } from '../src/data/toolPages.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
@@ -132,6 +133,42 @@ if (fs.existsSync(dist)) {
         fail(`/recipes: missing internal link to ${href}`)
       }
     }
+  }
+
+  const toolsIndexPath = path.join(dist, 'tools', 'index.html')
+  if (!fs.existsSync(toolsIndexPath)) {
+    fail('missing dist/tools/index.html')
+  } else {
+    const toolsHtml = fs.readFileSync(toolsIndexPath, 'utf8')
+    for (const tool of TOOL_PAGES) {
+      if (!toolsHtml.includes(`href="${tool.href}"`)) {
+        fail(`/tools: missing internal link to ${tool.href}`)
+      }
+    }
+  }
+
+  const homePath = path.join(dist, 'index.html')
+  if (fs.existsSync(homePath)) {
+    const homeHtml = fs.readFileSync(homePath, 'utf8')
+    if (!homeHtml.includes('href="/tools/"')) fail('/: homepage should link directly to /tools/')
+  }
+
+  for (const tool of TOOL_PAGES) {
+    const seo = SEO_PAGES.find((page) => page.canonical === `${SITE_URL}${tool.href}`)
+    if (!seo) {
+      fail(`${tool.href}: missing SEO registry entry`)
+      continue
+    }
+    const toolFile = path.join(dist, seo.file)
+    if (!fs.existsSync(toolFile)) continue
+    const html = fs.readFileSync(toolFile, 'utf8')
+    if (!html.includes('href="/tools/"')) fail(`${tool.href}: missing link back to /tools/`)
+    const relatedCount = tool.related.filter((id) => {
+      const related = TOOL_PAGES.find((item) => item.id === id)
+      return related && html.includes(`href="${related.href}"`)
+    }).length
+    if (relatedCount < 2) fail(`${tool.href}: expected at least two contextual related-tool links`)
+    if (!html.includes('data-nosnippet=""')) fail(`${tool.href}: app CTA should be excluded from search snippets`)
   }
 
   const robotsPath = path.join(dist, 'robots.txt')

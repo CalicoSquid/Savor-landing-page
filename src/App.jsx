@@ -15,6 +15,14 @@ import SaveHandwrittenRecipeCards from './pages/blog/SaveHandwrittenRecipeCards'
 import LifeStoryBeforeTheRecipe from './pages/blog/LifeStoryBeforeTheRecipe'
 import SaveRecipesFromWebsites from './pages/blog/SaveRecipesFromWebsites'
 import ScaleARecipe from './pages/blog/ScaleARecipe'
+import Tools from './pages/Tools'
+import RecipeScaler from './pages/RecipeScaler'
+import MeasurementConverter from './pages/MeasurementConverter'
+import PanConverter from './pages/PanConverter'
+import PortionPlanner from './pages/PortionPlanner'
+import IngredientSubstitutions from './pages/IngredientSubstitutions'
+import BrineCalculator from './pages/BrineCalculator'
+import BakersPercentage from './pages/BakersPercentage'
 import DeleteAccount from './pages/DeleteAccount'
 import DeleteCaperAccount from './pages/DeleteCaperAccount'
 import Privacy from './pages/Privacy'
@@ -52,6 +60,14 @@ export default function AppRoutes() {
         <Route path="/blog/life-story-before-the-recipe" element={<LifeStoryBeforeTheRecipe />} />
         <Route path="/blog/save-recipes-from-websites" element={<SaveRecipesFromWebsites />} />
         <Route path="/blog/how-to-scale-a-recipe" element={<ScaleARecipe />} />
+        <Route path="/tools"                    element={<Tools />} />
+        <Route path="/tools/recipe-scaler"      element={<RecipeScaler />} />
+        <Route path="/tools/measurement-converter" element={<MeasurementConverter />} />
+        <Route path="/tools/pan-converter"      element={<PanConverter />} />
+        <Route path="/tools/portion-planner"     element={<PortionPlanner />} />
+        <Route path="/tools/ingredient-substitutions" element={<IngredientSubstitutions />} />
+        <Route path="/tools/brine-calculator" element={<BrineCalculator />} />
+        <Route path="/tools/bakers-percentage" element={<BakersPercentage />} />
         <Route path="/delete-account"           element={<DeleteAccount />} />
         <Route path="/caper/delete-account"     element={<DeleteCaperAccount />} />
         <Route path="/forage/delete-account"    element={<Navigate to="/caper/delete-account/" replace />} />
