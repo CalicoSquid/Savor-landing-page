@@ -47,11 +47,11 @@ import {
 } from '../src/lib/bakersPercentage.js'
 
 
-assert.equal(TOOL_PAGES.length, 7)
+assert.equal(TOOL_PAGES.length, 8)
 assert.equal(new Set(TOOL_PAGES.map((tool) => tool.id)).size, TOOL_PAGES.length)
 assert.equal(new Set(TOOL_PAGES.map((tool) => tool.href)).size, TOOL_PAGES.length)
 for (const tool of TOOL_PAGES) {
-  assert.ok(tool.href.startsWith('/tools/') && tool.href.endsWith('/'))
+  assert.ok((tool.href.startsWith('/tools/') || tool.id === 'potluck') && tool.href.endsWith('/'))
   assert.ok(tool.title)
   assert.ok(tool.description)
   assert.ok(tool.related.length >= 2)

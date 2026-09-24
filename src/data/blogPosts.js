@@ -13,6 +13,18 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'what-should-i-cook-tonight',
+    title: 'What Should I Cook Tonight? A Chef’s Way Out of Dinner Decision Fatigue',
+    dek: 'When every dinner idea sounds equally fine — and therefore impossible to choose — stop searching for the perfect meal. Here’s a faster way to decide what to cook tonight.',
+    metaTitle: 'What Should I Cook Tonight? Dinner Ideas When You Can’t Decide | Savor',
+    metaDesc: 'Cannot decide what to cook tonight? Use a chef’s simple dinner decision rules, pantry fallbacks and Potluck random dinner generator to get cooking faster.',
+    date: '2026-09-24',
+    readTime: '7 min read',
+    ogImage: 'https://getsavor.recipes/potluck/potluck-og.jpg',
+    ogImageAlt: 'Potluck random dinner generator — what should I cook tonight?',
+    author: 'Caleb',
+  },
+  {
     slug: 'save-recipes-from-websites',
     title: 'How to Save Recipes From Websites Without Losing Them',
     dek: 'Bookmarks, screenshots and open tabs all work — until they don’t. Here’s a simple way to keep online recipes findable, cookable and connected to the original source.',

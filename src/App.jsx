@@ -15,6 +15,7 @@ import SaveHandwrittenRecipeCards from './pages/blog/SaveHandwrittenRecipeCards'
 import LifeStoryBeforeTheRecipe from './pages/blog/LifeStoryBeforeTheRecipe'
 import SaveRecipesFromWebsites from './pages/blog/SaveRecipesFromWebsites'
 import ScaleARecipe from './pages/blog/ScaleARecipe'
+import WhatShouldICookTonight from './pages/blog/WhatShouldICookTonight'
 import Tools from './pages/Tools'
 import RecipeScaler from './pages/RecipeScaler'
 import MeasurementConverter from './pages/MeasurementConverter'
@@ -60,6 +61,7 @@ export default function AppRoutes() {
         <Route path="/blog/life-story-before-the-recipe" element={<LifeStoryBeforeTheRecipe />} />
         <Route path="/blog/save-recipes-from-websites" element={<SaveRecipesFromWebsites />} />
         <Route path="/blog/how-to-scale-a-recipe" element={<ScaleARecipe />} />
+        <Route path="/blog/what-should-i-cook-tonight" element={<WhatShouldICookTonight />} />
         <Route path="/tools"                    element={<Tools />} />
         <Route path="/tools/recipe-scaler"      element={<RecipeScaler />} />
         <Route path="/tools/measurement-converter" element={<MeasurementConverter />} />

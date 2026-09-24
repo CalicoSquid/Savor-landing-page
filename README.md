@@ -46,3 +46,11 @@ The Kitchen Tools cluster now uses `src/data/toolPages.js` as the shared catalog
 Each tool keeps its existing `WebApplication` + breadcrumb structured data. Promotional app CTAs are marked with `data-nosnippet` so search snippets can focus on the calculator/explainer content. Significant route changes have accurate `lastmod: 2026-09-24` values for sitemap generation. `scripts/validate-seo.mjs` now checks homepage/hub discovery, tool backlinks, related-tool links and the snippet-exclusion marker after prerendering.
 
 Do not add FAQ structured data solely for search appearance: Google removed FAQ rich-result support in 2026. Keep useful question/answer copy visible on the page when it genuinely helps users.
+
+## Potluck search/discovery pass — 2026-09-24
+
+Potluck is now part of the shared `TOOL_PAGES` catalog as the eighth Kitchen Tool while keeping its canonical route at `/potluck/`. The page leads with the literal search intent (`Random Dinner Generator — What Should I Cook Tonight?`) while preserving the Potluck voice and playable wheel. Supporting copy explains the useful distinction between a random food-name picker and Potluck returning a real cookable recipe.
+
+`/blog/what-should-i-cook-tonight/` is the supporting search article. It gives a practical dinner-decision framework and links naturally into Potluck rather than existing as a thin keyword page. Potluck links back to the article, `/tools/`, the portion planner, ingredient substitutions and recipe scaler. The homepage Kitchen Tools section now features Potluck directly, and `/tools/` structured data automatically includes all eight tools.
+
+No filtering or meal-planning behaviour was added to Potluck in this pass; those remain product decisions for the app/web experience rather than SEO-only features.

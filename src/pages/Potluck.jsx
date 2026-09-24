@@ -493,8 +493,9 @@ export default function Potluck() {
             />
 
             <div className="pl-hero-copy">
-              <h1 className="pl-h1">What&rsquo;s for dinner? Let the universe decide.</h1>
-              <p className="pl-hero-descriptor">A free random dinner generator that picks a real recipe. No signup. No install.</p>
+              <h1 className="pl-h1">Random Dinner Generator — What Should I Cook Tonight?</h1>
+              <p className="pl-hero-tagline">Let the universe decide.</p>
+              <p className="pl-hero-descriptor">Spin once. Get a real recipe. Go cook. Free in the browser — no signup, no install, no endless feed.</p>
             </div>
 
             <div className={`pl-wheel pl-wheel--${phase} pl-wheel-stage--${spinStage}`} aria-live="polite">
@@ -675,8 +676,44 @@ export default function Potluck() {
           </div>
         </section>
 
+        {/* ── Search context: clear intent without flattening the personality ── */}
+        <section className="pl-section pl-discovery-section" aria-labelledby="pl-random-dinner-title">
+          <div className="pl-container">
+            <div className="pl-discovery-heading">
+              <span className="pl-eyebrow">Random meal generator, but useful</span>
+              <h2 id="pl-random-dinner-title" className="pl-h2">A dinner picker that gives you something you can actually cook.</h2>
+              <p>
+                Plenty of random food generators can tell you &ldquo;pizza&rdquo; or &ldquo;ramen&rdquo;. Potluck picks a real dinner recipe with ingredients and instructions ready to open. Think of it as dinner roulette with a useful landing page.
+              </p>
+            </div>
+
+            <div className="pl-steps" aria-label="How Potluck works">
+              <article className="pl-step">
+                <span className="pl-step-number" aria-hidden="true">1</span>
+                <h3>Spin once</h3>
+                <p>No browsing thirty recipes and forgetting why you opened the fridge. Give the wheel the decision.</p>
+              </article>
+              <article className="pl-step">
+                <span className="pl-step-number" aria-hidden="true">2</span>
+                <h3>Get a real recipe</h3>
+                <p>The result is something you can open and cook, not a random food name that creates another search.</p>
+              </article>
+              <article className="pl-step">
+                <span className="pl-step-number" aria-hidden="true">3</span>
+                <h3>Cook — or appeal</h3>
+                <p>If fate has clearly misunderstood the assignment, reroll. The universe is powerful, not infallible.</p>
+              </article>
+            </div>
+
+            <div className="pl-search-links">
+              <a href="/blog/what-should-i-cook-tonight/">Read: what should I cook tonight? →</a>
+              <a href="/tools/">Browse all free Savor kitchen tools →</a>
+            </div>
+          </div>
+        </section>
+
         {/* ── The app remembers ───────────────────────────────────────── */}
-        <section className="pl-section pl-memory-section">
+        <section className="pl-section pl-memory-section" data-nosnippet="">
           <div className="pl-container pl-memory-inner">
             <div className="pl-memory-copy">
               <span className="pl-eyebrow">Potluck on Android</span>
@@ -705,6 +742,33 @@ export default function Potluck() {
                   <p>{feature.body}</p>
                 </article>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="pl-section pl-related-section" aria-labelledby="pl-related-title">
+          <div className="pl-container">
+            <span className="pl-eyebrow">If dinner needs a little more help</span>
+            <h2 id="pl-related-title" className="pl-h2">Keep the problem-solving going.</h2>
+            <div className="pl-related-grid">
+              <a href="/tools/portion-planner/" className="pl-related-card">
+                <span>Planning</span>
+                <strong>Food Portion Planner</strong>
+                <p>Once dinner is decided, work out how much you actually need for the people eating.</p>
+                <em>Plan the portions →</em>
+              </a>
+              <a href="/tools/ingredient-substitutions/" className="pl-related-card">
+                <span>Ingredients</span>
+                <strong>Ingredient Substitution Finder</strong>
+                <p>Potluck chose well. Your cupboard disagrees. Find a sensible swap without wrecking the recipe.</p>
+                <em>Find a substitute →</em>
+              </a>
+              <a href="/tools/recipe-scaler/" className="pl-related-card">
+                <span>Recipe maths</span>
+                <strong>Recipe Scaler</strong>
+                <p>Cooking the chosen recipe for more or fewer people? Scale the ingredient list in one go.</p>
+                <em>Scale the recipe →</em>
+              </a>
             </div>
           </div>
         </section>

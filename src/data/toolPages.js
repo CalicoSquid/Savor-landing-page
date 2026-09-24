@@ -37,7 +37,7 @@ export const TOOL_PAGES = [
     description: 'Work out how much pasta, rice, meat, potatoes and more to buy for adults, kids, buffets, big appetites and leftovers.',
     action: 'Plan food for a crowd',
     problem: 'Cooking for a crowd and not sure how much to buy?',
-    related: ['recipe-scaler', 'measurement-converter', 'ingredient-substitutions'],
+    related: ['recipe-scaler', 'potluck', 'ingredient-substitutions'],
   },
   {
     id: 'ingredient-substitutions',
@@ -47,7 +47,7 @@ export const TOOL_PAGES = [
     description: 'Find practical swaps for missing ingredients, with the ratio, what changes and when the substitute is a bad idea.',
     action: 'Find a substitute',
     problem: 'Halfway through cooking and missing an ingredient?',
-    related: ['measurement-converter', 'recipe-scaler', 'portion-planner'],
+    related: ['measurement-converter', 'potluck', 'recipe-scaler'],
   },
   {
     id: 'brine-calculator',
@@ -58,6 +58,16 @@ export const TOOL_PAGES = [
     action: 'Calculate brine salt',
     problem: 'Need the exact salt weight for a fermentation brine?',
     related: ['measurement-converter', 'ingredient-substitutions', 'recipe-scaler'],
+  },
+  {
+    id: 'potluck',
+    href: '/potluck/',
+    category: 'Dinner decisions',
+    title: 'Potluck Random Dinner Generator',
+    description: 'Spin once and get a real recipe to cook tonight — not just a random food name. Free in the browser, no signup and no endless feed.',
+    action: 'Spin for dinner',
+    problem: 'Cannot decide what to cook tonight?',
+    related: ['portion-planner', 'ingredient-substitutions', 'recipe-scaler'],
   },
   {
     id: 'bakers-percentage',

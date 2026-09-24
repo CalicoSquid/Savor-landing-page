@@ -33,7 +33,7 @@ const FEATURED_TOOLS = [
     TOOL_PAGE_BY_ID['recipe-scaler'],
     TOOL_PAGE_BY_ID['measurement-converter'],
     TOOL_PAGE_BY_ID['pan-converter'],
-    TOOL_PAGE_BY_ID['portion-planner'],
+    TOOL_PAGE_BY_ID['potluck'],
 ]
 
 
@@ -175,10 +175,10 @@ export default function Savor() {
                     <div className="home-tools-heading">
                         <div>
                             <p className="home-tools-eyebrow">Free kitchen tools</p>
-                            <h2 id="home-tools-title">The annoying kitchen maths drawer.</h2>
+                            <h2 id="home-tools-title">The annoying kitchen problems drawer.</h2>
                         </div>
                         <p>
-                            Scale a recipe, convert cups and grams, fit a bake to another pan or work out food for a crowd. No account, no ads — just the answer and enough chef context to use it sensibly.
+                            Scale a recipe, convert cups and grams, fit a bake to another pan — or let Potluck decide what you should cook tonight. No account, no ads — just useful answers and enough chef context to use them sensibly.
                         </p>
                     </div>
                     <div className="home-tools-grid">
@@ -191,7 +191,7 @@ export default function Savor() {
                             </a>
                         ))}
                     </div>
-                    <a href="/tools/" className="home-tools-all">See all seven free kitchen tools →</a>
+                    <a href="/tools/" className="home-tools-all">See all eight free kitchen tools →</a>
                 </div>
             </section>
 

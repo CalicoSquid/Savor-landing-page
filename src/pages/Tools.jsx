@@ -9,9 +9,9 @@ export default function Tools() {
       <main className="page doc-page tools-page">
         <div className="doc-inner tools-inner">
           <span className="doc-eyebrow">Free kitchen tools</span>
-          <h1 className="doc-title">Free kitchen calculators for real cooking problems.</h1>
+          <h1 className="doc-title">Free kitchen tools for real cooking problems.</h1>
           <p className="doc-lead">
-            Scale a recipe, convert cups to grams, resize a baking recipe for another pan, work out food for a crowd, find a sensible ingredient substitute, calculate fermentation salt or untangle dough hydration. No account, no ads — just useful kitchen maths made by a chef.
+            Scale a recipe, convert cups to grams, resize a baking recipe for another pan, work out food for a crowd, find a sensible ingredient substitute, calculate fermentation salt, untangle dough hydration — or let Potluck decide what to cook tonight. No account, no ads — just useful cooking tools made by a chef.
           </p>
 
           <nav className="tool-problem-nav" aria-labelledby="tool-problem-title">
@@ -41,11 +41,11 @@ export default function Tools() {
           <section className="tools-trust" aria-labelledby="tools-trust-title">
             <div>
               <span className="tool-card-eyebrow">Why Savor tools?</span>
-              <h2 id="tools-trust-title">Kitchen judgement first. Calculator second.</h2>
+              <h2 id="tools-trust-title">Kitchen judgement first. Tool second.</h2>
             </div>
             <div>
               <p>
-                These are small utilities built around the awkward bits that actually come up while cooking. Where a number is only an estimate — ingredient density, portion size, pan behaviour — the tool says so instead of pretending the kitchen is a spreadsheet.
+                These are small utilities built around the awkward bits that actually come up while cooking — from kitchen maths to the surprisingly hard question of what to make for dinner. Where a number is only an estimate, the tool says so instead of pretending the kitchen is a spreadsheet.
               </p>
               <p>
                 The measurement converter also uses the same growing ingredient-conversion library as the Savor app, so improvements to Savor’s cooking data improve the free web tool too.
@@ -55,8 +55,8 @@ export default function Tools() {
           </section>
 
           <section className="tools-coming" aria-labelledby="tools-coming-title">
-            <span className="tool-card-eyebrow">Seven tools and counting</span>
-            <h2 id="tools-coming-title">The kitchen maths drawer is getting suspiciously useful.</h2>
+            <span className="tool-card-eyebrow">Eight tools and counting</span>
+            <h2 id="tools-coming-title">The kitchen problem-solving drawer is getting suspiciously useful.</h2>
             <p>We’ll keep adding tools when they solve a real cooking problem — not just to manufacture another calculator page.</p>
           </section>
         </div>

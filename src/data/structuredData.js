@@ -522,12 +522,13 @@ export function structuredDataForPage(seo) {
           image: `${SITE_URL}/potluck/potluck-og.jpg`,
           price: 0,
         }),
-        alternateName: ['Potluck', 'Potluck Random Dinner Generator'],
+        alternateName: ['Potluck', 'Potluck Random Dinner Generator', 'Potluck Dinner Picker'],
         applicationSubCategory: 'Random dinner and recipe generator',
         isAccessibleForFree: true,
         browserRequirements: 'Requires JavaScript',
         featureList: [
           'Pick a random dinner recipe in the browser',
+          'Get a real cookable recipe rather than only a random food name',
           'Open the selected recipe with ingredients and method',
           'Reroll when the first dinner suggestion is not right',
           'No signup required for the web spinner',
@@ -536,7 +537,8 @@ export function structuredDataForPage(seo) {
       },
       breadcrumb([
         { name: 'Savor', url: `${SITE_URL}/` },
-        { name: 'Potluck', url: seo.canonical },
+        { name: 'Kitchen Tools', url: `${SITE_URL}/tools/` },
+        { name: 'Random Dinner Generator', url: seo.canonical },
       ]),
     )
   } else if (seo.path === '/caper') {
