@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import '@fontsource/jetbrains-mono/600.css'
 import Footer from '../components/Footer'
 import RelatedTools from '../components/RelatedTools'
-import { PLAY_URL } from '../data/seoPages'
+import ToolAppCta from '../components/ToolAppCta'
 import {
   CONVERTER_UNITS,
   conversionIngredientNames,
@@ -90,9 +90,7 @@ export default function MeasurementConverter() {
   )
 
   const recipeResult = useMemo(
-    () => conversionData
-      ? convertRecipeText(recipe, targetSystem, conversionData)
-      : { output: '', convertedCount: 0, approximateCount: 0 },
+    () => convertRecipeText(recipe, targetSystem, conversionData),
     [recipe, targetSystem, conversionData],
   )
 
@@ -118,27 +116,25 @@ export default function MeasurementConverter() {
         <section className="tool-hero">
           <div className="tool-shell">
             <a href="/tools/" className="tool-back-link">← Free kitchen tools</a>
-            <span className="doc-eyebrow">Free cooking converter</span>
-            <h1>Convert cups, grams, ounces, ml — or an entire recipe.</h1>
+            <span className="doc-eyebrow">Measurements</span>
+            <h1>Cooking measurement converter</h1>
             <p className="tool-lead">
-              Do one quick kitchen conversion, or paste a whole ingredient list and flip it between US and metric. Ingredient-aware conversions handle the awkward bit where cups and grams are not the same thing.
+              Convert a single amount or an ingredient list. For cups to grams, choose the ingredient so the estimate uses its weight per cup.
             </p>
             <p className={`converter-data-status is-${dataStatus}`}>
               {conversionData
-                ? <>Powered by the same <strong>{conversionData.count}-entry ingredient conversion library</strong> used inside Savor{dataStatus === 'cache' ? ' — cached while we refresh it.' : '.'}</>
+                ? 'Volume-to-weight estimates use Savor’s ingredient measurements.'
                 : dataStatus === 'error'
-                  ? <>Savor’s ingredient library is temporarily unavailable. Direct unit and temperature conversions still work.</>
-                  : <>Loading Savor’s ingredient conversion library…</>}
+                  ? 'Ingredient estimates are unavailable. Direct unit and temperature conversions still work.'
+                  : 'Loading ingredient estimates. Direct conversions are ready to use.'}
             </p>
           </div>
         </section>
 
         <section className="tool-shell converter-quick-section" aria-labelledby="quick-converter-title">
           <div className="converter-section-heading">
-            <span className="scaler-step">1</span>
             <div>
-              <span className="tool-card-eyebrow">Quick conversion</span>
-              <h2 id="quick-converter-title">One amount, straight answer.</h2>
+              <h2 id="quick-converter-title">Convert an amount</h2>
             </div>
           </div>
 
@@ -166,7 +162,7 @@ export default function MeasurementConverter() {
               <UnitSelect id="converter-to" value={toUnit} onChange={(event) => setToUnit(event.target.value)} />
             </label>
 
-            {quickResult.needsIngredient || quickResult.approximate ? (
+            {quickResult.needsIngredient || quickResult.needsIngredientData || quickResult.approximate ? (
               <label className="converter-field converter-ingredient-field">
                 <span>Ingredient</span>
                 <input
@@ -198,7 +194,9 @@ export default function MeasurementConverter() {
                 <>
                   <span className="converter-answer-label">Result</span>
                   <strong className="converter-answer-empty">—</strong>
-                  <p>{quickResult.reason}</p>
+                  <p>{quickResult.needsIngredientData && dataStatus === 'error'
+                    ? 'Ingredient estimates are unavailable. You can still convert between units of weight, volume or temperature.'
+                    : quickResult.reason}</p>
                 </>
               )}
             </div>
@@ -207,10 +205,8 @@ export default function MeasurementConverter() {
 
         <section className="tool-shell recipe-converter-section" aria-labelledby="recipe-converter-title">
           <div className="converter-section-heading">
-            <span className="scaler-step">2</span>
             <div>
-              <span className="tool-card-eyebrow">Whole recipe converter</span>
-              <h2 id="recipe-converter-title">Paste the list. Change the kitchen.</h2>
+              <h2 id="recipe-converter-title">Convert an ingredient list</h2>
             </div>
           </div>
 
@@ -246,7 +242,7 @@ export default function MeasurementConverter() {
                 spellCheck="false"
                 placeholder={'2 cups flour\n8 oz cream cheese\n1 tbsp butter'}
               />
-              <p className="scaler-hint">Keep the quantity and unit at the start of each ingredient line. Temperatures can appear anywhere in the text.</p>
+              <p className="scaler-hint">Start each ingredient line with its quantity and unit. “c” means cups when followed by an ingredient; use °C or °F for temperatures.</p>
             </div>
 
             <div className="scaler-output-card" aria-live="polite">
@@ -254,15 +250,12 @@ export default function MeasurementConverter() {
                 <h3>{targetSystem === 'metric' ? 'Metric version' : 'US version'}</h3>
                 {recipeResult.convertedCount > 0 && <span className="scale-factor">{recipeResult.convertedCount} converted</span>}
               </div>
-              {!conversionData ? (
-                <div className="scaler-empty">
-                  {dataStatus === 'error'
-                    ? 'The ingredient conversion library is unavailable right now. Try again once the Savor API is reachable.'
-                    : 'Loading Savor’s ingredient conversion library…'}
-                </div>
-              ) : recipeResult.output.trim() ? (
+              {recipeResult.output.trim() ? (
                 <>
                   <pre className="scaled-list">{recipeResult.output}</pre>
+                  {!conversionData && (
+                    <p className="scaler-hint">Using direct conversions: cups become millilitres and grams become ounces. Ingredient estimates {dataStatus === 'error' ? 'are unavailable right now' : 'will appear when loaded'}.</p>
+                  )}
                   <div className="scaler-result-meta">
                     {recipeResult.approximateCount > 0 && (
                       <span>{recipeResult.approximateCount} ingredient-aware {recipeResult.approximateCount === 1 ? 'estimate' : 'estimates'}</span>
@@ -282,28 +275,20 @@ export default function MeasurementConverter() {
 
         <section className="tool-shell scaler-notes-section">
           <div className="chef-note-card">
-            <span className="chef-note-kicker">Why ingredient-aware matters</span>
-            <h2>A cup measures space. A gram measures weight.</h2>
+            <span className="chef-note-kicker">About the estimates</span>
+            <h2>Cups to grams depends on the ingredient</h2>
             <p>
-              One cup of flour does not weigh the same as one cup of honey, butter or oats. When this tool crosses between volume and weight it uses the same practical ingredient conversion data as the Savor app, marks the result as approximate and leaves room for kitchen judgement.
+              A cup of flour weighs less than a cup of honey. Volume-to-weight conversions use Savor’s ingredient data and are marked as estimates. Packing, chopping and brand differences can affect the weight.
             </p>
             <p>
-              For precise baking, weighing ingredients is still the better habit. Brands, packing and measuring technique can all move the number a little.
+              For precise baking, use a scale and the recipe’s original weights where available.
             </p>
           </div>
         </section>
 
         <RelatedTools current="measurement-converter" />
 
-        <section className="tool-shell tool-app-cta" data-nosnippet="">
-          <img src="/icons/icon-Tangerine.webp" alt="" width="72" height="72" loading="lazy" decoding="async" />
-          <div>
-            <span className="tool-card-eyebrow">Prefer not to do this every time?</span>
-            <h2>Savor keeps recipe measurements flexible.</h2>
-            <p>Save recipes from websites, screenshots, cookbooks and handwritten cards, then keep a clean version ready to cook.</p>
-          </div>
-          <a href={PLAY_URL} target="_blank" rel="noreferrer" className="btn btn-fruit tool-app-button">Get Savor</a>
-        </section>
+        <ToolAppCta />
       </main>
       <Footer />
     </>

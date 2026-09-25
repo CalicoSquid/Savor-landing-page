@@ -23,6 +23,10 @@ const UNICODE_FRACTION_CHARS = Object.keys(UNICODE_FRACTIONS).join('')
 const QUANTITY_PATTERN = `(?:\\d+\\s+\\d+\\/\\d+|\\d+\\s+[${UNICODE_FRACTION_CHARS}]|\\d+\\/\\d+|\\d+(?:\\.\\d+)?[${UNICODE_FRACTION_CHARS}]?|[${UNICODE_FRACTION_CHARS}]|\\d+(?:\\.\\d+)?)`
 const RANGE_RE = new RegExp(`^(${QUANTITY_PATTERN})\\s*(?:-|–|—|to)\\s*(${QUANTITY_PATTERN})(.*)$`, 'i')
 const SINGLE_RE = new RegExp(`^(${QUANTITY_PATTERN})(.*)$`)
+const MEASURE_UNIT_PATTERN = '(?:cups?|c|tablespoons?|tbsp|teaspoons?|tsp|kilograms?|kg|grams?|g|pounds?|lbs?|ounces?|oz|millilit(?:re|er)s?|ml|lit(?:re|er)s?|l|fl\\.?\\s*oz\\.?)'
+const MEASURE_UNIT_RE = new RegExp(`^\\s*${MEASURE_UNIT_PATTERN}(?=\\s|[.(]|$)\\.?`, 'i')
+const EQUIVALENT_RE = new RegExp(`^(\\s*[([]\\s*)(${QUANTITY_PATTERN})(\\s*${MEASURE_UNIT_PATTERN}\\s*[)\\]])`, 'i')
+const EXTRA_QUANTITY_RE = new RegExp(`[0-9${UNICODE_FRACTION_CHARS}]`)
 
 const FRIENDLY_DENOMINATORS = [2, 3, 4, 8, 16]
 
@@ -103,6 +107,24 @@ export function formatQuantity(value) {
   return `${sign}${whole ? `${whole} ` : ''}${fractionText}`
 }
 
+function scaleRemainder(remainder, factor) {
+  // Scale a bracketed equivalent only after a measured amount, e.g.
+  // "1 cup (125 g)". In "2 (400 g) tins", 400 g is the package size.
+  const unit = remainder.match(MEASURE_UNIT_RE)
+  const equivalent = unit && remainder.slice(unit[0].length).match(EQUIVALENT_RE)
+  if (equivalent) {
+    const amount = parseQuantity(equivalent[2])
+    if (amount != null) {
+      const tail = remainder.slice(unit[0].length + equivalent[0].length)
+      return {
+        output: `${unit[0]}${equivalent[1]}${formatQuantity(amount * factor)}${equivalent[3]}${tail}`,
+        needsReview: EXTRA_QUANTITY_RE.test(tail),
+      }
+    }
+  }
+  return { output: remainder, needsReview: EXTRA_QUANTITY_RE.test(remainder) }
+}
+
 function scaleLine(line, factor) {
   const prefixMatch = line.match(/^(\s*(?:[-*•]\s+)?)?/)
   const prefix = prefixMatch?.[0] || ''
@@ -116,9 +138,11 @@ function scaleLine(line, factor) {
     if (low == null || high == null) return { output: line, scaled: false, sourceAmount: null, scaledAmount: null }
     const scaledLow = low * factor
     const scaledHigh = high * factor
+    const remainder = scaleRemainder(range[3], factor)
     return {
-      output: `${prefix}${formatQuantity(scaledLow)}–${formatQuantity(scaledHigh)}${range[3]}`,
+      output: `${prefix}${formatQuantity(scaledLow)}–${formatQuantity(scaledHigh)}${remainder.output}`,
       scaled: true,
+      needsReview: remainder.needsReview,
       sourceAmount: [low, high],
       scaledAmount: [scaledLow, scaledHigh],
     }
@@ -131,9 +155,11 @@ function scaleLine(line, factor) {
   if (amount == null) return { output: line, scaled: false, sourceAmount: null, scaledAmount: null }
 
   const scaledAmount = amount * factor
+  const remainder = scaleRemainder(single[2], factor)
   return {
-    output: `${prefix}${formatQuantity(scaledAmount)}${single[2]}`,
+    output: `${prefix}${formatQuantity(scaledAmount)}${remainder.output}`,
     scaled: true,
+    needsReview: remainder.needsReview,
     sourceAmount: amount,
     scaledAmount,
   }
@@ -147,9 +173,11 @@ export function scaleIngredientList(text, originalServings, targetServings) {
   let scaledCount = 0
   let unchangedCount = 0
   let fractionalEgg = false
+  const reviewLines = []
 
-  const results = lines.map((line) => {
+  const results = lines.map((line, index) => {
     const result = scaleLine(line, factor)
+    if (result.needsReview && factor !== 1) reviewLines.push(index + 1)
     if (line.trim()) {
       if (result.scaled) scaledCount += 1
       else unchangedCount += 1
@@ -169,6 +197,7 @@ export function scaleIngredientList(text, originalServings, targetServings) {
     scaledCount,
     unchangedCount,
     fractionalEgg,
+    reviewLines,
   }
 }
 
@@ -177,15 +206,15 @@ export function buildScalingNotes(text, factor, fractionalEgg) {
   const ingredients = String(text || '').toLowerCase()
 
   if (factor > 1.05 && /\b(salt|pepper|chilli|chili|cayenne|vinegar|lemon|lime|soy sauce|fish sauce)\b/.test(ingredients)) {
-    notes.push('Seasoning, chilli and acid are safer added in stages. Scale most of it, then taste before adding the rest.')
+    notes.push('Add seasoning, chilli and acidic ingredients in stages, tasting as you go.')
   }
 
   if (fractionalEgg) {
-    notes.push('Fractional egg? Beat the egg first, then use the fraction by weight or volume rather than trying to split yolk and white by eye.')
+    notes.push('For a partial egg, beat it first, then measure the amount you need by weight or volume.')
   }
 
   if (/\b(flour|baking powder|baking soda|bicarbonate|cake|brownies?|bread|dough|batter)\b/.test(ingredients)) {
-    notes.push('For baking, keep an eye on pan area and batter depth. Ingredient maths can scale perfectly while the bake still behaves differently.')
+    notes.push('When baking, check pan area and batter depth as well as ingredient amounts.')
   }
 
   if (Math.abs(factor - 1) > 0.01) {

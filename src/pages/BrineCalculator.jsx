@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import '@fontsource/jetbrains-mono/600.css'
 import Footer from '../components/Footer'
 import RelatedTools from '../components/RelatedTools'
-import { PLAY_URL } from '../data/seoPages'
+import ToolAppCta from '../components/ToolAppCta'
 import {
   BRINE_METHODS,
   BRINE_PERCENT_PRESETS,
@@ -63,10 +63,10 @@ export default function BrineCalculator() {
         <section className="tool-hero">
           <div className="tool-shell">
             <a href="/tools/" className="tool-back-link">← Free kitchen tools</a>
-            <span className="doc-eyebrow">Free fermentation brine calculator</span>
-            <h1>Calculate fermentation brine salt by weight — without percentage guessing.</h1>
+            <span className="doc-eyebrow">Vegetable fermentation</span>
+            <h1>Fermentation brine calculator</h1>
             <p className="tool-lead">
-              Choose how your recipe defines its percentage, enter the vegetables and water, and get the exact salt weight. Total-weight ferment and water-only brine maths are kept deliberately separate.
+              Use the percentage and weight basis specified in your recipe to calculate how much salt to add.
             </p>
           </div>
         </section>
@@ -84,7 +84,7 @@ export default function BrineCalculator() {
               <div className="converter-section-heading">
                 <span className="scaler-step">1</span>
                 <div>
-                  <span className="tool-card-eyebrow">Choose the maths</span>
+                  <span className="tool-card-eyebrow">Salt calculation</span>
                   <h2>What does the percentage mean?</h2>
                 </div>
               </div>
@@ -106,7 +106,7 @@ export default function BrineCalculator() {
               </div>
 
               <div className="brine-unit-toolbar">
-                <span>Enter weights in</span>
+                <span>Units</span>
                 <div className="system-toggle" role="group" aria-label="Brine calculator units">
                   <button type="button" className={system === 'metric' ? 'is-active' : ''} onClick={() => changeSystem('metric')} aria-pressed={system === 'metric'}>Metric</button>
                   <button type="button" className={system === 'us' ? 'is-active' : ''} onClick={() => changeSystem('us')} aria-pressed={system === 'us'}>US</button>
@@ -125,7 +125,7 @@ export default function BrineCalculator() {
               </div>
               <p className="scaler-hint">
                 {system === 'metric'
-                  ? 'For kitchen brine maths, 1 ml water is treated as approximately 1 g.'
+                  ? 'Water is treated as 1 g per ml for this calculation.'
                   : 'Fluid ounces here mean US fluid ounces of water; the calculator converts them to water weight.'}
               </p>
 
@@ -143,7 +143,7 @@ export default function BrineCalculator() {
                   <button type="button" key={value} className={Number(percent) === value ? 'is-active' : ''} onClick={() => setPercent(String(value))}>{value}%</button>
                 ))}
               </div>
-              <p className="scaler-hint">These are maths shortcuts, not a claim that one percentage is right or safe for every ferment. Follow the process or tested recipe you are using.</p>
+              <p className="scaler-hint">Choose the percentage specified in your tested recipe. These shortcuts do not recommend a percentage for a particular ferment.</p>
             </div>
 
             <div className="brine-result-column">
@@ -173,8 +173,8 @@ export default function BrineCalculator() {
 
         <section className="tool-shell scaler-notes-section">
           <div className="chef-note-card brine-chef-note">
-            <span className="chef-note-kicker">Fermentation reality check</span>
-            <h2>The calculator can check your arithmetic. It cannot validate your preservation process.</h2>
+            <span className="chef-note-kicker">Fermentation safety</span>
+            <h2>Follow a tested fermentation recipe</h2>
             <ul>
               {notes.map((note) => <li key={note}>{note}</li>)}
               <li><strong>Do not arbitrarily reduce the salt in a tested fermented-pickle or sauerkraut recipe.</strong> Salt affects both the fermentation and the finished texture.</li>
@@ -189,12 +189,12 @@ export default function BrineCalculator() {
         <section className="tool-shell tool-explainer brine-explainer">
           <div>
             <span className="doc-eyebrow">Why two percentage modes?</span>
-            <h2>Because 3% can mean two very different amounts of salt.</h2>
+            <h2>Use the same basis as your recipe</h2>
             <p>
               If you have 1 kg of vegetables and 500 g of water, a 3% <strong>total-weight</strong> calculation uses 1.5 kg as its base and gives 45 g salt. A 3% <strong>water-only</strong> brine uses just the 500 g water and gives 15 g salt.
             </p>
             <p>
-              Neither convention is automatically “the right one.” The important thing is knowing which convention your recipe or fermentation method is using before you calculate.
+              Check whether your recipe bases its percentage on the water alone or on vegetables and water together.
             </p>
           </div>
           <div className="formula-card brine-formula-card" aria-label="Brine percentage formulas">
@@ -203,28 +203,9 @@ export default function BrineCalculator() {
           </div>
         </section>
 
-        <section className="tool-shell portion-search-section brine-search-intents">
-          <span className="doc-eyebrow">Common brine maths</span>
-          <h2>Use the percentage your recipe calls for.</h2>
-          <div className="portion-search-grid">
-            <button type="button" onClick={() => applyExample(EXAMPLES[0])}><strong>Dry-salted vegetables</strong><span>No added water? Total-weight mode becomes simple produce weight × salt percentage.</span></button>
-            <button type="button" onClick={() => applyExample(EXAMPLES[1])}><strong>Vegetables + added water</strong><span>Count both when your fermentation method defines salt as a percentage of total weight.</span></button>
-            <button type="button" onClick={() => applyExample(EXAMPLES[2])}><strong>Recipe specifies “3% brine”</strong><span>If that recipe defines brine percentage from water alone, use water-only mode.</span></button>
-            <a href="/tools/measurement-converter/"><strong>Working from cups or ounces?</strong><span>Convert the recipe measurements first, then weigh the salt accurately.</span></a>
-          </div>
-        </section>
-
         <RelatedTools current="brine-calculator" />
 
-        <section className="tool-shell tool-app-cta" data-nosnippet="">
-          <img src="/icons/icon-Tangerine.webp" alt="" width="72" height="72" loading="lazy" decoding="async" />
-          <div>
-            <span className="tool-card-eyebrow">Keep the recipe, not just the calculation</span>
-            <h2>Save it in Savor.</h2>
-            <p>Import recipes from websites, screenshots, cookbooks and handwritten cards, then keep the version you actually cook in one ad-free kitchen.</p>
-          </div>
-          <a href={PLAY_URL} target="_blank" rel="noreferrer" className="btn btn-fruit tool-app-button">Get Savor</a>
-        </section>
+        <ToolAppCta />
       </main>
       <Footer />
     </>

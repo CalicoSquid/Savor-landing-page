@@ -48,7 +48,7 @@ const UNIT_ALIASES = [
   ['grams', 'g'], ['gram', 'g'], ['g', 'g'],
   ['quarts', 'quart'], ['quart', 'quart'], ['qts', 'quart'], ['qt', 'quart'],
   ['pints', 'pint'], ['pint', 'pint'], ['pts', 'pint'], ['pt', 'pint'],
-  ['cups', 'cup'], ['cup', 'cup'],
+  ['cups', 'cup'], ['cup', 'cup'], ['c.', 'cup'], ['c', 'cup'],
   ['celsius', 'c'], ['fahrenheit', 'f'],
   ['°c', 'c'], ['°f', 'f'],
 ]
@@ -66,6 +66,13 @@ function canonicalUnit(raw) {
   const normalised = raw.toLowerCase().trim().replace(/\s+/g, ' ')
   const entry = UNIT_ALIASES.find(([alias]) => alias === normalised)
   return entry?.[1] || null
+}
+
+function ambiguousCupShorthand(rawUnit, remainder) {
+  // "180 C" and "180 C fan" may be temperatures. Only read a bare c
+  // as cups when it has an ingredient description, and leave ambiguity intact.
+  return /^c\.?$/i.test(rawUnit)
+    && (!remainder.trim() || /^[\s,;]*(?:fan|convection|oven|for|until)\b/i.test(remainder))
 }
 
 function entriesFor(dataset) {
@@ -301,9 +308,15 @@ function convertTemperaturesInText(text, targetSystem) {
       return `${roundCookingTemperature(c)}°C`
     })
   } else {
-    output = output.replace(/(-?\d+(?:\.\d+)?)\s*°?\s*c(?:elsius)?\b/gi, (_, raw) => {
+    // A bare "c" is also a common cup abbreviation. Require an explicit
+    // temperature marker, or an instruction such as "bake at 180 C".
+    output = output.replace(/(-?\d+(?:\.\d+)?)\s*(?:°\s*c\b|celsius\b|degrees?\s*c(?:elsius)?\b)/gi, (_, raw) => {
       const f = Number(raw) * 9 / 5 + 32
       return `${roundCookingTemperature(f)}°F`
+    })
+    output = output.replace(/(\b(?:at|to)\s+)(-?\d+(?:\.\d+)?)\s*c\b/gi, (_, prefix, raw) => {
+      const f = Number(raw) * 9 / 5 + 32
+      return `${prefix}${roundCookingTemperature(f)}°F`
     })
   }
   return output
@@ -320,7 +333,7 @@ function convertRecipeLine(line, targetSystem, dataset) {
     const high = parseQuantity(rangeMatch[2])
     const unit = canonicalUnit(rangeMatch[3])
     const remainder = rangeMatch[4] || ''
-    if (low != null && high != null && unit && UNIT_DEFS[unit]?.dimension !== 'temperature') {
+    if (low != null && high != null && unit && !ambiguousCupShorthand(rangeMatch[3], remainder) && UNIT_DEFS[unit]?.dimension !== 'temperature') {
       const sourceDef = UNIT_DEFS[unit]
       if (sourceDef.system !== targetSystem) {
         const ingredient = detectIngredient(remainder, dataset)
@@ -345,7 +358,7 @@ function convertRecipeLine(line, targetSystem, dataset) {
   const amount = parseQuantity(match[1])
   const unit = canonicalUnit(match[2])
   const remainder = match[3] || ''
-  if (amount == null || !unit || UNIT_DEFS[unit]?.dimension === 'temperature') {
+  if (amount == null || !unit || ambiguousCupShorthand(match[2], remainder) || UNIT_DEFS[unit]?.dimension === 'temperature') {
     return { output: convertTemperaturesInText(line, targetSystem), converted: false, approximate: false }
   }
 

@@ -95,6 +95,7 @@ export function scaleDough(result, { pieces = 1, pieceWeight = 0, system = 'metr
     flourG: scale(result.flourG),
     waterG: scale(result.waterG),
     starterG: scale(result.starterG),
+    starterHydration: result.starterHydration,
     saltG: scale(result.saltG),
     otherG: scale(result.otherG),
   }
@@ -118,7 +119,7 @@ export function buildDoughNotes(result) {
   if (!result?.ok) return []
   const notes = []
   if (result.starterG > 0) {
-    notes.push(`True hydration includes the flour and water inside your ${formatPercent(result.starterHydration, 0)} hydration starter.`)
+    notes.push(`Hydration includes the flour and water in your ${formatPercent(result.starterHydration)} hydration starter.`)
   } else {
     notes.push('With no starter or preferment entered, hydration is simply water weight ÷ flour weight.')
   }
@@ -132,9 +133,10 @@ export function scaledFormulaText(scaled, system = 'metric') {
   const rows = [
     ['Flour', scaled.flourG],
     ['Water', scaled.waterG],
-    ['Starter / preferment', scaled.starterG],
-    ['Salt', scaled.saltG],
   ]
+  if (scaled.starterG > 0) rows.push([`Starter / preferment (${formatPercent(scaled.starterHydration)} hydration)`, scaled.starterG])
+  rows.push(['Salt', scaled.saltG])
   if (scaled.otherG > 0.01) rows.push(['Other ingredients', scaled.otherG])
-  return rows.map(([label, grams]) => `${label}: ${formatWeight(grams, system)}`).join('\n')
+  const batch = `${scaled.pieces} × ${formatWeight(scaled.pieceWeightG, system)} dough portions`
+  return [batch, ...rows.map(([label, grams]) => `${label}: ${formatWeight(grams, system)}`)].join('\n')
 }

@@ -59,7 +59,7 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools',
-    lastmod: '2026-09-24',
+    lastmod: '2026-09-25',
     file: 'tools/index.html',
     title: 'Free Kitchen Calculators & Cooking Tools | Savor',
     description: 'Free kitchen tools by a chef: scale recipes, convert cups and grams, resize baking pans, plan portions, find substitutes, calculate brine and dough hydration, or pick dinner at random.',
@@ -68,7 +68,7 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools/recipe-scaler',
-    lastmod: '2026-09-24',
+    lastmod: '2026-09-25',
     file: 'tools/recipe-scaler/index.html',
     title: 'Recipe Scaler — Scale Ingredients & Servings Free | Savor',
     description: 'Scale any recipe up or down for a new serving size. Paste your ingredient list, choose the servings and get scaled quantities instantly — free, no signup.',
@@ -77,7 +77,7 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools/measurement-converter',
-    lastmod: '2026-09-24',
+    lastmod: '2026-09-25',
     file: 'tools/measurement-converter/index.html',
     title: 'Cooking Measurement Converter — Cups, Grams & More | Savor',
     description: 'Convert cups, grams, ounces, ml, litres, temperatures and whole recipe ingredient lists between US and metric. Free, ingredient-aware and no signup.',
@@ -86,7 +86,7 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools/pan-converter',
-    lastmod: '2026-09-24',
+    lastmod: '2026-09-25',
     file: 'tools/pan-converter/index.html',
     title: 'Baking Pan Converter — Cake Pan Size Calculator | Savor',
     description: 'Convert a baking recipe between round, square, rectangular and loaf pans. Get the batter multiplier, depth change and scaled ingredients free — no signup.',
@@ -95,7 +95,7 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools/portion-planner',
-    lastmod: '2026-09-24',
+    lastmod: '2026-09-25',
     file: 'tools/portion-planner/index.html',
     title: 'Food Portion Calculator — How Much Food Per Person? | Savor',
     description: 'Calculate how much pasta, rice, meat, potatoes, salad and more you need for a crowd. Adjust for adults, children, appetite, buffets and leftovers — free.',
@@ -104,7 +104,7 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools/ingredient-substitutions',
-    lastmod: '2026-09-24',
+    lastmod: '2026-09-25',
     file: 'tools/ingredient-substitutions/index.html',
     title: 'Ingredient Substitution Finder — Cooking & Baking Swaps | Savor',
     description: 'Find practical ingredient substitutes for baking and cooking. See the swap ratio, what changes, and when not to use it — free, no signup.',
@@ -113,7 +113,7 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools/brine-calculator',
-    lastmod: '2026-09-24',
+    lastmod: '2026-09-25',
     file: 'tools/brine-calculator/index.html',
     title: 'Fermentation Brine Calculator — Salt Percentage | Savor',
     description: 'Calculate salt for vegetable fermentation by total food-and-water weight or water-only brine percentage. Free brine calculator with grams and ounces.',
@@ -122,10 +122,10 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools/bakers-percentage',
-    lastmod: '2026-09-24',
+    lastmod: '2026-09-25',
     file: 'tools/bakers-percentage/index.html',
     title: 'Baker’s Percentage & Dough Hydration Calculator | Savor',
-    description: 'Calculate true dough hydration, baker’s percentages and starter contribution, then scale bread or pizza dough by loaf or dough-ball weight. Free, no signup.',
+    description: 'Calculate dough hydration, baker’s percentages and starter contribution, then scale bread or pizza dough by loaf or dough-ball weight. Free, no signup.',
     canonical: `${SITE_URL}/tools/bakers-percentage/`,
     ogImageAlt: 'Savor baker’s percentage and dough hydration calculator for bread and pizza dough',
   }),

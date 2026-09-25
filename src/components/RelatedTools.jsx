@@ -9,15 +9,12 @@ export default function RelatedTools({ current }) {
 
   return (
     <section className="tool-shell related-tools" aria-labelledby={`related-tools-${current}`}>
-      <span className="doc-eyebrow">Related kitchen tools</span>
-      <h2 id={`related-tools-${current}`}>Keep the kitchen maths moving.</h2>
+      <h2 id={`related-tools-${current}`}>More kitchen tools</h2>
       <div className="related-tools-grid">
         {related.map((item) => (
           <a href={item.href} className="related-tool-card" key={item.id}>
-            <span className="tool-card-eyebrow">{item.category}</span>
             <strong>{item.title}</strong>
-            <span>{item.description}</span>
-            <em>{item.action} →</em>
+            <span aria-hidden="true">→</span>
           </a>
         ))}
       </div>

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import '@fontsource/jetbrains-mono/600.css'
 import Footer from '../components/Footer'
 import RelatedTools from '../components/RelatedTools'
-import { PLAY_URL } from '../data/seoPages'
+import ToolAppCta from '../components/ToolAppCta'
 import { buildScalingNotes, scaleIngredientList } from '../lib/recipeScaler'
 import {
   PAN_PRESETS,
@@ -208,10 +208,10 @@ export default function PanConverter() {
         <section className="tool-hero">
           <div className="tool-shell">
             <a href="/tools/" className="tool-back-link">← Free kitchen tools</a>
-            <span className="doc-eyebrow">Free baking pan converter</span>
-            <h1>Convert a baking recipe to the pan you actually own.</h1>
+            <span className="doc-eyebrow">Baking</span>
+            <h1>Baking pan converter</h1>
             <p className="tool-lead">
-              Tell us which pan the recipe expects and which pan is in your cupboard. Savor works out the batter multiplier, shows how the depth changes and can scale the ingredient list for you.
+              Enter the recipe’s pan size and yours to calculate an ingredient multiplier. The estimate uses pan area to keep a similar batter depth.
             </p>
           </div>
         </section>
@@ -245,10 +245,10 @@ export default function PanConverter() {
                 <div className="pan-result-details">
                   <div><span>Recipe pan area</span><strong>{formatArea(result.sourceArea, unit)}</strong></div>
                   <div><span>Your pan area</span><strong>{formatArea(result.targetArea, unit)}</strong></div>
-                  <div><span>Same recipe, new pan</span><strong>{Math.round(result.unscaledDepthRatio * 100)}% depth</strong></div>
+                  <div><span>Estimated depth, unscaled</span><strong>{Math.round(result.unscaledDepthRatio * 100)}% depth</strong></div>
                 </div>
                 <div className="pan-result-advice">
-                  <p><strong>Batter depth:</strong> {copy.depth}</p>
+                  <p><strong>Estimated batter depth:</strong> {copy.depth}</p>
                   <p><strong>Bake time:</strong> {copy.timing}</p>
                   {result.approximate && result.caveat && <p><strong>Shape/depth note:</strong> {result.caveat}</p>}
                 </div>
@@ -276,7 +276,7 @@ export default function PanConverter() {
               </div>
               <label className="sr-only" htmlFor="pan-ingredients">Recipe ingredient list</label>
               <textarea id="pan-ingredients" value={ingredients} onChange={(event) => setIngredients(event.target.value)} spellCheck="false" />
-              <p className="scaler-hint">Quantities are multiplied by the pan-area ratio. Lines without a leading quantity stay as written.</p>
+              <p className="scaler-hint">Start each ingredient with its quantity. Bracketed equivalents, such as 1 cup (125 g), scale together. Package sizes stay unchanged.</p>
             </div>
 
             <div className="scaler-output-card" aria-live="polite">
@@ -291,6 +291,9 @@ export default function PanConverter() {
                     <span>{scaled.scaledCount} {scaled.scaledCount === 1 ? 'line' : 'lines'} scaled</span>
                     {scaled.unchangedCount > 0 && <span>{scaled.unchangedCount} left as written</span>}
                   </div>
+                  {scaled.reviewLines.length > 0 && (
+                    <p className="scaler-review-note">Check {scaled.reviewLines.length === 1 ? 'line' : 'lines'} {scaled.reviewLines.join(', ')}: additional quantities were left unchanged. Put any extra amounts that should scale on separate lines.</p>
+                  )}
                   <button type="button" className="btn btn-fruit scaler-copy" onClick={copyIngredients}>{copied ? 'Copied ✓' : 'Copy scaled ingredients'}</button>
                 </>
               ) : (
@@ -302,8 +305,8 @@ export default function PanConverter() {
 
         <section className="tool-shell scaler-notes-section">
           <div className="chef-note-card">
-            <span className="chef-note-kicker">The useful caveat</span>
-            <h2>Pan area can scale batter. It cannot promise a bake time.</h2>
+            <span className="chef-note-kicker">Baking notes</span>
+            <h2>Check capacity and baking time</h2>
             <p>
               Scaling by surface area keeps batter depth roughly similar when the pans have comparable depth and shape. That makes it a good starting point for cakes, brownies and tray bakes — but ovens, pan material, batter type and actual pan depth still matter.
             </p>
@@ -316,12 +319,12 @@ export default function PanConverter() {
         <section className="tool-shell tool-explainer pan-explainer">
           <div>
             <span className="doc-eyebrow">How it works</span>
-            <h2>Same depth = target area ÷ original area.</h2>
+            <h2>How pan area sets the multiplier</h2>
             <p>
               An 8-inch round pan has about 50.3 square inches of surface area. A 9-inch round has about 63.6. Divide 63.6 by 50.3 and you get roughly 1.27 — so making 1.27× the batter keeps the depth close to the original recipe.
             </p>
             <p>
-              This is intentionally an area calculator, not a fake-precision oven predictor. Deep tins, very shallow trays, Bundt pans and unusually sloped pans are better compared by actual capacity.
+              For deep tins, shallow trays, Bundt pans or sloped sides, compare the pans’ actual capacity as well. Area alone does not tell you how much batter a pan can hold.
             </p>
           </div>
           <div className="formula-card" aria-label="Baking pan conversion formula">
@@ -335,15 +338,7 @@ export default function PanConverter() {
 
         <RelatedTools current="pan-converter" />
 
-        <section className="tool-shell tool-app-cta" data-nosnippet="">
-          <img src="/icons/icon-Tangerine.webp" alt="" width="72" height="72" loading="lazy" decoding="async" />
-          <div>
-            <span className="tool-card-eyebrow">Keep the recipe, not the maths</span>
-            <h2>Savor keeps your recipes clean and cookable.</h2>
-            <p>Save recipes from websites, screenshots, cookbooks and handwritten cards, then scale quantities whenever you need them.</p>
-          </div>
-          <a href={PLAY_URL} target="_blank" rel="noreferrer" className="btn btn-fruit tool-app-button">Get Savor</a>
-        </section>
+        <ToolAppCta />
       </main>
       <Footer />
     </>

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import '@fontsource/jetbrains-mono/600.css'
 import Footer from '../components/Footer'
 import RelatedTools from '../components/RelatedTools'
-import { PLAY_URL } from '../data/seoPages'
+import ToolAppCta from '../components/ToolAppCta'
 import {
   buildDoughNotes,
   calculateDough,
@@ -94,9 +94,9 @@ export default function BakersPercentage() {
         <section className="tool-hero">
           <div className="tool-shell">
             <a href="/tools/" className="tool-back-link">← Free kitchen tools</a>
-            <span className="doc-eyebrow">Free baker’s percentage calculator</span>
-            <h1>Calculate baker’s percentage and true dough hydration.</h1>
-            <p className="tool-lead">Calculate true hydration, baker’s percentages and the flour/water hidden inside your starter — then scale the same formula to however many loaves or pizza balls you need.</p>
+            <span className="doc-eyebrow">Bread & pizza</span>
+            <h1>Baker’s percentage calculator</h1>
+            <p className="tool-lead">Calculate dough hydration, including the flour and water in your starter. Then scale the batch to your desired number and weight of loaves or dough balls.</p>
           </div>
         </section>
 
@@ -136,7 +136,7 @@ export default function BakersPercentage() {
             </div>
 
             <div className="baker-result-column">
-              <span className="tool-card-eyebrow">True formula</span>
+              <span className="tool-card-eyebrow">Dough formula</span>
               <div className={`baker-result-card${result.ok ? '' : ' is-empty'}`} aria-live="polite">
                 {result.ok ? (
                   <>
@@ -163,7 +163,7 @@ export default function BakersPercentage() {
           <div className="baker-scale-card">
             <div className="converter-section-heading">
               <span className="scaler-step">2</span>
-              <div><span className="tool-card-eyebrow">Scale the batch</span><h2>How much dough do you actually need?</h2></div>
+              <div><span className="tool-card-eyebrow">Scale the batch</span><h2>Choose your batch size</h2></div>
             </div>
             <div className="baker-target-grid">
               <label className="converter-field"><span>Loaves / dough balls</span><input type="number" min="1" step="1" inputMode="numeric" value={pieces} onChange={(event) => setPieces(event.target.value)} /></label>
@@ -176,7 +176,7 @@ export default function BakersPercentage() {
                 <div className="baker-scaled-grid">
                   <div><span>Flour</span><strong>{formatWeight(scaled.flourG, system)}</strong></div>
                   <div><span>Water</span><strong>{formatWeight(scaled.waterG, system)}</strong></div>
-                  <div><span>Starter</span><strong>{formatWeight(scaled.starterG, system)}</strong></div>
+                  <div><span>Starter{scaled.starterG > 0 ? ` (${formatPercent(scaled.starterHydration)} hydration)` : ''}</span><strong>{formatWeight(scaled.starterG, system)}</strong></div>
                   <div><span>Salt</span><strong>{formatWeight(scaled.saltG, system)}</strong></div>
                   {scaled.otherG > 0.01 && <div><span>Other</span><strong>{formatWeight(scaled.otherG, system)}</strong></div>}
                 </div>
@@ -188,8 +188,8 @@ export default function BakersPercentage() {
 
         <section className="tool-shell scaler-notes-section">
           <div className="chef-note-card">
-            <span className="chef-note-kicker">Dough reality check</span>
-            <h2>Baker’s percentages are ratios. Flour still has opinions.</h2>
+            <span className="chef-note-kicker">Dough notes</span>
+            <h2>About the hydration figure</h2>
             <ul>{notes.map((note) => <li key={note}>{note}</li>)}</ul>
           </div>
         </section>
@@ -209,15 +209,7 @@ export default function BakersPercentage() {
 
         <RelatedTools current="bakers-percentage" />
 
-        <section className="tool-shell tool-app-cta" data-nosnippet="">
-          <img src="/icons/icon-Tangerine.webp" alt="" width="72" height="72" loading="lazy" decoding="async" />
-          <div>
-            <span className="tool-card-eyebrow">Once the formula is right</span>
-            <h2>Keep the recipe in Savor.</h2>
-            <p>Save the version you actually bake, scale it when the batch changes and keep your kitchen notes with the recipe instead of on another scrap of paper.</p>
-          </div>
-          <a href={PLAY_URL} target="_blank" rel="noreferrer" className="btn btn-fruit tool-app-button">Get Savor</a>
-        </section>
+        <ToolAppCta />
       </main>
       <Footer />
     </>

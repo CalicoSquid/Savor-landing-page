@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import '@fontsource/jetbrains-mono/600.css'
 import Footer from '../components/Footer'
 import RelatedTools from '../components/RelatedTools'
-import { PLAY_URL } from '../data/seoPages'
+import ToolAppCta from '../components/ToolAppCta'
 import {
   APPETITE_LEVELS,
   LEFTOVER_LEVELS,
@@ -58,10 +58,10 @@ export default function PortionPlanner() {
         <section className="tool-hero">
           <div className="tool-shell">
             <a href="/tools/" className="tool-back-link">← Free kitchen tools</a>
-            <span className="doc-eyebrow">Free portion planner</span>
-            <h1>Calculate how much food you need — without cooking for an army.</h1>
+            <span className="doc-eyebrow">Cooking for a crowd</span>
+            <h1>Food portion planner</h1>
             <p className="tool-lead">
-              Tell Savor who is eating, what you are serving and how hungry everyone is. Get a practical shopping quantity with room for kids, buffets and leftovers.
+              Choose a food and enter your guest count. Adjust for appetite, serving style and leftovers to estimate how much to buy.
             </p>
           </div>
         </section>
@@ -80,7 +80,7 @@ export default function PortionPlanner() {
                 <span className="scaler-step">1</span>
                 <div>
                   <span className="tool-card-eyebrow">The crowd</span>
-                  <h2>What are you feeding them?</h2>
+                  <h2>Food and guests</h2>
                 </div>
               </div>
 
@@ -172,8 +172,8 @@ export default function PortionPlanner() {
               </div>
 
               <div className="portion-mini-note">
-                <strong>Chef maths, not catering law.</strong>
-                <span>Portion sizes are a planning baseline. Your menu, guests and serving style still win.</span>
+                <strong>An estimated shopping quantity</strong>
+                <span>Adjust for the rest of your menu and how much your guests usually eat.</span>
               </div>
             </div>
           </div>
@@ -181,21 +181,21 @@ export default function PortionPlanner() {
 
         <section className="tool-shell scaler-notes-section">
           <div className="chef-note-card">
-            <span className="chef-note-kicker">Chef reality check</span>
-            <h2>The number is the starting point. The menu decides the rest.</h2>
+            <span className="chef-note-kicker">Planning notes</span>
+            <h2>About these portions</h2>
             <ul>{notes.map((note) => <li key={note}>{note}</li>)}</ul>
           </div>
         </section>
 
         <section className="tool-shell tool-explainer portion-explainer">
           <div>
-            <span className="doc-eyebrow">How the planner thinks</span>
-            <h2>People are not identical serving spoons.</h2>
+            <span className="doc-eyebrow">How it works</span>
+            <h2>How portions are calculated</h2>
             <p>
-              The calculator starts with a practical adult portion for the selected food, counts children as a fraction of an adult portion, then adjusts for appetite, serving style and whatever leftover buffer you choose.
+              The calculator uses a standard adult portion for the selected food and serving style. Children count as 60% of an adult portion; appetite and leftovers adjust the total.
             </p>
             <p>
-              Buffet portions are deliberately smaller because people are choosing from several dishes. A hungry crowd gets a larger allowance. Leftovers are added last, so “plenty” really means extra food rather than oversized plates.
+              Light appetites reduce the total by 15%; hungry appetites add 20%. Leftovers add 10% or 25%. The final quantity is rounded up for shopping.
             </p>
           </div>
           <div className="formula-card" aria-label="Food portion planning formula">
@@ -203,34 +203,15 @@ export default function PortionPlanner() {
             <strong>×</strong>
             <span>portion for this food</span>
             <strong>×</strong>
-            <span>appetite + leftover buffer</span>
+            <span>appetite factor × leftover factor</span>
             <strong>=</strong>
             <span>shopping target</span>
           </div>
         </section>
 
-        <section className="tool-shell portion-search-section">
-          <span className="doc-eyebrow">Useful for real questions</span>
-          <h2>How much food do I need for a crowd?</h2>
-          <div className="portion-search-grid">
-            <div><strong>Pasta for 12 people</strong><span>Use dry weight and choose whether it is the main event or a side.</span></div>
-            <div><strong>Rice for 20 people</strong><span>Plan uncooked rice before it expands in the pot.</span></div>
-            <div><strong>Meat for a BBQ</strong><span>Choose boneless or bone-in and account for hungry guests.</span></div>
-            <div><strong>Potatoes for a roast</strong><span>Build in peeling loss, children and leftovers before you shop.</span></div>
-          </div>
-        </section>
-
         <RelatedTools current="portion-planner" />
 
-        <section className="tool-shell tool-app-cta" data-nosnippet="">
-          <img src="/icons/icon-Tangerine.webp" alt="" width="72" height="72" loading="lazy" decoding="async" />
-          <div>
-            <span className="tool-card-eyebrow">Once you know how much</span>
-            <h2>Scale the actual recipe in Savor.</h2>
-            <p>Save recipes from websites, screenshots, cookbooks and handwritten cards, then adjust servings whenever the guest list changes.</p>
-          </div>
-          <a href={PLAY_URL} target="_blank" rel="noreferrer" className="btn btn-fruit tool-app-button">Get Savor</a>
-        </section>
+        <ToolAppCta />
       </main>
       <Footer />
     </>

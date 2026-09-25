@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import '@fontsource/jetbrains-mono/600.css'
 import Footer from '../components/Footer'
 import RelatedTools from '../components/RelatedTools'
-import { PLAY_URL } from '../data/seoPages'
+import ToolAppCta from '../components/ToolAppCta'
 import { buildScalingNotes, scaleIngredientList } from '../lib/recipeScaler'
 import './pages.css'
 import './tools.css'
@@ -68,10 +68,10 @@ export default function RecipeScaler() {
         <section className="tool-hero">
           <div className="tool-shell">
             <a href="/tools/" className="tool-back-link">← Free kitchen tools</a>
-            <span className="doc-eyebrow">Free recipe scaler</span>
-            <h1>Scale a recipe up or down without doing fractions in your head.</h1>
+            <span className="doc-eyebrow">Servings</span>
+            <h1>Recipe scaler</h1>
             <p className="tool-lead">
-              Paste your ingredient list, tell us how many servings it makes and how many you need. The maths happens instantly — your kitchen judgement remains gloriously human.
+              Paste your ingredients and enter the original and target servings. Quantities update as you type.
             </p>
           </div>
         </section>
@@ -94,7 +94,7 @@ export default function RecipeScaler() {
               spellCheck="false"
               placeholder={'500 g potatoes\n2 tbsp olive oil\n1/2 tsp salt'}
             />
-            <p className="scaler-hint">Start each ingredient with its quantity. Lines like “salt to taste” stay unchanged.</p>
+            <p className="scaler-hint">Start each ingredient with its quantity. Bracketed equivalents, such as 1 cup (125 g), scale together. Package sizes stay unchanged.</p>
 
             <div className="servings-row">
               <label>
@@ -143,6 +143,9 @@ export default function RecipeScaler() {
                   <span>{result.scaledCount} {result.scaledCount === 1 ? 'line' : 'lines'} scaled</span>
                   {result.unchangedCount > 0 && <span>{result.unchangedCount} left as written</span>}
                 </div>
+                {result.reviewLines.length > 0 && (
+                  <p className="scaler-review-note">Check {result.reviewLines.length === 1 ? 'line' : 'lines'} {result.reviewLines.join(', ')}: additional quantities were left unchanged. Put any extra amounts that should scale on separate lines.</p>
+                )}
                 <button type="button" className="btn btn-fruit scaler-copy" onClick={copyResult}>
                   {copied ? 'Copied ✓' : 'Copy scaled ingredients'}
                 </button>
@@ -155,28 +158,28 @@ export default function RecipeScaler() {
 
         <section className="tool-shell scaler-notes-section">
           <div className="chef-note-card">
-            <span className="chef-note-kicker">The calculator does the maths. You still do the cooking.</span>
-            <h2>A few things worth knowing before you make the bigger batch.</h2>
+            <span className="chef-note-kicker">Cooking notes</span>
+            <h2>When changing the batch size</h2>
             {notes.length ? (
               <ul>
                 {notes.map((note) => <li key={note}>{note}</li>)}
               </ul>
             ) : (
-              <p>Most ordinary ingredient quantities scale cleanly. Cooking time, seasoning and pan geometry are the bits that deserve your attention.</p>
+              <p>Check cooking time, seasoning and pan size when changing the batch.</p>
             )}
-            <a href="/blog/how-to-scale-a-recipe/" className="tool-inline-link">Read the chef’s guide to scaling recipes →</a>
+            <a href="/blog/how-to-scale-a-recipe/" className="tool-inline-link">More about scaling recipes →</a>
           </div>
         </section>
 
         <section className="tool-shell tool-explainer">
           <div>
             <span className="doc-eyebrow">How it works</span>
-            <h2>The simple recipe scaling formula</h2>
+            <h2>How to calculate the multiplier</h2>
             <p>
               Divide the servings you want by the servings the original recipe makes. That is your scaling factor. A recipe for 4 scaled to 10 portions has a factor of 2.5, so each ingredient quantity is multiplied by 2.5.
             </p>
             <p>
-              This tool understands common whole numbers, decimals, fractions like 3/4 and mixed amounts like 1 1/2. Ingredient lines without a leading quantity are deliberately left alone.
+              Whole numbers, decimals, fractions such as 3/4 and mixed amounts such as 1 1/2 are supported. Lines without a leading quantity stay unchanged.
             </p>
           </div>
           <div className="formula-card" aria-label="Recipe scaling formula">
@@ -190,15 +193,7 @@ export default function RecipeScaler() {
 
         <RelatedTools current="recipe-scaler" />
 
-        <section className="tool-shell tool-app-cta" data-nosnippet="">
-          <img src="/icons/icon-Tangerine.webp" alt="" width="72" height="72" loading="lazy" decoding="async" />
-          <div>
-            <span className="tool-card-eyebrow">Want this built into every recipe?</span>
-            <h2>Savor scales saved recipes while you cook.</h2>
-            <p>Save recipes from websites, screenshots, cookbooks and handwritten cards, then change the serving count whenever you need it.</p>
-          </div>
-          <a href={PLAY_URL} target="_blank" rel="noreferrer" className="btn btn-fruit tool-app-button">Get Savor</a>
-        </section>
+        <ToolAppCta />
       </main>
       <Footer />
     </>

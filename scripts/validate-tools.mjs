@@ -44,6 +44,7 @@ import {
   inputWeightToGrams,
   scaleDough,
   starterBreakdown,
+  scaledFormulaText,
 } from '../src/lib/bakersPercentage.js'
 
 
@@ -88,6 +89,11 @@ assert.ok(conversionIngredientNames(conversionData, { weightVolumeOnly: true }).
 const scaled = scaleIngredientList('1 1/2 cups flour\n2 eggs\nsalt to taste', 4, 7)
 assert.equal(scaled.output, '2 5/8 cups flour\n3 1/2 eggs\nsalt to taste')
 assert.equal(scaled.fractionalEgg, true)
+
+const pairedAmounts = scaleIngredientList('1 cup (125 g) flour\n125 g [1 cup] flour\n2 (400 g) tins tomatoes\n1 cup plus 2 tbsp milk', 2, 4)
+assert.equal(pairedAmounts.output, '2 cup (250 g) flour\n250 g [2 cup] flour\n4 (400 g) tins tomatoes\n2 cup plus 2 tbsp milk')
+assert.deepEqual(pairedAmounts.reviewLines, [3, 4])
+assert.deepEqual(scaleIngredientList('2 (400 g) tins tomatoes', 4, 4).reviewLines, [])
 
 const cupFlour = convertMeasurement('1', 'cup', 'g', 'flour', conversionData)
 assert.equal(cupFlour.ok, true)
@@ -150,6 +156,19 @@ const ranges = convertRecipeText(`1–2 cups flour
 assert.equal(ranges.output, `120–240 g flour
 30–45 ml oil`)
 assert.equal(ranges.convertedCount, 2)
+
+// Cup shorthand must never turn an ingredient into a temperature.
+assert.equal(convertRecipeText('1 c flour\n1 C milk', 'metric', conversionData).output, '120 g flour\n240 ml milk')
+assert.equal(convertRecipeText('1 c flour\n1 C milk', 'us', conversionData).output, '1 c flour\n1 C milk')
+assert.equal(convertRecipeText('1 c. flour', 'metric', conversionData).output, '120 g flour')
+for (const system of ['metric', 'us']) {
+  assert.equal(convertRecipeText('180 C\n180 C fan\n180C for 20 minutes', system, conversionData).output, '180 C\n180 C fan\n180C for 20 minutes')
+}
+assert.equal(convertRecipeText('Bake at 180 C\n180°C\n180 Celsius\n180 degrees C', 'us', conversionData).output, 'Bake at 355°F\n355°F\n355°F\n355°F')
+
+// Direct conversions must remain useful before ingredient data arrives.
+assert.equal(convertRecipeText('8 oz cream cheese\n1 cup milk\nBake at 350°F', 'metric', null).output, '227 g cream cheese\n237 ml milk\nBake at 175°C')
+assert.equal(convertRecipeText('120 ml milk\n100 g flour', 'us', null).output, '1/2 cup milk\n3.53 oz flour')
 
 
 const eightRound = presetToPan('round-8in', 'in')
@@ -258,6 +277,14 @@ const scaledDough = scaleDough(sourdough, { pieces: 2, pieceWeight: 900, system:
 assert.equal(scaledDough.ok, true)
 assert.ok(Math.abs(scaledDough.targetTotalG - 1800) < 0.000001)
 assert.ok(Math.abs(scaledDough.factor - (1800 / 1770)) < 0.000001)
+
+const stiffStarterDough = calculateDough({ flour: 900, water: 650, starter: 150, starterHydration: 50, salt: 20 })
+const stiffStarterScaled = scaleDough(stiffStarterDough, { pieces: 2, pieceWeight: 860 })
+const copiedFormula = scaledFormulaText(stiffStarterScaled)
+assert.match(copiedFormula, /^2 × 860 g dough portions\n/)
+assert.match(copiedFormula, /Starter \/ preferment \(50% hydration\): 150 g/)
+assert.match(scaledFormulaText(stiffStarterScaled, 'us'), /Starter \/ preferment \(50% hydration\): 5.29 oz/)
+assert.doesNotMatch(scaledFormulaText(scaleDough(calculateDough({ flour: 1000, water: 700, salt: 20 }), { pieces: 2, pieceWeight: 860 })), /Starter/)
 
 const usWeight = gramsToInputWeight(500, 'us')
 assert.ok(Math.abs(inputWeightToGrams(usWeight, 'us') - 500) < 0.00001)
