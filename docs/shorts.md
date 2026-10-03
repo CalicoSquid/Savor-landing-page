@@ -16,7 +16,8 @@ recipe URL or leave the field empty.
 
 The featured list is curated manually and requires a site rebuild/deployment.
 Connecting an account or posting a Reel does not automatically feature it.
-The recipe link does not alter captions automatically; edit captions as needed.
+Studio adds the recipe URL and a link-in-bio reminder to the published/copied
+caption. This does not update the featured list or your platform profile links.
 
 No sample recipes or unpublished videos are presented as real posts. Until the
 first entry is supplied, the page shows a short introduction and Instagram link.
