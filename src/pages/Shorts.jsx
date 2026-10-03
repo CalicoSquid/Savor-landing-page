@@ -1,10 +1,24 @@
+import { useEffect, useState } from 'react'
 import Footer from '../components/Footer'
 import { SHORTS } from '../data/shorts'
 import './pages.css'
 import './Shorts.css'
 
 export default function Shorts() {
-  const posts = [...SHORTS].sort((a, b) => b.featuredAt.localeCompare(a.featuredAt))
+  const [entries, setEntries] = useState(SHORTS)
+  useEffect(() => {
+    const controller = new AbortController()
+    const timeout = window.setTimeout(() => controller.abort(), 8000)
+    fetch('/api/shorts', { signal: controller.signal, cache: 'no-store' }).then(response => {
+      if (!response.ok) throw new Error('Featured recipes unavailable')
+      return response.json()
+    }).then(body => {
+      if (!Array.isArray(body.items)) throw new Error('Invalid featured recipes')
+      if (!controller.signal.aborted) setEntries(body.items)
+    }).catch(() => { /* Keep the known featured entry if the feed is temporarily unavailable. */ }).finally(() => window.clearTimeout(timeout))
+    return () => { controller.abort(); window.clearTimeout(timeout) }
+  }, [])
+  const posts = [...entries].sort((a, b) => b.featuredAt.localeCompare(a.featuredAt))
   return <>
     <main className="page doc-page shorts-page">
       <div className="container doc-inner shorts-inner">

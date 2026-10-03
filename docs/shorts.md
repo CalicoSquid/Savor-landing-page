@@ -1,23 +1,9 @@
 # Recipes from videos
 
-`/shorts/` is the permanent bio-link page. It links to existing shared Savor
-recipes, without connecting Studio to the recipe database.
+`/shorts/` links to existing shared Savor recipes. The recipe database is not connected or changed.
 
-Add featured posts to `src/data/shorts.js`, using the example in that file.
-Give each post a unique ID, a recipe title, an existing HTTPS `/r/{id}` recipe
-URL, and a featured date (`featuredAt`, `YYYY-MM-DD`). The image and published video URL
-are optional. Use a recipe photo or a recognizable video still; local images
-go in `public/images/`. Posts display newest first.
+Admins can open **Studio > Settings > Manage /shorts** and choose **Add recipe** or **Edit**. Enter the recipe title, shared Savor `/r/{id}` URL, and published YouTube/Instagram/TikTok URL. An HTTPS image URL is optional. Posted date controls newest-first order. **Save to /shorts** updates the public list without rebuilding the website. **Remove** followed by **Confirm removal** removes a featured entry, not the recipe or social post.
 
-In Studio's Publish screen, paste the shared recipe into **Recipe link** and
-save the publishing copy. Use **Open recipe** to check it and **Copy recipe
-link** when preparing the featured entry. Other Studio users can use any HTTPS
-recipe URL or leave the field empty.
+Other Studio users do not see this editor. The server rejects non-admin reads and writes to `/api/admin/shorts`; browser roles cannot grant access. The public read-only feed exposes only featured entries at `/api/public/shorts`. Netlify proxies `/api/shorts` to it. Studio stores this list separately in its existing metadata store, with revision checks to prevent lost edits.
 
-The featured list is curated manually and requires a site rebuild/deployment.
-Connecting an account or posting a Reel does not automatically feature it.
-Studio adds the recipe URL and a link-in-bio reminder to the published/copied
-caption. This does not update the featured list or your platform profile links.
-
-No sample recipes or unpublished videos are presented as real posts. Until the
-first entry is supplied, the page shows a short introduction and Instagram link.
+The current doughnut recipe is the initial entry. `src/data/shorts.js` provides the build-time/failure fallback. Normal live updates come from the feed, including an intentionally empty list. If the feed is temporarily unavailable, the website retains its bundled fallback. Publishing a social post does not automatically feature it; add the returned video URL after posting.

@@ -13,6 +13,13 @@
 
 # Keep one public host and protocol. Domain-level rules only apply when the
 # relevant custom domains are attached to this Netlify site.
+# Read-only Studio feed; editing remains behind Studio admin authentication.
+[[redirects]]
+  from = "/api/shorts"
+  to = "https://studio.getsavor.recipes/api/public/shorts"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "http://getsavor.recipes/*"
   to = "https://getsavor.recipes/:splat"

@@ -1,8 +1,5 @@
-// Add real published videos here, newest first. No recipe database connection.
-// { id: 'unique-post-name', title: 'Recipe name', recipeUrl:
-//   'https://getsavor.recipes/r/RECIPE_ID', videoUrl:
-//   'https://www.instagram.com/reel/REEL_ID/', image: '/images/recipe.webp',
-//   featuredAt: '2026-10-03' }
+// Bundled fallback for prerendering or a temporarily unavailable live feed.
+// Manage published entries in Studio Settings as an admin.
 export const SHORTS = [
   {
     id: 'potato-doughnuts',
