@@ -8,6 +8,7 @@ import About from './pages/About'
 import IronKitchen from './pages/IronKitchen'
 import Faq from './pages/Faq'
 import Recipes from './pages/Recipes'
+import Shorts from './pages/Shorts'
 import RecipePage from './pages/RecipePage'
 import DemoBlog from './pages/DemoBlog'
 import BlogIndex from './pages/blog/BlogIndex'
@@ -55,6 +56,7 @@ export default function AppRoutes() {
         <Route path="/recipes"                  element={<Recipes />} />
         <Route path="/studio"                   element={<Studio />} />
         <Route path="/r/:id"                    element={<RecipePage />} />
+        <Route path="/shorts"                   element={<Shorts />} />
         <Route path="/demo"                     element={<DemoBlog />} />
         <Route path="/blog"                     element={<BlogIndex />} />
         <Route path="/blog/save-handwritten-recipe-cards" element={<SaveHandwrittenRecipeCards />} />

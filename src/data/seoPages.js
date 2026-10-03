@@ -17,6 +17,15 @@ const page = (config) => ({
 
 export const STATIC_SEO_PAGES = [
   page({
+    path: '/shorts',
+    file: 'shorts/index.html',
+    title: 'Recipes from our videos | Savor',
+    description: 'Find the full recipes from Savor cooking videos. Browse the dishes you saw on YouTube or Instagram and get straight to the recipe.',
+    canonical: `${SITE_URL}/shorts/`,
+    ogImageAlt: 'Recipes from Savor cooking videos',
+    lastmod: '2026-10-03',
+  }),
+  page({
     path: '/',
     lastmod: '2026-09-24',
     file: 'index.html',

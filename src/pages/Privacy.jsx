@@ -1,7 +1,7 @@
 import Footer from '../components/Footer'
 
 export default function Privacy() {
-  const LAST_UPDATED = "August 15, 2026";
+  const LAST_UPDATED = "October 1, 2026";
 
   const section = (title, children) => (
     <div style={{ marginBottom: 48 }}>
@@ -121,6 +121,7 @@ export default function Privacy() {
               "Email address — if you register with email and password, we store your email for authentication only.",
               "Your username — displayed alongside recipes you share to the community feed.",
               "Recipes you save — stored in your personal recipe box on our servers.",
+              "Custom recipe photos - free users keep photos on their device. Pro users can back them up privately in Firebase Storage and choose to publish a separate photo with their own Community recipe.",
               "Recipes you choose to share — visible to other Savor users in the community feed.",
               "Savor Pro purchase status — if you buy Savor Pro through a subscription or one-time lifetime purchase, we receive the purchase and entitlement status from RevenueCat and Google Play. We never see your payment card details.",
             ])}
@@ -173,6 +174,7 @@ export default function Privacy() {
           </>)}
 
           {section("Data retention and deletion", <>
+            {p("Private recipe photo backup access ends immediately when you delete the recipe or your account; storage cleanup removes the files. Published Community photos remain with their recipes after account deletion. You can remove your own Community photo before deleting your account, or report an inappropriate photo for review.")}
             {p("You can delete your Savor account at any time from within the app (Settings → Privacy & Data → Delete Account). This permanently deletes your account, email address, and all saved recipes immediately.")}
             {p("Recipes you have shared to the community feed remain as anonymous contributions after account deletion — your username is removed but the recipe stays. This is intentional so the community isn't disrupted when someone leaves. If you want a specific shared recipe removed, contact us.")}
             {p("Potluck does not maintain a user account or personal profile to delete. Anonymous operational and product-event records are not linked to a known person or Savor account.")}

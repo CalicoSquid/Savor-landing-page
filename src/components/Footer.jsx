@@ -16,6 +16,7 @@ export default function Footer() {
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/tools/">Kitchen Tools</a></li>
           <li><a href="/recipes/">Recipes</a></li>
+          <li><a href="/shorts/">Recipes from videos</a></li>
           <li><a href="/faq/">FAQ</a></li>
           <li><a href="/iron-kitchen/">Savor × Iron Kitchen</a></li>
           <li><a href="/potluck/">Potluck</a></li>

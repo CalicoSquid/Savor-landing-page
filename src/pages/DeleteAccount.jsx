@@ -85,7 +85,7 @@ export default function DeleteAccount() {
             <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
               Your account, email address, saved recipes, and all personal data are permanently deleted immediately.
               Recipes you've shared to the community feed remain as anonymous contributions — this is by design,
-              so the community isn't affected when someone leaves.
+              so the community isn't affected when someone leaves. Published recipe photos remain too; remove your Community photo in the app before deleting your account if you do not want it to remain public. Private photo backup access ends immediately and storage cleanup removes those files.
             </p>
           </div>
 

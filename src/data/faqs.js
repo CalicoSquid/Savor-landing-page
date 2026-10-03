@@ -3,12 +3,25 @@
 
 export const FAQS = [
   {
+    q: "Can I add my own recipe photo?",
+    a: "Yes. Open a recipe, tap Edit, then Add Photo or Change Photo. Everyone can keep a custom photo on this phone. Pro also backs it up privately so it follows your account to another device. For an existing local photo, tap Back up my photo in the editor. Choosing a photo never publishes it automatically.",
+  },
+  {
+    q: "How do I share or change a Community photo?",
+    a: "When you share your own recipe, choose Original image or My photo. Publishing My photo requires Pro and a completed backup. For an already shared recipe, tap Community photo to update its public image; changing your private photo alone leaves Community unchanged. You cannot change another cook's public recipe photo. Open the Community recipe to remove your published photo or report an inappropriate photo.",
+  },
+  {
+    q: "What happens to my photos if Pro ends or I delete my account?",
+    a: "Existing backed-up photos stay readable and published photos stay visible after Pro ends. New backups and new custom-photo publications require Pro; removing a photo or restoring the original does not. Account deletion removes access to private backups immediately and storage cleanup removes their files. Community recipes and their published photos remain; remove your Community photo before deleting your account if you do not want it to remain public.",
+  },
+
+  {
     q: 'What is Savor?',
     a: "Savor is a recipe organiser app, made by a chef, for keeping every recipe that matters to you in one place. You can save recipes from any website, scan them off cookbook pages or handwritten cards with your camera, or type one in from memory — and Savor turns each into a clean, ad-free recipe card. It's available on Android.",
   },
   {
     q: 'Is Savor free?',
-    a: 'Yes. Savor is free to download and use, and the free version lets you build a generous library of recipes. There is an optional Savor Pro upgrade that unlocks unlimited recipes and all of the colour themes, available as a subscription or a one-time lifetime purchase. You never have to pay to get started.',
+    a: 'Yes. Savor is free to download and use, and the free version lets you build a generous library of recipes. There is an optional Savor Pro upgrade that unlocks unlimited recipes, all standard colour themes, private recipe photo backup and the option to publish your own photo in Community, available as a subscription or a one-time lifetime purchase. You never have to pay to get started.',
   },
   {
     q: 'How do I save a recipe from a website?',
