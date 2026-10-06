@@ -49,6 +49,30 @@ try {
   assert.match(importedHtml, /<link rel="canonical" href="https:\/\/example\.org\/original-pasta"/)
 
   const missing = await call({ recipe: null, id: 'gone' })
+  for (const sourceUrl of [null, 'https://example.org/original-pasta']) {
+    const pinterestRecipe = {
+      ...original, sourceUrl,
+      times: { prep: { hours: 0, minutes: 10 }, cook: { hours: 0, minutes: 20 } },
+      description: 'A recipe with </script> in its description.',
+    }
+    const pinterest = await call({ recipe: pinterestRecipe, userAgent: 'Pinterestbot/1.0' })
+    const html = await pinterest.text()
+    assert.equal(pinterest.status, 200)
+    const match = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)
+    assert.ok(match, 'Pinterest must receive Recipe metadata in server HTML')
+    const metadata = JSON.parse(match[1])
+    assert.equal(metadata['@type'], 'Recipe')
+    assert.deepEqual(metadata.recipeIngredient, original.ingredients)
+    assert.equal(metadata.recipeYield, '2 servings')
+    assert.equal(metadata.prepTime, 'PT0H10M')
+    assert.equal(metadata.cookTime, 'PT0H20M')
+    assert.equal(metadata.description, pinterestRecipe.description)
+    assert.equal(metadata.url, 'https://getsavor.recipes/r/test-original')
+    assert.match(html, /noindex, follow/)
+  }
+  const social = await call({ recipe: original, userAgent: 'facebookexternalhit/1.1' })
+  assert.doesNotMatch(await social.text(), /application\/ld\+json/)
+
   const missingHtml = await missing.text()
   assert.equal(missing.status, 404)
   assert.match(missingHtml, /noindex, follow/)

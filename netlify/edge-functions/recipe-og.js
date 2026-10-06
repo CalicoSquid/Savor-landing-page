@@ -4,7 +4,7 @@
 // edge function is the source of truth for recipe indexability:
 //   - original Savor recipes: full indexable Recipe HTML
 //   - imported recipes: noindex + canonical back to the original publisher
-//   - social preview bots: thin noindex OG card
+//   - social preview bots: thin noindex OG card (Pinterest includes Recipe data)
 
 const SEARCH_CRAWLERS = [
   'googlebot', 'bingbot', 'applebot', 'duckduckbot', 'yandexbot',
@@ -138,12 +138,13 @@ function baseHead({ metaTitle, displayTitle, desc, image, pageUrl }) {
   <meta name="twitter:image:alt" content="${displayTitle}" />`
 }
 
-function thinStub({ metaTitle, displayTitle, desc, image, pageUrl, canonicalUrl }) {
+function thinStub({ metaTitle, displayTitle, desc, image, pageUrl, canonicalUrl, recipe }) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>${baseHead({ metaTitle, displayTitle, desc, image, pageUrl })}
   <link rel="canonical" href="${canonicalUrl}" />
   <meta name="robots" content="noindex, follow" />
+  ${recipe ? `<script type="application/ld+json">${buildJsonLd(recipe, pageUrl)}</script>` : ''}
 </head>
 <body>
   <p>Shared with Savor.</p>
@@ -252,7 +253,10 @@ export default async function handler(request, context) {
         canonicalUrl: escapeHtml(recipe.sourceUrl),
       })
     } else {
-      html = thinStub({ metaTitle, displayTitle, desc, image, pageUrl, canonicalUrl: pageUrl })
+      html = thinStub({
+        metaTitle, displayTitle, desc, image, pageUrl, canonicalUrl: pageUrl,
+        recipe: userAgent.includes('pinterest') ? recipe : undefined,
+      })
     }
 
     return new Response(html, {
