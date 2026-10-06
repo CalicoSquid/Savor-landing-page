@@ -76,20 +76,26 @@ try {
 
   RECIPE_IMAGE_OVERRIDES['test-photo-override'] = {
     image: '/images/recipes/replacement.webp', imageCredit: null,
+    ingredientGroups: [{ label: 'Sauce & herbs', startIndex: 0 }, { label: 'Pasta', startIndex: 1 }],
   }
   try {
     const recipe = { ...original, imageCredit: { photographer: 'Old credit' } }
     const overridden = applyRecipeImageOverride(recipe, 'test-photo-override')
     assert.equal(overridden.imageCredit, null)
+    assert.deepEqual(overridden.ingredientGroups, RECIPE_IMAGE_OVERRIDES['test-photo-override'].ingredientGroups)
     assert.equal(recipe.image, original.image, 'Overrides must not mutate API data')
     for (const userAgent of ['Pinterestbot/1.0', 'Googlebot', 'facebookexternalhit/1.1']) {
       const response = await call({ recipe, id: 'test-photo-override', userAgent })
       const html = await response.text()
       assert.match(html, /og:image" content="https:\/\/getsavor\.recipes\/images\/recipes\/replacement.webp"/)
       assert.doesNotMatch(html, /example.com\/pasta.jpg/)
+      if (userAgent === 'Googlebot') {
+        assert.match(html, /<h3>Sauce &amp; herbs<\/h3>[\s\S]*400 g tomatoes[\s\S]*<h3>Pasta<\/h3>[\s\S]*250 g pasta/)
+      }
       if (userAgent !== 'facebookexternalhit/1.1') {
         const metadata = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
         assert.equal(metadata.image, overridden.image)
+        assert.deepEqual(metadata.recipeIngredient, original.ingredients)
       }
     }
   } finally {

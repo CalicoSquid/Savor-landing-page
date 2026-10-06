@@ -27,3 +27,10 @@ recipe URL. Remove the entry and redeploy to restore the API image.
 
 Published Pinterest Pin images cannot be replaced this way; new Pins can use
 the replacement photo.
+
+An entry can also include `ingredientGroups`, for example:
+`[{ label: 'Crust', startIndex: 0 }, { label: 'Filling', startIndex: 3 }]`.
+Indices refer to the unchanged API ingredient list, starting at zero. Check the
+boundaries again if that recipe's ingredient list changes. Headings appear on
+the website and in search crawler HTML; Recipe JSON-LD keeps the flat ingredient
+list that recipe consumers expect.

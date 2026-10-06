@@ -7,8 +7,14 @@ export const RECIPE_IMAGE_OVERRIDES = {
     imageCredit: null,
   },
   '6a7f7a14617ae028323946ba': {
-    image: '/images/recipes/caramel-apple-cheesecake-v1.png',
+    image: '/images/recipes/caramel-apple-cheesecake-bars-v2.png',
     imageCredit: null,
+    ingredientGroups: [
+      { label: 'Graham cracker crust', startIndex: 0 },
+      { label: 'Cheesecake layer', startIndex: 3 },
+      { label: 'Apple filling', startIndex: 7 },
+      { label: 'Streusel topping', startIndex: 11 },
+    ],
   },
 }
 
@@ -19,5 +25,8 @@ export function applyRecipeImageOverride(recipe, id) {
     throw new Error(`Invalid website photo override for recipe ${id}`)
   }
   const image = new URL(override.image, 'https://getsavor.recipes').href
-  return { ...recipe, image, imageCredit: override.imageCredit ?? null }
+  return {
+    ...recipe, image, imageCredit: override.imageCredit ?? null,
+    ...(override.ingredientGroups ? { ingredientGroups: override.ingredientGroups } : {}),
+  }
 }

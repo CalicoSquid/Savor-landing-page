@@ -157,7 +157,11 @@ function thinStub({ metaTitle, displayTitle, desc, image, pageUrl, canonicalUrl,
 
 function fullPage({ recipe, metaTitle, displayTitle, desc, image, pageUrl }) {
   const ingredientsHtml = (recipe.ingredients || [])
-    .map((ing) => `<li>${escapeHtml(ingredientText(ing))}</li>`)
+    .map((ing, index) => {
+      const group = recipe.ingredientGroups?.find((entry) => entry.startIndex === index)
+      const heading = group ? `<li><h3>${escapeHtml(group.label)}</h3></li>\n      ` : ''
+      return `${heading}<li>${escapeHtml(ingredientText(ing))}</li>`
+    })
     .join('\n      ')
   const instructionsHtml = (recipe.instructions || [])
     .map((step) => `<li>${escapeHtml(stepText(step))}</li>`)
