@@ -7,7 +7,7 @@ export const RECIPE_IMAGE_OVERRIDES = {
     imageCredit: null,
   },
   '6a7f7a14617ae028323946ba': {
-    image: '/images/recipes/caramel-apple-cheesecake-bars-v2.png',
+    image: '/images/recipes/caramel-apple-cheesecake-bars-v3.png',
     imageCredit: null,
     ingredientGroups: [
       { label: 'Graham cracker crust', startIndex: 0 },
