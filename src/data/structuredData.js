@@ -26,6 +26,7 @@ export const baseEntities = [
     sameAs: [
       'https://www.instagram.com/savor_recipeapp/',
       'https://uk.pinterest.com/cookincolor/',
+      'https://www.youtube.com/@cookincolor',
     ],
   },
   {

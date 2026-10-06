@@ -42,6 +42,12 @@ export default function Footer() {
                 <text x="12" y="16" textAnchor="middle" fontSize="12" fontWeight="700" fill="currentColor">P</text>
               </svg>
             </a>
+            <a href="https://www.youtube.com/@cookincolor" target="_blank" rel="noreferrer" aria-label="Savor on YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" width="20" height="20" aria-hidden="true">
+                <rect x="2" y="5" width="20" height="14" rx="4" />
+                <path d="m10 9 6 3-6 3z" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
           </div>
           <a href="/studio/" className="site-footer-mark">
             calicoSquid<span className="code">Code</span>
