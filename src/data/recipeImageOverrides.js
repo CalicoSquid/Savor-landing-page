@@ -2,6 +2,10 @@
 // Use a path under public (e.g. /images/recipes/pasta.webp) or an HTTPS URL.
 // Leave imageCredit null for your own photos; otherwise include the credit.
 export const RECIPE_IMAGE_OVERRIDES = {
+  '6ac54e6d1e142fac7ac5f88e': {
+    image: '/images/recipes/pecan-pie-brownies-v1.webp',
+    imageCredit: null,
+  },
   '6abdf816388d4deccfa77023': {
     image: '/images/recipes/cinnamon-sugar-donuts-v1.webp',
     imageCredit: null,
