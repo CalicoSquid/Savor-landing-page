@@ -3,8 +3,15 @@
 This changes only the website. App and Community photos remain independent.
 
 1. Copy the recipe ID from its existing `https://getsavor.recipes/r/ID` link.
-2. Put the replacement image in `public/images/recipes/` (create the directory
-   if needed), using a new filename for each replacement to avoid stale caches.
+2. Optimize the replacement before adding it to the site:
+
+   ```powershell
+   node scripts/optimize-recipe-image.mjs 'D:/replacement.png' public/images/recipes/pasta-v2.webp
+   ```
+
+   This creates a WebP at quality 82, fitting within 1200 × 1500 pixels without
+   cropping or enlarging. Check the output visually and its reported file size.
+   Use a new filename for each replacement to avoid stale caches.
    Alternatively, use a publicly accessible HTTPS image URL.
 3. Add an entry to `src/data/recipeImageOverrides.js`:
 

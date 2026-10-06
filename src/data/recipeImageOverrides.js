@@ -3,11 +3,11 @@
 // Leave imageCredit null for your own photos; otherwise include the credit.
 export const RECIPE_IMAGE_OVERRIDES = {
   '6abdf816388d4deccfa77023': {
-    image: '/images/recipes/cinnamon-sugar-donuts-v1.png',
+    image: '/images/recipes/cinnamon-sugar-donuts-v1.webp',
     imageCredit: null,
   },
   '6a7f7a14617ae028323946ba': {
-    image: '/images/recipes/caramel-apple-cheesecake-bars-v3.png',
+    image: '/images/recipes/caramel-apple-cheesecake-bars-v3.webp',
     imageCredit: null,
     ingredientGroups: [
       { label: 'Graham cracker crust', startIndex: 0 },
