@@ -414,6 +414,28 @@
 }
 
 /* ── Print button (screen only) ─────────────────────────────────── */
+.rp-recipe-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+.rp-pinterest-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #bd081b;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.rp-pinterest-btn:hover { background: #990616; }
+.rp-pinterest-btn:focus-visible { outline: 3px solid #bd081b; outline-offset: 3px; }
 .rp-print-btn {
   display: inline-flex;
   align-items: center;
@@ -443,6 +465,7 @@
 /* ── Print styles ────────────────────────────────────────────────── */
 @media print {
   /* ── Hide screen-only chrome ───────────────────────────────────── */
+  .rp-recipe-actions,
   .rp-print-btn,
   .rp-download-bar,
   .rp-cta,

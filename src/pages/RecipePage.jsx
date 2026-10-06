@@ -231,6 +231,17 @@ function RecipeContent({ id, onRetry }) {
     </div>
   )
 
+  const pinterestParams = new URLSearchParams({
+    url: `${SITE_URL}/r/${encodeURIComponent(id)}`,
+    description: [decode(recipe.name), decode(recipe.description)].filter(Boolean).join(' — ').slice(0, 500),
+  })
+  if (recipe.image && !imageFailed) {
+    try {
+      const imageUrl = new URL(recipe.image, SITE_URL)
+      if (['https:', 'http:'].includes(imageUrl.protocol)) pinterestParams.set('media', imageUrl.href)
+    } catch { /* Let Pinterest find images on the recipe page. */ }
+  }
+
   return (
     <div className="rp-root">
       <aside className="rp-download-bar" aria-label="Get the Savor app">
@@ -314,9 +325,19 @@ function RecipeContent({ id, onRetry }) {
               </span>
               </div>
             )}
+              <div className="rp-recipe-actions">
+                <a
+                  className="rp-pinterest-btn"
+                  href={`https://www.pinterest.com/pin/create/button/?${pinterestParams}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Save to Pinterest
+                </a>
               <button className="rp-print-btn" onClick={() => window.print()}>
                 🖨 Print recipe
               </button>
+              </div>
             </div>
         </div>
 
