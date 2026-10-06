@@ -2,6 +2,17 @@
 // Use a path under public (e.g. /images/recipes/pasta.webp) or an HTTPS URL.
 // Leave imageCredit null for your own photos; otherwise include the credit.
 export const RECIPE_IMAGE_OVERRIDES = {
+  '6ac549861e142fac7ac5f84f': {
+    image: '/images/recipes/apple-cinnamon-roll-v1.webp',
+    imageCredit: null,
+    ingredientGroups: [
+      { label: 'Dough', startIndex: 0 },
+      { label: 'Apple filling', startIndex: 6 },
+      { label: 'For spreading on the dough', startIndex: 12 },
+      { label: 'Vanilla glaze', startIndex: 13 },
+      { label: 'Caramel sauce', startIndex: 16 },
+    ],
+  },
   '6ac54e6d1e142fac7ac5f88e': {
     image: '/images/recipes/pecan-pie-brownies-v1.webp',
     imageCredit: null,
