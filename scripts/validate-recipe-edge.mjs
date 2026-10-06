@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import handler from '../netlify/edge-functions/recipe-og.js'
+import { RECIPE_IMAGE_OVERRIDES, applyRecipeImageOverride } from '../src/data/recipeImageOverrides.js'
 
 const originalFetch = globalThis.fetch
 const context = { next: () => new Response('NEXT', { status: 599 }) }
@@ -72,6 +73,28 @@ try {
   }
   const social = await call({ recipe: original, userAgent: 'facebookexternalhit/1.1' })
   assert.doesNotMatch(await social.text(), /application\/ld\+json/)
+
+  RECIPE_IMAGE_OVERRIDES['test-photo-override'] = {
+    image: '/images/recipes/replacement.webp', imageCredit: null,
+  }
+  try {
+    const recipe = { ...original, imageCredit: { photographer: 'Old credit' } }
+    const overridden = applyRecipeImageOverride(recipe, 'test-photo-override')
+    assert.equal(overridden.imageCredit, null)
+    assert.equal(recipe.image, original.image, 'Overrides must not mutate API data')
+    for (const userAgent of ['Pinterestbot/1.0', 'Googlebot', 'facebookexternalhit/1.1']) {
+      const response = await call({ recipe, id: 'test-photo-override', userAgent })
+      const html = await response.text()
+      assert.match(html, /og:image" content="https:\/\/getsavor\.recipes\/images\/recipes\/replacement.webp"/)
+      assert.doesNotMatch(html, /example.com\/pasta.jpg/)
+      if (userAgent !== 'facebookexternalhit/1.1') {
+        const metadata = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
+        assert.equal(metadata.image, overridden.image)
+      }
+    }
+  } finally {
+    delete RECIPE_IMAGE_OVERRIDES['test-photo-override']
+  }
 
   const missingHtml = await missing.text()
   assert.equal(missing.status, 404)

@@ -8,6 +8,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+import { applyRecipeImageOverride } from '../src/data/recipeImageOverrides.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const output = path.join(root, 'src', 'data', 'publicRecipeIndex.generated.js')
@@ -68,7 +69,7 @@ try {
 
   const resolved = await mapWithConcurrency(candidates, 6, async (candidate) => {
     const detail = await graphql(RECIPE_QUERY, { id: candidate.id })
-    const recipe = detail?.publicRecipe
+    const recipe = applyRecipeImageOverride(detail?.publicRecipe, candidate.id)
 
     // A candidate can disappear between the index query and the detail query.
     if (!recipe?.name) return null

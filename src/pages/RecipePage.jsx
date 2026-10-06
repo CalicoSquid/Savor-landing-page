@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import './RecipePage.css'
+import { applyRecipeImageOverride } from '../data/recipeImageOverrides'
 
 const APOLLO_URI = import.meta.env.VITE_APOLLO_URI || 'https://savor-production.up.railway.app/graphql'
 
@@ -135,7 +136,7 @@ function RecipeContent({ id, onRetry }) {
           return
         }
         if (!data?.publicRecipe) throw new Error('Unable to load recipe')
-        setRecipe(data.publicRecipe)
+        setRecipe(applyRecipeImageOverride(data.publicRecipe, id))
       })
       .catch(() => { if (!controller.signal.aborted) setError('network') })
       .finally(() => { if (!controller.signal.aborted) setLoading(false) })

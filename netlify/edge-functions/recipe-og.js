@@ -6,6 +6,8 @@
 //   - imported recipes: noindex + canonical back to the original publisher
 //   - social preview bots: thin noindex OG card (Pinterest includes Recipe data)
 
+import { applyRecipeImageOverride } from '../../src/data/recipeImageOverrides.js'
+
 const SEARCH_CRAWLERS = [
   'googlebot', 'bingbot', 'applebot', 'duckduckbot', 'yandexbot',
   'oai-searchbot', 'perplexitybot', 'claudebot',
@@ -220,7 +222,7 @@ export default async function handler(request, context) {
 
     const payload = await res.json()
     if (payload.errors?.length) throw new Error(payload.errors[0].message)
-    const recipe = payload.data?.publicRecipe
+    const recipe = applyRecipeImageOverride(payload.data?.publicRecipe, id)
     if (!recipe) {
       return isSearchBot
         ? crawlerStatusPage(404, 'Recipe not found — Savor', 'This shared recipe is no longer available.')
