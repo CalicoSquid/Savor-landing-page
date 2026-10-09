@@ -2,8 +2,10 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import { useTheme } from '../context/useTheme'
 import { getIcon } from '../utils/themeUtils'
+import { isSavorVisit } from '../lib/potluckSavor'
 
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
+const POTLUCK_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck&utm_source=potluck_web&utm_medium=header&utm_campaign=from_savor'
 
 export default function Nav() {
   const { activeTheme } = useTheme()
@@ -11,6 +13,7 @@ export default function Nav() {
 
   const isStudio  = location.pathname.startsWith('/studio')
   const isPotluck = location.pathname.startsWith('/potluck')
+  const fromSavor = isPotluck && isSavorVisit(location.search)
   const isCaper   = location.pathname.startsWith('/caper') || location.pathname.startsWith('/forage')
   const isApocaleaf = location.pathname.startsWith('/apocaleaf')
   const isIronKitchen = location.pathname.startsWith('/iron-kitchen')
@@ -31,10 +34,8 @@ export default function Nav() {
                  : isApocaleaf ? 'Apocaleaf'
                  : 'Savor'
 
-  // Persistent install CTA only belongs on Savor's own pages (home, about,
-  // faq, etc). Potluck/Studio/Caper have their own pages and their own
-  // conversion paths — a "Get Savor" button there sends mixed signals.
-  const showCta = !isStudio && !isPotluck && !isCaper && !isApocaleaf
+  // Potluck also introduces visitors to Savor, alongside its recipe discovery.
+  const showCta = !isStudio && !isCaper && !isApocaleaf
 
   return (
     <nav className="nav" data-nav-theme={navTheme}>
@@ -72,8 +73,8 @@ export default function Nav() {
           </NavLink>
         )}
         {showCta && (
-          <a href={PLAY_URL} target="_blank" rel="noreferrer" className="nav-cta">
-            Get the App
+          <a href={fromSavor ? POTLUCK_PLAY_URL : PLAY_URL} target="_blank" rel="noreferrer" className="nav-cta">
+            {fromSavor ? 'Get Potluck' : isPotluck ? 'Get Savor' : 'Get the App'}
           </a>
         )}
       </div>

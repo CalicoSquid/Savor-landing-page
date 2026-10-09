@@ -955,7 +955,9 @@ export default function DemoBlog() {
             <div className="db-reveal-scroll">
               <h2 className="db-reveal-title">The Only Lasagne Recipe You&rsquo;ll Ever Need</h2>
               <p className="db-reveal-desc">{RECIPE_SCHEMA.description}</p>
-              <p className="db-reveal-author">by {RECIPE_SCHEMA.author.name}</p>
+              {RECIPE_SCHEMA.author?.name && (
+                <p className="db-reveal-author">by {RECIPE_SCHEMA.author.name}</p>
+              )}
 
               <div className="db-reveal-source">
                 <span className="db-reveal-source-line" />
