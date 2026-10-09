@@ -211,7 +211,7 @@ export default function PortionPlanner() {
 
         <RelatedTools current="portion-planner" />
 
-        <ToolAppCta />
+        <ToolAppCta tool="portion-planner" />
       </main>
       <Footer />
     </>

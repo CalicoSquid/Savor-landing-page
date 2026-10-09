@@ -288,7 +288,7 @@ export default function MeasurementConverter() {
 
         <RelatedTools current="measurement-converter" />
 
-        <ToolAppCta />
+        <ToolAppCta tool="measurement-converter" />
       </main>
       <Footer />
     </>

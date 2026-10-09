@@ -338,7 +338,7 @@ export default function PanConverter() {
 
         <RelatedTools current="pan-converter" />
 
-        <ToolAppCta />
+        <ToolAppCta tool="pan-converter" />
       </main>
       <Footer />
     </>

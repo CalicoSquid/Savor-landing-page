@@ -205,7 +205,7 @@ export default function BrineCalculator() {
 
         <RelatedTools current="brine-calculator" />
 
-        <ToolAppCta />
+        <ToolAppCta tool="brine-calculator" />
       </main>
       <Footer />
     </>

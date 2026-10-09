@@ -209,7 +209,7 @@ export default function BakersPercentage() {
 
         <RelatedTools current="bakers-percentage" />
 
-        <ToolAppCta />
+        <ToolAppCta tool="bakers-percentage" />
       </main>
       <Footer />
     </>

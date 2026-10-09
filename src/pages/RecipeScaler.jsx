@@ -193,7 +193,7 @@ export default function RecipeScaler() {
 
         <RelatedTools current="recipe-scaler" />
 
-        <ToolAppCta />
+        <ToolAppCta tool="recipe-scaler" />
       </main>
       <Footer />
     </>

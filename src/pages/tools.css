@@ -383,6 +383,8 @@
 }
 
 .tool-app-cta p { max-width: 650px; font-size: .95rem; }
+.tool-app-copy { min-width: 0; }
+.tool-app-copy p + p { margin-top: 8px; }
 .tool-app-cta strong { color: var(--text-primary); }
 .tool-app-button {
   flex-shrink: 0;
@@ -392,6 +394,7 @@
   text-decoration: none;
 }
 .tool-app-button:hover { text-decoration: underline; }
+.tool-app-button:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
 
 .sr-only {
   position: absolute;

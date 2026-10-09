@@ -1,4 +1,17 @@
 import assert from 'node:assert/strict'
+import { TOOL_APP_CTAS, toolAppInstallUrl } from '../src/data/toolAppCtas.js'
+
+for (const tool of Object.keys(TOOL_APP_CTAS)) {
+  const destination = new URL(toolAppInstallUrl(tool))
+  assert.equal(destination.origin, 'https://play.google.com')
+  assert.equal(destination.searchParams.get('id'), 'com.calicosquid.savorrecipes')
+  const attribution = new URLSearchParams(destination.searchParams.get('referrer'))
+  assert.equal(attribution.get('utm_source'), 'savor_web')
+  assert.equal(attribution.get('utm_content'), tool.replaceAll('-', '_'))
+}
+assert.ok(!new URL(toolAppInstallUrl('ingredient-substitutions')).searchParams.has('referrer'))
+assert.match(TOOL_APP_CTAS['bakers-percentage'].headline, /hydration/i)
+assert.doesNotMatch(TOOL_APP_CTAS['bakers-percentage'].body, /baker.s percentage|batch sizing/i)
 import { isSavorVisit, savorRecipeLink } from '../src/lib/potluckSavor.js'
 
 assert.equal(isSavorVisit('?from=savor'), true)
