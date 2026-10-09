@@ -1,4 +1,14 @@
 import assert from 'node:assert/strict'
+import { isSavorVisit, savorRecipeLink } from '../src/lib/potluckSavor.js'
+
+assert.equal(isSavorVisit('?from=savor'), true)
+assert.equal(isSavorVisit(''), false)
+assert.equal(isSavorVisit('?from=other'), false)
+const savorTestUrl = 'https://getsavor.recipes/r/test%23%2F%3F'
+assert.equal(new URL(savorRecipeLink('test#/?')).searchParams.get('url'), savorTestUrl)
+const savorTestIntent = savorRecipeLink('test#/?', true)
+assert.equal(new URL(savorTestIntent.split('#')[0]).searchParams.get('url'), savorTestUrl)
+assert.ok(savorTestIntent.includes(`S.browser_fallback_url=${encodeURIComponent(savorTestUrl)}`))
 import { scaleIngredientList } from '../src/lib/recipeScaler.js'
 import { TOOL_PAGES, TOOL_PAGE_BY_ID } from '../src/data/toolPages.js'
 import {

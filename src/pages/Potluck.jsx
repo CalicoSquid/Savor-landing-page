@@ -1,7 +1,8 @@
 // src/pages/Potluck.jsx — Potluck's playable web front door.
 import './potluck.css'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import { isSavorVisit, savorRecipeLink } from '../lib/potluckSavor'
 import Footer from '../components/Footer'
 import {
   REEL_SYMBOLS,
@@ -249,6 +250,7 @@ function ThemeClaimHelp({ onClose, onSavorClick }) {
 }
 
 export default function Potluck() {
+  const fromSavor = isSavorVisit(useLocation().search)
   const [spinCount, setSpinCount] = useState(null)
   const [statsUnavailable, setStatsUnavailable] = useState(false)
   const [phase, setPhase] = useState('idle') // idle | spinning | revealed
@@ -604,13 +606,17 @@ export default function Potluck() {
                       <span className="pl-native-cta-chevron" aria-hidden="true">›</span>
                     </Link>
 
-                    <button type="button" className="pl-native-secondary" onClick={handleSpin}>
+                    {fromSavor && <div className="pl-savor-actions">
+                      <a className="pl-native-secondary pl-save-savor" href={savorRecipeLink(recipe.id, isAndroidDevice())}>Save to Savor</a>
+                      <button type="button" className="pl-native-secondary" onClick={handleSpin}>{rerollLabel}</button>
+                    </div>}
+                    {!fromSavor && <button type="button" className="pl-native-secondary" onClick={handleSpin}>
                       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                         <path d="M20 7v5h-5" />
                         <path d="M18.2 16.3A7.5 7.5 0 1 1 19.6 9" />
                       </svg>
                       <span>{rerollLabel}</span>
-                    </button>
+                    </button>}
                   </div>
                 ) : (
                   <>
