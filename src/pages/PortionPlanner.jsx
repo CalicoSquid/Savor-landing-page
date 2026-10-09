@@ -59,7 +59,7 @@ export default function PortionPlanner() {
           <div className="tool-shell">
             <a href="/tools/" className="tool-back-link">← Free kitchen tools</a>
             <span className="doc-eyebrow">Cooking for a crowd</span>
-            <h1>Food portion planner</h1>
+            <h1>Food portion calculator</h1>
             <p className="tool-lead">
               Choose a food and enter your guest count. Adjust for appetite, serving style and leftovers to estimate how much to buy.
             </p>

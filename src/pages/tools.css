@@ -1740,7 +1740,7 @@
 .related-tool-card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   padding: 14px 0;
   border-bottom: 1px solid rgba(0,0,0,.12);
