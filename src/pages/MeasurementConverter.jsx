@@ -59,14 +59,23 @@ export default function MeasurementConverter() {
   const [fromUnit, setFromUnit] = useState('cup')
   const [toUnit, setToUnit] = useState('g')
   const [ingredientName, setIngredientName] = useState('flour')
-  const [conversionData, setConversionData] = useState(() => readCachedConversionDataset())
-  const [dataStatus, setDataStatus] = useState(() => readCachedConversionDataset() ? 'cache' : 'loading')
+  const [conversionData, setConversionData] = useState(null)
+  const [dataStatus, setDataStatus] = useState('loading')
   const [recipe, setRecipe] = useState(RECIPE_SAMPLE)
   const [targetSystem, setTargetSystem] = useState('metric')
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     let cancelled = false
+    // Read browser storage after hydration, without waiting for the network.
+    Promise.resolve().then(() => {
+      if (cancelled) return
+      const cached = readCachedConversionDataset()
+      if (cached) {
+        setConversionData(cached)
+        setDataStatus('cache')
+      }
+    })
     loadConversionDataset()
       .then(({ dataset, source }) => {
         if (cancelled) return

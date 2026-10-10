@@ -1,4 +1,5 @@
 // src/components/Nav.jsx
+import { useSyncExternalStore } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useTheme } from '../context/useTheme'
 import { getIcon } from '../utils/themeUtils'
@@ -6,14 +7,19 @@ import { isSavorVisit } from '../lib/potluckSavor'
 
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
 const POTLUCK_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorpotluck&utm_source=potluck_web&utm_medium=header&utm_campaign=from_savor'
+const subscribeToHydration = () => () => {}
+const clientHydrated = () => true
+const serverHydrated = () => false
 
 export default function Nav() {
   const { activeTheme } = useTheme()
   const location = useLocation()
+  // Static HTML has no visitor query; keep the hydration render identical.
+  const hydrated = useSyncExternalStore(subscribeToHydration, clientHydrated, serverHydrated)
 
   const isStudio  = location.pathname.startsWith('/studio')
   const isPotluck = location.pathname.startsWith('/potluck')
-  const fromSavor = isPotluck && isSavorVisit(location.search)
+  const fromSavor = hydrated && isPotluck && isSavorVisit(location.search)
   const isCaper   = location.pathname.startsWith('/caper') || location.pathname.startsWith('/forage')
   const isApocaleaf = location.pathname.startsWith('/apocaleaf')
   const isIronKitchen = location.pathname.startsWith('/iron-kitchen')
