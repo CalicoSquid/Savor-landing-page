@@ -1,0 +1,11 @@
+.blaff-recipe-card { margin: 40px 0; border: 1px solid var(--primary); border-radius: 20px; background: var(--surface-2); overflow: hidden; scroll-margin-top: 100px; }
+.blaff-recipe-image { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.blaff-recipe-content { padding: clamp(20px, 5vw, 38px); }
+.blaff-recipe-content h2 { margin-top: 12px; }
+.blaff-recipe-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 30px; }
+.blaff-recipe-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 20px; border-radius: 999px; background: var(--primary); color: #fff; font-weight: 700; text-decoration: none; }
+.blaff-recipe-actions .blaff-pinterest { background: #bd081b; }
+.blaff-recipe-actions a:hover { filter: brightness(.9); }
+.blaff-recipe-actions a:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 4px; }
+.blaff-recipe-card li { scroll-margin-top: 100px; }
+@media print { .blaff-recipe-actions { display: none; } .blaff-recipe-card { border-color: #aaa; } }
