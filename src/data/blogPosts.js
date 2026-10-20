@@ -13,6 +13,20 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'one-pan-smoky-tomato-rice',
+    title: 'One-Pan Smoky Tomato Rice with Chickpeas & Crispy Eggs',
+    dek: 'Dinner on Autopilot, number one. A tin of tomatoes, a tin of chickpeas, rice and eggs: a proper dinner from the things already doing nothing in your cupboard.',
+    metaTitle: 'One-Pan Tomato Rice with Chickpeas & Crispy Eggs | Savor',
+    metaDesc: 'Make smoky tomato rice with chickpeas, spinach and crispy fried eggs in one pan. A flexible cupboard dinner with simple swaps and Savor recipe saving.',
+    date: '2026-10-20',
+    readTime: '5 min read',
+    ogImage: 'https://getsavor.recipes/blog/smoky-tomato-rice.jpg',
+    ogImageWidth: 1200,
+    ogImageHeight: 800,
+    ogImageAlt: 'Smoky tomato rice with chickpeas, spinach and crisp-edged fried eggs',
+    author: 'Caleb',
+  },
+  {
     slug: 'salt-pork-blaff',
     title: 'Salt Pork Blaff: The Dinner That Started Potluck',
     dek: 'Back of the Cupboard, number one. A cookbook, a random page, and a dinner remembered more than a decade later. Salt pork, green plantain and a generous pot of vegetables.',
