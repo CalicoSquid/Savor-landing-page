@@ -24,6 +24,11 @@ export default function Tools() {
               </a>
             ))}
           </div>
+          <div className="doc-cta">
+            <h2>Finish with a kitchen close-down</h2>
+            <p>Free printable checklist, leftover labels and fridge reference. Download in A4 or US Letter.</p>
+            <a href="/food-safety-printables/">Get the free food-safety printables →</a>
+          </div>
         </div>
       </main>
       <Footer />

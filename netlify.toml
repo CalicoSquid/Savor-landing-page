@@ -74,6 +74,11 @@
 # Hashed Vite bundles can be cached indefinitely. Public marketing images keep
 # normal Netlify caching so replacements at stable URLs are not pinned forever.
 [[headers]]
+  for = "/printables/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
+
+[[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

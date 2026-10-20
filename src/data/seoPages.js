@@ -17,6 +17,15 @@ const page = (config) => ({
 
 export const STATIC_SEO_PAGES = [
   page({
+    path: '/food-safety-printables',
+    file: 'food-safety-printables/index.html',
+    title: 'Free Food Safety Printables & Leftover Labels | Savor',
+    description: 'Download a free kitchen closing checklist, leftover labels and fridge reference. Printable A4 and US Letter PDFs, with sourced home food-safety guidance.',
+    canonical: `${SITE_URL}/food-safety-printables/`,
+    ogImageAlt: 'Savor kitchen close-down kit: free food safety checklists and leftover labels',
+    lastmod: '2026-10-21',
+  }),
+  page({
     path: '/originals',
     file: 'originals/index.html',
     title: 'Savor Originals | Recipes from Caleb’s Kitchen',

@@ -4,6 +4,7 @@ import { SITE_URL, PLAY_URL } from './seoPages.js'
 import { PUBLIC_RECIPE_INDEX } from './publicRecipeIndex.generated.js'
 import { TOOL_PAGES } from './toolPages.js'
 import { SAVOR_ORIGINALS } from './originals.js'
+import { SAFETY_PRINTABLES } from './safetyPrintables.js'
 
 const ORG_ID = `${SITE_URL}/#organisation`
 const WEBSITE_ID = `${SITE_URL}/#website`
@@ -187,6 +188,19 @@ export function structuredDataForPage(seo) {
         { name: 'Savor', url: `${SITE_URL}/` },
         { name: 'FAQ', url: seo.canonical },
       ]),
+    )
+  } else if (seo.path === '/food-safety-printables') {
+    graph.push(
+      { ...webPageNode(seo, 'CollectionPage'), mainEntity: { '@id': `${seo.canonical}#sheets` } },
+      {
+        '@type': 'ItemList', '@id': `${seo.canonical}#sheets`, name: 'Kitchen close-down printables',
+        numberOfItems: SAFETY_PRINTABLES.length,
+        itemListElement: SAFETY_PRINTABLES.map((sheet, index) => ({
+          '@type': 'ListItem', position: index + 1, name: sheet.title,
+          url: `${seo.canonical}#${sheet.slug}`,
+        })),
+      },
+      breadcrumb([{ name: 'Savor', url: `${SITE_URL}/` }, { name: 'Food safety printables', url: seo.canonical }]),
     )
   } else if (seo.path === '/originals') {
     graph.push(

@@ -102,6 +102,11 @@ export default function FoodSafetyLessons() {
       <p>If you cannot remember when you cooked something, a date label would have been considerably more useful than this paragraph.</p>
 
       <h2 id="close-down">A two-minute kitchen close-down</h2>
+      <div className="blog-post-callout">
+        <div className="blog-post-callout-title">Put it on the fridge</div>
+        <p>Free printable closing checklist, leftover labels and a fridge reference. A4 and US Letter PDFs, with no signup.</p>
+        <a className="blog-post-callout-link" href="/food-safety-printables/">Get the kitchen close-down kit →</a>
+      </div>
       <p>The habit worth taking home from a professional kitchen is a short check before you finish.</p>
       <ul>
         <li>Put perishable food away promptly; portion larger batches so they cool quickly.</li>

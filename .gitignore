@@ -1,4 +1,5 @@
 # Logs
+.safety-print-browser/
 logs
 *.log
 npm-debug.log*
