@@ -13,6 +13,18 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'food-safety-lessons-from-a-chef',
+    title: '“They’re Here”: What My First EHO Visit Taught Me About Food Safety',
+    dek: 'A Friday lunch service, a terrified chef and a Scottish lady with a clipboard. The kitchen habits worth bringing home, from leftover rice to garlic oil and chopping boards.',
+    metaTitle: 'Food Safety at Home: Lessons from a Chef | Savor',
+    metaDesc: 'A chef’s guide to food safety at home: cooling rice, storing leftovers, garlic oil, chopping boards and cleaning chemicals, with links to official guidance.',
+    date: '2026-10-21',
+    readTime: '9 min read',
+    ogImage: 'https://getsavor.recipes/images/savor-og.jpg',
+    ogImageAlt: 'Savor — practical home food safety lessons from a professional kitchen',
+    author: 'Caleb',
+  },
+  {
     slug: 'one-pan-smoky-tomato-rice',
     title: 'One-Pan Smoky Tomato Rice with Chickpeas & Crispy Eggs',
     dek: 'Dinner on Autopilot, number one. A tin of tomatoes, a tin of chickpeas, rice and eggs: a proper dinner from the things already doing nothing in your cupboard.',

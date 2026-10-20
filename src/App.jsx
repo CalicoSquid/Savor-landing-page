@@ -20,6 +20,7 @@ import ScaleARecipe from './pages/blog/ScaleARecipe'
 import WhatShouldICookTonight from './pages/blog/WhatShouldICookTonight'
 import SaltPorkBlaff from './pages/blog/SaltPorkBlaff'
 import SmokyTomatoRice from './pages/blog/SmokyTomatoRice'
+import FoodSafetyLessons from './pages/blog/FoodSafetyLessons'
 import Tools from './pages/Tools'
 import RecipeScaler from './pages/RecipeScaler'
 import MeasurementConverter from './pages/MeasurementConverter'
@@ -70,6 +71,7 @@ export default function AppRoutes() {
         <Route path="/blog/what-should-i-cook-tonight" element={<WhatShouldICookTonight />} />
         <Route path="/blog/salt-pork-blaff" element={<SaltPorkBlaff />} />
         <Route path="/blog/one-pan-smoky-tomato-rice" element={<SmokyTomatoRice />} />
+        <Route path="/blog/food-safety-lessons-from-a-chef" element={<FoodSafetyLessons />} />
         <Route path="/tools"                    element={<Tools />} />
         <Route path="/tools/recipe-scaler"      element={<RecipeScaler />} />
         <Route path="/tools/measurement-converter" element={<MeasurementConverter />} />
