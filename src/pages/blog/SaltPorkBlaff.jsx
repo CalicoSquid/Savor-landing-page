@@ -70,7 +70,7 @@ export default function SaltPorkBlaff() {
   return (
     <BlogPostLayout title={post.title} date={post.date} readTime={post.readTime}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(recipeMetadata).replace(/</g, '\\u003c') }} />
-      <p><strong>Back of the Cupboard · No. 1</strong></p>
+      <p><a href="/originals/">Savor Originals</a> · <strong>Back of the Cupboard · No. 1</strong></p>
       <p>A weekly invitation to cook something you might otherwise walk straight past. Starting with the dinner that stayed with me for more than a decade.</p>
       <p>Yes, I built an app to skip recipe life stories, <a href="/blog/life-story-before-the-recipe/">wrote an article complaining about them</a>, and then gave this dinner an origin story. In my defence, it did accidentally become an app.</p>
       <p><a href="#recipe">Skip my life story and get cooking ↓</a></p>

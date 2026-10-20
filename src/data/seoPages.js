@@ -17,6 +17,18 @@ const page = (config) => ({
 
 export const STATIC_SEO_PAGES = [
   page({
+    path: '/originals',
+    file: 'originals/index.html',
+    title: 'Savor Originals | Recipes from Caleb’s Kitchen',
+    description: 'Original recipes from the chef behind Savor. Explore Dinner on Autopilot for easy cupboard meals and Back of the Cupboard for something different.',
+    canonical: `${SITE_URL}/originals/`,
+    ogImage: `${SITE_URL}/blog/smoky-tomato-rice-rustic.jpg`,
+    ogImageWidth: 1200,
+    ogImageHeight: 1200,
+    ogImageAlt: 'Crisp fried egg and tomato rice from the Savor Originals recipe collection',
+    lastmod: '2026-10-20',
+  }),
+  page({
     path: '/shorts',
     file: 'shorts/index.html',
     title: 'Recipes from our videos | Savor',

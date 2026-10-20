@@ -73,7 +73,7 @@ export default function SmokyTomatoRice() {
   return (
     <BlogPostLayout title={post.title} date={post.date} readTime={post.readTime}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(recipe).replace(/</g, '\\u003c') }} />
-      <p><strong>Dinner on Autopilot · No. 1</strong></p>
+      <p><a href="/originals/">Savor Originals</a> · <strong>Dinner on Autopilot · No. 1</strong></p>
       <p>Some nights you want a cooking adventure. Other nights you want the cupboard to sort itself out and produce dinner. This is for the second kind.</p>
       <p><a href="#recipe">Skip the pep talk and get cooking ↓</a></p>
       <p>A tin of tomatoes, a tin of chickpeas and a handful of rice do most of the work. Smoked paprika gives it some depth; a fried egg brings the crispy edges. The spinach counts as getting something green involved.</p>

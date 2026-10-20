@@ -18,6 +18,8 @@ export default function BlogIndex() {
             keep them.
           </p>
 
+          <p><a className="blog-post-callout-link" href="/originals/">Here for the food? Browse Savor Originals →</a></p>
+
           <div className="blog-index-list">
             {[...BLOG_POSTS].sort((a, b) => b.date.localeCompare(a.date)).map((post) => (
               <a

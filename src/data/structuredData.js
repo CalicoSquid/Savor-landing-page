@@ -3,6 +3,7 @@ import { BLOG_POSTS } from './blogPosts.js'
 import { SITE_URL, PLAY_URL } from './seoPages.js'
 import { PUBLIC_RECIPE_INDEX } from './publicRecipeIndex.generated.js'
 import { TOOL_PAGES } from './toolPages.js'
+import { SAVOR_ORIGINALS } from './originals.js'
 
 const ORG_ID = `${SITE_URL}/#organisation`
 const WEBSITE_ID = `${SITE_URL}/#website`
@@ -185,6 +186,28 @@ export function structuredDataForPage(seo) {
       breadcrumb([
         { name: 'Savor', url: `${SITE_URL}/` },
         { name: 'FAQ', url: seo.canonical },
+      ]),
+    )
+  } else if (seo.path === '/originals') {
+    graph.push(
+      {
+        ...webPageNode(seo, 'CollectionPage'),
+        author: { '@id': AUTHOR_ID },
+        mainEntity: { '@id': `${seo.canonical}#recipes` },
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${seo.canonical}#recipes`,
+        name: 'Savor Originals',
+        numberOfItems: SAVOR_ORIGINALS.length,
+        itemListElement: SAVOR_ORIGINALS.map((recipe, index) => ({
+          '@type': 'ListItem', position: index + 1,
+          name: recipe.name, url: `${SITE_URL}${recipe.href}`,
+        })),
+      },
+      breadcrumb([
+        { name: 'Savor', url: `${SITE_URL}/` },
+        { name: 'Savor Originals', url: seo.canonical },
       ]),
     )
   } else if (seo.path === '/blog') {
