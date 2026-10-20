@@ -21,6 +21,8 @@ export const BLOG_POSTS = [
     date: '2026-10-20',
     readTime: '8 min read',
     ogImage: 'https://getsavor.recipes/blog/salt-pork-blaff-closeup.jpg',
+    ogImageWidth: 1200,
+    ogImageHeight: 800,
     ogImageAlt: 'Salt pork blaff with crisp pork, green plantain, vegetables and lime',
     author: 'Caleb',
   },

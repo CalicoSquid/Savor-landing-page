@@ -108,8 +108,8 @@ function blogPostNode(post, seo) {
     image: {
       '@type': 'ImageObject',
       url: post.ogImage,
-      width: 1200,
-      height: 630,
+      width: post.ogImageWidth ?? 1200,
+      height: post.ogImageHeight ?? 630,
     },
     datePublished: post.date,
     dateModified: post.modified || post.date,

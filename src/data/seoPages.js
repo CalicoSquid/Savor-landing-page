@@ -265,6 +265,8 @@ export const BLOG_SEO_PAGES = BLOG_POSTS.map((post) => page({
   canonical: `${SITE_URL}/blog/${post.slug}/`,
   ogType: 'article',
   ogImage: post.ogImage,
+  ogImageWidth: post.ogImageWidth ?? 1200,
+  ogImageHeight: post.ogImageHeight ?? 630,
   ogImageAlt: post.ogImageAlt || `${post.title} — Savor Blog`,
   author: post.author || 'Caleb',
   publishedTime: post.date,

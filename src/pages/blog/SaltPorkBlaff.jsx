@@ -72,7 +72,8 @@ export default function SaltPorkBlaff() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(recipeMetadata).replace(/</g, '\\u003c') }} />
       <p><strong>Back of the Cupboard · No. 1</strong></p>
       <p>A weekly invitation to cook something you might otherwise walk straight past. Starting with the dinner that stayed with me for more than a decade.</p>
-      <p><a href="#recipe">Jump to the recipe ↓</a></p>
+      <p>Yes, I built an app to skip recipe life stories, <a href="/blog/life-story-before-the-recipe/">wrote an article complaining about them</a>, and then gave this dinner an origin story. In my defence, it did accidentally become an app.</p>
+      <p><a href="#recipe">Skip my life story and get cooking ↓</a></p>
 
       <h2>Before there was a spin button</h2>
       <p>Over a decade ago, while I was grinding through long hours in professional kitchens, deciding what to cook at home could feel harder than the cooking itself. The decision fatigue was very real.</p>
