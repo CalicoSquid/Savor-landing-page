@@ -13,6 +13,18 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'salt-pork-blaff',
+    title: 'Salt Pork Blaff: The Dinner That Started Potluck',
+    dek: 'Back of the Cupboard, number one. A cookbook, a random page, and a dinner remembered more than a decade later. Salt pork, green plantain and a generous pot of vegetables.',
+    metaTitle: 'Salt Pork Blaff with Green Plantain | Savor',
+    metaDesc: 'The cookbook roulette dinner that inspired Potluck. A new salt pork blaff recipe in development, with green plantain, vegetables, crisp pork and lime.',
+    date: '2026-10-20',
+    readTime: '8 min read',
+    ogImage: 'https://getsavor.recipes/blog/salt-pork-blaff.jpg',
+    ogImageAlt: 'AI illustration suggesting salt pork blaff with crisp pork, vegetables and lime',
+    author: 'Caleb',
+  },
+  {
     slug: 'what-should-i-cook-tonight',
     title: 'What Should I Cook Tonight? A Chef’s Way Out of Dinner Decision Fatigue',
     dek: 'When every dinner idea sounds equally fine — and therefore impossible to choose — stop searching for the perfect meal. Here’s a faster way to decide what to cook tonight.',
