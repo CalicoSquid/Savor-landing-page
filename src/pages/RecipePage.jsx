@@ -52,12 +52,15 @@ function buildJsonLd(recipe, id) {
     recipeCategory: recipe.category || undefined,
     recipeCuisine: recipe.cuisine || undefined,
     recipeYield: recipe.recipeYield || undefined,
+    keywords: decode(recipe.name).replace(/\s+/g, ' ').trim() || undefined,
     recipeIngredient: recipe.ingredients?.map(ing =>
       typeof ing === 'string' ? ing : `${ing.amount ?? ''} ${ing.unit ?? ''} ${ing.name ?? ''}`.trim()
     ),
     recipeInstructions: recipe.instructions?.map((step, i) => ({
       '@type': 'HowToStep',
       position: i + 1,
+      name: decode(typeof step === 'string' ? step : step.text || step.instruction || '').replace(/\s+/g, ' ').trim().split(/(?<=[.!?])\s/)[0],
+      url: `${SITE_URL}/r/${encodeURIComponent(id)}#step-${i + 1}`,
       text: typeof step === 'string' ? step : step.text || step.instruction || '',
     })),
     url: recipe.sourceUrl || `${SITE_URL}/r/${encodeURIComponent(id)}`,
@@ -396,7 +399,7 @@ function RecipeContent({ id, onRetry }) {
             <h2 className="rp-section-title">Instructions</h2>
             <ol className="rp-instructions">
               {recipe.instructions.map((step, i) => (
-                <li key={i} className="rp-step">
+                <li key={i} id={`step-${i + 1}`} className="rp-step">
                   <span className="rp-step-num">{i + 1}</span>
                   <span>{decode(typeof step === 'string' ? step : step.text || step.instruction || JSON.stringify(step))}</span>
                 </li>

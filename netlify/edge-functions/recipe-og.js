@@ -103,10 +103,13 @@ function buildJsonLd(recipe, pageUrl) {
     recipeCategory: recipe.category || undefined,
     recipeCuisine: recipe.cuisine || undefined,
     recipeYield: recipe.recipeYield || undefined,
+    keywords: cleanText(recipe.name) || undefined,
     recipeIngredient: recipe.ingredients?.map(ingredientText),
     recipeInstructions: recipe.instructions?.map((step, i) => ({
       '@type': 'HowToStep',
       position: i + 1,
+      name: cleanText(stepText(step)).split(/(?<=[.!?])\s/)[0],
+      url: `${pageUrl}#step-${i + 1}`,
       text: stepText(step),
     })),
     url: pageUrl,
@@ -164,7 +167,7 @@ function fullPage({ recipe, metaTitle, displayTitle, desc, image, pageUrl }) {
     })
     .join('\n      ')
   const instructionsHtml = (recipe.instructions || [])
-    .map((step) => `<li>${escapeHtml(stepText(step))}</li>`)
+    .map((step, i) => `<li id="step-${i + 1}">${escapeHtml(stepText(step))}</li>`)
     .join('\n      ')
   const author = recipe.user?.name || recipe.user?.username
   const jsonLd = buildJsonLd(recipe, pageUrl)

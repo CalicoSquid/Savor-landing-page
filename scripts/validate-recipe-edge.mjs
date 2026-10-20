@@ -42,6 +42,15 @@ try {
   assert.match(indexedHtml, /<script type="application\/ld\+json">/)
   assert.match(indexedHtml, /href="https:\/\/getsavor\.recipes\/recipes\/"/)
   assert.match(indexedHtml, /<h1>Roast Tomato Pasta<\/h1>/)
+  const recipeMetadata = JSON.parse(indexedHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
+  assert.equal(recipeMetadata.keywords, original.name)
+  for (const [i, step] of recipeMetadata.recipeInstructions.entries()) {
+    assert.equal(step.name, original.instructions[i])
+    assert.equal(step.text, original.instructions[i])
+    assert.equal(step.url, `https://getsavor.recipes/r/test-original#step-${i + 1}`)
+    assert.ok(indexedHtml.includes(`<li id="step-${i + 1}">`), 'Step links must target real instruction elements')
+    assert.equal(step.image, undefined, 'Do not invent step images from the finished-dish photo')
+  }
 
   const imported = await call({ recipe: { ...original, sourceUrl: 'https://example.org/original-pasta' }, id: 'imported' })
   const importedHtml = await imported.text()
