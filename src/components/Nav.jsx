@@ -78,7 +78,6 @@ export default function Nav() {
             />
           </NavLink>
         )}
-        {navTheme === 'savor' && <a className="nav-originals" href="/originals/" aria-current={location.pathname.replace(/\/$/, '') === '/originals' ? 'page' : undefined}>Savor Originals</a>}
         {showCta && (
           <a href={fromSavor ? POTLUCK_PLAY_URL : PLAY_URL} target="_blank" rel="noreferrer" className="nav-cta">
             {fromSavor ? 'Get Potluck' : isPotluck ? 'Get Savor' : 'Get the App'}
