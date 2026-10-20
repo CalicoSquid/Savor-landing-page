@@ -20,10 +20,10 @@ export const BLOG_POSTS = [
     metaDesc: 'Make smoky tomato rice with chickpeas, spinach and crispy fried eggs in one pan. A flexible cupboard dinner with simple swaps and Savor recipe saving.',
     date: '2026-10-20',
     readTime: '5 min read',
-    ogImage: 'https://getsavor.recipes/blog/smoky-tomato-rice.jpg',
+    ogImage: 'https://getsavor.recipes/blog/smoky-tomato-rice-rustic.jpg',
     ogImageWidth: 1200,
-    ogImageHeight: 800,
-    ogImageAlt: 'Smoky tomato rice with chickpeas, spinach and crisp-edged fried eggs',
+    ogImageHeight: 1200,
+    ogImageAlt: 'Crisp-edged fried egg over tomato rice and chickpeas on a blue-rimmed plate',
     author: 'Caleb',
   },
   {

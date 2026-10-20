@@ -80,7 +80,7 @@ export default function SmokyTomatoRice() {
       <p>Dinner on Autopilot is about dependable formats built around kitchen essentials, with room for whatever needs using. This one uses a single pan: cook the rice, spoon it into bowls, then fry the eggs in that same pan. No hidden second frying pan in the small print.</p>
 
       <section id="recipe" className="blaff-recipe-card" aria-labelledby="autopilot-recipe-title">
-        <img className="blaff-recipe-image" src="/blog/smoky-tomato-rice.jpg" width="1200" height="800" alt={post.ogImageAlt} decoding="async" />
+        <img className="blaff-recipe-image" src="/blog/smoky-tomato-rice-rustic.jpg" width="1200" height="1200" style={{ aspectRatio: '1 / 1' }} alt={post.ogImageAlt} decoding="async" />
         <div className="blaff-recipe-content">
           <span className="doc-eyebrow">Dinner on Autopilot · Recipe No. 1</span>
           <h2 id="autopilot-recipe-title">Smoky tomato rice with chickpeas &amp; crispy eggs</h2>
