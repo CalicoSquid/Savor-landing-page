@@ -260,7 +260,7 @@ export default function Savor() {
                     <p className="same-kitchen-eyebrow">From the same kitchen</p>
                     <h2 className="same-kitchen-title">More from the same kitchen.</h2>
                     <p className="same-kitchen-sub">
-                        Savor comes from a one-person kitchen, not a studio. Here&rsquo;s what&rsquo;s cooking.
+                        Something to cook, a little help choosing, and a few good habits for when you&rsquo;re done.
                     </p>
                     <div className="same-kitchen-apps">
                         <div className="same-kitchen-app">
@@ -283,60 +283,26 @@ export default function Savor() {
                             </div>
                         </div>
                         <div className="same-kitchen-app">
-                            <img
-                                src="/caper/caper-icon.webp"
-                                alt="Caper"
-                                className="same-kitchen-app-icon"
-                                width="160"
-                                height="160"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                            <h3>Caper</h3>
-                            <p>A wild foraging companion — find and identify what&rsquo;s edible nearby, then learn to cook it safely. Comes with a set of cute, boy-scout-style badges to earn along the way.</p>
+                            <img src="/blog/smoky-tomato-rice-rustic.jpg" alt="Crisp fried egg over tomato rice and chickpeas" className="same-kitchen-app-icon" width="1200" height="1200" loading="lazy" decoding="async" />
+                            <h3>Savor Originals</h3>
+                            <p>Original recipes from Caleb&rsquo;s kitchen. Dinner on Autopilot for an ordinary weeknight; Back of the Cupboard for the day you fancy cooking something different.</p>
                             <div className="same-kitchen-app-links">
-                                <a href="/caper/" className="same-kitchen-app-link">See Caper →</a>
-                                <span className="same-kitchen-app-soon">In development</span>
+                                <a href="/originals/" className="same-kitchen-app-link">Find something to cook &rarr;</a>
                             </div>
                         </div>
-                        <div className="same-kitchen-app same-kitchen-app--apocaleaf">
-                            <div className="apoc-teaser">
-                                <div className="apoc-teaser-grid" aria-hidden="true" />
-                                <span className="apoc-teaser-stamp">Coming soon</span>
-                                <div className="apoc-teaser-lockup" aria-hidden="true">
-                                    <img
-                                        src="/apocaleaf/famine-approval-ring.webp"
-                                        alt="F.A.M.I.N.E. approval ring"
-                                        className="apoc-teaser-ring"
-                                        width="512"
-                                        height="512"
-                                        loading="lazy"
-                                        decoding="async"
-                                    />
-                                    <img
-                                        src="/apocaleaf/standard-issue-splash.webp"
-                                        alt="Apocaleaf standard-issue seal"
-                                        className="apoc-teaser-seal"
-                                        width="256"
-                                        height="256"
-                                        loading="lazy"
-                                        decoding="async"
-                                    />
-                                </div>
-                                <span className="apoc-teaser-agency">F.A.M.I.N.E. // Field Archive</span>
-                                <h3 className="apoc-teaser-title">Apocaleaf</h3>
-                                <span className="apoc-teaser-tag">Forage the ruins. File the report. Eat well.</span>
-                            </div>
-                            <p>A post-apocalyptic foraging game disguised as a field file. Track edible plants, file your findings, earn collection cards, and build a survival archive from the wreckage.</p>
+                        <div className="same-kitchen-app">
+                            <svg className="same-kitchen-resource-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" width="44" height="44" aria-hidden="true">
+                                <rect x="6" y="4" width="20" height="25" rx="3" />
+                                <path d="M12 4V2h8v2M11 12l2 2 4-4M19 12h3M11 21l2 2 4-4M19 21h3" />
+                            </svg>
+                            <h3>The kitchen close-down kit</h3>
+                            <p>A free printable checklist, leftover labels and fridge reference. Useful food-safety habits from a professional kitchen, without the clipboard-induced panic.</p>
                             <div className="same-kitchen-app-links">
-                                <a href="/apocaleaf/" className="same-kitchen-app-link">Open field file →</a>
-                                <span className="same-kitchen-app-soon">In development</span>
+                                <a href="/food-safety-printables/" className="same-kitchen-app-link">Get the free printables &rarr;</a>
+                                <a href="/blog/food-safety-lessons-from-a-chef/" className="same-kitchen-app-link same-kitchen-app-link--muted">Read the kitchen story</a>
                             </div>
                         </div>
                     </div>
-                    <p className="same-kitchen-disclaimer">
-                        Potluck is live on Google Play. Caper and Apocaleaf are still in the kitchen.
-                    </p>
                 </div>
             </section>
 

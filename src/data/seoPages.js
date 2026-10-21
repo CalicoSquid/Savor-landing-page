@@ -48,7 +48,7 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/',
-    lastmod: '2026-09-24',
+    lastmod: '2026-10-21',
     file: 'index.html',
     title: 'Savor — Recipe Organiser App | Save & Scan Recipes',
     description: 'Save recipes from websites, screenshots, cookbook pages and handwritten cards. Savor turns them into clean, cookable recipe cards — ad-free and made by a chef.',
