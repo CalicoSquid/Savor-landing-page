@@ -1,6 +1,45 @@
 /* ── Page ──────────────────────────────────────────────────────── */
 .savor-page { background: var(--bg); }
 
+/* Keep the kitchen useful first, with a compact app showcase below it. */
+.savor-page .hero { padding: 32px 0 54px; }
+.savor-page .hero-wordmark { max-width: 320px; }
+.hero-kitchen-intro { font-size: .9rem; font-weight: 600; color: var(--text-secondary); }
+.savor-page .hero-cta-row { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 18px 24px; }
+.savor-page .pillars { padding: 42px 0; }
+.savor-page .pillars-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
+.savor-page .feature-row-img { min-height: 330px; }
+.savor-page .feature-row-text { padding: 32px; }
+.savor-page .pillar-shot img { max-height: 320px; width: auto; max-width: 100%; }
+.savor-page .download-cta { padding: 36px 0; }
+.savor-page .download-cta-inner { gap: 12px; }
+.savor-page .download-cta-icon { width: 40px; height: 40px; }
+.savor-page .download-cta-title { font-size: clamp(1.5rem, 3vw, 2rem); }
+.savor-page .download-play-badge { height: 46px; }
+.home-app-details { max-width: 1100px; margin: 0 auto; border-bottom: 1px solid rgba(0,0,0,.08); }
+.home-app-details > summary { cursor: pointer; padding: 24px; font-weight: 800; color: var(--text-primary); }
+.home-app-details > summary span { display: inline-block; margin-left: 16px; font-size: .9rem; font-weight: 500; color: var(--text-secondary); }
+.home-app-details > summary:focus-visible { outline: 3px solid var(--primary); outline-offset: -4px; }
+@media (max-width: 600px) { .home-app-details > summary span { display: block; margin: 6px 0 0 18px; } }
+
+.flavors.flavors--compact { padding: 34px 0; }
+.flavors--compact .flavors-inner { max-width: 1040px; }
+.flavors--compact .flavors-overline { margin-bottom: 6px; }
+.flavors--compact .flavors-title { font-size: 1.8rem; margin: 0 0 8px; text-align: left; color: var(--text-primary); }
+.flavors--compact .flavors-sub { max-width: none; margin: 0 0 20px; text-align: left; font-size: .95rem; color: var(--text-secondary); }
+.flavors--compact .flavors-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.flavors--compact .theme-card { display: flex; align-items: center; gap: 7px; min-height: 52px; padding: 8px; border: 2px solid transparent; border-radius: 12px; box-shadow: none; font-size: .78rem; font-weight: 700; color: var(--text-primary); }
+.flavors--compact .theme-card img { width: 30px; height: 30px; flex-shrink: 0; object-fit: contain; }
+.flavors--compact .theme-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.flavors--compact .theme-card--active { animation: none; box-shadow: none; }
+.theme-preference-note { margin-top: 14px; color: var(--text-secondary); font-size: .85rem; }
+.theme-preference-note button { border: 0; background: none; color: var(--primary); font: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; margin-left: 8px; padding: 8px 0; }
+.flavors--compact button:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+@media (max-width: 850px) { .flavors--compact .flavors-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .flavors--compact .flavors-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .flavors--compact .theme-card { font-size: .72rem; padding: 6px; gap: 5px; } .flavors--compact .theme-card img { width: 24px; height: 24px; } .savor-page .pillars-grid { grid-template-columns: 1fr; } .savor-page .hero-wordmark { max-width: 260px; } .savor-page .hero-cta-row { flex-direction: column; gap: 14px; } }
+@media (max-width: 360px) { .flavors--compact .theme-card { flex-direction: column; min-height: 60px; font-size: .68rem; gap: 2px; padding: 4px; } .flavors--compact .theme-card img { width: 20px; height: 20px; } }
+@media (prefers-reduced-motion: reduce) { .flavors--compact .theme-card { transition: none; } .flavors--compact .theme-card:hover { transform: none; } }
+
 /* ── Hero ──────────────────────────────────────────────────────── */
 .hero {
   position: relative;

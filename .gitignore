@@ -1,5 +1,7 @@
 # Logs
 .safety-print-browser/
+.homepage-browser-*/
+*.local.png
 logs
 *.log
 npm-debug.log*

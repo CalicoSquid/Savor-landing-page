@@ -39,31 +39,12 @@ const FEATURED_TOOLS = [
 
 function ThemeCard({ theme, active, onSelect }) {
     return (
-        <button
-            className={`theme-card ${active ? 'theme-card--active' : ''}`}
-            onClick={(e) => onSelect(theme, e)}
-            style={active ? { borderColor: theme.primary } : {}}
-        >
-            <div className="theme-card-swatch" style={{ background: `linear-gradient(135deg, ${theme.gradient[0]}, ${theme.gradient[1]})` }}>
-                <div className="theme-card-dots">
-                    <span className="theme-dot" style={{ background: theme.primary }} />
-                    <span className="theme-dot" style={{ background: theme.secondary }} />
-                    <span className="theme-dot" style={{ background: theme.tertiary }} />
-                </div>
-                {active && <span className="theme-card-check">&#10003;</span>}
-            </div>
-            <div className="theme-card-label">
-                <img
-                    src={getIcon(theme.name)}
-                    alt={theme.name}
-                    className="theme-card-icon"
-                    width="160"
-                    height="160"
-                    loading="lazy"
-                    decoding="async"
-                />
-                <span className="theme-card-name">{theme.name}</span>
-            </div>
+        <button type="button" className={`theme-card ${active ? 'theme-card--active' : ''}`}
+            aria-pressed={active} aria-label={`Use ${theme.name} theme`}
+            onClick={(event) => onSelect(theme, event)}
+            style={{ borderColor: active ? theme.primary : undefined }}>
+            <img src={getIcon(theme.name)} alt="" width="32" height="32" loading="lazy" decoding="async" />
+            <span>{theme.name}</span>
         </button>
     )
 }
@@ -88,6 +69,7 @@ export default function Savor() {
                         decoding="async"
                         fetchPriority="high"
                     />
+                    <p className="hero-kitchen-intro fade-up fade-up-2">Recipes, useful tools, and a little kitchen confidence.</p>
                     <h1 className="hero-tagline fade-up fade-up-2">
                         Recipes fade.<br />
                         <span style={{ color: 'var(--primary)' }}>Savor doesn&rsquo;t.</span>
@@ -105,71 +87,13 @@ export default function Savor() {
                         Save recipes from websites, screenshots, cookbook pages and handwritten cards — then keep them as clean, cookable recipe cards in one colorful place.
                     </p>
                     <div className="hero-cta-row fade-up fade-up-4">
-                        <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes" className="btn btn-fruit" target="_blank" rel="noreferrer">Get Savor</a>
-                        <a href="#preserve" className="hero-secondary-link">See how it started ↓</a>
+                        <a href="#kitchen" className="btn btn-fruit">Explore the kitchen</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes" className="hero-secondary-link" target="_blank" rel="noreferrer">Get the Savor app &rarr;</a>
+                        <a href="#preserve" className="hero-secondary-link">The story behind the app ↓</a>
                     </div>
                 </div>
             </section>
 
-            {/* ── Flagship: Preserve (merged with the origin story) ──── */}
-            <section className="features" id="preserve">
-                <div className="container">
-                    <div className="feature-row">
-                        <div className="feature-row-img feature-row-img--photo">
-                            <img
-                                src="/screenshots/savor-scan.webp"
-                                srcSet="/screenshots/savor-scan-640.webp 640w, /screenshots/savor-scan.webp 1000w"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                alt="A 1982 handwritten recipe card for Aunt Maja's lemon drizzle cake next to the same recipe saved in Savor"
-                                className="feature-row-photo"
-                                width="1000"
-                                height="1000"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </div>
-                        <div className="feature-row-text">
-                            <div className="feature-overline" style={{ background: 'var(--grad-fruit)' }} />
-                            <p style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Where Savor started</p>
-                            <h2 className="feature-row-title">Preserve.</h2>
-                            <p className="feature-row-sub">
-                                I started Savor the day I found my mum&rsquo;s old recipe cards — tattered, smudged, and still the most important recipes I own. Point your camera at handwriting like that, import a photo or screenshot, or scan a page from a battered cookbook, and Savor reads it, rebuilds the recipe, and even finds a photo when there isn&rsquo;t one. Recipes that were one spill away from disappearing — saved properly, at last.
-                            </p>
-                            <a href="/blog/save-handwritten-recipe-cards/" className="pillar-cta">How to preserve handwritten recipe cards →</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* ── Pillars (with merged screenshots) ──────────────────── */}
-            <section className="pillars">
-                <div className="container pillars-grid">
-                    {PILLARS.map((p) => (
-                        <div className="pillar" key={p.title}>
-                            <div className="pillar-shot" style={{ background: p.bg }}>
-                                <img
-                                    src={p.img}
-                                    srcSet={`${p.img.replace('.webp', '-240.webp')} 240w, ${p.img} 480w`}
-                                    sizes="(max-width: 900px) 200px, 188px"
-                                    alt={p.alt}
-                                    width="480"
-                                    height="1002"
-                                    loading="lazy"
-                                    decoding="async"
-                                />
-                            </div>
-                            <div className="pillar-rule" style={{ background: 'var(--grad-fruit)' }} />
-                            <h3 className="pillar-title">{p.title}</h3>
-                            <p className="pillar-sub">{p.sub}</p>
-                            {p.cta && <a href={p.cta.href} className="pillar-cta">{p.cta.label}</a>}
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-
-
-            {/* ── Free kitchen tools ────────────────────────────────── */}
             <section className="home-tools" aria-labelledby="home-tools-title">
                 <div className="container home-tools-inner">
                     <div className="home-tools-heading">
@@ -195,70 +119,10 @@ export default function Savor() {
                 </div>
             </section>
 
-
-            {/* ── Pick Your Flavor ───────────────────────────────────── */}
-            <section className="flavors" id="flavors">
-                <div className="flavors-glow" style={{ background: `radial-gradient(ellipse at 50% 0%, ${activeTheme.primary}30 0%, transparent 60%)` }} />
-                <div className="container flavors-inner">
-                    <p className="flavors-overline">12 fruit themes</p>
-                    <h2 className="flavors-title">Cook in Color.</h2>
-                    <p className="flavors-sub">
-                        Pick a theme — the whole app wears it.
-                        This is what it looks like in your hands.
-                    </p>
-                    <div className="flavors-grid">
-                        {themes.map((t) => (
-                            <ThemeCard key={t.name} theme={t} active={activeTheme.name === t.name} onSelect={selectTheme} />
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* ── Download CTA ───────────────────────────────────────── */}
-            <section className="download-cta" id="download">
-                <div className="download-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
-                <div className="container download-cta-inner">
-                    <img
-                        src={getIcon(activeTheme.name)}
-                        alt="Savor"
-                        className="download-cta-icon"
-                        width="160"
-                        height="160"
-                        loading="lazy"
-                        decoding="async"
-                    />
-                    <h2 className="download-cta-title">A home for every recipe that matters.</h2>
-                    <p className="download-cta-sub">
-                        Free to start. No ads, ever. Available now on Android.
-                    </p>
-                    <a
-                        href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="download-play-link"
-                    >
-                        <img
-                            src="/potluck/play2.webp"
-                            alt="Get it on Google Play"
-                            className="download-play-badge"
-                            width="440"
-                            height="121"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                    </a>
-                    <p className="download-name-note">
-                        A few apps share the Savor name. This is the ad-free recipe organiser with the fruit themes, one-tap web imports and handwritten recipe scanning.
-                    </p>
-                </div>
-            </section>
-
-
-            {/* ── From the same kitchen ───────────────────────────────── */}
-            <section className="same-kitchen">
+            <section className="same-kitchen" id="kitchen" aria-labelledby="same-kitchen-title">
                 <div className="container same-kitchen-inner">
                     <p className="same-kitchen-eyebrow">From the same kitchen</p>
-                    <h2 className="same-kitchen-title">More from the same kitchen.</h2>
+                    <h2 className="same-kitchen-title" id="same-kitchen-title">What&rsquo;s cooking at Savor.</h2>
                     <p className="same-kitchen-sub">
                         Something to cook, a little help choosing, and a few good habits for when you&rsquo;re done.
                     </p>
@@ -305,6 +169,135 @@ export default function Savor() {
                     </div>
                 </div>
             </section>
+
+            {/* ── Flagship: Preserve (merged with the origin story) ──── */}
+            <section className="features" id="preserve">
+                <div className="container">
+                    <div className="feature-row">
+                        <div className="feature-row-img feature-row-img--photo">
+                            <img
+                                src="/screenshots/savor-scan.webp"
+                                srcSet="/screenshots/savor-scan-640.webp 640w, /screenshots/savor-scan.webp 1000w"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                alt="A 1982 handwritten recipe card for Aunt Maja's lemon drizzle cake next to the same recipe saved in Savor"
+                                className="feature-row-photo"
+                                width="1000"
+                                height="1000"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
+                        <div className="feature-row-text">
+                            <div className="feature-overline" style={{ background: 'var(--grad-fruit)' }} />
+                            <p style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Where Savor started</p>
+                            <h2 className="feature-row-title">Preserve.</h2>
+                            <p className="feature-row-sub">
+                                I started Savor the day I found my mum&rsquo;s old recipe cards — tattered, smudged, and still the most important recipes I own. Point your camera at handwriting like that, import a photo or screenshot, or scan a page from a battered cookbook, and Savor reads it, rebuilds the recipe, and even finds a photo when there isn&rsquo;t one. Recipes that were one spill away from disappearing — saved properly, at last.
+                            </p>
+                            <a href="/blog/save-handwritten-recipe-cards/" className="pillar-cta">How to preserve handwritten recipe cards →</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── Pillars (with merged screenshots) ──────────────────── */}
+            <details className="home-app-details">
+                <summary>More about the Savor app <span>Import, create and share recipes</span></summary>
+            <section className="pillars">
+                <div className="container pillars-grid">
+                    {PILLARS.map((p) => (
+                        <div className="pillar" key={p.title}>
+                            <div className="pillar-shot" style={{ background: p.bg }}>
+                                <img
+                                    src={p.img}
+                                    srcSet={`${p.img.replace('.webp', '-240.webp')} 240w, ${p.img} 480w`}
+                                    sizes="(max-width: 900px) 200px, 188px"
+                                    alt={p.alt}
+                                    width="480"
+                                    height="1002"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <div className="pillar-rule" style={{ background: 'var(--grad-fruit)' }} />
+                            <h3 className="pillar-title">{p.title}</h3>
+                            <p className="pillar-sub">{p.sub}</p>
+                            {p.cta && <a href={p.cta.href} className="pillar-cta">{p.cta.label}</a>}
+                        </div>
+                    ))}
+                </div>
+            </section>
+            </details>
+
+
+
+            {/* ── Free kitchen tools ────────────────────────────────── */}
+
+
+
+            {/* ── Pick Your Flavor ───────────────────────────────────── */}
+            <section className="flavors flavors--compact" id="flavors" aria-labelledby="flavors-title">
+                <div className="flavors-glow" style={{ background: `radial-gradient(ellipse at 50% 0%, ${activeTheme.primary}30 0%, transparent 60%)` }} />
+                <div className="container flavors-inner">
+                    <p className="flavors-overline">12 fruit themes</p>
+                    <h2 className="flavors-title" id="flavors-title">Cook in Color.</h2>
+                    <p className="flavors-sub">
+                        A little fruit, a different mood. Pick a colour for this visit.
+                    </p>
+                    <div className="flavors-grid">
+                        {themes.map((t) => (
+                            <ThemeCard key={t.name} theme={t} active={activeTheme.name === t.name} onSelect={selectTheme} />
+                        ))}
+                    </div>
+                    <p className="theme-preference-note">
+                        <span role="status">Your colour: {activeTheme.name}.</span> Stays with you in this tab.
+                        {activeTheme.name !== themes[0].name && <button type="button" onClick={(event) => selectTheme(themes[0], event)}>Back to Tangerine</button>}
+                    </p>
+                </div>
+            </section>
+
+            {/* ── Download CTA ───────────────────────────────────────── */}
+            <section className="download-cta" id="download">
+                <div className="download-cta-bg" style={{ background: `linear-gradient(135deg, ${activeTheme.gradient[0]}18, ${activeTheme.gradient[1]}18)` }} />
+                <div className="container download-cta-inner">
+                    <img
+                        src={getIcon(activeTheme.name)}
+                        alt="Savor"
+                        className="download-cta-icon"
+                        width="160"
+                        height="160"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                    <h2 className="download-cta-title">A home for every recipe that matters.</h2>
+                    <p className="download-cta-sub">
+                        Free to start. No ads, ever. Available now on Android.
+                    </p>
+                    <a
+                        href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="download-play-link"
+                    >
+                        <img
+                            src="/potluck/play2.webp"
+                            alt="Get it on Google Play"
+                            className="download-play-badge"
+                            width="440"
+                            height="121"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    </a>
+                    <p className="download-name-note">
+                        A few apps share the Savor name. This is the ad-free recipe organiser with the fruit themes, one-tap web imports and handwritten recipe scanning.
+                    </p>
+                </div>
+            </section>
+
+
+            {/* ── From the same kitchen ───────────────────────────────── */}
+
 
             {/* ── Footer ─────────────────────────────────────────────── */}
             <Footer />
