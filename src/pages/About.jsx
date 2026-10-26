@@ -1,6 +1,5 @@
 // src/pages/About.jsx
 import './pages.css'
-import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 
 const PLAY_URL =
@@ -13,67 +12,101 @@ export default function About() {
       <main className="page doc-page">
         <div className="container doc-inner">
           <span className="doc-eyebrow">About</span>
-          <h1 className="doc-title">A recipe app made by a chef who got tired of recipe apps.</h1>
+          <h1 className="doc-title">It started with my mum’s recipe cards.</h1>
           <p className="doc-lead">
-            Savor started the day I found my mum’s old recipe cards — tattered,
-            smudged, stained, and still meaning the world to me. I wanted a place
-            worthy of them. Not another feed of ads and pop-ups and a thousand
-            words before the ingredients. Just the recipes, and a home for them.
+            I’m Caleb, a former chef and the person behind Savor. When I found
+            my mum’s old recipe cards, stained and smudged from years of use,
+            I wanted somewhere to keep them properly. They mattered rather more
+            than the state of the paper suggested.
+          </p>
+          <p className="doc-lead">
+            That became a recipe app. Then came recipes of my own, tools for the
+            awkward bits of kitchen maths, and Potluck for the evenings when
+            deciding what to cook is somehow harder than cooking it. The recipe
+            box has acquired a few neighbours.
           </p>
 
           <div className="about-block">
-            <h2>What Savor does</h2>
+            <h2>A home for the recipes you keep</h2>
             <p>
-              <strong>Save from anywhere.</strong> Savor has a browser built in.
-              Find a recipe you love on any website and one tap imports it
-              properly — the photo, the ingredients, the steps — with none of the
-              clutter that surrounded it.
+              The <a href={PLAY_URL} target="_blank" rel="noreferrer">Savor app</a>{' '}
+              saves recipes from websites, reads cookbook pages and handwritten
+              cards, and helps turn the recipe rattling around in your head into
+              something you can cook from. Keep them together, find them again,
+              and share the good ones if you fancy it.
             </p>
             <p>
-              <strong>Rescue what’s on paper.</strong> Point your camera at a
-              cookbook page or a handwritten card and Savor reads it, rebuilds it,
-              and even finds an image when there isn’t one. Recipes that nearly
-              disappeared, brought back.
-            </p>
-            <p>
-              <strong>Cook from memory.</strong> Got a recipe rattling around in
-              your head? Type it out, however roughly, and Savor turns it into a
-              real card you can actually cook from.
-            </p>
-            <p>
-              <strong>Share, quietly.</strong> Savor’s community feed is
-              deliberately calm and algorithm-free — cooks showing what they made
-              for lunch today, not chasing a viral moment. Save anything that
-              looks good.
+              It’s ad-free, with ingredients and instructions where you can
+              actually find them. Having spent years cooking professionally,
+              I have fairly strong feelings about things getting in the way
+              when dinner is already on the stove.
             </p>
           </div>
 
           <div className="about-block">
-            <h2>Why it’s different</h2>
+            <h2>Recipes from my kitchen</h2>
             <p>
-              I spent years cooking professionally, and the apps I tried never
-              respected the recipe or the cook. So Savor has no ads, no life
-              stories, no endless scroll. It strips every recipe down to what you
-              actually need, and then gets out of your way. You can even dress the
-              whole app in one of twelve colour themes — because cooking should
-              feel like yours.
+              <a href="/originals/">Savor Originals</a> is where I put the things
+              worth making again. There are two fairly different ways dinner
+              tends to happen around here.
+            </p>
+            <p>
+              <a href="/originals/?series=autopilot#recipes"><strong>Dinner on Autopilot</strong></a>{' '}
+              is for an ordinary evening: familiar ingredients, sensible swaps
+              and less hands-on effort. Each recipe has a Little Trick — one
+              useful bit of cooking knowledge to take into the next dinner.
+            </p>
+            <p>
+              <a href="/originals/?series=cupboard#recipes"><strong>Back of the Cupboard</strong></a>{' '}
+              gives the forgotten or slightly awkward ingredient its moment.
+              Sometimes that means a bag of dried mushrooms finally earning
+              the shelf space. Sometimes it means cooking something I would
+              usually walk straight past.
             </p>
           </div>
 
           <div className="about-block">
-            <h2>Who’s behind it</h2>
+            <h2>Let the tools do the maths</h2>
             <p>
-              Savor is built by one former chef, working solo under the name{' '}
-              <strong>CalicoSquid</strong>, from a farm in Montenegro. It’s part of
-              a small family of cooking apps — alongside <strong>Caper</strong>, a
-              companion for wild food, and <strong>Potluck</strong>, a playful way
-              to decide what’s for dinner. Made by someone who actually cooks, for
-              people who actually cook.
+              The free <a href="/tools/">kitchen tools</a> help you scale a recipe,
+              convert measurements, compare baking tins and work out portions.
+              They work right here in the browser, without an account. Halving
+              dinner shouldn’t require a maths exam before you’ve even peeled
+              an onion.
+            </p>
+          </div>
+
+          <div className="about-block">
+            <h2>And when you still can’t choose</h2>
+            <p>
+              Years ago, we used to open a cookbook at random and cook whatever
+              we landed on. <a href="/potluck/">Potluck</a> grew out of that:
+              give it a spin, get a recipe, and see where dinner takes you.
+              You still have to do the cooking. I haven’t managed to negotiate
+              that part away.
+            </p>
+          </div>
+
+          <div className="about-block">
+            <h2>Still one cook behind it</h2>
+            <p>
+              I build Savor under the name <strong>CalicoSquid</strong>, from a
+              farm in Montenegro. The professional cooking came first; learning
+              to build all this followed. I write about both the useful bits and
+              the occasional kitchen mishap over on the <a href="/blog/">blog</a>.
+            </p>
+            <p>
+              There are good people along the way, too. The{' '}
+              <a href="/iron-kitchen/">Savor × Iron Kitchen collaboration</a>{' '}
+              brings together their kitchen tools and recipes with a place to
+              keep them. There’s a free app theme in it as well, because
+              apparently I also have opinions about the colour of a recipe box.
             </p>
           </div>
 
           <div className="doc-cta">
-            <h2>A home for every recipe that matters.</h2>
+            <h2>Find something good to cook.</h2>
+            <p><a href="/originals/">Browse Savor Originals →</a>{' '}·{' '}<a href="/tools/">Explore the kitchen tools →</a></p>
             <a
               href={PLAY_URL}
               target="_blank"
@@ -90,12 +123,12 @@ export default function About() {
                 decoding="async"
               />
             </a>
-            <Link
-              to="/faq/"
+            <a
+              href="/faq/"
               style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}
             >
               Read the frequently asked questions →
-            </Link>
+            </a>
           </div>
         </div>
       </main>

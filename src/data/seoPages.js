@@ -66,10 +66,11 @@ export const STATIC_SEO_PAGES = [
   page({
     path: '/about',
     file: 'about/index.html',
-    title: 'About Savor — A Recipe App Made by a Chef',
-    description: 'The story behind Savor: a recipe organiser built by a former chef for saving recipes from the web, paper and memory — without ads or endless scrolling.',
+    title: 'About Savor | Recipes, Kitchen Tools & Potluck',
+    description: 'Meet Caleb, the former chef behind Savor: a recipe organiser, original dinner recipes, free kitchen tools and Potluck for deciding what to cook next.',
     canonical: `${SITE_URL}/about/`,
-    ogImageAlt: 'About Savor, the recipe organiser made by a former chef',
+    ogImageAlt: 'Savor: recipes, kitchen tools and a recipe organiser from Caleb’s kitchen',
+    lastmod: '2026-10-26',
   }),
   page({
     path: '/faq',
