@@ -9,6 +9,7 @@ import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { applyRecipeImageOverride } from '../src/data/recipeImageOverrides.js'
+import { deduplicateRecipes } from './lib/deduplicate-recipes.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const output = path.join(root, 'src', 'data', 'publicRecipeIndex.generated.js')
@@ -30,6 +31,13 @@ const RECIPE_QUERY = `
       description
       image
       sourceUrl
+      ingredients
+      ingredientGroups { label startIndex }
+      instructions
+      recipeYield
+      times { prep { hours minutes } cook { hours minutes } total { hours minutes } }
+      isShared
+      sourceRecipeId
     }
   }
 `
@@ -78,16 +86,18 @@ try {
     // so advertising them in our sitemap would create a noindex/sitemap clash.
     if (recipe.sourceUrl) return null
 
-    return {
-      id: String(candidate.id),
-      name: String(recipe.name).replace(/\s+/g, ' ').trim(),
-      description: String(recipe.description || '').replace(/\s+/g, ' ').trim(),
-      image: recipe.image || null,
-      updatedAt: candidate.updatedAt || null,
-    }
+    return { id: String(candidate.id), updatedAt: candidate.updatedAt || null, recipe }
   })
 
-  const recipes = resolved.filter(Boolean)
+  const eligible = resolved.filter(Boolean)
+  const unique = deduplicateRecipes(eligible)
+  const recipes = unique.map(({ id, updatedAt, recipe }) => ({
+    id,
+    name: String(recipe.name).replace(/\s+/g, ' ').trim(),
+    description: String(recipe.description || '').replace(/\s+/g, ' ').trim(),
+    image: recipe.image || null,
+    updatedAt,
+  }))
   const seen = new Set()
   for (const recipe of recipes) {
     if (seen.has(recipe.id)) throw new Error(`Duplicate sitemap recipe id: ${recipe.id}`)
@@ -100,6 +110,7 @@ try {
     `// Generated at build time by scripts/prepare-seo-data.mjs.\nexport const PUBLIC_RECIPE_INDEX = ${safeJson}\n`,
   )
   console.log(`✓ SEO recipe data: ${recipes.length} indexable original recipe(s) from ${candidates.length} public candidate(s)`)
+  console.log(`  Collapsed ${eligible.length - unique.length} matching recipe copies; existing share URLs remain available`)
 } catch (error) {
   // Publishing a fresh build with an empty/partial recipe manifest would remove
   // valid URLs from both the sitemap and their parent hub. Safer to keep the

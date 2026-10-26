@@ -22,13 +22,6 @@ export const PUBLIC_RECIPE_INDEX = [
     "updatedAt": "2026-04-13T23:14:29.473Z"
   },
   {
-    "id": "69dee4cf2a03163328446a57",
-    "name": "Pork chops with aubergine",
-    "description": "Perk up chops in just 30 minutes",
-    "image": "https://images.pexels.com/photos/7333262/pexels-photo-7333262.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-    "updatedAt": "2026-04-15T01:07:27.798Z"
-  },
-  {
     "id": "69e96ecd2a03163328447d86",
     "name": "Thai chicken soup",
     "description": "Create a mouth-watering chicken soup with leftovers from your roast lunch",
@@ -99,11 +92,11 @@ export const PUBLIC_RECIPE_INDEX = [
     "updatedAt": "2026-06-26T16:26:24.849Z"
   },
   {
-    "id": "6a3eb86e2a814c568b6ac6d0",
+    "id": "6a4c9784861f2ce11c7999ec",
     "name": "Chef's Fridge Pickles",
     "description": "Crisp and tangy quick-pickled vegetables made with a balanced vinegar brine, perfect for burgers, sandwiches, or snacking.",
     "image": "https://images.pexels.com/photos/9005955/pexels-photo-9005955.jpeg?auto=compress&cs=tinysrgb&h=350",
-    "updatedAt": "2026-06-26T17:35:42.230Z"
+    "updatedAt": "2026-07-07T06:07:00.170Z"
   },
   {
     "id": "6a49847a861f2ce11c7996dd",
@@ -111,13 +104,6 @@ export const PUBLIC_RECIPE_INDEX = [
     "description": "The best zucchini chips EVER! They are perfectly seasoned and perfectly crunchy and crisp even though these are completely BAKED! You will not even be able to tell the difference. Promise!",
     "image": "https://images.pexels.com/photos/13422450/pexels-photo-13422450.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
     "updatedAt": "2026-07-04T22:08:58.233Z"
-  },
-  {
-    "id": "6a4c9784861f2ce11c7999ec",
-    "name": "Chef's Fridge Pickles",
-    "description": "Crisp and tangy quick-pickled vegetables made with a balanced vinegar brine, perfect for burgers, sandwiches, or snacking.",
-    "image": "https://images.pexels.com/photos/9005955/pexels-photo-9005955.jpeg?auto=compress&cs=tinysrgb&h=350",
-    "updatedAt": "2026-07-07T06:07:00.170Z"
   },
   {
     "id": "6a53cc7f861f2ce11c79a238",
@@ -132,13 +118,6 @@ export const PUBLIC_RECIPE_INDEX = [
     "description": "An easy 30-minute dinner featuring tender steak bites and crispy roasted potatoes tossed in a savory honey garlic sauce.",
     "image": "https://images.unsplash.com/photo-1760504526069-ff0f8bf6e4ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MDA1MDV8MHwxfHNlYXJjaHwxfHxhbWVyaWNhbiUyMGhvbmV5JTIwZ2FybGljJTIwc3RlYWslMjBiaXRlc3xlbnwwfHx8fDE3ODM4OTQwMDJ8MA&ixlib=rb-4.1.0&q=80&w=400",
     "updatedAt": "2026-07-12T22:06:53.907Z"
-  },
-  {
-    "id": "6a64d261d73f69ae6d182e35",
-    "name": "White Bean Stew",
-    "description": "A rich and satisfying 35-minute white bean stew inspired by traditional Mediterranean recipes, designed to be as nourishing as it is comforting.",
-    "image": "https://images.pexels.com/photos/38431288/pexels-photo-38431288.jpeg?auto=compress&cs=tinysrgb&h=350",
-    "updatedAt": "2026-07-25T15:12:33.050Z"
   },
   {
     "id": "6a64d346d73f69ae6d182e70",
@@ -160,13 +139,6 @@ export const PUBLIC_RECIPE_INDEX = [
     "description": "A simple and tasty one-pan pasta dish packed with chicken fajita flavors and topped with melted cheese.",
     "image": "https://images.pexels.com/photos/7595069/pexels-photo-7595069.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
     "updatedAt": "2026-07-28T11:41:49.202Z"
-  },
-  {
-    "id": "6a6a023a52f5f0af4a90f6b1",
-    "name": "Cheesy Ground Chicken Fajita Pasta",
-    "description": "A simple and tasty one-pan pasta dish packed with chicken fajita flavors and topped with melted cheese.",
-    "image": "https://images.pexels.com/photos/7595069/pexels-photo-7595069.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-    "updatedAt": "2026-07-29T13:38:02.199Z"
   },
   {
     "id": "6a7f7a14617ae028323946ba",
@@ -209,13 +181,6 @@ export const PUBLIC_RECIPE_INDEX = [
     "description": "Soft and fluffy gluten-free doughnuts made with potato flakes, coated in cinnamon sugar.",
     "image": "https://getsavor.recipes/images/recipes/cinnamon-sugar-donuts-v1.webp",
     "updatedAt": "2026-10-01T06:05:10.312Z"
-  },
-  {
-    "id": "6abf3e251e142fac7ac5e596",
-    "name": "Gluten-Free Potato Doughnuts",
-    "description": "Soft and fluffy gluten-free doughnuts made with potato flakes, coated in cinnamon sugar.",
-    "image": "https://images.pexels.com/photos/39851644/pexels-photo-39851644.jpeg?auto=compress&cs=tinysrgb&h=350",
-    "updatedAt": "2026-10-02T05:16:21.153Z"
   },
   {
     "id": "6ac549861e142fac7ac5f84f",
