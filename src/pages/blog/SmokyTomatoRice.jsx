@@ -97,10 +97,11 @@ export default function SmokyTomatoRice() {
         </div>
       </section>
 
-      <h2>The bits that make it work</h2>
+      <h2>The Little Trick: fry the eggs last</h2>
+      <p>Move the cooked rice into bowls before frying the eggs in the same pan. You get crisp fried edges instead of steamed eggs, with no second pan to wash.</p>
+      <h2>A couple of useful checks</h2>
       <p><strong>Use the rice listed.</strong> Brown rice takes longer and needs a different amount of liquid; this is not a straight swap. A tight lid and a gentle heat matter more than watching the clock to the second. Pan width, rice brands and the juiciness of the tomatoes all affect the finish, so use the checks in the method.</p>
       <p><strong>Let the tomatoes cook down first.</strong> A few minutes uncovered gives you a thicker base. Keep the paprika away from fierce dry heat so it tastes smoky rather than burnt.</p>
-      <p><strong>The eggs go last.</strong> Frying them on top of the rice would steam them. Moving the rice to the bowls first gives you proper fried edges without adding another pan to the washing-up.</p>
 
       <h2>Use what you have</h2>
       <ul>
