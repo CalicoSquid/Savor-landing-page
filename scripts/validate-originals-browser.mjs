@@ -1,3 +1,4 @@
+import { SAVOR_ORIGINALS } from '../src/data/originals.js'
 // Production-bundle browser regression for theme navigation and transitions.
 // Run after npm run build. No extra browser packages; uses local Chrome/CDP.
 import assert from 'node:assert/strict'
@@ -70,7 +71,7 @@ try {
   await command('Runtime.enable')
   await navigate('/originals/');
   await evaluate('Promise.all([...document.querySelectorAll(".originals-card img")].map(async i=>{i.src=new URL(i.src).pathname;i.loading="eager";await i.decode()}))');
-  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),4);
+  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.length);
   for (const width of [1440,390,320]) {
     await command('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<500});
     await delay(150);
@@ -81,16 +82,28 @@ try {
   for(const series of ['autopilot','cupboard']) {
     await evaluate(`document.querySelector('.originals-filters a[href*="${series}"]').click()`);
     await delay(200);
-    assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),2);
+    assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.filter(r=>r.series===(series==='autopilot'?'Dinner on Autopilot':'Back of the Cupboard')).length);
     assert.ok(await evaluate('location.search.includes("'+series+'")'));
     assert.equal(await evaluate('document.querySelector(".originals-filters [aria-current=page]").textContent'),series==='autopilot'?'Dinner on Autopilot':'Back of the Cupboard');
   }
   await command('Page.reload'); await delay(700);
-  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),2);
+  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.filter(r=>r.series==='Back of the Cupboard').length);
   await evaluate('document.querySelector(".originals-filters a").click()'); await delay(200);
-  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),4);
+  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.length);
   await navigate('/originals/?series=invalid&page=-1');
-  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),4);
+  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.length);
+  await navigate('/blog/smash-burgers-pickle-mustard-sauce/');
+  assert.equal(await evaluate('document.querySelectorAll("#recipe ol li").length'),6);
+  assert.equal(await evaluate('document.querySelector(".smash-recipe-figure img").naturalWidth'),1440);
+  assert.ok(await evaluate('document.querySelector(".smash-recipe-figure figcaption").textContent.includes("Iron Kitchen Inc.")'));
+  assert.ok(await evaluate(`document.querySelector('.smash-partner-links a[href="https://ironkitcheninc.com/pages/iron-kitchen-x-savor"]')!==null`));
+  assert.ok(await evaluate(`document.querySelector('.smash-partner-links a[href="/iron-kitchen/"]')!==null`));
+  for (const width of [1440,390,320]) {
+    await command('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<500});
+    await delay(100);
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'),'Burger article has no overflow at '+width);
+    if(width!==320) await screenshot('smash-burgers-'+width);
+  }
   assert.deepEqual(errors,[],'No runtime or hydration errors');
   await command('Browser.close');
   console.log('Originals browser checks passed: series filters, reload, invalid query, image loading and desktop/mobile layouts.');

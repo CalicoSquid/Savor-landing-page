@@ -13,6 +13,20 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'smash-burgers-pickle-mustard-sauce',
+    title: 'Smash Burgers with Quick Pickle–Mustard Sauce',
+    dek: 'Dinner on Autopilot, number three. A Savor take on Iron Kitchen’s classic: two crisp-edged patties, melting cheese and a quick sauce made with the pickle jar.',
+    metaTitle: 'Easy Smash Burgers with Pickle–Mustard Sauce | Savor',
+    metaDesc: 'Make double smash burgers with crisp edges, melted cheese and quick pickle–mustard sauce. An easy Savor adaptation of Iron Kitchen’s classic burger recipe.',
+    date: '2026-10-26',
+    readTime: '4 min read',
+    ogImage: 'https://getsavor.recipes/blog/iron-kitchen-smash-burgers.webp',
+    ogImageWidth: 1440,
+    ogImageHeight: 810,
+    ogImageAlt: 'Iron Kitchen’s double smash burger with melted cheese, pickles and onion in a toasted bun',
+    author: 'Caleb',
+  },
+  {
     slug: 'paprika-chicken-crispy-potatoes',
     title: 'Paprika Chicken & Crispy Potatoes',
     dek: 'Dinner on Autopilot, number two. Golden chicken, crispy potatoes and sweet roasted garlic on one tray. Ten minutes of effort, then the oven takes over.',

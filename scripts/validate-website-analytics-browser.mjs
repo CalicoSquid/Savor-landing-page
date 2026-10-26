@@ -1,3 +1,4 @@
+import { SAVOR_ORIGINALS } from '../src/data/originals.js'
 // Production-bundle browser regression for theme navigation and transitions.
 // Run after npm run build. No extra browser packages; uses local Chrome/CDP.
 import assert from 'node:assert/strict'
@@ -105,7 +106,7 @@ try {
   assert.equal(await evaluate('dataLayer.filter(c=>c[0]==="event"&&c[1]==="page_view").length'),1);
   assert.ok(!await evaluate('JSON.stringify(dataLayer).includes("private@example.com")'));
   await evaluate(`document.querySelector('.originals-filters a[href*="autopilot"]').click()`); await delay(100);
-  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),2);
+  assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.filter(r=>r.series==='Dinner on Autopilot').length);
   assert.equal(await evaluate('dataLayer.filter(c=>c[0]==="event"&&c[1]==="series_filter").length'),1);
   assert.equal(await evaluate('dataLayer.filter(c=>c[0]==="event"&&c[1]==="page_view").length'),1);
   await evaluate('document.addEventListener("click",e=>{if(e.target.closest("a"))e.preventDefault()});const a=document.createElement("a");a.href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes";a.textContent="Get the app";document.body.appendChild(a);a.click()');

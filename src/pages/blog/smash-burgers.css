@@ -1,0 +1,9 @@
+.smash-collab-credit { padding: 16px 20px; background: var(--surface-2); border-left: 3px solid var(--primary); font-size: .9rem; }
+.smash-recipe-figure { margin: 0; }
+.smash-recipe-image { aspect-ratio: 16 / 9; }
+.smash-recipe-figure figcaption { padding: 14px 20px; color: var(--text-secondary); font-size: .8rem; line-height: 1.6; border-bottom: 1px solid rgba(120, 100, 70, .2); }
+.smash-partner-note { margin: 36px 0; padding: clamp(20px, 4vw, 32px); border: 1px solid var(--primary); border-radius: 18px; background: var(--surface-2); }
+.smash-partner-note h2 { margin-top: 14px; }
+.smash-partner-links { display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.smash-partner-links a { min-height: 44px; display: inline-flex; align-items: center; font-weight: 700; }
+.smash-source-note { font-size: .85rem; }

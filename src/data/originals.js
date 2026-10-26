@@ -3,6 +3,14 @@ import { BLOG_POSTS } from './blogPosts.js'
 // One collection entry per authored recipe; articles retain their existing URLs.
 export const SAVOR_ORIGINALS = [
   {
+    slug: 'smash-burgers-pickle-mustard-sauce',
+    series: 'Dinner on Autopilot',
+    number: 3,
+    name: 'Smash burgers with quick pickle–mustard sauce',
+    description: 'A Savor × Iron Kitchen take on burger night: crisp beef, melting cheese and a tangy sauce from the pickle jar.',
+    effort: '25–30 minutes · Makes 4 double burgers',
+  },
+  {
     slug: 'paprika-chicken-crispy-potatoes',
     series: 'Dinner on Autopilot',
     number: 2,
