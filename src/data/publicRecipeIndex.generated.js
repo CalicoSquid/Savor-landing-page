@@ -195,5 +195,12 @@ export const PUBLIC_RECIPE_INDEX = [
     "description": "Fudgy and gooey brownies topped with a rich pecan pie layer, perfect for Thanksgiving.",
     "image": "https://getsavor.recipes/images/recipes/pecan-pie-brownies-v1.webp",
     "updatedAt": "2026-10-06T19:39:25.952Z"
+  },
+  {
+    "id": "6adf911e12ca72bf53933c16",
+    "name": "Brown Butter Maple Pecan Blondies",
+    "description": "Chewy, buttery blondies featuring toasted pecans, pockets of dark chocolate, and the deep, nutty flavour of browned butter finished with a maple glaze.",
+    "image": "https://getsavor.recipes/images/recipes/brown-butter-maple-pecan-blondies-v1.webp",
+    "updatedAt": "2026-10-26T17:42:54.621Z"
   }
 ]

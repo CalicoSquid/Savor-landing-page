@@ -2,6 +2,11 @@
 // Use a path under public (e.g. /images/recipes/pasta.webp) or an HTTPS URL.
 // Leave imageCredit null for your own photos; otherwise include the credit.
 export const RECIPE_IMAGE_OVERRIDES = {
+  '6adf911e12ca72bf53933c16': {
+    image: '/images/recipes/brown-butter-maple-pecan-blondies-v1.webp',
+    imageCredit: null,
+    imageAlt: 'Three stacked blondie squares studded with dark chocolate and pecans on a wooden board, with white ceramic jugs behind.',
+  },
   '6ac549861e142fac7ac5f84f': {
     image: '/images/recipes/apple-cinnamon-roll-v1.webp',
     imageCredit: null,
@@ -62,6 +67,7 @@ export function applyRecipeImageOverride(recipe, id) {
   const image = new URL(override.image, 'https://getsavor.recipes').href
   return {
     ...recipe, image, imageCredit: override.imageCredit ?? null,
+    ...(override.imageAlt ? { imageAlt: override.imageAlt } : {}),
     ...(override.ingredientGroups ? { ingredientGroups: override.ingredientGroups } : {}),
     ...(override.ingredients ? { ingredients: override.ingredients } : {}),
     ...(override.instructions ? { instructions: override.instructions } : {}),
