@@ -157,14 +157,16 @@
   margin: 0;
   padding: 0;
 }
-.site-footer-links a {
+.site-footer-links a,
+.site-footer-links .analytics-settings {
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--text-secondary);
   text-decoration: none;
   transition: color 0.15s;
 }
-.site-footer-links a:hover { color: var(--primary); }
+.site-footer-links a:hover,
+.site-footer-links .analytics-settings:hover { color: var(--primary); }
 
 .site-footer-mark {
   font-size: 0.92rem;

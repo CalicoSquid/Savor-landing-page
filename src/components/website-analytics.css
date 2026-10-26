@@ -4,5 +4,5 @@
 .analytics-consent-actions { display: flex; flex-shrink: 0; gap: 10px; }
 .analytics-consent button { font: inherit; font-size: .85rem; font-weight: 700; min-height: 44px; padding: 10px 14px; border: 1px solid var(--primary); border-radius: 10px; color: var(--text-primary); background: var(--surface-2); cursor: pointer; }
 .analytics-consent button:focus-visible, .analytics-settings:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
-.analytics-settings { font: inherit; color: inherit; background: none; border: none; text-decoration: underline; cursor: pointer; padding: 0; min-height: 44px; }
+.analytics-settings { font: inherit; color: inherit; background: none; border: none; cursor: pointer; padding: 0; }
 @media (max-width: 640px) { .analytics-consent { bottom: 10px; left: 10px; right: 10px; padding: 18px; flex-direction: column; align-items: stretch; gap: 16px; } .analytics-consent-actions button { flex: 1; } }
