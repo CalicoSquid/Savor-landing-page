@@ -1,0 +1,15 @@
+.pinterest-share { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; max-width: 100%; min-width: 0; }
+.pinterest-new-tab { margin-left: 7px; }
+.blaff-recipe-actions, .rp-recipe-actions { align-items: flex-start; }
+.pinterest-copy { color: var(--text-primary); font-size: .85rem; max-width: 100%; }
+.pinterest-copy summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 6px; color: var(--primary); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.pinterest-copy summary::before { content: '+'; text-decoration: none; }
+.pinterest-copy[open] summary::before { content: '−'; }
+.pinterest-copy[open] { width: min(360px, calc(100vw - 100px)); }
+.pinterest-copy .pinterest-copy-hint, .pinterest-copy-field p { font-size: .85rem; line-height: 1.6; margin: 8px 0 14px; overflow-wrap: anywhere; color: var(--text-secondary); }
+.pinterest-copy-field { padding: 12px 0 0; border-top: 1px solid rgba(120, 100, 70, .25); }
+.pinterest-copy-field > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pinterest-copy button { font: inherit; min-height: 44px; padding: 8px 12px; border: 1px solid var(--text-secondary); border-radius: 8px; color: var(--text-primary); background: var(--surface-2); cursor: pointer; }
+.pinterest-copy :is(button, summary):focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+.pinterest-copy-status { font-size: .8rem; line-height: 1.5; }
+@media print { .pinterest-share { display: none; } }

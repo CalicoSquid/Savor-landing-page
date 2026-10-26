@@ -1,9 +1,12 @@
+import PinterestSave from '../../components/PinterestSave'
+import { originalPinterestDetails, pinterestImageAttributes } from '../../lib/pinterest'
 import BlogPostLayout from '../../components/BlogPostLayout'
 import { BLOG_POSTS } from '../../data/blogPosts'
 import './salt-pork-blaff.css'
 import './smash-burgers.css'
 
 const post = BLOG_POSTS.find(p => p.slug === 'smash-burgers-pickle-mustard-sauce')
+const pin = originalPinterestDetails(post)
 const pageUrl = `https://getsavor.recipes/blog/${post.slug}/`
 const originalUrl = 'https://ironkitcheninc.com/pages/recipes/classic-smash-burgers'
 const themeUrl = 'https://ironkitcheninc.com/pages/iron-kitchen-x-savor'
@@ -29,7 +32,7 @@ const steps = [
 ]
 const recipeMetadata = {
   '@context': 'https://schema.org', '@type': 'Recipe',
-  name: post.title, description: post.metaDesc,
+  name: pin.title, description: post.metaDesc,
   image: { '@type': 'ImageObject', url: post.ogImage, contentUrl: post.ogImage, width: 1440, height: 810, creditText: 'Iron Kitchen Inc.', creator: { '@type': 'Organization', name: 'Iron Kitchen Inc.', url: 'https://ironkitcheninc.com/' } },
   author: { '@type': 'Person', name: 'Caleb' }, datePublished: post.date,
   isBasedOn: { '@type': 'Recipe', name: 'Classic Smash Burgers', url: originalUrl, author: { '@type': 'Organization', name: 'Iron Kitchen Inc.' } },
@@ -52,7 +55,7 @@ export default function SmashBurgers() {
 
       <section id="recipe" className="blaff-recipe-card" aria-labelledby="smash-recipe-title">
         <figure className="smash-recipe-figure">
-          <img className="blaff-recipe-image smash-recipe-image" src="/blog/iron-kitchen-smash-burgers.webp" width="1440" height="810" alt={post.ogImageAlt} decoding="async" />
+          <img className="blaff-recipe-image smash-recipe-image" src="/blog/iron-kitchen-smash-burgers.webp" width="1440" height="810" alt={pin.altText} {...pinterestImageAttributes(pin)} decoding="async" />
           <figcaption>Photo: <a href={originalUrl} target="_blank" rel="noopener noreferrer">Iron Kitchen Inc.</a> Their classic burger is pictured; the pickle–mustard sauce below is Savor’s addition.</figcaption>
         </figure>
         <div className="blaff-recipe-content">
@@ -62,7 +65,7 @@ export default function SmashBurgers() {
           <p><strong>Makes:</strong> 4 double burgers · <strong>Difficulty:</strong> Easy<br /><strong>Prep:</strong> 10 minutes · <strong>Cook:</strong> 15–20 minutes in batches<br /><strong>Total:</strong> about 25–30 minutes, depending on pan size.</p>
           <div className="blaff-recipe-actions">
             <a href={`savor://create?url=${encodeURIComponent(pageUrl)}`}>Save to Savor</a>
-            <a className="blaff-pinterest" href={`https://www.pinterest.com/pin/create/button/?${new URLSearchParams({ url: pageUrl, media: post.ogImage, description: `${post.title} — adapted from Iron Kitchen Inc.; photo by Iron Kitchen Inc.` })}`} target="_blank" rel="noopener noreferrer">Save to Pinterest</a>
+            <PinterestSave details={pin} />
           </div>
           <h3>Ingredients</h3>
           <ul>{ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}</ul>

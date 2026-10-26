@@ -1,8 +1,11 @@
+import PinterestSave from '../../components/PinterestSave'
+import { originalPinterestDetails, pinterestImageAttributes } from '../../lib/pinterest'
 import BlogPostLayout from '../../components/BlogPostLayout'
 import { BLOG_POSTS } from '../../data/blogPosts'
 import './salt-pork-blaff.css'
 
 const post = BLOG_POSTS.find(p => p.slug === 'salt-pork-blaff')
+const pin = originalPinterestDetails(post)
 
 const ingredients = [
   "600 g meaty salt pork, or 600 g fresh skinless pork belly plus 30 g ordinary salt for the homemade option",
@@ -55,7 +58,7 @@ const steps = [
 const pageUrl = 'https://getsavor.recipes/blog/salt-pork-blaff/'
 const recipeMetadata = {
   '@context': 'https://schema.org', '@type': 'Recipe',
-  name: 'Salt pork blaff with green plantain, vegetables & lime',
+  name: pin.title,
   description: 'Vegetables and green plantain in a thyme-scented pork broth, finished with lime and crisp pork belly.',
   image: 'https://getsavor.recipes/blog/salt-pork-blaff-closeup.jpg',
   author: { '@type': 'Person', name: 'Caleb' }, datePublished: '2026-10-20',
@@ -91,7 +94,7 @@ export default function SaltPorkBlaff() {
       <p>Keep the belly within its original use-by date and the normal 3–5 day refrigerated window for fresh pork, including the salting day. Cook it promptly after salting. For shop-bought salt pork, follow its own soaking and cooking instructions instead.</p>
 
       <section id="recipe" className="blaff-recipe-card" aria-labelledby="blaff-recipe-title">
-        <img className="blaff-recipe-image" src="/blog/salt-pork-blaff-closeup.jpg" width="1200" height="800" alt="Salt pork blaff with crisp pork belly, green plantain and vegetables in a golden broth" decoding="async" />
+        <img className="blaff-recipe-image" src="/blog/salt-pork-blaff-closeup.jpg" width="1200" height="800" alt={pin.altText} {...pinterestImageAttributes(pin)} decoding="async" />
         <div className="blaff-recipe-content">
         <span className="doc-eyebrow">Back of the Cupboard · Recipe No. 1</span>
         <h2 id="blaff-recipe-title">Salt pork blaff with green plantain, vegetables &amp; lime</h2>
@@ -99,7 +102,7 @@ export default function SaltPorkBlaff() {
         <p><strong>Serves:</strong> 4 generously.<br /><strong>Allow:</strong> roughly 2–3 hours, plus 24 hours if salting your own belly, or any soaking needed for shop-bought pork.</p>
         <div className="blaff-recipe-actions">
           <a href={`savor://create?url=${encodeURIComponent('https://getsavor.recipes/blog/salt-pork-blaff/')}`}>Save to Savor</a>
-          <a className="blaff-pinterest" href={`https://www.pinterest.com/pin/create/button/?${new URLSearchParams({ url: 'https://getsavor.recipes/blog/salt-pork-blaff/', media: 'https://getsavor.recipes/blog/salt-pork-blaff-closeup.jpg', description: 'Salt pork blaff with green plantain, vegetables and lime — the dinner that inspired Potluck.' })}`} target="_blank" rel="noopener noreferrer">Save to Pinterest</a>
+          <PinterestSave details={pin} />
         </div>
         <h3>Ingredients</h3>
         <ul>{ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}</ul>

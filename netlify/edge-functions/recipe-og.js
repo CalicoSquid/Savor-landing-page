@@ -7,6 +7,7 @@
 //   - social preview bots: thin noindex OG card (Pinterest includes Recipe data)
 
 import { applyRecipeImageOverride } from '../../src/data/recipeImageOverrides.js'
+import { recipePinterestDetails, pinterestImageAttributes } from '../../src/lib/pinterest.js'
 
 const SEARCH_CRAWLERS = [
   'googlebot', 'bingbot', 'applebot', 'duckduckbot', 'yandexbot',
@@ -32,6 +33,7 @@ const QUERY = `
       name
       description
       image
+      imageCredit { photographer photographerUrl }
       ingredients
       ingredientGroups { label startIndex }
       instructions
@@ -121,32 +123,35 @@ function buildJsonLd(recipe, pageUrl) {
   return JSON.stringify(ld).replace(/</g, '\\u003c')
 }
 
-function baseHead({ metaTitle, displayTitle, desc, image, pageUrl }) {
+function baseHead({ metaTitle, displayTitle, desc, image, pageUrl, pin }) {
+  const shareTitle = pin ? escapeHtml(pin.title) : displayTitle
+  const shareDesc = pin ? escapeHtml(pin.description) : desc
+  const imageAlt = pin ? escapeHtml(pin.altText) : displayTitle
   return `
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${metaTitle}</title>
   <meta name="description" content="${desc}" />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="${displayTitle}" />
-  <meta property="og:description" content="${desc}" />
+  <meta property="og:title" content="${shareTitle}" />
+  <meta property="og:description" content="${shareDesc}" />
   <meta property="og:image" content="${image}" />
   <meta property="og:image:secure_url" content="${image}" />
-  <meta property="og:image:alt" content="${displayTitle}" />
+  <meta property="og:image:alt" content="${imageAlt}" />
   <meta property="og:url" content="${pageUrl}" />
   <meta property="og:site_name" content="Savor" />
   <meta property="og:locale" content="en_GB" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${displayTitle}" />
-  <meta name="twitter:description" content="${desc}" />
+  <meta name="twitter:title" content="${shareTitle}" />
+  <meta name="twitter:description" content="${shareDesc}" />
   <meta name="twitter:image" content="${image}" />
-  <meta name="twitter:image:alt" content="${displayTitle}" />`
+  <meta name="twitter:image:alt" content="${imageAlt}" />`
 }
 
-function thinStub({ metaTitle, displayTitle, desc, image, pageUrl, canonicalUrl, recipe }) {
+function thinStub({ metaTitle, displayTitle, desc, image, pageUrl, canonicalUrl, recipe, pin }) {
   return `<!DOCTYPE html>
 <html lang="en">
-<head>${baseHead({ metaTitle, displayTitle, desc, image, pageUrl })}
+<head>${baseHead({ metaTitle, displayTitle, desc, image, pageUrl, pin })}
   <link rel="canonical" href="${canonicalUrl}" />
   <meta name="robots" content="noindex, follow" />
   ${recipe ? `<script type="application/ld+json">${buildJsonLd(recipe, pageUrl)}</script>` : ''}
@@ -158,7 +163,7 @@ function thinStub({ metaTitle, displayTitle, desc, image, pageUrl, canonicalUrl,
 </html>`
 }
 
-function fullPage({ recipe, metaTitle, displayTitle, desc, image, pageUrl }) {
+function fullPage({ recipe, metaTitle, displayTitle, desc, image, pageUrl, pin }) {
   const ingredientsHtml = (recipe.ingredients || [])
     .map((ing, index) => {
       const group = recipe.ingredientGroups?.find((entry) => entry.startIndex === index)
@@ -174,7 +179,7 @@ function fullPage({ recipe, metaTitle, displayTitle, desc, image, pageUrl }) {
 
   return `<!DOCTYPE html>
 <html lang="en">
-<head>${baseHead({ metaTitle, displayTitle, desc, image, pageUrl })}
+<head>${baseHead({ metaTitle, displayTitle, desc, image, pageUrl, pin })}
   <link rel="canonical" href="${pageUrl}" />
   <meta name="robots" content="index, follow" />
   <script type="application/ld+json">${jsonLd}</script>
@@ -185,7 +190,7 @@ function fullPage({ recipe, metaTitle, displayTitle, desc, image, pageUrl }) {
     <h1>${displayTitle}</h1>
     ${desc ? `<p>${desc}</p>` : ''}
     ${author ? `<p>Saved by ${escapeHtml(author)} on Savor</p>` : ''}
-    ${image ? `<img src="${image}" alt="${displayTitle}" />` : ''}
+    ${image ? `<img src="${image}" alt="${pin ? escapeHtml(pin.altText) : displayTitle}" ${pin ? Object.entries(pinterestImageAttributes(pin)).map(([name, value]) => `${name}="${escapeHtml(value)}"`).join(' ') : ''} />` : ''}
     ${ingredientsHtml ? `<h2>Ingredients</h2>\n    <ul>\n      ${ingredientsHtml}\n    </ul>` : ''}
     ${instructionsHtml ? `<h2>Instructions</h2>\n    <ol>\n      ${instructionsHtml}\n    </ol>` : ''}
     <p><a href="https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes">Save recipes from anywhere with Savor →</a></p>
@@ -247,11 +252,12 @@ export default async function handler(request, context) {
     try { image = new URL(recipe.image || DEFAULT_IMAGE, SITE_URL).href } catch { image = DEFAULT_IMAGE }
     image = escapeHtml(image)
     const pageUrl = escapeHtml(`${SITE_URL}/r/${encodeURIComponent(id)}`)
+    const pin = recipePinterestDetails(recipe, `${SITE_URL}/r/${encodeURIComponent(id)}`)
     const isOriginal = !recipe.sourceUrl
 
     let html
     if (isSearchBot && isOriginal) {
-      html = fullPage({ recipe, metaTitle, displayTitle, desc, image, pageUrl })
+      html = fullPage({ recipe, metaTitle, displayTitle, desc, image, pageUrl, pin })
     } else if (isSearchBot) {
       html = thinStub({
         metaTitle,
@@ -259,11 +265,12 @@ export default async function handler(request, context) {
         desc,
         image,
         pageUrl,
+        pin,
         canonicalUrl: escapeHtml(recipe.sourceUrl),
       })
     } else {
       html = thinStub({
-        metaTitle, displayTitle, desc, image, pageUrl, canonicalUrl: pageUrl,
+        metaTitle, displayTitle, desc, image, pageUrl, pin, canonicalUrl: pageUrl,
         recipe: userAgent.includes('pinterest') ? recipe : undefined,
       })
     }

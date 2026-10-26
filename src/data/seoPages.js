@@ -1,4 +1,5 @@
 import { BLOG_POSTS } from './blogPosts.js'
+import { PINTEREST_RECIPES } from './pinterest.js'
 
 export const SITE_URL = 'https://getsavor.recipes'
 export const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.calicosquid.savorrecipes'
@@ -286,10 +287,13 @@ export const BLOG_SEO_PAGES = BLOG_POSTS.map((post) => page({
   description: post.metaDesc || post.dek,
   canonical: `${SITE_URL}/blog/${post.slug}/`,
   ogType: 'article',
+  ogTitle: PINTEREST_RECIPES[post.slug]?.title,
+  ogDescription: PINTEREST_RECIPES[post.slug]?.description,
   ogImage: post.ogImage,
+  ogImageType: /\.webp(?:\?|$)/i.test(post.ogImage) ? 'image/webp' : /\.png(?:\?|$)/i.test(post.ogImage) ? 'image/png' : 'image/jpeg',
   ogImageWidth: post.ogImageWidth ?? 1200,
   ogImageHeight: post.ogImageHeight ?? 630,
-  ogImageAlt: post.ogImageAlt || `${post.title} — Savor Blog`,
+  ogImageAlt: PINTEREST_RECIPES[post.slug]?.altText || post.ogImageAlt || `${post.title} — Savor Blog`,
   author: post.author || 'Caleb',
   publishedTime: post.date,
   modifiedTime: post.modified || post.date,

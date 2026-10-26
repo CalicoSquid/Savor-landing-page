@@ -1,8 +1,11 @@
+import PinterestSave from '../../components/PinterestSave'
+import { originalPinterestDetails, pinterestImageAttributes } from '../../lib/pinterest'
 import BlogPostLayout from '../../components/BlogPostLayout'
 import { BLOG_POSTS } from '../../data/blogPosts'
 import './salt-pork-blaff.css'
 
 const post = BLOG_POSTS.find(item => item.slug === 'one-pan-smoky-tomato-rice')
+const pin = originalPinterestDetails(post)
 const pageUrl = `https://getsavor.recipes/blog/${post.slug}/`
 const imageUrl = post.ogImage
 const ingredients = [
@@ -51,7 +54,7 @@ const steps = [
 const recipe = {
   '@context': 'https://schema.org',
   '@type': 'Recipe',
-  name: 'One-pan smoky tomato rice with chickpeas and crispy eggs',
+  name: pin.title,
   description: 'Smoky tomato rice with chickpeas, wilted spinach and crisp-edged fried eggs, cooked in one pan with cupboard staples.',
   image: imageUrl,
   author: { '@type': 'Person', name: 'Caleb', url: 'https://getsavor.recipes/about/' },
@@ -67,7 +70,6 @@ const recipe = {
   url: pageUrl,
   mainEntityOfPage: pageUrl,
 }
-const pinterestParams = new URLSearchParams({ url: pageUrl, media: imageUrl, description: recipe.name })
 
 export default function SmokyTomatoRice() {
   return (
@@ -80,7 +82,7 @@ export default function SmokyTomatoRice() {
       <p>Dinner on Autopilot is about dependable formats built around kitchen essentials, with room for whatever needs using. This one uses a single pan: cook the rice, spoon it into bowls, then fry the eggs in that same pan. No hidden second frying pan in the small print.</p>
 
       <section id="recipe" className="blaff-recipe-card" aria-labelledby="autopilot-recipe-title">
-        <img className="blaff-recipe-image" src="/blog/smoky-tomato-rice-rustic.jpg" width="1200" height="1200" style={{ aspectRatio: '1 / 1' }} alt={post.ogImageAlt} decoding="async" />
+        <img className="blaff-recipe-image" src="/blog/smoky-tomato-rice-rustic.jpg" width="1200" height="1200" style={{ aspectRatio: '1 / 1' }} alt={pin.altText} {...pinterestImageAttributes(pin)} decoding="async" />
         <div className="blaff-recipe-content">
           <span className="doc-eyebrow">Dinner on Autopilot · Recipe No. 1</span>
           <h2 id="autopilot-recipe-title">Smoky tomato rice with chickpeas &amp; crispy eggs</h2>
@@ -88,7 +90,7 @@ export default function SmokyTomatoRice() {
           <p><strong>Serves:</strong> 4.<br /><strong>Prep:</strong> 10 minutes. <strong>Cook:</strong> about 40 minutes.<br /><strong>Equipment:</strong> a deep 28 cm non-stick sauté pan with a lid.</p>
           <div className="blaff-recipe-actions">
             <a href={`savor://create?url=${encodeURIComponent(pageUrl)}`}>Save to Savor</a>
-            <a className="blaff-pinterest" href={`https://www.pinterest.com/pin/create/button/?${pinterestParams}`} target="_blank" rel="noopener noreferrer">Save to Pinterest</a>
+            <PinterestSave details={pin} />
           </div>
           <h3>Ingredients</h3>
           <ul>{ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}</ul>

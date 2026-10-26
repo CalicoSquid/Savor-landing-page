@@ -1,8 +1,11 @@
+import PinterestSave from '../../components/PinterestSave'
+import { originalPinterestDetails, pinterestImageAttributes } from '../../lib/pinterest'
 import BlogPostLayout from '../../components/BlogPostLayout'
 import { BLOG_POSTS } from '../../data/blogPosts'
 import './salt-pork-blaff.css'
 
 const post = BLOG_POSTS.find(p => p.slug === 'sticky-soy-braised-pork-neck-shiitake')
+const pin = originalPinterestDetails(post)
 const pageUrl = `https://getsavor.recipes/blog/${post.slug}/`
 const ingredients = [
   '600–900 g pork neck, cut into large chunks',
@@ -32,7 +35,7 @@ const steps = [
 ]
 const recipeMetadata = {
   '@context': 'https://schema.org', '@type': 'Recipe',
-  name: post.title, description: 'Tender pork neck and dried shiitake mushrooms slow-braised with soy, ginger and garlic, finished in a glossy, sticky sauce.',
+  name: pin.title, description: 'Tender pork neck and dried shiitake mushrooms slow-braised with soy, ginger and garlic, finished in a glossy, sticky sauce.',
   image: post.ogImage, author: { '@type': 'Person', name: 'Caleb' },
   datePublished: post.date, prepTime: 'PT45M', cookTime: 'PT3H', totalTime: 'PT3H45M',
   recipeYield: '2–4 servings', recipeCategory: 'Dinner',
@@ -52,7 +55,7 @@ export default function StickySoyPork() {
       <p><a href="#recipe">Straight to the recipe ↓</a></p>
 
       <section id="recipe" className="blaff-recipe-card" aria-labelledby="pork-recipe-title">
-        <img className="blaff-recipe-image" src="/blog/sticky-soy-pork-shiitake.jpg" width="1536" height="1024" alt={post.ogImageAlt} decoding="async" />
+        <img className="blaff-recipe-image" src="/blog/sticky-soy-pork-shiitake.jpg" width="1536" height="1024" alt={pin.altText} {...pinterestImageAttributes(pin)} decoding="async" />
         <div className="blaff-recipe-content">
           <span className="doc-eyebrow">Back of the Cupboard · Recipe No. 2</span>
           <h2 id="pork-recipe-title">{post.title}</h2>
@@ -60,7 +63,7 @@ export default function StickySoyPork() {
           <p><strong>Serves:</strong> 2–4<br /><strong>Prep:</strong> 45 minutes, including mushroom soaking<br /><strong>Cook:</strong> 2½–3 hours; allow longer if the pork needs it.</p>
           <div className="blaff-recipe-actions">
             <a href={`savor://create?url=${encodeURIComponent(pageUrl)}`}>Save to Savor</a>
-            <a className="blaff-pinterest" href={`https://www.pinterest.com/pin/create/button/?${new URLSearchParams({ url: pageUrl, media: post.ogImage, description: post.title })}`} target="_blank" rel="noopener noreferrer">Save to Pinterest</a>
+            <PinterestSave details={pin} />
           </div>
           <h3>Ingredients</h3>
           <ul>{ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}</ul>

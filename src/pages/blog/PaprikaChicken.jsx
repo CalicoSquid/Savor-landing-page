@@ -1,8 +1,11 @@
+import PinterestSave from '../../components/PinterestSave'
+import { originalPinterestDetails, pinterestImageAttributes } from '../../lib/pinterest'
 import BlogPostLayout from '../../components/BlogPostLayout'
 import { BLOG_POSTS } from '../../data/blogPosts'
 import './salt-pork-blaff.css'
 
 const post = BLOG_POSTS.find(p => p.slug === 'paprika-chicken-crispy-potatoes')
+const pin = originalPinterestDetails(post)
 const pageUrl = `https://getsavor.recipes/blog/${post.slug}/`
 const ingredients = [
   '4 bone-in, skin-on chicken thighs (about 800 g)',
@@ -26,7 +29,7 @@ const steps = [
 ]
 const recipeMetadata = {
   '@context': 'https://schema.org', '@type': 'Recipe',
-  name: post.title, description: post.metaDesc, image: post.ogImage,
+  name: pin.title, description: post.metaDesc, image: post.ogImage,
   author: { '@type': 'Person', name: 'Caleb' }, datePublished: post.date,
   prepTime: 'PT10M', cookTime: 'PT45M', totalTime: 'PT55M',
   recipeYield: '4 servings', recipeCategory: 'Dinner',
@@ -45,7 +48,7 @@ export default function PaprikaChicken() {
       <p>The little trick is a hot metal tray and enough space for the potatoes to roast. Give them a ten-minute head start, add the chicken, and let heat and time get on with it.</p>
       <p><a href="#recipe">Get straight to the recipe ↓</a></p>
       <section id="recipe" className="blaff-recipe-card" aria-labelledby="chicken-recipe-title">
-        <img className="blaff-recipe-image" src="/blog/paprika-chicken-crispy-potatoes.jpg" width={post.ogImageWidth} height={post.ogImageHeight} alt={post.ogImageAlt} decoding="async" />
+        <img className="blaff-recipe-image" src="/blog/paprika-chicken-crispy-potatoes.jpg" width={post.ogImageWidth} height={post.ogImageHeight} alt={pin.altText} {...pinterestImageAttributes(pin)} decoding="async" />
         <div className="blaff-recipe-content">
           <span className="doc-eyebrow">Dinner on Autopilot · Recipe No. 2</span>
           <h2 id="chicken-recipe-title">Paprika chicken &amp; crispy potatoes</h2>
@@ -53,7 +56,7 @@ export default function PaprikaChicken() {
           <p><strong>Serves:</strong> 4 · <strong>Difficulty:</strong> Easy<br /><strong>Prep:</strong> 10 minutes · <strong>Cook:</strong> 40–45 minutes<br /><strong>Total:</strong> 50–55 minutes, plus 5 minutes resting. Allow extra time for the oven to heat if needed.</p>
           <div className="blaff-recipe-actions">
             <a href={`savor://create?url=${encodeURIComponent(pageUrl)}`}>Save to Savor</a>
-            <a className="blaff-pinterest" href={`https://www.pinterest.com/pin/create/button/?${new URLSearchParams({ url: pageUrl, media: post.ogImage, description: post.title })}`} target="_blank" rel="noopener noreferrer">Save to Pinterest</a>
+            <PinterestSave details={pin} />
           </div>
           <h3>Ingredients</h3>
           <ul>{ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}</ul>

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import './RecipePage.css'
 import { applyRecipeImageOverride } from '../data/recipeImageOverrides'
+import PinterestSave from '../components/PinterestSave'
+import { recipePinterestDetails, pinterestImageAttributes } from '../lib/pinterest'
 
 const APOLLO_URI = import.meta.env.VITE_APOLLO_URI || 'https://savor-production.up.railway.app/graphql'
 
@@ -157,22 +159,23 @@ function RecipeContent({ id, onRetry }) {
     const desc = (recipe.description || `${recipe.cuisine || recipe.category || 'A'} recipe saved on Savor`).replace(/\s+/g, ' ').trim()
     const metaDesc = desc.length > 180 ? `${desc.slice(0, 177).trimEnd()}…` : desc
     const pageUrl = `${SITE_URL}/r/${encodeURIComponent(id)}`
+    const pin = recipePinterestDetails(recipe, pageUrl)
     let socialImage = DEFAULT_SOCIAL_IMAGE
     try { socialImage = new URL(recipe.image || DEFAULT_SOCIAL_IMAGE, SITE_URL).href } catch { /* use default */ }
 
     setMeta('description', metaDesc, 'name')
-    setMeta('og:title', decode(recipe.name))
-    setMeta('og:description', metaDesc)
+    setMeta('og:title', pin.title)
+    setMeta('og:description', pin.description)
     setMeta('og:image', socialImage)
     setMeta('og:image:secure_url', socialImage)
-    setMeta('og:image:alt', decode(recipe.name))
+    setMeta('og:image:alt', pin.altText)
     setMeta('og:url', pageUrl)
     setMeta('og:type', 'article')
     setMeta('twitter:card', 'summary_large_image', 'name')
-    setMeta('twitter:title', decode(recipe.name), 'name')
-    setMeta('twitter:description', metaDesc, 'name')
+    setMeta('twitter:title', pin.title, 'name')
+    setMeta('twitter:description', pin.description, 'name')
     setMeta('twitter:image', socialImage, 'name')
-    setMeta('twitter:image:alt', decode(recipe.name), 'name')
+    setMeta('twitter:image:alt', pin.altText, 'name')
 
     // Indexability: only ever index recipes with no sourceUrl (originals —
     // OCR/scan/handwritten, not scraped from another site). Anything with a
@@ -235,16 +238,7 @@ function RecipeContent({ id, onRetry }) {
     </div>
   )
 
-  const pinterestParams = new URLSearchParams({
-    url: `${SITE_URL}/r/${encodeURIComponent(id)}`,
-    description: [decode(recipe.name), decode(recipe.description)].filter(Boolean).join(' — ').slice(0, 500),
-  })
-  if (recipe.image && !imageFailed) {
-    try {
-      const imageUrl = new URL(recipe.image, SITE_URL)
-      if (['https:', 'http:'].includes(imageUrl.protocol)) pinterestParams.set('media', imageUrl.href)
-    } catch { /* Let Pinterest find images on the recipe page. */ }
-  }
+  const pin = recipePinterestDetails({ ...recipe, image: imageFailed ? null : recipe.image }, `${SITE_URL}/r/${encodeURIComponent(id)}`)
 
   return (
     <div className="rp-root">
@@ -272,7 +266,8 @@ function RecipeContent({ id, onRetry }) {
             <>
               <img
                 src={recipe.image}
-                alt={recipe.name}
+                alt={pin.altText}
+                {...pinterestImageAttributes(pin)}
                 className={`rp-hero-img${imageLoaded ? ' is-loaded' : ''}`}
                 width="1200"
                 height="800"
@@ -330,14 +325,7 @@ function RecipeContent({ id, onRetry }) {
               </div>
             )}
               <div className="rp-recipe-actions">
-                <a
-                  className="rp-pinterest-btn"
-                  href={`https://www.pinterest.com/pin/create/button/?${pinterestParams}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Save to Pinterest
-                </a>
+                <PinterestSave details={pin} className="rp-pinterest-btn" />
               <button className="rp-print-btn" onClick={() => window.print()}>
                 🖨 Print recipe
               </button>
