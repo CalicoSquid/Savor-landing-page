@@ -2,6 +2,11 @@
 // Use a path under public (e.g. /images/recipes/pasta.webp) or an HTTPS URL.
 // Leave imageCredit null for your own photos; otherwise include the credit.
 export const RECIPE_IMAGE_OVERRIDES = {
+  '6adf98c012ca72bf53933e0b': {
+    image: '/images/recipes/christmas-dinner-pie-polished-v1.webp',
+    imageCredit: null,
+    imageAlt: 'A round Christmas dinner pie topped with chunky golden stuffing, onion and herbs, with a red-and-green fluted pastry rim, in a metal tin on a clean stovetop.',
+  },
   '6adf946812ca72bf53933d3c': {
     image: '/images/recipes/cranberry-pistachio-white-chocolate-cookies-v1.webp',
     imageCredit: null,

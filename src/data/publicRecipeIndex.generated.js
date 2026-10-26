@@ -209,5 +209,12 @@ export const PUBLIC_RECIPE_INDEX = [
     "description": "Buttery, bakery-style cookies packed with creamy white chocolate, tart dried cranberries, crunchy pistachios, and a hint of orange zest.",
     "image": "https://getsavor.recipes/images/recipes/cranberry-pistachio-white-chocolate-cookies-v1.webp",
     "updatedAt": "2026-10-26T17:56:56.193Z"
+  },
+  {
+    "id": "6adf98c012ca72bf53933e0b",
+    "name": "The Christmas Dinner Pie",
+    "description": "A festive pie featuring tender turkey in a rich gravy, encased in buttery shortcrust pastry and topped with a crispy, golden sage-and-onion stuffing crust.",
+    "image": "https://getsavor.recipes/images/recipes/christmas-dinner-pie-polished-v1.webp",
+    "updatedAt": "2026-10-26T18:15:28.215Z"
   }
 ]
