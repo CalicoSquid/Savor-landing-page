@@ -2,6 +2,11 @@
 // Use a path under public (e.g. /images/recipes/pasta.webp) or an HTTPS URL.
 // Leave imageCredit null for your own photos; otherwise include the credit.
 export const RECIPE_IMAGE_OVERRIDES = {
+  '6adf946812ca72bf53933d3c': {
+    image: '/images/recipes/cranberry-pistachio-white-chocolate-cookies-v1.webp',
+    imageCredit: null,
+    imageAlt: 'Stacked golden cookies with white chocolate chips, dried cranberries and green pistachios on dark slate, with a bite missing from the top cookie.',
+  },
   '6adf911e12ca72bf53933c16': {
     image: '/images/recipes/brown-butter-maple-pecan-blondies-v1.webp',
     imageCredit: null,

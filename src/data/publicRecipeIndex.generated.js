@@ -202,5 +202,12 @@ export const PUBLIC_RECIPE_INDEX = [
     "description": "Chewy, buttery blondies featuring toasted pecans, pockets of dark chocolate, and the deep, nutty flavour of browned butter finished with a maple glaze.",
     "image": "https://getsavor.recipes/images/recipes/brown-butter-maple-pecan-blondies-v1.webp",
     "updatedAt": "2026-10-26T17:42:54.621Z"
+  },
+  {
+    "id": "6adf946812ca72bf53933d3c",
+    "name": "White Chocolate, Cranberry & Pistachio Cookies",
+    "description": "Buttery, bakery-style cookies packed with creamy white chocolate, tart dried cranberries, crunchy pistachios, and a hint of orange zest.",
+    "image": "https://getsavor.recipes/images/recipes/cranberry-pistachio-white-chocolate-cookies-v1.webp",
+    "updatedAt": "2026-10-26T17:56:56.193Z"
   }
 ]
