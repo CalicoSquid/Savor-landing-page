@@ -3,6 +3,15 @@ import { BLOG_POSTS } from './blogPosts.js'
 // One collection entry per authored recipe; articles retain their existing URLs.
 export const SAVOR_ORIGINALS = [
   {
+    slug: 'paprika-chicken-crispy-potatoes',
+    series: 'Dinner on Autopilot',
+    number: 2,
+    name: 'Paprika chicken & crispy potatoes',
+    description: 'Golden chicken, crispy-edged potatoes and sweet roasted garlic. One tray, ten minutes of prep, then hand dinner over to the oven.',
+    effort: '50–55 minutes, plus resting · Serves 4',
+    mood: 'For the evening when the oven can do the work.',
+  },
+  {
     slug: 'sticky-soy-braised-pork-neck-shiitake',
     series: 'Back of the Cupboard',
     number: 2,

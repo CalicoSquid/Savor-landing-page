@@ -13,6 +13,20 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'paprika-chicken-crispy-potatoes',
+    title: 'Paprika Chicken & Crispy Potatoes',
+    dek: 'Dinner on Autopilot, number two. Golden chicken, crispy potatoes and sweet roasted garlic on one tray. Ten minutes of effort, then the oven takes over.',
+    metaTitle: 'Paprika Chicken & Crispy Potatoes Traybake | Savor',
+    metaDesc: 'An easy paprika chicken traybake with crispy potatoes, onions and roasted garlic. Just 10 minutes of prep for a one-tray dinner that serves four.',
+    date: '2026-10-26',
+    readTime: '4 min read',
+    ogImage: 'https://getsavor.recipes/blog/paprika-chicken-crispy-potatoes.jpg',
+    ogImageWidth: 1024,
+    ogImageHeight: 1024,
+    ogImageAlt: 'Paprika-roasted chicken drumsticks and golden potato wedges with roasted garlic in a tray',
+    author: 'Caleb',
+  },
+  {
     slug: 'sticky-soy-braised-pork-neck-shiitake',
     title: 'Sticky Soy-Braised Pork Neck with Shiitake Mushrooms',
     dek: 'Back of the Cupboard, number two. Forgotten dried shiitake, bargain pork neck and a slow braise that turns both into something worth clearing a shelf for.',

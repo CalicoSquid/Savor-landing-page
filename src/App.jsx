@@ -20,6 +20,7 @@ import ScaleARecipe from './pages/blog/ScaleARecipe'
 import WhatShouldICookTonight from './pages/blog/WhatShouldICookTonight'
 import SaltPorkBlaff from './pages/blog/SaltPorkBlaff'
 import StickySoyPork from './pages/blog/StickySoyPork'
+import PaprikaChicken from './pages/blog/PaprikaChicken'
 import SmokyTomatoRice from './pages/blog/SmokyTomatoRice'
 import FoodSafetyLessons from './pages/blog/FoodSafetyLessons'
 import FoodSafetyPrintables from './pages/FoodSafetyPrintables'
@@ -73,6 +74,7 @@ export default function AppRoutes() {
         <Route path="/blog/what-should-i-cook-tonight" element={<WhatShouldICookTonight />} />
         <Route path="/blog/salt-pork-blaff" element={<SaltPorkBlaff />} />
         <Route path="/blog/sticky-soy-braised-pork-neck-shiitake" element={<StickySoyPork />} />
+        <Route path="/blog/paprika-chicken-crispy-potatoes" element={<PaprikaChicken />} />
         <Route path="/blog/one-pan-smoky-tomato-rice" element={<SmokyTomatoRice />} />
         <Route path="/blog/food-safety-lessons-from-a-chef" element={<FoodSafetyLessons />} />
         <Route path="/food-safety-printables" element={<FoodSafetyPrintables />} />
