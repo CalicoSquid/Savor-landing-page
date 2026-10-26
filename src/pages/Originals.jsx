@@ -23,7 +23,7 @@ export default function Originals() {
                   <img src={recipe.post.ogImage} alt={recipe.post.ogImageAlt} width={recipe.post.ogImageWidth} height={recipe.post.ogImageHeight} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
                 </a>
                 <div className="originals-card-body">
-                  <span className="originals-series">{recipe.series} · No. 1</span>
+                  <span className="originals-series">{recipe.series} · No. {recipe.number ?? 1}</span>
                   <p className="originals-mood">{recipe.mood}</p>
                   <h2><a href={recipe.href}>{recipe.name}</a></h2>
                   <p>{recipe.description}</p>

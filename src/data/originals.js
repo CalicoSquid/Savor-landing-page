@@ -3,6 +3,15 @@ import { BLOG_POSTS } from './blogPosts.js'
 // One collection entry per authored recipe; articles retain their existing URLs.
 export const SAVOR_ORIGINALS = [
   {
+    slug: 'sticky-soy-braised-pork-neck-shiitake',
+    series: 'Back of the Cupboard',
+    number: 2,
+    name: 'Sticky soy-braised pork neck with shiitake mushrooms',
+    description: 'Forgotten dried mushrooms and bargain pork neck, slow-braised in soy, ginger and garlic until glossy and fork-tender.',
+    effort: '45 minutes prep · 2½–3 hours cooking · Serves 2–4',
+    mood: 'For the bag at the back that finally gets its moment.',
+  },
+  {
     slug: 'one-pan-smoky-tomato-rice',
     series: 'Dinner on Autopilot',
     name: 'Smoky tomato rice with chickpeas & crispy eggs',

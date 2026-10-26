@@ -13,6 +13,20 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'sticky-soy-braised-pork-neck-shiitake',
+    title: 'Sticky Soy-Braised Pork Neck with Shiitake Mushrooms',
+    dek: 'Back of the Cupboard, number two. Forgotten dried shiitake, bargain pork neck and a slow braise that turns both into something worth clearing a shelf for.',
+    metaTitle: 'Soy-Braised Pork Neck with Shiitake Mushrooms | Savor',
+    metaDesc: 'Slow-braise pork neck with dried shiitake, ginger and garlic, then reduce the soy sauce into a sticky glaze. A budget-friendly recipe served over rice.',
+    date: '2026-10-26',
+    readTime: '4 min read',
+    ogImage: 'https://getsavor.recipes/blog/sticky-soy-pork-shiitake.jpg',
+    ogImageWidth: 1536,
+    ogImageHeight: 1024,
+    ogImageAlt: 'Glossy soy-braised pork neck and shiitake mushrooms over rice with spring onions and greens',
+    author: 'Caleb',
+  },
+  {
     slug: 'food-safety-lessons-from-a-chef',
     title: '“They’re Here”: What My First EHO Visit Taught Me About Food Safety',
     dek: 'A Friday lunch service, a terrified chef and a Scottish lady with a clipboard. The kitchen habits worth bringing home, from leftover rice to garlic oil and chopping boards.',
