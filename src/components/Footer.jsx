@@ -6,6 +6,8 @@
 // they do a full document load that starts at the top. The minor cost is a
 // full reload for normal web visitors on footer clicks, negligible here.
 
+import { GA_MEASUREMENT_ID } from '../data/analyticsConfig'
+
 export default function Footer() {
   return (
     <footer className="site-footer">
@@ -25,6 +27,7 @@ export default function Footer() {
           <li><a href="/apocaleaf/">Apocaleaf</a></li>
           <li><a href="/demo/">Recipe import demo</a></li>
           <li><a href="/privacy/">Privacy</a></li>
+          {GA_MEASUREMENT_ID && <li><button className="analytics-settings" type="button" onClick={() => window.dispatchEvent(new Event('savor-analytics-settings'))}>Analytics preferences</button></li>}
           <li><a href="/terms/">Terms</a></li>
           <li><a href="https://seoreceipts.com/site/getsavor/?ref=badge&amp;utm_source=embed&amp;utm_medium=badge&amp;utm_campaign=status-founding" rel="nofollow sponsored noopener" target="_blank" title="View getsavor.recipes's Google Search Console stats"><img src="https://seoreceipts.com/api/badge?slug=getsavor&amp;mode=founding&amp;theme=paper&amp;size=compact" alt="Google Search Console stats for getsavor.recipes" width="180" height="44" loading="lazy" decoding="async"/></a></li>
         </ul>

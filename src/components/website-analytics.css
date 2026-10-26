@@ -1,0 +1,8 @@
+.analytics-consent { position: fixed; bottom: 18px; left: 18px; right: 18px; z-index: 10000; max-width: 900px; margin: auto; padding: 22px; background: var(--bg); color: var(--text-primary); border: 1px solid var(--text-secondary); border-radius: 16px; box-shadow: 0 8px 40px #0003; display: flex; align-items: center; gap: 24px; }
+.analytics-consent p { font-size: .88rem; line-height: 1.6; margin: 8px 0 0; }
+.analytics-consent a { color: var(--primary); text-underline-offset: 3px; }
+.analytics-consent-actions { display: flex; flex-shrink: 0; gap: 10px; }
+.analytics-consent button { font: inherit; font-size: .85rem; font-weight: 700; min-height: 44px; padding: 10px 14px; border: 1px solid var(--primary); border-radius: 10px; color: var(--text-primary); background: var(--surface-2); cursor: pointer; }
+.analytics-consent button:focus-visible, .analytics-settings:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+.analytics-settings { font: inherit; color: inherit; background: none; border: none; text-decoration: underline; cursor: pointer; padding: 0; min-height: 44px; }
+@media (max-width: 640px) { .analytics-consent { bottom: 10px; left: 10px; right: 10px; padding: 18px; flex-direction: column; align-items: stretch; gap: 16px; } .analytics-consent-actions button { flex: 1; } }

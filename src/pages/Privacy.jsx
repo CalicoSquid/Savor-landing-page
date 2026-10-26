@@ -1,7 +1,7 @@
 import Footer from '../components/Footer'
 
 export default function Privacy() {
-  const LAST_UPDATED = "October 1, 2026";
+  const LAST_UPDATED = "October 26, 2026";
 
   const section = (title, children) => (
     <div style={{ marginBottom: 48 }}>
@@ -135,6 +135,12 @@ export default function Privacy() {
             {p("The Android app keeps its Potluck history and weekly choices locally on your device. Normal network requests still reach our server to fetch recipe data and may include standard technical request information such as IP address and user agent in infrastructure logs.")}
           </>)}
 
+          {section("Optional website analytics", <>
+            {p("On getsavor.recipes, we use Google Analytics only if you choose Allow analytics. Until then, we do not load the Google Analytics tag or send it analytics events. Choosing No thanks leaves this tracking off. You can change your choice using Analytics preferences in the website footer.")}
+            {p("If you opt in, Google Analytics uses first-party analytics cookies to measure visits, pages viewed, traffic sources and actions such as app-store link clicks, recipe opens, recipe-save clicks, kitchen-tool interactions and Potluck spins. Google processes technical information such as browser and device details. Advertising features and Google signals are disabled. We do not send account details, form contents, recipe text, or URL query strings through our custom tracking.")}
+            {p("Your preference is stored locally for up to 180 days. Withdrawing consent stops future analytics events and removes accessible Google Analytics cookies; it does not automatically erase data already collected. Browsers signalling Do Not Track or Global Privacy Control do not receive this analytics tag. This optional website analytics is separate from the existing Potluck product events described above.")}
+            <p><a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Google’s privacy policy</a> · <a href="https://support.google.com/analytics/answer/6004245" target="_blank" rel="noreferrer">Google Analytics data practices</a></p>
+          </>)}
           {section("Camera and scan", <>
             {p("Savor's scan feature lets you photograph physical recipe cards and cookbooks to import them into your recipe box. When you use this feature:")}
             {li([
@@ -170,7 +176,7 @@ export default function Privacy() {
               "RevenueCat — manages Savor Pro purchase entitlements. RevenueCat receives purchase and subscription status and purchase history via Google Play. We never receive your payment card details.",
               "Expo / EAS — used to deliver over-the-air app updates. No personal data is transmitted.",
             ])}
-            {p("Each of these services has their own privacy policy. We have chosen providers who take data seriously and do not use your data for their own advertising or profiling.")}
+            {p("Optional website analytics is provided by Google Analytics as described above. Each provider has its own privacy policy; our Google Analytics integration disables advertising features and Google signals.")}
           </>)}
 
           {section("Data retention and deletion", <>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { trackWebsiteEvent } from '../lib/websiteAnalytics'
 import Footer from '../components/Footer'
 import { SAVOR_ORIGINALS } from '../data/originals'
 import './pages.css'
@@ -63,8 +64,8 @@ export default function Originals() {
               <p>Newest recipes first. Pick what fits your evening.</p>
             </div>
             <nav className="originals-filters" aria-label="Filter recipes by series">
-              <Link to={collectionUrl()} aria-current={!selected ? 'page' : undefined}>All recipes</Link>
-              {SERIES.map(series => <Link key={series.id} to={collectionUrl(series.id)} aria-current={selected?.id === series.id ? 'page' : undefined}>{series.name}</Link>)}
+              <Link to={collectionUrl()} onClick={() => trackWebsiteEvent('series_filter', { series: 'all' })} aria-current={!selected ? 'page' : undefined}>All recipes</Link>
+              {SERIES.map(series => <Link key={series.id} to={collectionUrl(series.id)} onClick={() => trackWebsiteEvent('series_filter', { series: series.id })} aria-current={selected?.id === series.id ? 'page' : undefined}>{series.name}</Link>)}
             </nav>
             <p className="originals-count" role="status">{recipes.length} {recipes.length === 1 ? 'recipe' : 'recipes'}{selected ? ` · ${selected.name}` : ''}</p>
             <div className="originals-grid">

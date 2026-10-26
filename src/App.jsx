@@ -42,6 +42,7 @@ import { ThemeProvider } from './context/ThemeProvider'
 import Nav from './components/Nav'
 import SeoManager from './components/SeoManager'
 import ScrollToTop from './components/ScrollToTop'
+import WebsiteAnalytics from './components/WebsiteAnalytics'
 
 // Router-agnostic app tree. The Router (BrowserRouter for the client,
 // StaticRouter for the prerender build) is supplied by the entry files.
@@ -50,6 +51,7 @@ export default function AppRoutes() {
     <ThemeProvider>
       <SeoManager />
       <ScrollToTop />
+      <WebsiteAnalytics />
       <Nav />
       <Routes>
         <Route path="/"                         element={<Savor />} />

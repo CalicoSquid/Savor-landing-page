@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { isSavorVisit, savorRecipeLink } from '../lib/potluckSavor'
 import Footer from '../components/Footer'
+import { trackWebsiteEvent } from '../lib/websiteAnalytics'
 import {
   REEL_SYMBOLS,
   fetchRandomRecipe,
@@ -418,6 +419,7 @@ export default function Potluck() {
 
       seenIds.current = [...seenIds.current, picked.id].slice(-30)
       setRecipe(picked)
+      trackWebsiteEvent('potluck_spin')
       setVerdict(verdictFor(picked))
       setPhase('revealed')
       setSpinStage('idle')
