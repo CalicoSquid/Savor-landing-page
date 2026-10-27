@@ -2,8 +2,6 @@ import { Navigate, Routes, Route } from 'react-router-dom'
 import Savor from './pages/Savor'
 import Studio from './pages/Studio'
 import Potluck from './pages/Potluck'
-import Caper from './pages/Caper'
-import Apocaleaf from './pages/Apocaleaf'
 import About from './pages/About'
 import IronKitchen from './pages/IronKitchen'
 import Faq from './pages/Faq'
@@ -57,9 +55,6 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/"                         element={<Savor />} />
         <Route path="/potluck"                  element={<Potluck />} />
-        <Route path="/caper"                    element={<Caper />} />
-        <Route path="/forage"                   element={<Navigate to="/caper/" replace />} />
-        <Route path="/apocaleaf"                element={<Apocaleaf />} />
         <Route path="/about"                    element={<About />} />
         <Route path="/iron-kitchen"             element={<IronKitchen />} />
         <Route path="/faq"                      element={<Faq />} />

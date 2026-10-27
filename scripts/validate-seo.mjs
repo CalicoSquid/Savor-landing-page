@@ -37,6 +37,9 @@ if (fs.existsSync(dist)) {
     }
 
     const html = read(seo.file)
+    if (/href="\/(?:forage|caper|apocaleaf)\/?(?:[?#][^"]*)?"/i.test(html)) {
+      fail(`${seo.path}: links to a retired app landing page`)
+    }
     const checks = [
       ['title', title(html), seo.title],
       ['description', attr(html, 'name', 'description'), seo.description],
@@ -108,8 +111,8 @@ if (fs.existsSync(dist)) {
     for (const seo of SEO_PAGES.filter((page) => !page.sitemap)) {
       if (locs.includes(seo.canonical)) fail(`sitemap.xml: noindex/utility route included: ${seo.canonical}`)
     }
-    if (locs.some((url) => url === `${SITE_URL}/forage` || url.startsWith(`${SITE_URL}/forage/`))) {
-      fail('sitemap.xml: legacy /forage URL included')
+    if (locs.some((url) => /^\/(?:forage|caper|apocaleaf)(?:\/|$)/.test(new URL(url).pathname))) {
+      fail('sitemap.xml: retired app URL included')
     }
 
     const recipeIds = PUBLIC_RECIPE_INDEX.map((recipe) => recipe.id)

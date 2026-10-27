@@ -23,8 +23,6 @@ export default function Footer() {
           <li><a href="/faq/">FAQ</a></li>
           <li><a href="/iron-kitchen/">Savor × Iron Kitchen</a></li>
           <li><a href="/potluck/">Potluck</a></li>
-          <li><a href="/caper/">Caper</a></li>
-          <li><a href="/apocaleaf/">Apocaleaf</a></li>
           <li><a href="/demo/">Recipe import demo</a></li>
           <li><a href="/privacy/">Privacy</a></li>
           {GA_MEASUREMENT_ID && <li><button className="analytics-settings" type="button" onClick={() => window.dispatchEvent(new Event('savor-analytics-settings'))}>Analytics preferences</button></li>}

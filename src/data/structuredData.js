@@ -579,19 +579,6 @@ export function structuredDataForPage(seo) {
         { name: 'Random Dinner Generator', url: seo.canonical },
       ]),
     )
-  } else if (seo.path === '/caper') {
-    graph.push(
-      webPageNode(seo),
-      appNode({
-        id: `${SITE_URL}/caper/#app`,
-        name: 'Caper',
-        url: `${SITE_URL}/caper/`,
-        downloadUrl: 'https://play.google.com/store/apps/details?id=com.calicosquid.forage',
-        description: 'A seasonal wild-food companion for exploring edible plants, logging finds and cooking with what you bring home.',
-        image: `${SITE_URL}/caper/caper-og.jpg`,
-        price: '7.99',
-      }),
-    )
   } else if (seo.path === '/studio') {
     graph.push(webPageNode(seo, 'AboutPage'))
   } else {

@@ -20,28 +20,22 @@ export default function Nav() {
   const isStudio  = location.pathname.startsWith('/studio')
   const isPotluck = location.pathname.startsWith('/potluck')
   const fromSavor = hydrated && isPotluck && isSavorVisit(location.search)
-  const isCaper   = location.pathname.startsWith('/caper') || location.pathname.startsWith('/forage')
-  const isApocaleaf = location.pathname.startsWith('/apocaleaf')
   const isIronKitchen = location.pathname.startsWith('/iron-kitchen')
   const isRecipe  = location.pathname.startsWith('/r/')
   const isDemo    = location.pathname.startsWith('/demo')
 
   if (isRecipe || isDemo) return null
 
-  const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isCaper ? 'forage' : isApocaleaf ? 'apocaleaf' : isIronKitchen ? 'iron-kitchen' : 'savor'
+  const navTheme = isStudio ? 'studio' : isPotluck ? 'potluck' : isIronKitchen ? 'iron-kitchen' : 'savor'
   const iconSrc  = isStudio  ? '/images/logo_W.webp'
                  : isPotluck ? '/potluck/potluck-icon.webp'
-                 : isCaper   ? '/caper/caper-icon.webp'
-                 : isApocaleaf ? '/apocaleaf/standard-issue-mark.webp'
                  : getIcon(activeTheme.name)
   const iconAlt  = isStudio  ? 'CalicoSquid Code'
                  : isPotluck ? 'Potluck by Savor'
-                 : isCaper   ? 'Caper'
-                 : isApocaleaf ? 'Apocaleaf'
                  : 'Savor'
 
   // Potluck also introduces visitors to Savor, alongside its recipe discovery.
-  const showCta = !isStudio && !isCaper && !isApocaleaf
+  const showCta = !isStudio
 
   return (
     <nav className="nav" data-nav-theme={navTheme}>
@@ -71,7 +65,7 @@ export default function Nav() {
             <img
               src={iconSrc}
               alt={iconAlt}
-              className={`nav-icon${isPotluck ? ' nav-icon--potluck' : isCaper ? ' nav-icon--forage' : isApocaleaf ? ' nav-icon--apocaleaf' : ''}`}
+              className={`nav-icon${isPotluck ? ' nav-icon--potluck' : ''}`}
               width="44"
               height="44"
               decoding="async"

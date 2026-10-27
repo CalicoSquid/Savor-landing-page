@@ -44,14 +44,8 @@
   status = 301
   force = true
 
-# Caper replaced the old Forage marketing URL. Do not let two copies of the
-# same page compete in search.
-[[redirects]]
-  from = "/forage"
-  to = "/caper/"
-  status = 301
-  force = true
-
+# Retired app landing pages return the site's real 404 response. Keep only
+# existing-user privacy and account-deletion URLs, both already noindex.
 [[redirects]]
   from = "/forage/privacy"
   to = "/caper/privacy/"
