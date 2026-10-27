@@ -28,4 +28,5 @@ dist-ssr
 
 # SSR prerender build artifact
 .ssr
+.indexnow-recipes.json
 delete-orphans.sh

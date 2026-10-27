@@ -76,3 +76,15 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Additive IndexNow infrastructure; existing page/asset rules stay unchanged.
+[[headers]]
+  for = "/83438594cc1a4361a467018f4214fb5c.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/indexnow-manifest.json"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
+    Cache-Control = "no-store"

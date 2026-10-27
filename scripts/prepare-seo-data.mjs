@@ -10,6 +10,7 @@ import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { applyRecipeImageOverride } from '../src/data/recipeImageOverrides.js'
 import { deduplicateRecipes } from './lib/deduplicate-recipes.mjs'
+import { recipeFingerprints } from './lib/indexnow-fingerprints.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const output = path.join(root, 'src', 'data', 'publicRecipeIndex.generated.js')
@@ -111,6 +112,14 @@ try {
   )
   console.log(`✓ SEO recipe data: ${recipes.length} indexable original recipe(s) from ${candidates.length} public candidate(s)`)
   console.log(`  Collapsed ${eligible.length - unique.length} matching recipe copies; existing share URLs remain available`)
+  // Optional sidecar for notifications only. Existing recipe selection and
+  // SEO output above remain the source of truth and are not changed.
+  try {
+    fs.writeFileSync(path.join(root, '.indexnow-recipes.json'), JSON.stringify({ version: 1, completeIds: unique.map(({ id }) => String(id)), fingerprints: recipeFingerprints(unique) }))
+  } catch {
+    fs.rmSync(path.join(root, '.indexnow-recipes.json'), { force: true })
+    console.warn('[IndexNow] recipe fingerprint sidecar unavailable; notifications will be skipped')
+  }
 } catch (error) {
   // Publishing a fresh build with an empty/partial recipe manifest would remove
   // valid URLs from both the sitemap and their parent hub. Safer to keep the

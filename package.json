@@ -5,14 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/validate-tools.mjs && node --test scripts/deduplicate-recipes.test.mjs scripts/website-analytics.test.mjs scripts/pinterest.test.mjs && node scripts/prepare-seo-data.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir .ssr && node prerender.js && node generate-sitemap.js && node scripts/validate-seo.mjs && node scripts/validate-recipe-edge.mjs",
+    "build": "node scripts/validate-tools.mjs && node --test scripts/deduplicate-recipes.test.mjs scripts/website-analytics.test.mjs scripts/pinterest.test.mjs && node scripts/prepare-seo-data.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir .ssr && node prerender.js && node generate-sitemap.js && node scripts/validate-seo.mjs && node scripts/validate-recipe-edge.mjs && node scripts/generate-indexnow-manifest.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "audit:assets": "node scripts/audit-image-assets.mjs",
     "validate:seo": "node scripts/validate-seo.mjs",
     "prepare:seo-data": "node scripts/prepare-seo-data.mjs",
     "validate:recipe-edge": "node scripts/validate-recipe-edge.mjs",
-    "validate:tools": "node scripts/validate-tools.mjs"
+    "validate:tools": "node scripts/validate-tools.mjs",
+    "test:indexnow": "node --test scripts/indexnow.test.mjs",
+    "indexnow:dry-run": "node scripts/indexnow-dry-run.mjs"
   },
   "dependencies": {
     "@fontsource/caveat": "^5.2.8",
@@ -20,6 +22,7 @@
     "@fontsource/lora": "^5.2.8",
     "@fontsource/playfair-display": "^5.2.8",
     "@fontsource/raleway": "^5.2.8",
+    "@netlify/blobs": "10.7.13",
     "canvas-confetti": "^1.9.4",
     "gsap": "^3.14.2",
     "react": "^19.2.4",
