@@ -84,6 +84,10 @@
   line-height: 1.0;
 }
 
+.hero-tagline-accent {
+  white-space: nowrap;
+}
+
 .hero-colorstrip {
   display: flex;
   width: 260px;
@@ -968,6 +972,7 @@
   .hero-inner { gap: 18px; }
   .hero-wordmark { max-width: 330px; }
   .hero-tagline { font-size: clamp(2.45rem, 13vw, 3.25rem); }
+  .hero-tagline-accent { display: block; }
   .hero-sub--definition { max-width: 34rem; font-size: 1rem; line-height: 1.68; }
 }
 
