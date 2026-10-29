@@ -71,8 +71,8 @@ export default function Savor() {
                     />
                     <p className="hero-kitchen-intro fade-up fade-up-2">Recipes, useful tools, and a little kitchen confidence.</p>
                     <h1 className="hero-tagline fade-up fade-up-2">
-                        Recipes fade.<br />
-                        <span style={{ color: 'var(--primary)' }}>Savor doesn&rsquo;t.</span>
+                        Cook like<br />
+                        <span style={{ color: 'var(--primary)' }}>a pro.</span>
                     </h1>
                     <div className="hero-colorstrip fade-up fade-up-2" aria-hidden="true">
                         {themes.map((t, i) => (
@@ -84,7 +84,10 @@ export default function Savor() {
                         ))}
                     </div>
                     <p className="hero-sub hero-sub--definition fade-up fade-up-3">
-                        Save recipes from websites, screenshots, cookbook pages and handwritten cards — then keep them as clean, cookable recipe cards in one colorful place.
+                        Recipes worth keeping, kitchen tools that actually help, and a few things I learned the hard way.
+                    </p>
+                    <p className="hero-kitchen-intro fade-up fade-up-3">
+                        Save and organise recipes from websites, screenshots, cookbooks and handwritten cards with the Savor app.
                     </p>
                     <div className="hero-cta-row fade-up fade-up-4">
                         <a href="#kitchen" className="btn btn-fruit">Explore the kitchen</a>
