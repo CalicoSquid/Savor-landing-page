@@ -1190,3 +1190,84 @@
   .home-tools-grid { grid-template-columns: 1fr; }
   .home-tool-card { min-height: 0; }
 }
+
+/* Homepage rhythm: shared edges, fluid spacing, and content-led heights. */
+.savor-page {
+  --home-section-space: clamp(36px, 6svh, 64px);
+  --home-heading-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+.savor-page > section { scroll-margin-top: 80px; }
+.savor-page .same-kitchen-inner,
+.savor-page .flavors--compact .flavors-inner { max-width: var(--max-width); }
+.savor-page .hero { padding: clamp(24px, 4svh, 40px) 0 clamp(32px, 5svh, 52px); }
+.savor-page .hero-inner { gap: clamp(14px, 2.4svh, 22px); }
+.savor-page .hero-wordmark { max-width: clamp(220px, 32svh, 300px); }
+.savor-page .hero-kitchen-intro,
+.savor-page .hero-sub--definition { text-wrap: balance; }
+.savor-page .hero-cta-row { max-width: 590px; }
+.savor-page .hero-cta-row > .btn { width: 100%; }
+.savor-page .home-tools,
+.savor-page .same-kitchen,
+.savor-page .features,
+.savor-page .flavors--compact,
+.savor-page .download-cta { padding-block: var(--home-section-space); }
+.savor-page .home-tools-heading { align-items: start; gap: 32px; }
+.savor-page .home-tools-heading h2,
+.savor-page .same-kitchen-title,
+.savor-page .feature-row-title,
+.savor-page .flavors-title,
+.savor-page .download-cta-title {
+  font-size: var(--home-heading-size);
+  line-height: 1.12;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+}
+.savor-page .home-tools-heading > p { padding-top: 26px; }
+.savor-page .home-tools-inner { gap: 28px; }
+.savor-page .same-kitchen { text-align: left; }
+.savor-page .same-kitchen-sub { max-width: 650px; margin-bottom: 28px; }
+.savor-page .home-tools-eyebrow,
+.savor-page .same-kitchen-eyebrow,
+.savor-page .flavors-overline { font-size: .75rem; letter-spacing: .12em; margin-bottom: 12px; }
+.savor-page .home-tools-grid,
+.savor-page .same-kitchen-apps { gap: 20px; }
+.savor-page .home-tool-card,
+.savor-page .same-kitchen-app { border-radius: var(--radius-lg); padding: 22px; }
+.savor-page .home-tool-card { min-height: 220px; }
+.savor-page .same-kitchen-apps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.savor-page .same-kitchen-app-links { margin-top: auto; padding-top: 16px; }
+.savor-page .feature-row { gap: 32px; border-bottom: 0; }
+.savor-page .feature-row-img--photo { padding: 0; border-radius: var(--radius-lg); overflow: hidden; }
+.savor-page .feature-row-text { padding: 16px 0; }
+.savor-page .home-app-details { width: calc(100% - 48px); max-width: calc(var(--max-width) - 48px); }
+.savor-page .home-app-details > summary { padding: 24px 0; }
+.savor-page .home-app-details .container { padding-inline: 0; }
+.savor-page .flavors--compact { border-top: 1px solid rgba(0,0,0,.06); }
+.savor-page .download-cta-title { max-width: 24ch; }
+
+@media (max-width: 900px) {
+  .savor-page .feature-row { gap: 24px; }
+  .savor-page .feature-row-img--photo { min-height: 0; height: clamp(240px, 42svh, 360px); }
+  .savor-page .feature-row-text { padding: 0; }
+  .savor-page .feature-row-sub { max-width: 65ch; }
+}
+@media (max-width: 768px) {
+  .savor-page .home-app-details { width: calc(100% - 32px); }
+}
+@media (max-width: 720px) {
+  .savor-page .home-tools-heading { gap: 16px; }
+  .savor-page .home-tools-heading > p { padding-top: 0; }
+  .savor-page .same-kitchen-apps { grid-template-columns: 1fr; }
+  .savor-page .home-tool-card { min-height: 0; }
+  .savor-page .home-tool-card,
+  .savor-page .same-kitchen-app { padding: 20px; }
+  .savor-page .home-tools-grid,
+  .savor-page .same-kitchen-apps { gap: 14px; }
+  .savor-page .home-tool-card em { padding-top: 16px; }
+}
+@media (max-width: 640px) {
+  .savor-page .hero-inner { gap: 16px; }
+  .savor-page .hero-wordmark { max-width: 230px; }
+  .savor-page .hero-cta-row { margin-top: 4px; }
+  .savor-page .hero-secondary-link { padding-block: 8px; }
+}
