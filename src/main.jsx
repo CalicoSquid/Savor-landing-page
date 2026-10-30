@@ -14,6 +14,9 @@ import '@fontsource/raleway/600.css'
 import '@fontsource/raleway/700.css'
 import '@fontsource/raleway/800.css'
 import AppRoutes from './App'
+import { startCloudflareAnalytics } from './lib/cloudflareAnalytics'
+
+startCloudflareAnalytics()
 
 const root = document.getElementById('root')
 

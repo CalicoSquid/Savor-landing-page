@@ -197,6 +197,7 @@ export const STATIC_SEO_PAGES = [
     robots: 'noindex, follow',
     sitemap: false,
     ogImageAlt: 'Savor privacy policy',
+    lastmod: '2026-10-30',
   }),
   page({
     path: '/terms',
