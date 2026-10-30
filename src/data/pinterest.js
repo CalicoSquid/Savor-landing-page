@@ -1,5 +1,10 @@
 // Pin descriptions describe the recipe; alt text describes the actual photo.
 export const PINTEREST_RECIPES = {
+  'bacon-leek-cheddar-bread-butter-pudding': {
+    title: 'Savoury Bacon, Leek & Cheddar Bread and Butter Pudding',
+    description: 'A Sunday roast side made from stale bread, crisp smoked bacon, butter-softened leeks and mature cheddar. Bay and garlic flavour the milk for a thyme-and-Dijon custard. Let the bread soak before baking until golden and set. Serves six as a side, with smoked cheese, sausage and sage, and red onion and goat’s cheese variations.',
+    altText: 'Close-up of golden bread pudding with crisp bacon, sliced leeks and melted cheddar, with herbs on top and a serving spoon alongside.',
+  },
   'smash-burgers-pickle-mustard-sauce': {
     title: 'Easy Double Smash Burgers with Pickle–Mustard Sauce',
     description: 'Double smash burgers with crisp beef edges, melted cheese and a quick pickle–mustard sauce. Make four burgers in about 25–30 minutes with a hot pan and a sturdy spatula. A Savor adaptation of Iron Kitchen’s classic recipe. Photo: Iron Kitchen Inc.; their classic burger is pictured.',

@@ -13,6 +13,20 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'bacon-leek-cheddar-bread-butter-pudding',
+    title: 'Bacon, Leek & Cheddar Bread and Butter Pudding',
+    dek: 'Back of the Cupboard, number three. Yesterday’s bread, crisp smoked bacon, buttery leeks and a mustard-and-thyme custard. A Sunday roast side from my kitchen days.',
+    metaTitle: 'Bacon, Leek & Cheddar Bread Pudding | Savor',
+    metaDesc: 'Turn stale bread into a savoury bread and butter pudding with crisp smoked bacon, buttery leeks, cheddar and Dijon custard. A generous Sunday roast side.',
+    date: '2026-10-30',
+    readTime: '5 min read',
+    ogImage: 'https://getsavor.recipes/blog/bacon-leek-cheddar-bread-pudding.webp',
+    ogImageWidth: 1200,
+    ogImageHeight: 1789,
+    ogImageAlt: 'Golden savoury bread pudding with smoked bacon, softened leeks and melted cheddar, with a serving spoon alongside',
+    author: 'Caleb',
+  },
+  {
     slug: 'smash-burgers-pickle-mustard-sauce',
     title: 'Smash Burgers with Quick Pickle–Mustard Sauce',
     dek: 'Dinner on Autopilot, number three. A Savor take on Iron Kitchen’s classic: two crisp-edged patties, melting cheese and a quick sauce made with the pickle jar.',

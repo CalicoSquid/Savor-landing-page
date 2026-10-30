@@ -19,6 +19,7 @@ import WhatShouldICookTonight from './pages/blog/WhatShouldICookTonight'
 import SaltPorkBlaff from './pages/blog/SaltPorkBlaff'
 import StickySoyPork from './pages/blog/StickySoyPork'
 import PaprikaChicken from './pages/blog/PaprikaChicken'
+import SavouryBreadPudding from './pages/blog/SavouryBreadPudding'
 import SmashBurgers from './pages/blog/SmashBurgers'
 import SmokyTomatoRice from './pages/blog/SmokyTomatoRice'
 import FoodSafetyLessons from './pages/blog/FoodSafetyLessons'
@@ -72,6 +73,7 @@ export default function AppRoutes() {
         <Route path="/blog/what-should-i-cook-tonight" element={<WhatShouldICookTonight />} />
         <Route path="/blog/salt-pork-blaff" element={<SaltPorkBlaff />} />
         <Route path="/blog/sticky-soy-braised-pork-neck-shiitake" element={<StickySoyPork />} />
+        <Route path="/blog/bacon-leek-cheddar-bread-butter-pudding" element={<SavouryBreadPudding />} />
         <Route path="/blog/paprika-chicken-crispy-potatoes" element={<PaprikaChicken />} />
         <Route path="/blog/smash-burgers-pickle-mustard-sauce" element={<SmashBurgers />} />
         <Route path="/blog/one-pan-smoky-tomato-rice" element={<SmokyTomatoRice />} />

@@ -36,7 +36,7 @@ export const STATIC_SEO_PAGES = [
     ogImageWidth: 1200,
     ogImageHeight: 1200,
     ogImageAlt: 'Crisp fried egg and tomato rice from the Savor Originals recipe collection',
-    lastmod: '2026-10-26',
+    lastmod: '2026-10-30',
   }),
   page({
     path: '/shorts',

@@ -3,6 +3,15 @@ import { BLOG_POSTS } from './blogPosts.js'
 // One collection entry per authored recipe; articles retain their existing URLs.
 export const SAVOR_ORIGINALS = [
   {
+    slug: 'bacon-leek-cheddar-bread-butter-pudding',
+    series: 'Back of the Cupboard',
+    number: 3,
+    name: 'Bacon, leek & cheddar bread and butter pudding',
+    description: 'Stale bread baked in savoury mustard-and-thyme custard with crisp smoked bacon, buttery leeks and cheddar. Made for Sunday roast chicken.',
+    effort: '25 minutes prep · 20 minutes soaking · 30–45 minutes baking · Serves 6 as a side',
+    mood: 'For yesterday’s bread and Sunday’s roast.',
+  },
+  {
     slug: 'smash-burgers-pickle-mustard-sauce',
     series: 'Dinner on Autopilot',
     number: 3,
