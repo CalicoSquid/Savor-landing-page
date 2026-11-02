@@ -3,6 +3,15 @@ import { BLOG_POSTS } from './blogPosts.js'
 // One collection entry per authored recipe; articles retain their existing URLs.
 export const SAVOR_ORIGINALS = [
   {
+  "slug": "hot-smoked-salmon-fennel-dill-vodka",
+  "series": "Signature Recipes",
+  "number": 1,
+  "name": "Oven-smoked salmon with fennel, dill & vodka",
+  "description": "A short aromatic cure, a glossy glaze and a roasting tray standing in for a smoker. Golden hot-smoked salmon to serve warm or cold.",
+  "effort": "15 minutes prep · 5–6 hours curing · 30–40 minutes cooking · Serves 6–8",
+  "mood": "For making the roasting tray look considerably more accomplished."
+},
+  {
     slug: 'bacon-leek-cheddar-bread-butter-pudding',
     series: 'Back of the Cupboard',
     number: 3,

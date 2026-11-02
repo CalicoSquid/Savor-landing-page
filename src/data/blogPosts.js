@@ -13,6 +13,20 @@
 
 export const BLOG_POSTS = [
   {
+  "slug": "hot-smoked-salmon-fennel-dill-vodka",
+  "title": "Oven-Smoked Salmon with Fennel, Dill & Vodka",
+  "dek": "A side of hot-smoked salmon, a short fennel-and-dill cure and a roasting tray doing an excellent impression of a smoker. From Caleb’s Signature Recipes.",
+  "metaTitle": "Oven-Smoked Salmon with Fennel, Dill & Vodka | Savor",
+  "metaDesc": "Make hot-smoked salmon in a hob-safe roasting tray, with a fennel, dill and vodka cure and a glossy glaze. Includes curing times and thermometer guidance.",
+  "date": "2026-11-02",
+  "readTime": "6 min read",
+  "ogImage": "https://getsavor.recipes/blog/oven-smoked-salmon-fennel-dill-vodka.webp",
+  "ogImageWidth": 1440,
+  "ogImageHeight": 1999,
+  "ogImageAlt": "A glossy side of hot-smoked salmon on a wooden board with dill, caper berries, cucumber, shallot rings and lime",
+  "author": "Caleb"
+},
+  {
     slug: 'bacon-leek-cheddar-bread-butter-pudding',
     title: 'Bacon, Leek & Cheddar Bread and Butter Pudding',
     dek: 'Back of the Cupboard, number three. Yesterday’s bread, crisp smoked bacon, buttery leeks and a mustard-and-thyme custard. A Sunday roast side from my kitchen days.',

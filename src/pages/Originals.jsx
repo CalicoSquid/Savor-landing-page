@@ -7,6 +7,7 @@ import './pages.css'
 import './originals.css'
 
 const SERIES = [
+  { id: 'signature', name: 'Signature Recipes', tagline: 'Worth making your own.', description: 'Dishes developed, refined or made my own over years of cooking. A little kitchen know-how, generous flavour and something worth coming back to.' },
   { id: 'autopilot', name: 'Dinner on Autopilot', tagline: 'Good food. Less thinking.', description: 'Everyday ingredients, forgiving recipes and one little trick that makes dinner better. Less hands-on effort, whether it is a quick pan or a tray left to the oven.' },
   { id: 'cupboard', name: 'Back of the Cupboard', tagline: "You’ve got what? Let’s cook it.", description: 'The forgotten, unusual or awkward ingredient gets its moment. A little curiosity, a few practical swaps and something worth making again. Take the time it needs.' },
 ]
@@ -42,11 +43,11 @@ export default function Originals() {
             <span className="doc-eyebrow">From Caleb’s kitchen</span>
             <h1 className="doc-title">Savor Originals.</h1>
             <p className="originals-lead">Less thinking, more cooking.</p>
-            <p>Original recipes from Caleb’s kitchen. Everyday dinners and cupboard discoveries, with a little know-how to take into your next meal.</p>
+            <p>Original recipes from Caleb’s kitchen. Everyday dinners, cupboard discoveries and signature dishes, with a little know-how to take into your next meal.</p>
             <a className="originals-author" href="/about/">Meet Caleb, the cook behind the app →</a>
           </header>
 
-          <section className="originals-series-grid" aria-label="Two ways to get cooking">
+          <section className="originals-series-grid" aria-label="Recipe collections">
             {SERIES.map((series, index) => (
               <article className="originals-series-intro" key={series.id}>
                 <span className="doc-eyebrow">Series 0{index + 1}</span>

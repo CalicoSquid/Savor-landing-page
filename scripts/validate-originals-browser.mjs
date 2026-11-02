@@ -79,12 +79,12 @@ try {
     assert.ok(await evaluate('[...document.querySelectorAll(".originals-card img")].every(i=>i.complete && i.naturalWidth>0)'));
     if(width!==320) await screenshot('originals-collection-'+width);
   }
-  for(const series of ['autopilot','cupboard']) {
+  for(const series of ['signature','autopilot','cupboard']) {
     await evaluate(`document.querySelector('.originals-filters a[href*="${series}"]').click()`);
     await delay(200);
-    assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.filter(r=>r.series===(series==='autopilot'?'Dinner on Autopilot':'Back of the Cupboard')).length);
+    assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.filter(r=>r.series===(({signature:'Signature Recipes',autopilot:'Dinner on Autopilot',cupboard:'Back of the Cupboard'})[series])).length);
     assert.ok(await evaluate('location.search.includes("'+series+'")'));
-    assert.equal(await evaluate('document.querySelector(".originals-filters [aria-current=page]").textContent'),series==='autopilot'?'Dinner on Autopilot':'Back of the Cupboard');
+    assert.equal(await evaluate('document.querySelector(".originals-filters [aria-current=page]").textContent'),({signature:'Signature Recipes',autopilot:'Dinner on Autopilot',cupboard:'Back of the Cupboard'})[series]);
   }
   await command('Page.reload'); await delay(700);
   assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.filter(r=>r.series==='Back of the Cupboard').length);
@@ -103,6 +103,20 @@ try {
     await delay(100);
     assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'),'Burger article has no overflow at '+width);
     if(width!==320) await screenshot('smash-burgers-'+width);
+  }
+  await navigate('/blog/hot-smoked-salmon-fennel-dill-vodka/');
+  await evaluate('Promise.all([...document.querySelectorAll("#recipe img")].map(async i=>{i.src=new URL(i.src).pathname;await i.decode()}))');
+  assert.equal(await evaluate('document.querySelectorAll("#recipe ol li").length'),7);
+  assert.equal(await evaluate('document.querySelector("#recipe img").naturalWidth'),1440);
+  assert.ok(await evaluate('document.querySelector("#step-5").textContent.includes("180°C")'));
+  assert.ok(await evaluate('document.querySelector("#step-6").textContent.includes("63°C")'));
+  const salmonSchema=await evaluate(`JSON.parse([...document.querySelectorAll('script[type="application/ld+json"]')].find(s=>JSON.parse(s.textContent)["@type"]==="Recipe").textContent)`);
+  assert.equal(salmonSchema.recipeInstructions.length,7);
+  assert.equal(salmonSchema.recipeIngredient.length,8);
+  for(const width of [1440,390,320]){
+    await command('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<500});await delay(100);
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'),'Salmon article has no overflow at '+width);
+    if(width!==320)await screenshot('hot-smoked-salmon-'+width);
   }
   assert.deepEqual(errors,[],'No runtime or hydration errors');
   await command('Browser.close');

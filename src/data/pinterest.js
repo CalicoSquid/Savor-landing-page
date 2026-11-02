@@ -1,5 +1,10 @@
 // Pin descriptions describe the recipe; alt text describes the actual photo.
 export const PINTEREST_RECIPES = {
+  "hot-smoked-salmon-fennel-dill-vodka": {
+  "title": "Oven-Smoked Salmon with Fennel, Dill & Vodka",
+  "description": "Make your own hot-smoked salmon with a fennel, lemon, dill and vodka cure, then finish with a glossy maple or honey glaze. A hob-and-oven-safe roasting tray stands in for a smoker. Allow 5–6 hours curing, then around 30–40 minutes cooking, using a thermometer to check the centre reaches 63°C. Serves 6–8.",
+  "altText": "A glossy side of hot-smoked salmon on a wooden board with dill, caper berries, cucumber, shallot rings and lime"
+},
   'bacon-leek-cheddar-bread-butter-pudding': {
     title: 'Savoury Bacon, Leek & Cheddar Bread and Butter Pudding',
     description: 'A Sunday roast side made from stale bread, crisp smoked bacon, butter-softened leeks and mature cheddar. Bay and garlic flavour the milk for a thyme-and-Dijon custard. Let the bread soak before baking until golden and set. Serves six as a side, with smoked cheese, sausage and sage, and red onion and goat’s cheese variations.',
