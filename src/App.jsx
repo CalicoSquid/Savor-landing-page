@@ -17,6 +17,7 @@ import SaveRecipesFromWebsites from './pages/blog/SaveRecipesFromWebsites'
 import ScaleARecipe from './pages/blog/ScaleARecipe'
 import WhatShouldICookTonight from './pages/blog/WhatShouldICookTonight'
 import SaltPorkBlaff from './pages/blog/SaltPorkBlaff'
+import LemonBrownies from './pages/blog/LemonBrownies'
 import HotSmokedSalmon from './pages/blog/HotSmokedSalmon'
 import StickySoyPork from './pages/blog/StickySoyPork'
 import PaprikaChicken from './pages/blog/PaprikaChicken'
@@ -72,6 +73,7 @@ export default function AppRoutes() {
         <Route path="/blog/save-recipes-from-websites" element={<SaveRecipesFromWebsites />} />
         <Route path="/blog/how-to-scale-a-recipe" element={<ScaleARecipe />} />
         <Route path="/blog/what-should-i-cook-tonight" element={<WhatShouldICookTonight />} />
+        <Route path="/blog/lemon-brownies-strawberry-tree-jam" element={<LemonBrownies />} />
         <Route path="/blog/hot-smoked-salmon-fennel-dill-vodka" element={<HotSmokedSalmon />} />
         <Route path="/blog/salt-pork-blaff" element={<SaltPorkBlaff />} />
         <Route path="/blog/sticky-soy-braised-pork-neck-shiitake" element={<StickySoyPork />} />

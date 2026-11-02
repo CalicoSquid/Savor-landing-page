@@ -3,6 +3,15 @@ import { BLOG_POSTS } from './blogPosts.js'
 // One collection entry per authored recipe; articles retain their existing URLs.
 export const SAVOR_ORIGINALS = [
   {
+  "slug": "lemon-brownies-strawberry-tree-jam",
+  "series": "Signature Recipes",
+  "number": 2,
+  "name": "Lemon brownies",
+  "description": "Bright, buttery squares with a sharp lemon glaze. A Montenegro kitchen memory, with strawberry tree jam as an optional little adventure.",
+  "effort": "15 minutes prep · 22–28 minutes baking, plus cooling · Makes 9 large or 16 small",
+  "mood": "For sunshine, butter and a thoroughly underwhelming fruit."
+},
+  {
   "slug": "hot-smoked-salmon-fennel-dill-vodka",
   "series": "Signature Recipes",
   "number": 1,

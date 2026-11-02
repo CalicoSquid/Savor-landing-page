@@ -1,5 +1,10 @@
 // Pin descriptions describe the recipe; alt text describes the actual photo.
 export const PINTEREST_RECIPES = {
+  "lemon-brownies-strawberry-tree-jam": {
+  "title": "Bright, Buttery Lemon Brownies with Lemon Glaze",
+  "description": "Lemon brownies with zest rubbed into the sugar and a sharp lemon glaze. Bake in a 20 cm square tin for 22–28 minutes, then cool completely before glazing. Makes 9 large or 16 small squares. Serve plain, with raspberries or with the optional strawberry tree refrigerator jam. The plated photo shows a serving suggestion.",
+  "altText": "Plated lemon dessert with ice cream, raspberries and garnish, shown as a serving suggestion."
+},
   "hot-smoked-salmon-fennel-dill-vodka": {
   "title": "Oven-Smoked Salmon with Fennel, Dill & Vodka",
   "description": "Make your own hot-smoked salmon with a fennel, lemon, dill and vodka cure, then finish with a glossy maple or honey glaze. A hob-and-oven-safe roasting tray stands in for a smoker. Allow 5–6 hours curing, then around 30–40 minutes cooking, using a thermometer to check the centre reaches 63°C. Serves 6–8.",

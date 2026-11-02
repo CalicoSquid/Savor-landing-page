@@ -13,6 +13,20 @@
 
 export const BLOG_POSTS = [
   {
+  "slug": "lemon-brownies-strawberry-tree-jam",
+  "title": "Lemon Brownies with Optional Strawberry Tree Jam",
+  "dek": "Bright, buttery lemon brownies from my first summer in Montenegro. Raspberry works beautifully, but there’s a little strawberry tree jam adventure if you fancy it.",
+  "metaTitle": "Lemon Brownies & Optional Strawberry Tree Jam | Savor",
+  "metaDesc": "Bright, buttery lemon brownies with a sharp lemon glaze. Makes 9 large or 16 small squares, with an optional strawberry tree jam recipe from Montenegro.",
+  "date": "2026-11-02",
+  "readTime": "8 min read",
+  "ogImage": "https://getsavor.recipes/blog/lemon-brownies.webp",
+  "ogImageWidth": 1440,
+  "ogImageHeight": 1921,
+  "ogImageAlt": "Plated lemon dessert with ice cream, raspberries and garnish, shown as a serving suggestion.",
+  "author": "Caleb"
+},
+  {
   "slug": "hot-smoked-salmon-fennel-dill-vodka",
   "title": "Oven-Smoked Salmon with Fennel, Dill & Vodka",
   "dek": "A side of hot-smoked salmon, a short fennel-and-dill cure and a roasting tray doing an excellent impression of a smoker. From Caleb’s Signature Recipes.",

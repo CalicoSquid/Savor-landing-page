@@ -118,6 +118,23 @@ try {
     assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'),'Salmon article has no overflow at '+width);
     if(width!==320)await screenshot('hot-smoked-salmon-'+width);
   }
+  await navigate('/blog/lemon-brownies-strawberry-tree-jam/');
+  await evaluate('Promise.all([...document.querySelectorAll("#recipe img")].map(async i=>{i.src=new URL(i.src).pathname;await i.decode()}))');
+  assert.equal(await evaluate('document.querySelectorAll("#recipe ol li").length'),8);
+  assert.equal(await evaluate('document.querySelectorAll("#strawberry-tree-jam ol li").length'),7);
+  assert.equal(await evaluate('document.querySelectorAll("#recipe h4").length'),2);
+  assert.ok(await evaluate('document.querySelector("#strawberry-tree-jam").textContent.includes("not been validated for shelf-stable canning")'));
+  assert.ok(await evaluate(`document.querySelector('#strawberry-tree-jam a[href="#recipe"]')!==null`));
+  const brownieSchema=await evaluate(`JSON.parse([...document.querySelectorAll('script[type="application/ld+json"]')].find(s=>JSON.parse(s.textContent)["@type"]==="Recipe").textContent)`);
+  assert.equal(brownieSchema.recipeInstructions.length,8);
+  assert.equal(brownieSchema.recipeIngredient.length,11);
+  assert.ok(brownieSchema.recipeIngredient.every(item=>!item.startsWith('## ')));
+  for(const width of [1440,390,320]){
+    await command('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<500});await delay(100);
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'),'Brownie article has no overflow at '+width);
+    await evaluate('document.querySelector("#recipe").scrollIntoView()');
+    if(width!==320)await screenshot('lemon-brownies-'+width);
+  }
   assert.deepEqual(errors,[],'No runtime or hydration errors');
   await command('Browser.close');
   console.log('Originals browser checks passed: series filters, reload, invalid query, image loading and desktop/mobile layouts.');
