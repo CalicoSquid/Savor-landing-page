@@ -50,13 +50,17 @@ export function calculateBrine({
   percent = 2.5,
   system = 'metric',
 } = {}) {
+  if (!Object.hasOwn(BRINE_METHODS, method)) return { ok: false, reason: 'Choose a brine percentage method.' }
+  if ([produce, water].some((value) => !Number.isFinite(Number(value)) || Number(value) < 0)) {
+    return { ok: false, reason: 'Enter non-negative, finite vegetable and water amounts.' }
+  }
   const produceG = inputToGrams(produce, 'produce', system)
   const waterG = inputToGrams(water, 'water', system)
   const saltPercent = finiteNumber(percent)
   const selectedMethod = BRINE_METHODS[method] ? method : 'total'
 
-  if (!(saltPercent > 0)) {
-    return { ok: false, reason: 'Enter a salt percentage greater than 0.' }
+  if (!(saltPercent >= 0.1 && saltPercent <= 20)) {
+    return { ok: false, reason: 'Enter a salt percentage from 0.1 to 20, as specified by your recipe.' }
   }
 
   const baseWeightG = selectedMethod === 'water' ? waterG : produceG + waterG
@@ -87,6 +91,7 @@ export function calculateBrine({
 
 function smartNumber(value, digits = 1) {
   if (!Number.isFinite(value)) return '0'
+  if (value !== 0 && Math.abs(value) < 0.1) return String(Number(value.toPrecision(3)))
   const rounded = Number(value.toFixed(digits))
   return String(rounded)
 }

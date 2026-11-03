@@ -221,6 +221,7 @@ function formatKitchenMeasure(value) {
 
 export function formatConvertedValue(value, unit) {
   if (!Number.isFinite(value)) return ''
+  if (value !== 0 && Math.abs(value) < 0.125) return String(Number(value.toPrecision(3)))
   if (['cup', 'tsp', 'tbsp'].includes(unit) && Math.abs(value) < 12) return formatKitchenMeasure(value)
   if (['c', 'f'].includes(unit)) return String(Number(value.toFixed(1)))
   if (Math.abs(value) >= 100) return String(Number(value.toFixed(0)))
@@ -296,8 +297,8 @@ function toUs(amount, unit, ingredient) {
   return null
 }
 
-function roundCookingTemperature(value) {
-  return Math.round(value / 5) * 5
+function formatRecipeTemperature(value) {
+  return Number(value.toFixed(1))
 }
 
 function convertTemperaturesInText(text, targetSystem) {
@@ -305,18 +306,18 @@ function convertTemperaturesInText(text, targetSystem) {
   if (targetSystem === 'metric') {
     output = output.replace(/(-?\d+(?:\.\d+)?)\s*°?\s*f(?:ahrenheit)?\b/gi, (_, raw) => {
       const c = (Number(raw) - 32) * 5 / 9
-      return `${roundCookingTemperature(c)}°C`
+      return `${formatRecipeTemperature(c)}°C`
     })
   } else {
     // A bare "c" is also a common cup abbreviation. Require an explicit
     // temperature marker, or an instruction such as "bake at 180 C".
     output = output.replace(/(-?\d+(?:\.\d+)?)\s*(?:°\s*c\b|celsius\b|degrees?\s*c(?:elsius)?\b)/gi, (_, raw) => {
       const f = Number(raw) * 9 / 5 + 32
-      return `${roundCookingTemperature(f)}°F`
+      return `${formatRecipeTemperature(f)}°F`
     })
     output = output.replace(/(\b(?:at|to)\s+)(-?\d+(?:\.\d+)?)\s*c\b/gi, (_, prefix, raw) => {
       const f = Number(raw) * 9 / 5 + 32
-      return `${prefix}${roundCookingTemperature(f)}°F`
+      return `${prefix}${formatRecipeTemperature(f)}°F`
     })
   }
   return output
@@ -378,8 +379,13 @@ function convertRecipeLine(line, targetSystem, dataset) {
 export function convertRecipeText(text, targetSystem = 'metric', dataset = null) {
   let convertedCount = 0
   let approximateCount = 0
-  const lines = String(text || '').split('\n').map((line) => {
+  let temperatureCount = 0
+  const reviewLines = []
+  const lines = String(text || '').split('\n').map((line, index) => {
     const result = convertRecipeLine(line, targetSystem, dataset)
+    const temperatureOnly = convertTemperaturesInText(line, targetSystem)
+    if (temperatureOnly !== line) temperatureCount += 1
+    if (/(?:\bplus\b|\band\b|\+|[([])\s*\d/i.test(line) || /^\s*\d+[.)]\s+\d/.test(line)) reviewLines.push(index + 1)
     if (result.converted) convertedCount += 1
     if (result.approximate) approximateCount += 1
     return result.output
@@ -389,5 +395,7 @@ export function convertRecipeText(text, targetSystem = 'metric', dataset = null)
     output: lines.join('\n'),
     convertedCount,
     approximateCount,
+    temperatureCount,
+    reviewLines,
   }
 }

@@ -32,6 +32,9 @@ export function calculateDough({
   other = 0,
   system = 'metric',
 } = {}) {
+  if ([flour, water, starter, starterHydration, salt, other].some((value) => !Number.isFinite(Number(value)) || Number(value) < 0)) {
+    return { ok: false, reason: 'Enter finite, non-negative ingredient weights and starter hydration.' }
+  }
   const flourG = inputWeightToGrams(flour, system)
   const waterG = inputWeightToGrams(water, system)
   const starterG = inputWeightToGrams(starter, system)
@@ -76,7 +79,10 @@ export function scaleDough(result, { pieces = 1, pieceWeight = 0, system = 'metr
     return { ok: false, reason: 'Enter a valid dough formula before scaling it.' }
   }
 
-  const pieceCount = Math.max(0, Math.floor(Number(pieces) || 0))
+  const pieceCount = Number(pieces)
+  if (!Number.isSafeInteger(pieceCount) || pieceCount < 1) {
+    return { ok: false, reason: 'Enter a whole number of loaves or dough balls greater than zero.' }
+  }
   const pieceWeightG = inputWeightToGrams(pieceWeight, system)
   if (pieceCount <= 0 || pieceWeightG <= 0) {
     return { ok: false, reason: 'Enter at least one loaf or dough ball and a target weight.' }

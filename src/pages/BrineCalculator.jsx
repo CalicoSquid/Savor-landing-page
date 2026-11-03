@@ -24,8 +24,8 @@ const EXAMPLES = [
   { label: '3% water brine', method: 'water', produce: 0, water: 1000, percent: 3 },
 ]
 
-function tidyInput(value, digits = 2) {
-  return String(Number(Number(value).toFixed(digits)))
+function tidyInput(value) {
+  return String(value)
 }
 
 export default function BrineCalculator() {
@@ -40,6 +40,7 @@ export default function BrineCalculator() {
 
   function changeSystem(nextSystem) {
     if (nextSystem === system) return
+    if ([produce, water].some((value) => !Number.isFinite(Number(value)) || Number(value) < 0)) return
     const produceG = inputToGrams(produce, 'produce', system)
     const waterG = inputToGrams(water, 'water', system)
     setProduce(tidyInput(gramsToInput(produceG, 'produce', nextSystem)))

@@ -160,7 +160,7 @@ assert.equal(metric.output, `180 g all-purpose flour
 73.3 g dark brown sugar
 227 g cream cheese
 5 ml vanilla
-Bake at 175°C`)
+Bake at 176.7°C`)
 assert.equal(metric.convertedCount, 6)
 assert.equal(metric.approximateCount, 3)
 
@@ -171,7 +171,7 @@ Bake at 180°C`, 'us', conversionData)
 assert.equal(us.output, `1 cup plain flour
 1/2 cup milk
 2 1/8 tbsp butter
-Bake at 355°F`)
+Bake at 356°F`)
 assert.equal(us.convertedCount, 3)
 
 const ranges = convertRecipeText(`1–2 cups flour
@@ -187,10 +187,10 @@ assert.equal(convertRecipeText('1 c. flour', 'metric', conversionData).output, '
 for (const system of ['metric', 'us']) {
   assert.equal(convertRecipeText('180 C\n180 C fan\n180C for 20 minutes', system, conversionData).output, '180 C\n180 C fan\n180C for 20 minutes')
 }
-assert.equal(convertRecipeText('Bake at 180 C\n180°C\n180 Celsius\n180 degrees C', 'us', conversionData).output, 'Bake at 355°F\n355°F\n355°F\n355°F')
+assert.equal(convertRecipeText('Bake at 180 C\n180°C\n180 Celsius\n180 degrees C', 'us', conversionData).output, 'Bake at 356°F\n356°F\n356°F\n356°F')
 
 // Direct conversions must remain useful before ingredient data arrives.
-assert.equal(convertRecipeText('8 oz cream cheese\n1 cup milk\nBake at 350°F', 'metric', null).output, '227 g cream cheese\n237 ml milk\nBake at 175°C')
+assert.equal(convertRecipeText('8 oz cream cheese\n1 cup milk\nBake at 350°F', 'metric', null).output, '227 g cream cheese\n237 ml milk\nBake at 176.7°C')
 assert.equal(convertRecipeText('120 ml milk\n100 g flour', 'us', null).output, '1/2 cup milk\n3.53 oz flour')
 
 

@@ -70,8 +70,15 @@ export function parseQuantity(token) {
 }
 
 function formatDecimal(value) {
+  if (value !== 0 && Math.abs(value) < 0.01) return String(Number(value.toPrecision(3)))
   if (Math.abs(value - Math.round(value)) < 0.0001) return String(Math.round(value))
   return String(Number(value.toFixed(2)))
+}
+
+function formatMeasuredQuantity(value, remainder) {
+  return /^\s*(?:kg|g|grams?|kilograms?|ml|millilit(?:re|er)s?|l|lit(?:re|er)s?)\b/i.test(remainder)
+    ? formatDecimal(value)
+    : formatQuantity(value)
 }
 
 export function formatQuantity(value) {
@@ -117,7 +124,7 @@ function scaleRemainder(remainder, factor) {
     if (amount != null) {
       const tail = remainder.slice(unit[0].length + equivalent[0].length)
       return {
-        output: `${unit[0]}${equivalent[1]}${formatQuantity(amount * factor)}${equivalent[3]}${tail}`,
+        output: `${unit[0]}${equivalent[1]}${formatMeasuredQuantity(amount * factor, equivalent[3])}${equivalent[3]}${tail}`,
         needsReview: EXTRA_QUANTITY_RE.test(tail),
       }
     }
@@ -126,10 +133,13 @@ function scaleRemainder(remainder, factor) {
 }
 
 function scaleLine(line, factor) {
-  const prefixMatch = line.match(/^(\s*(?:[-*•]\s+)?)?/)
+  const prefixMatch = line.match(/^(\s*(?:[-*•]\s+|\d+[.)]\s+)?)?/)
   const prefix = prefixMatch?.[0] || ''
-  const content = line.slice(prefix.length)
+  const content = line.slice(prefix.length).replace(/^\d{1,3}(?:,\d{3})+(?:\.\d+)?(?=\s|[a-z]|$)/i, (amount) => amount.replaceAll(',', ''))
   if (!content) return { output: line, scaled: false, sourceAmount: null, scaledAmount: null }
+  if (/^\d+,/.test(content)) {
+    return { output: line, scaled: false, needsReview: true }
+  }
 
   const range = content.match(RANGE_RE)
   if (range) {
@@ -140,7 +150,7 @@ function scaleLine(line, factor) {
     const scaledHigh = high * factor
     const remainder = scaleRemainder(range[3], factor)
     return {
-      output: `${prefix}${formatQuantity(scaledLow)}–${formatQuantity(scaledHigh)}${remainder.output}`,
+      output: `${prefix}${formatMeasuredQuantity(scaledLow, range[3])}–${formatMeasuredQuantity(scaledHigh, range[3])}${remainder.output}`,
       scaled: true,
       needsReview: remainder.needsReview,
       sourceAmount: [low, high],
@@ -157,7 +167,7 @@ function scaleLine(line, factor) {
   const scaledAmount = amount * factor
   const remainder = scaleRemainder(single[2], factor)
   return {
-    output: `${prefix}${formatQuantity(scaledAmount)}${remainder.output}`,
+    output: `${prefix}${formatMeasuredQuantity(scaledAmount, single[2])}${remainder.output}`,
     scaled: true,
     needsReview: remainder.needsReview,
     sourceAmount: amount,

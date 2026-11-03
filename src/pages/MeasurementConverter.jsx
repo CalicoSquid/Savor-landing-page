@@ -262,6 +262,9 @@ export default function MeasurementConverter() {
               {recipeResult.output.trim() ? (
                 <>
                   <pre className="scaled-list">{recipeResult.output}</pre>
+                  {recipeResult.reviewLines.length > 0 && (
+                    <p className="scaler-review-note">Check lines {recipeResult.reviewLines.join(', ')}: compound amounts, bracketed equivalents or numbered lists may need separate conversion.</p>
+                  )}
                   {!conversionData && (
                     <p className="scaler-hint">Using direct conversions: cups become millilitres and grams become ounces. Ingredient estimates {dataStatus === 'error' ? 'are unavailable right now' : 'will appear when loaded'}.</p>
                   )}
@@ -269,7 +272,7 @@ export default function MeasurementConverter() {
                     {recipeResult.approximateCount > 0 && (
                       <span>{recipeResult.approximateCount} ingredient-aware {recipeResult.approximateCount === 1 ? 'estimate' : 'estimates'}</span>
                     )}
-                    <span>Temperatures rounded for cooking</span>
+                    {recipeResult.temperatureCount > 0 && <span>{recipeResult.temperatureCount} temperature {recipeResult.temperatureCount === 1 ? 'line' : 'lines'} converted to one decimal place</span>}
                   </div>
                   <button type="button" className="btn btn-fruit scaler-copy" onClick={copyRecipe}>
                     {copied ? 'Copied ✓' : 'Copy converted recipe'}
