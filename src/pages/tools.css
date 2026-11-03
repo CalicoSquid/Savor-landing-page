@@ -1367,6 +1367,24 @@
 
 /* Fermentation brine calculator */
 .brine-calculator-section { padding: 10px 0 50px; }
+.brine-section-title { margin-bottom: 14px; }
+.brine-workflow-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 24px; }
+.brine-workflow-grid button { padding: 18px 12px; border: 1px solid rgba(0,0,0,.15); border-radius: 12px; background: var(--surface); color: var(--text-primary); font: inherit; font-weight: 750; cursor: pointer; }
+.brine-workflow-grid button.is-active { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 9%, var(--surface)); }
+.brine-quantity-row { display: grid; gap: 8px; margin-top: 8px; }
+.brine-quantity-row input, .brine-quantity-row select { width: 100%; min-width: 0; }
+.brine-copy { margin-top: 16px; width: 100%; }
+.brine-faq { padding-bottom: 42px; }
+.brine-faq h3 { margin-top: 24px; margin-bottom: 8px; }
+.brine-faq p { color: var(--text-secondary); line-height: 1.7; max-width: 78ch; }
+.brine-calculator-section button:focus-visible, .brine-calculator-section input:focus-visible, .brine-calculator-section select:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+@media (max-width: 600px) {
+  .brine-workflow-grid { grid-template-columns: 1fr; gap: 8px; }
+  .brine-workflow-grid button { padding: 13px; }
+  .brine-calculator-section .brine-input-grid { grid-template-columns: 1fr; }
+  .brine-calculator-section .brine-unit-toolbar { flex-wrap: wrap; }
+  .brine-calculator-section .brine-big-number { overflow-wrap: anywhere; }
+}
 
 .brine-example-row {
   display: flex;

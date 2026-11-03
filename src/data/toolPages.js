@@ -52,11 +52,11 @@ export const TOOL_PAGES = [
   {
     id: 'brine-calculator',
     href: '/tools/brine-calculator/',
-    category: 'Fermentation',
-    title: 'Fermentation Brine Calculator',
-    description: 'Calculate salt from the percentage and weight basis your fermentation recipe uses.',
+    category: 'Brining & fermentation',
+    title: 'Brine Calculator',
+    description: 'Calculate salt for meat brining, vegetable fermentation or a precise brine concentration.',
     action: 'Calculate brine salt',
-    problem: 'Need the exact salt weight for a fermentation brine?',
+    problem: 'Need the salt weight for a meat brine or vegetable ferment?',
     related: ['measurement-converter', 'ingredient-substitutions', 'recipe-scaler'],
   },
   {

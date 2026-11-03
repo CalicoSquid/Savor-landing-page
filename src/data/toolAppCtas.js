@@ -14,8 +14,8 @@ export const TOOL_APP_CTAS = {
     body: 'Compare pan sizes in Savor and apply the multiplier to your recipe’s ingredients for this cook. Your saved recipe stays unchanged.',
   },
   'brine-calculator': {
-    headline: 'Keep your brine calculator in Savor',
-    body: 'Calculate salt by water weight or food and water weight, alongside your recipes and other kitchen tools.',
+    headline: 'Keep the recipe for next time',
+    body: 'Save your brining or fermentation recipe in Savor so its ingredients and instructions are easy to find when you cook again.',
   },
   'bakers-percentage': {
     headline: 'Check dough hydration in Savor',

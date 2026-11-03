@@ -13,15 +13,15 @@ export const MEAT_BRINE_METHODS = {
   },
 }
 
-export function calculateMeatBrine({ method, meatG, waterG = 0, percent } = {}) {
+export function calculateMeatBrine({ method, meatG = 0, waterG = 0, percent } = {}) {
   if (!Object.hasOwn(MEAT_BRINE_METHODS, method)) {
     return { ok: false, reason: 'Choose wet or dry brining.' }
   }
   const meat = Number(meatG)
   const water = Number(waterG)
   const percentage = Number(percent)
-  if (!Number.isFinite(meat) || meat <= 0 || !Number.isFinite(water) || water < 0) {
-    return { ok: false, reason: 'Enter a positive meat weight and a non-negative water weight.' }
+  if (!Number.isFinite(meat) || meat < 0 || (method === 'dry' && meat <= 0) || !Number.isFinite(water) || water < 0) {
+    return { ok: false, reason: 'Enter a positive meat weight for dry brining and non-negative water and meat weights.' }
   }
   // This is an input guard, not a recommended or safe range for a recipe.
   if (!Number.isFinite(percentage) || percentage < 0.1 || percentage > 20) {

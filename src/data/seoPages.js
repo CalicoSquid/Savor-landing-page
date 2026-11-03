@@ -145,12 +145,12 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools/brine-calculator',
-    lastmod: '2026-09-25',
+    lastmod: '2026-11-03',
     file: 'tools/brine-calculator/index.html',
-    title: 'Fermentation Brine Calculator — Salt Percentage | Savor',
-    description: 'Calculate salt for vegetable fermentation by total food-and-water weight or water-only brine percentage. Free brine calculator with grams and ounces.',
+    title: 'Brine Calculator — Meat, Fermentation & Salt % | Savor',
+    description: 'Calculate salt for chicken, turkey, pork and vegetable fermentation. Choose wet or dry brining, or calculate brine concentration. Grams and ounces, no signup.',
     canonical: `${SITE_URL}/tools/brine-calculator/`,
-    ogImageAlt: 'Savor fermentation brine calculator for salt percentages by weight',
+    ogImageAlt: 'Savor brine calculator for meat, vegetable fermentation and salt concentration',
   }),
   page({
     path: '/tools/bakers-percentage',

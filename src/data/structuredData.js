@@ -461,7 +461,7 @@ export function structuredDataForPage(seo) {
       {
         '@type': 'WebApplication',
         '@id': brineCalculatorId,
-        name: 'Savor Fermentation Brine Calculator',
+        name: 'Savor Brine Calculator',
         url: seo.canonical,
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'Web browser',
@@ -471,10 +471,13 @@ export function structuredDataForPage(seo) {
         description: seo.description,
         publisher: { '@id': ORG_ID },
         featureList: [
+          'Calculate wet brine salt from water weight for meat and poultry',
+          'Calculate dry brine salt from meat weight',
           'Calculate fermentation salt as a percentage of total vegetable and water weight',
           'Calculate water-only brine percentages when a recipe uses that convention',
-          'Enter produce in grams or ounces and water in millilitres or US fluid ounces',
-          'Show the exact salt amount in grams and ounces',
+          'Distinguish salt-to-water ratios from final solution salt concentration',
+          'Enter food in grams, kilograms, ounces or pounds and water in metric or US units',
+          'Show salt weight in grams and ounces and copy the calculation',
           'Keep total-weight and water-only percentage conventions visibly separate',
           'Explain the calculation formula and preservation limitations',
         ],
@@ -482,7 +485,7 @@ export function structuredDataForPage(seo) {
       breadcrumb([
         { name: 'Savor', url: `${SITE_URL}/` },
         { name: 'Kitchen Tools', url: `${SITE_URL}/tools/` },
-        { name: 'Fermentation Brine Calculator', url: seo.canonical },
+        { name: 'Brine Calculator', url: seo.canonical },
       ]),
     )
   } else if (seo.path === '/tools/bakers-percentage') {

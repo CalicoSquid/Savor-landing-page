@@ -1,6 +1,6 @@
 # Kitchen tools fix scaffold
 
-Status: foundation for the 3 November 2026 review. Deployment of the tested fixes is authorized; meat-brining UI integration remains outstanding.
+Status: calculation fixes published on 3 November 2026. The brine UI, canonical-weight state and metadata integration are now implemented; see `brine-calculator-release.md` for validation and indexing status.
 
 ## Implemented in this scaffold
 
@@ -11,7 +11,7 @@ Status: foundation for the 3 November 2026 review. Deployment of the tested fixe
 - Conversion UI flags compound amounts, bracketed equivalents and numbered lists for review.
 - Fermentation brine rejects invalid weights, unknown methods and percentages outside the UI's 0.1–20 range. Tiny salt values retain precision. Unit switching retains conversion precision and does not normalize invalid weights.
 - Dough formulas reject negative/non-finite ingredients; batch scaling rejects fractional piece counts.
-- Separate meat-brining calculation contract and tests, not connected to the public page yet.
+- Separate meat-brining calculation contract and tests, connected to the brine page with independent wet and dry workflows.
 
 ## Meat-brining integration
 
@@ -26,19 +26,19 @@ These percentages are ingredient-weight ratios, not final-solution salinity. The
 
 Remaining implementation:
 
-- [ ] Add the meat / vegetable-fermentation choice to the existing brine route, with a deliberate initial selection.
-- [ ] Provide separate wet/dry controls and retain the current vegetable total-weight/water-only distinction.
-- [ ] Store canonical gram values independently from displayed unit text, including invalid/empty editing states. The current precision fix prevents coarse rounding but is not that full state refactor.
-- [ ] Explain percentage denominators beside the inputs and results. Hide irrelevant inputs without silently reusing values from another method.
-- [ ] Add sourced refrigeration, handling, used-brine disposal and pre-salted meat guidance. Keep fermentation and canning limitations in their relevant workflow.
-- [ ] Add accessible result announcements and complete keyboard/mobile/clipboard checks.
-- [ ] Update title, description, H1, social tags, tool-directory card and WebApplication schema together when the integrated workflow is ready.
+- [x] Add the meat / vegetable-fermentation choice to the existing brine route, with a deliberate initial selection.
+- [x] Provide separate wet/dry controls and retain the current vegetable total-weight/water-only distinction.
+- [x] Store canonical gram values independently from displayed unit text, including invalid/empty editing states.
+- [x] Explain percentage denominators beside the inputs and results. Hide irrelevant inputs without silently reusing values from another method.
+- [x] Add sourced refrigeration, handling, used-brine disposal and pre-salted meat guidance. Keep fermentation and canning limitations in their relevant workflow.
+- [x] Add accessible result announcements and complete keyboard/mobile/clipboard checks.
+- [x] Update title, description, H1, social tags, tool-directory card and WebApplication schema together with the integrated workflow.
 
 Candidate title after integration: **Brine Calculator for Meat & Vegetable Fermentation | Savor**.
 
 Candidate description: **Calculate salt for meat and poultry brining or vegetable fermentation. Choose your method, see the percentage basis, and get salt weights in grams or ounces.**
 
-Existing fermentation metadata remains accurate during scaffolding.
+The final metadata also describes concentration calculations; the ranked route and canonical are unchanged.
 
 Source references for the content pass:
 
