@@ -438,6 +438,8 @@ export function structuredDataForPage(seo) {
         publisher: { '@id': ORG_ID },
         featureList: [
           'Search common cooking and baking ingredients for practical substitutes',
+          'Browse 40 ingredients by category with regional names and spelling suggestions',
+          'Scale selected measured substitutions and copy swaps with their cautions',
           'Choose substitutions based on how the ingredient is used in the recipe',
           'Show practical replacement ratios and preparation instructions',
           'Explain expected flavour and texture changes',

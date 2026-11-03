@@ -1142,6 +1142,21 @@
 }
 
 .sub-search-field { display: block; }
+.sub-browse { margin-top: 22px; border-top: 1px solid rgba(0,0,0,.1); padding-top: 16px; }
+.sub-browse summary { cursor: pointer; font-weight: 750; padding-block: 8px; }
+.sub-browse label { display: block; margin-top: 12px; }
+.sub-browse-list { display: grid; gap: 5px; max-height: 250px; overflow-y: auto; margin-top: 12px; }
+.sub-browse-list button { padding: 10px; text-align: left; font: inherit; color: var(--text-primary); background: var(--surface-2); border: 1px solid rgba(0,0,0,.08); border-radius: 8px; cursor: pointer; }
+.sub-sources { margin-top: 12px; font-size: .8rem; line-height: 1.6; }
+.sub-sources a { color: var(--primary); overflow-wrap: anywhere; }
+.sub-amount { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.1); }
+.sub-amount label { display: block; font-size: .84rem; font-weight: 750; margin-bottom: 8px; }
+.sub-amount input { width: 100%; max-width: 180px; min-height: 44px; padding: 10px; margin-bottom: 12px; border: 1px solid rgba(0,0,0,.2); border-radius: 8px; background: var(--surface); color: var(--text-primary); font: inherit; }
+.sub-amount ul { padding-left: 20px; margin-top: 8px; line-height: 1.7; }
+.sub-copy { margin-top: 16px; min-height: 44px; }
+.sub-copy:disabled { opacity: .5; cursor: default; }
+.sub-suggestions { display: grid; gap: 7px; margin-top: 12px; }
+.sub-workspace button:focus-visible, .sub-workspace summary:focus-visible, .sub-workspace input:focus-visible, .sub-workspace select:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
 
 .sub-search-results {
   display: grid;

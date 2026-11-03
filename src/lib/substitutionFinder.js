@@ -1,3 +1,5 @@
+import { SUBSTITUTION_ADDITIONS } from '../data/substitutionAdditions.js'
+
 const COMMON_CONTEXTS = {
   general: { id: 'general', label: 'General cooking', description: 'A practical everyday swap.' },
   baking: { id: 'baking', label: 'Baking', description: 'Cakes, muffins, quick breads and similar batters.' },
@@ -12,7 +14,7 @@ function context(id, options, overrides = {}) {
   return { ...(COMMON_CONTEXTS[id] || { id, label: id, description: '' }), ...overrides, options }
 }
 
-export const SUBSTITUTION_INGREDIENTS = [
+const BASE_SUBSTITUTION_INGREDIENTS = [
   {
     id: 'buttermilk', name: 'Buttermilk', aliases: ['cultured buttermilk'],
     summary: 'Acid + dairy matters more than the name. In baking, preserve the acidity that reacts with baking soda.',
@@ -133,10 +135,10 @@ export const SUBSTITUTION_INGREDIENTS = [
   },
   {
     id: 'self-raising-flour', name: 'Self-raising flour', aliases: ['self rising flour', 'self-rising flour'],
-    summary: 'Self-raising flour is plain flour with leavening and salt already mixed in.',
+    summary: 'Self-raising flour contains raising agents. US self-rising blends also usually include salt; regional recipes differ.',
     contexts: [
       context('baking', [
-        option('Plain / all-purpose flour + baking powder', 'Easy homemade mix', 'For 1 cup flour: use 1 cup plain flour + 1 1/2 tsp baking powder + 1/4 tsp fine salt.', 'Functionally very close for cakes, scones and quick breads.', 'Check whether the original recipe already adds baking powder or salt before doubling up.'),
+        option('Plain / all-purpose flour + baking powder', 'Easy homemade mix', 'For a US-style self-rising mix: combine 1 cup plain flour, 1 1/2 tsp baking powder and 1/4 tsp fine salt.', 'Functionally very close for cakes, scones and quick breads.', 'This is a US-style mix. For a UK self-raising recipe, follow its flour specification and do not automatically add the US salt allowance. Check existing raising agents before doubling up.'),
       ]),
     ],
   },
@@ -150,7 +152,7 @@ export const SUBSTITUTION_INGREDIENTS = [
     ],
   },
   {
-    id: 'cornstarch', name: 'Cornstarch', aliases: ['cornflour', 'corn flour starch'],
+    id: 'cornstarch', name: 'Cornstarch', aliases: ['cornflour', 'corn starch', 'corn flour starch'],
     summary: 'Different starches thicken at different temperatures and give different clarity and texture.',
     contexts: [
       context('savoury', [
@@ -197,7 +199,7 @@ export const SUBSTITUTION_INGREDIENTS = [
     ],
   },
   {
-    id: 'garlic', name: 'Fresh garlic', aliases: ['garlic clove', 'garlic cloves'],
+    id: 'garlic', name: 'Fresh garlic', aliases: ['garlic', 'garlic clove', 'garlic cloves'],
     summary: 'Dried garlic is stronger by volume but lacks the fresh bite and texture of a clove.',
     contexts: [
       context('savoury', [
@@ -261,12 +263,46 @@ export const SUBSTITUTION_INGREDIENTS = [
   },
 ]
 
-function normalise(value = '') {
-  return String(value)
-    .toLowerCase()
-    .replace(/[’']/g, '')
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim()
+const CATEGORY_BY_ID = {
+  'buttermilk': 'Dairy & eggs', egg: 'Dairy & eggs', butter: 'Dairy & eggs', 'heavy-cream': 'Dairy & eggs', 'sour-cream': 'Dairy & eggs', milk: 'Dairy & eggs',
+  'brown-sugar': 'Sweeteners', honey: 'Sweeteners',
+  'baking-powder': 'Baking', 'baking-soda': 'Baking', 'self-raising-flour': 'Baking', 'cake-flour': 'Baking', cornstarch: 'Baking',
+  'soy-sauce': 'Sauces & liquids', 'rice-vinegar': 'Sauces & liquids', 'lemon-juice': 'Sauces & liquids', wine: 'Sauces & liquids',
+  garlic: 'Seasonings', 'fresh-herbs': 'Seasonings', 'dijon-mustard': 'Seasonings', shallot: 'Seasonings',
+}
+
+const MEASURED_OPTIONS = {
+  buttermilk: {
+    'Milk + lemon juice or white vinegar': { amount: 1, unit: 'cup', parts: [{ amount: 1, unit: 'tbsp', name: 'Lemon juice or white vinegar' }, { amount: 1, unit: 'cup', name: 'Milk', fillTo: true }] },
+    'Plain yogurt + milk': { amount: 1, unit: 'cup', parts: [{ amount: 0.75, unit: 'cup', name: 'Plain yogurt' }, { amount: 0.25, unit: 'cup', name: 'Milk' }] },
+  },
+  egg: {
+    'Ground flax + water': { amount: 1, unit: 'egg', parts: [{ amount: 1, unit: 'tbsp', name: 'Ground flaxseed' }, { amount: 3, unit: 'tbsp', name: 'Water' }] },
+  },
+  cornstarch: {
+    'Plain flour': { amount: 1, unit: 'tbsp', parts: [{ amount: 2, unit: 'tbsp', name: 'Plain flour' }] },
+  },
+  garlic: {
+    'Garlic powder': { amount: 1, unit: 'clove', parts: [{ amount: 0.125, unit: 'tsp', name: 'Garlic powder' }] },
+  },
+}
+
+export const SUBSTITUTION_INGREDIENTS = [...BASE_SUBSTITUTION_INGREDIENTS, ...SUBSTITUTION_ADDITIONS].map((item) => ({
+  ...item,
+  category: item.category || CATEGORY_BY_ID[item.id] || 'Pantry',
+  contexts: item.contexts.map((usage) => ({
+    ...usage,
+    options: usage.options.map((swap) => ({ ...swap, ...(MEASURED_OPTIONS[item.id]?.[swap.name] ? { measure: MEASURED_OPTIONS[item.id][swap.name] } : {}) })),
+  })),
+}))
+
+export const SUBSTITUTION_CATEGORIES = [...new Set(SUBSTITUTION_INGREDIENTS.map((item) => item.category))].sort()
+
+export function normaliseSubstitutionQuery(value = '') {
+  return String(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/[’']/g, '').replace(/[^a-z0-9]+/g, ' ').trim()
+    .replace(/^(?:what can i use instead of|substitutes? for|replacement for)\s+/, '')
+    .replace(/\s+(?:substitutes?|replacement)$/, '').trim()
 }
 
 export function getSubstitutionIngredient(id) {
@@ -279,27 +315,66 @@ export function getSubstitutionContext(ingredientId, contextId) {
   return ingredient.contexts.find((item) => item.id === contextId) || ingredient.contexts[0] || null
 }
 
-export function searchSubstitutions(query, limit = 8) {
-  const needle = normalise(query)
-  if (!needle) return SUBSTITUTION_INGREDIENTS.slice(0, limit)
+export function exactSubstitution(query) {
+  const needle = normaliseSubstitutionQuery(query)
+  if (!needle) return null
+  return SUBSTITUTION_INGREDIENTS.find((item) => [item.name, ...item.aliases].some((name) => normaliseSubstitutionQuery(name) === needle)) || null
+}
 
-  return SUBSTITUTION_INGREDIENTS
-    .map((item) => {
-      const name = normalise(item.name)
-      const aliases = item.aliases.map(normalise)
-      let score = 0
-      if (name === needle || aliases.includes(needle)) score = 100
-      else if (name.startsWith(needle) || aliases.some((alias) => alias.startsWith(needle))) score = 75
-      else if (name.includes(needle) || aliases.some((alias) => alias.includes(needle))) score = 50
-      else if (normalise(item.summary).includes(needle)) score = 15
-      return { item, score }
-    })
-    .filter(({ score }) => score > 0)
+export function searchSubstitutions(query, limit = 8) {
+  const needle = normaliseSubstitutionQuery(query)
+  if (!needle) return SUBSTITUTION_INGREDIENTS.slice(0, limit)
+  return SUBSTITUTION_INGREDIENTS.map((item) => {
+    const names = [item.name, ...item.aliases].map(normaliseSubstitutionQuery)
+    let score = 0
+    if (names.includes(needle)) score = 100
+    else if (names.some((name) => name.startsWith(needle))) score = 75
+    else if (names.some((name) => name.includes(needle))) score = 50
+    else if (normaliseSubstitutionQuery(item.summary).includes(needle)) score = 15
+    return { item, score }
+  }).filter(({ score }) => score > 0)
     .sort((a, b) => b.score - a.score || a.item.name.localeCompare(b.item.name))
-    .slice(0, limit)
-    .map(({ item }) => item)
+    .slice(0, limit).map(({ item }) => item)
+}
+
+function editDistance(left, right) {
+  let row = Array.from({ length: right.length + 1 }, (_, index) => index)
+  for (let i = 0; i < left.length; i++) {
+    const next = [i + 1]
+    for (let j = 0; j < right.length; j++) next.push(Math.min(next[j] + 1, row[j + 1] + 1, row[j] + (left[i] === right[j] ? 0 : 1)))
+    row = next
+  }
+  return row[right.length]
+}
+
+export function suggestSubstitutions(query) {
+  const needle = normaliseSubstitutionQuery(query)
+  if (needle.length < 4 || needle.length > 60 || searchSubstitutions(query).length) return []
+  return SUBSTITUTION_INGREDIENTS.map((item) => ({ item, distance: Math.min(...[item.name, ...item.aliases].map((name) => editDistance(needle, normaliseSubstitutionQuery(name)))) }))
+    .filter(({ distance }) => distance <= (needle.length > 6 ? 2 : 1))
+    .sort((a, b) => a.distance - b.distance || a.item.name.localeCompare(b.item.name))
+    .slice(0, 3).map(({ item }) => item)
+}
+
+export function scaleSubstitution(swap, amountInput) {
+  const amount = Number(amountInput)
+  if (!swap.measure || String(amountInput).trim() === '' || !Number.isFinite(amount) || amount <= 0 || amount > 1000) {
+    return { ok: false, reason: 'Enter an amount greater than zero, up to 1000, in the unit shown.' }
+  }
+  const factor = amount / swap.measure.amount
+  const format = (number) => String(Number(number.toPrecision(4)))
+  return { ok: true, lines: swap.measure.parts.map((part) => `${part.name}: ${part.fillTo ? 'add enough to bring the total mixture to ' : ''}${format(part.amount * factor)} ${part.unit}`) }
+}
+
+export function substitutionCopyText(ingredient, usage, swap, amountInput) {
+  const scaled = swap.measure ? scaleSubstitution(swap, amountInput) : null
+  if (scaled && !scaled.ok) return ''
+  return [`Substitute for: ${ingredient.name}`, `Use: ${usage.label}`, `Swap: ${swap.name}`, swap.swap,
+    ...(scaled ? [`For ${amountInput} ${swap.measure.unit}:`, ...scaled.lines] : []),
+    `Expect: ${swap.changes}`, ...(swap.avoid ? [`Watch out: ${swap.avoid}`] : []),
+  ].join('\n')
 }
 
 export function popularSubstitutionIds() {
-  return ['buttermilk', 'egg', 'butter', 'heavy-cream', 'sour-cream', 'brown-sugar', 'cornstarch', 'soy-sauce']
+  return ['buttermilk', 'egg', 'butter', 'heavy-cream', 'baking-powder', 'cornstarch', 'soy-sauce', 'tomato-paste']
 }

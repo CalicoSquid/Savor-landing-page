@@ -8,6 +8,7 @@ import { calculateMeatBrine } from '../src/lib/meatBrineCalculator.js'
 import { brineQuantity, displayBrineQuantity, initialBrineBatches, calculateBrineWorkflow, brineResultText, formatBrineSalt } from '../src/lib/brineWorkflow.js'
 import { SEO_PAGES } from '../src/data/seoPages.js'
 import { structuredDataForPage } from '../src/data/structuredData.js'
+import { SUBSTITUTION_INGREDIENTS, exactSubstitution, suggestSubstitutions, getSubstitutionContext, scaleSubstitution, substitutionCopyText } from '../src/lib/substitutionFinder.js'
 
 test('recipe temperatures retain precision instead of oven-style rounding', () => {
   assert.equal(convertRecipeText('Cook ground beef to 160°F', 'metric').output, 'Cook ground beef to 71.1°C')
@@ -111,4 +112,48 @@ test('brine search metadata preserves the ranked URL and describes all supported
   assert.match(data, /Savor Brine Calculator/)
   assert.match(data, /final solution salt concentration/)
   assert.doesNotMatch(data, /Savor Fermentation Brine Calculator/)
+})
+
+test('substitution search handles accents, regional terms and explicit spelling suggestions', () => {
+  for (const [query, id] of Object.entries({ 'creme fraiche': 'creme-fraiche', 'crème fraîche': 'creme-fraiche', 'cornflour': 'cornstarch', 'bicarb': 'baking-soda', 'What can I use instead of vanilla extract?': 'vanilla-extract', 'tomato concentrate substitute': 'tomato-paste' })) {
+    assert.equal(exactSubstitution(query)?.id, id, query)
+  }
+  assert.equal(exactSubstitution('butermilk'), null)
+  assert.equal(suggestSubstitutions('butermilk')[0]?.id, 'buttermilk')
+  assert.deepEqual(suggestSubstitutions('zzzzzzzzzz'), [])
+})
+
+test('measured substitutions scale components, not preparation instructions', () => {
+  const ingredient = exactSubstitution('buttermilk')
+  const context = getSubstitutionContext(ingredient.id, 'baking')
+  const swap = context.options[0]
+  assert.deepEqual(scaleSubstitution(swap, '2').lines, [
+    'Lemon juice or white vinegar: 2 tbsp',
+    'Milk: add enough to bring the total mixture to 2 cup',
+  ])
+  assert.match(substitutionCopyText(ingredient, context, swap, '2'), /Rest 5–10 minutes/)
+  assert.match(substitutionCopyText(ingredient, context, swap, '2'), /Watch out:/)
+  for (const value of ['', '0', '-1', 'Infinity', '1001']) {
+    assert.equal(scaleSubstitution(swap, value).ok, false)
+    assert.equal(substitutionCopyText(ingredient, context, swap, value), '')
+  }
+  const garlic = getSubstitutionContext('garlic', 'savoury').options[0]
+  assert.deepEqual(scaleSubstitution(garlic, 0.5).lines, ['Garlic powder: 0.0625 tsp'])
+})
+
+test('expanded substitution entries have unique IDs and complete usage guidance', () => {
+  assert.equal(SUBSTITUTION_INGREDIENTS.length, 40)
+  assert.equal(new Set(SUBSTITUTION_INGREDIENTS.map((item) => item.id)).size, 40)
+  for (const ingredient of SUBSTITUTION_INGREDIENTS) {
+    assert.ok(ingredient.category)
+    assert.ok(ingredient.contexts.length)
+    assert.equal(new Set(ingredient.contexts.map((item) => item.id)).size, ingredient.contexts.length)
+    for (const context of ingredient.contexts) {
+      assert.ok(context.options.length)
+      for (const swap of context.options) {
+        assert.ok(swap.name && swap.swap && swap.changes)
+        if (swap.measure) assert.equal(scaleSubstitution(swap, swap.measure.amount).ok, true)
+      }
+    }
+  }
 })

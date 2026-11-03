@@ -136,10 +136,10 @@ export const STATIC_SEO_PAGES = [
   }),
   page({
     path: '/tools/ingredient-substitutions',
-    lastmod: '2026-09-25',
+    lastmod: '2026-11-03',
     file: 'tools/ingredient-substitutions/index.html',
     title: 'Ingredient Substitution Finder — Cooking & Baking Swaps | Savor',
-    description: 'Find practical ingredient substitutes for baking and cooking. See the swap ratio, what changes, and when not to use it — free, no signup.',
+    description: 'Find substitutes for 40 cooking and baking ingredients. Compare swaps, adjust selected quantities, and see flavour, texture and technique cautions. Free, no signup.',
     canonical: `${SITE_URL}/tools/ingredient-substitutions/`,
     ogImageAlt: 'Savor ingredient substitution finder for practical cooking and baking swaps',
   }),
