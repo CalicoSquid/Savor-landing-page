@@ -10,7 +10,9 @@ import { applyRecipeImageOverride } from '../../src/data/recipeImageOverrides.js
 import { recipePinterestDetails, pinterestImageAttributes } from '../../src/lib/pinterest.js'
 
 const SEARCH_CRAWLERS = [
-  'googlebot', 'bingbot', 'applebot', 'duckduckbot', 'yandexbot',
+  // Search Console live tests use a different agent from production Googlebot.
+  // Both must receive the same recipe HTML and indexing directives.
+  'googlebot', 'google-inspectiontool', 'bingbot', 'applebot', 'duckduckbot', 'yandexbot',
   'oai-searchbot', 'perplexitybot', 'claudebot',
   // SEO audit crawlers must see the same indexability Google sees. Without
   // these, Ahrefs receives app.html (intentionally noindex) and reports every

@@ -58,6 +58,24 @@ try {
   assert.match(importedHtml, /<meta name="robots" content="noindex, follow"/)
   assert.match(importedHtml, /<link rel="canonical" href="https:\/\/example\.org\/original-pasta"/)
 
+  // Google URL Inspection must agree with the production search crawler,
+  // including deliberate exclusions and backend error handling.
+  for (const userAgent of [
+    'Mozilla/5.0 (compatible; Google-InspectionTool/1.0;)',
+    'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36 (compatible; Google-InspectionTool/1.0;)',
+  ]) {
+    for (const recipe of [original, { ...original, sourceUrl: 'https://example.org/original-pasta' }, null]) {
+      const inspected = await call({ recipe, userAgent })
+      const crawled = await call({ recipe, userAgent: 'Googlebot' })
+      assert.equal(inspected.status, crawled.status)
+      assert.equal(await inspected.text(), await crawled.text(), 'Inspection and Googlebot must receive identical HTML')
+    }
+    const failed = await call({ userAgent, fetchImpl: async () => { throw new Error('API outage') } })
+    assert.equal(failed.status, 503)
+    assert.equal(failed.headers.get('retry-after'), '300')
+    assert.match(await failed.text(), /noindex, follow/)
+  }
+
   const missing = await call({ recipe: null, id: 'gone' })
   for (const sourceUrl of [null, 'https://example.org/original-pasta']) {
     const pinterestRecipe = {
@@ -126,7 +144,7 @@ try {
   assert.equal(human.status, 599)
   assert.equal(await human.text(), 'NEXT')
 
-  console.log('✓ recipe edge validation passed: Ahrefs index/noindex parity, internal links, 404, 503 and human passthrough')
+  console.log('✓ recipe edge validation passed: Google Inspection/Googlebot and Ahrefs index/noindex parity, internal links, 404, 503 and human passthrough')
 } finally {
   globalThis.fetch = originalFetch
 }
