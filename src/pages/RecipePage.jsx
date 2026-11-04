@@ -1,32 +1,9 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import './RecipePage.css'
-import { applyRecipeImageOverride } from '../data/recipeImageOverrides'
+import { loadPublicRecipe } from '../lib/publicRecipe'
 import PinterestSave from '../components/PinterestSave'
 import { recipePinterestDetails, pinterestImageAttributes } from '../lib/pinterest'
-
-const APOLLO_URI = import.meta.env.VITE_APOLLO_URI || 'https://savor-production.up.railway.app/graphql'
-
-const QUERY = `
-  query PublicRecipe($id: ID!) {
-    publicRecipe(id: $id) {
-      id
-      name
-      description
-      image
-      ingredients
-      ingredientGroups { label startIndex }
-      instructions
-      category
-      cuisine
-      sourceUrl
-      imageCredit { photographer photographerUrl }
-      times { prep { hours minutes } cook { hours minutes } total { hours minutes } }
-      recipeYield
-      user { name username theme }
-    }
-  }
-`
 
 function formatTime(t) {
   if (!t) return null
@@ -99,6 +76,13 @@ function RecipeContent({ id, onRetry }) {
   const [error, setError] = useState(null)
   const [imageFailed, setImageFailed] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
+  const [checkedIngredients, setCheckedIngredients] = useState(() => new Set())
+  const toggleIngredient = index => setCheckedIngredients(previous => {
+    const next = new Set(previous)
+    if (next.has(index)) next.delete(index)
+    else next.add(index)
+    return next
+  })
 
   // Screen Wake Lock — keeps screen on while cooking, re-acquires on visibility change
   useEffect(() => {
@@ -123,25 +107,14 @@ function RecipeContent({ id, onRetry }) {
 
   useEffect(() => {
     const controller = new AbortController()
-    fetch(APOLLO_URI, {
-      signal: controller.signal,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: QUERY, variables: { id } }),
-    })
-      .then(r => {
-        if (!r.ok) throw new Error('Unable to load recipe')
-        return r.json()
-      })
-      .then(({ data, errors }) => {
+    loadPublicRecipe(id)
+      .then(recipe => {
         if (controller.signal.aborted) return
-        if (errors?.length) throw new Error('Unable to load recipe')
-        if (data?.publicRecipe === null) {
+        if (recipe === null) {
           setError('not-found')
           return
         }
-        if (!data?.publicRecipe) throw new Error('Unable to load recipe')
-        setRecipe(applyRecipeImageOverride(data.publicRecipe, id))
+        setRecipe(recipe)
       })
       .catch(() => { if (!controller.signal.aborted) setError('network') })
       .finally(() => { if (!controller.signal.aborted) setLoading(false) })
@@ -258,42 +231,7 @@ function RecipeContent({ id, onRetry }) {
           </div>
         </div>
       </aside>
-      <div className="rp-body">
-
-        {/* External recipe photos are best-effort in a browser. */}
-        <div className={`rp-hero-wrap${!recipe.image || imageFailed ? ' rp-hero-wrap--placeholder' : ''}`}>
-          {recipe.image && !imageFailed ? (
-            <>
-              <img
-                src={recipe.image}
-                alt={pin.altText}
-                {...pinterestImageAttributes(pin)}
-                className={`rp-hero-img${imageLoaded ? ' is-loaded' : ''}`}
-                width="1200"
-                height="800"
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-                referrerPolicy="no-referrer"
-                onLoad={() => setImageLoaded(true)}
-                onError={() => { setImageLoaded(false); setImageFailed(true) }}
-              />
-              {!imageLoaded && <span className="rp-hero-loading" aria-hidden="true" />}
-              {imageLoaded && recipe.imageCredit?.photographer && (
-                <a
-                  className="rp-credit"
-                  href={recipe.imageCredit.photographerUrl || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  📷 {recipe.imageCredit.photographer}
-                </a>
-              )}
-            </>
-          ) : (
-            <span className="rp-hero-placeholder" aria-hidden="true">🍽️</span>
-          )}
-        </div>
+      <div className={`rp-body${recipe.image && !imageFailed ? ' rp-body--with-photo' : ''}`}>
 
         {/* Header */}
         <div className="rp-header">
@@ -333,6 +271,12 @@ function RecipeContent({ id, onRetry }) {
             </div>
         </div>
 
+        <nav className="rp-quick-links" aria-label="Recipe sections">
+          {recipe.ingredients?.length > 0 && <a href="#ingredients">Ingredients <span aria-hidden="true">↓</span></a>}
+          {recipe.instructions?.length > 0 && <a href="#method">Method <span aria-hidden="true">↓</span></a>}
+          <span>No account needed to cook.</span>
+        </nav>
+
         {/* Stats */}
         {(prepTime || cookTime || totalTime || recipe.recipeYield) && (
           <div className="rp-stats">
@@ -342,6 +286,47 @@ function RecipeContent({ id, onRetry }) {
             {recipe.recipeYield && <div className="rp-stat"><span className="rp-stat-label">Serves</span><span className="rp-stat-val">{recipe.recipeYield}</span></div>}
           </div>
         )}
+
+        <p className="rp-print-provenance">
+          Recipe: <a href={`${SITE_URL}/r/${encodeURIComponent(id)}`}>{`${SITE_URL}/r/${encodeURIComponent(id)}`}</a>
+          {recipe.sourceUrl && getDomain(recipe.sourceUrl) && <> · Original source: <a href={recipe.sourceUrl}>{recipe.sourceUrl}</a></>}
+          {recipe.image && !imageFailed && recipe.imageCredit?.photographer && <> · Photo: {recipe.imageCredit.photographer}</>}
+        </p>
+
+        {/* External recipe photos are best-effort in a browser. */}
+        <div className={`rp-hero-wrap${!recipe.image || imageFailed ? ' rp-hero-wrap--placeholder' : ''}`}>
+          {recipe.image && !imageFailed ? (
+            <>
+              <img
+                src={recipe.image}
+                alt={pin.altText}
+                {...pinterestImageAttributes(pin)}
+                className={`rp-hero-img${imageLoaded ? ' is-loaded' : ''}`}
+                width="1200"
+                height="800"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+                referrerPolicy="no-referrer"
+                onLoad={() => setImageLoaded(true)}
+                onError={() => { setImageLoaded(false); setImageFailed(true) }}
+              />
+              {!imageLoaded && <span className="rp-hero-loading" aria-hidden="true" />}
+              {imageLoaded && recipe.imageCredit?.photographer && (
+                <a
+                  className="rp-credit"
+                  href={recipe.imageCredit.photographerUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  📷 {recipe.imageCredit.photographer}
+                </a>
+              )}
+            </>
+          ) : (
+            <span className="rp-hero-placeholder" aria-hidden="true">🍽️</span>
+          )}
+        </div>
 
         {/* Source */}
         {recipe.sourceUrl && (
@@ -357,13 +342,17 @@ function RecipeContent({ id, onRetry }) {
 
         {/* Ingredients */}
         {recipe.ingredients?.length > 0 && (
-          <section className="rp-section">
-            <h2 className="rp-section-title">Ingredients</h2>
+          <section className="rp-section" id="ingredients" aria-labelledby="ingredients-title">
+            <h2 className="rp-section-title" id="ingredients-title">Ingredients</h2>
+            <div className="rp-checklist-tools">
+              <p aria-live="polite">{checkedIngredients.size ? `${checkedIngredients.size} of ${recipe.ingredients.length} ready` : 'Tap ingredients as you prepare them.'}</p>
+              <button type="button" disabled={!checkedIngredients.size} onClick={() => setCheckedIngredients(new Set())}>Reset</button>
+            </div>
             <ul className="rp-ingredients">
               {recipe.ingredients.map((ing, i) => {
                 const group = recipe.ingredientGroups?.find(g => g.startIndex === i)
                 return (
-                  <>
+                  <Fragment key={i}>
                     {group && (
                       <li key={`group-${i}`} className="rp-ingredient-group">
                         <span className="rp-ingredient-group-label">{group.label}</span>
@@ -371,10 +360,13 @@ function RecipeContent({ id, onRetry }) {
                       </li>
                     )}
                     <li key={i} className="rp-ingredient">
-                      <span className="rp-ingredient-dot" />
-                      <span>{decode(typeof ing === 'string' ? ing : `${ing.amount ?? ''} ${ing.unit ?? ''} ${ing.name ?? ''}`.trim())}</span>
+                      <label className={`rp-ingredient-label${checkedIngredients.has(i) ? ' is-checked' : ''}`}>
+                        <input type="checkbox" checked={checkedIngredients.has(i)} onChange={() => toggleIngredient(i)} />
+                        <span className="rp-ingredient-dot" aria-hidden="true" />
+                        <span>{decode(typeof ing === 'string' ? ing : `${ing.amount ?? ''} ${ing.unit ?? ''} ${ing.name ?? ''}`.trim())}</span>
+                      </label>
                     </li>
-                  </>
+                  </Fragment>
                 )
               })}
             </ul>
@@ -383,8 +375,8 @@ function RecipeContent({ id, onRetry }) {
 
         {/* Instructions */}
         {recipe.instructions?.length > 0 && (
-          <section className="rp-section">
-            <h2 className="rp-section-title">Instructions</h2>
+          <section className="rp-section" id="method" aria-labelledby="method-title">
+            <h2 className="rp-section-title" id="method-title">Instructions</h2>
             <ol className="rp-instructions">
               {recipe.instructions.map((step, i) => (
                 <li key={i} id={`step-${i + 1}`} className="rp-step">

@@ -1,5 +1,4 @@
 import { PINTEREST_RECIPES } from '../src/data/pinterest.js'
-import { SAVOR_ORIGINALS } from '../src/data/originals.js'
 // Production-bundle browser regression for theme navigation and transitions.
 // Run after npm run build. No extra browser packages; uses local Chrome/CDP.
 import assert from 'node:assert/strict'
@@ -79,12 +78,8 @@ try {
     assert.equal(saved.description,pin.description);
     assert.equal(saved.url,'https://getsavor.recipes/blog/'+slug+'/');
     assert.equal(await evaluate('document.querySelector("#recipe img").alt'),pin.altText);
-    await evaluate('Object.defineProperty(navigator,"clipboard",{configurable:true,value:{writeText:async text=>{window.__copied=text}}})');
-    await evaluate('document.querySelector(".pinterest-copy summary").click()');
-    await evaluate(`document.querySelector('[aria-label="Copy Pin alt text"]').click()`);
-    assert.equal(await evaluate('window.__copied'),pin.altText);
-    await evaluate(`document.querySelector('[aria-label="Copy Pin title"]').click()`);
-    assert.equal(await evaluate('window.__copied'),pin.title);
+    assert.equal(await evaluate('document.querySelector(".pinterest-share a").target'), '_blank');
+    assert.ok(await evaluate('document.querySelector(".pinterest-share a").rel.includes("noopener")'));
     for(const width of [1440,390,320]) {
       await command('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<500});await delay(100);
       assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth'),slug+' fits '+width);
@@ -106,9 +101,8 @@ try {
     assert.ok(saved.description.includes('publisher.example'));
     assert.ok(saved.description.includes('Photo: Test Photographer'));
     assert.equal(Boolean(saved.media),id==='test-photo');
-    await evaluate('document.querySelector(".pinterest-copy summary").click()');
     assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth'),'Shared Pin text fits phone width');
   }
   assert.deepEqual(errors,[],'No runtime or hydration errors');await command('Browser.close');
-  console.log('Pinterest browser checks passed: five Originals, metadata, Save descriptions, copy controls, mobile layout, shared recipes and failed-image fallback.');
+  console.log('Pinterest browser checks passed: five Originals, metadata, Save descriptions, safe composer links, mobile layout, shared recipes and failed-image fallback.');
 }finally{socket?.close();child.kill();server.close();}

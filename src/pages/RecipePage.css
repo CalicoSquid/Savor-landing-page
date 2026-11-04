@@ -630,3 +630,43 @@
     border-top: 1px solid #eee;
   }
 }
+
+/* Cooking helpers: retain recipe content and the existing landing-page order. */
+.rp-quick-links { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; font-family: var(--font); }
+.rp-quick-links a { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 15px; border: 1px solid #deded5; border-radius: 999px; background: var(--surface); color: var(--text-primary); font-size: .85rem; font-weight: 700; text-decoration: none; }
+.rp-quick-links a:hover { border-color: var(--primary); }
+.rp-quick-links > span { color: var(--text-secondary); font-size: .75rem; }
+.rp-section[id], .rp-step[id] { scroll-margin-top: 115px; }
+.rp-checklist-tools { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: -6px 0 10px; font-family: var(--font); }
+.rp-checklist-tools p { color: var(--text-secondary); font-size: .82rem; }
+.rp-checklist-tools button { min-width: 60px; min-height: 44px; background: var(--surface); border: 1px solid #deded5; border-radius: 8px; font: inherit; font-size: .82rem; color: var(--text-primary); cursor: pointer; }
+.rp-checklist-tools button:disabled { opacity: .5; cursor: default; }
+.rp-ingredient-label { display: flex; align-items: flex-start; gap: 12px; width: 100%; min-height: 24px; cursor: pointer; }
+.rp-ingredient-label input { flex-shrink: 0; width: 20px; height: 20px; margin: 2px 0 0; accent-color: #a83b0c; cursor: pointer; }
+.rp-ingredient-label input:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 3px; }
+.rp-ingredient-label .rp-ingredient-dot { display: none; }
+.rp-ingredient-label.is-checked > span:last-child { text-decoration: line-through; color: var(--text-muted); }
+@media (max-width: 480px) { .rp-quick-links > span { flex-basis: 100%; } }
+@media print {
+  .rp-quick-links, .rp-checklist-tools, .rp-ingredient-label input { display: none !important; }
+  .rp-ingredient-label { min-height: 0; cursor: default; }
+  .rp-ingredient-label .rp-ingredient-dot { display: block; }
+  .rp-ingredient-label.is-checked > span:last-child { text-decoration: none; color: inherit; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rp-hero-img { transition: none; }
+  .rp-hero-loading, .rp-spinner { animation: none; }
+}
+
+/* Compact, attributed print header. Screen photo and landing layout stay intact. */
+.rp-print-provenance { display: none; }
+@media print {
+  .rp-body { position: relative; }
+  .rp-hero-wrap { position: absolute; top: 0; right: 0; width: 100px; height: 100px; max-height: 100px; margin: 0; }
+  .rp-hero-wrap--placeholder { display: none !important; }
+  .rp-header { margin-bottom: 8px; }
+  .rp-body--with-photo .rp-header { padding-right: 120px; }
+  .rp-print-provenance { display: block; font: 8pt/1.4 var(--font); margin: 6px 0; overflow-wrap: anywhere; color: #444; }
+  .rp-print-provenance a { color: inherit; text-decoration: none; }
+  .rp-body::after { margin-top: 10px; padding-top: 5px; }
+}

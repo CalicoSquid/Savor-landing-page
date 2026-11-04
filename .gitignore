@@ -30,3 +30,5 @@ dist-ssr
 .ssr
 .indexnow-recipes.json
 delete-orphans.sh
+
+.recipe-browser-review/

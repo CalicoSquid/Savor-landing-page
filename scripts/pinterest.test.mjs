@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { BLOG_POSTS } from '../src/data/blogPosts.js'
 import { PINTEREST_RECIPES } from '../src/data/pinterest.js'
-import { createPinterestDetails, originalPinterestDetails, recipePinterestDetails, pinterestSaveUrl, pinterestImageAttributes } from '../src/lib/pinterest.js'
+import { createPinterestDetails, originalPinterestDetails, recipePinterestDetails, pinterestSaveUrl, pinterestImageAttributes, pinterestMediaUrl } from '../src/lib/pinterest.js'
 
 test('each Original has distinct Pin copy and accessible photo text within Pinterest limits', () => {
   for (const slug of Object.keys(PINTEREST_RECIPES)) {
@@ -51,4 +51,29 @@ test('dynamic descriptions add known timing and servings without fabricating eit
   const empty = recipePinterestDetails({ name: 'Stew' }, '/r/123')
   assert.ok(!empty.description.includes('minutes'))
   assert.ok(!empty.description.includes('servings'))
+})
+
+
+test('Pinterest alone gets larger supported image variants without changing page media or credits', () => {
+  const image = 'https://images.unsplash.com/photo-test?w=400&q=80&ixid=keep-me&fit=max'
+  const details = recipePinterestDetails({ name: 'Soup', image, imageCredit: { photographer: 'Photo Person' } }, '/r/test')
+  assert.equal(details.image, image, 'Page/OG image must stay unchanged')
+  const media = new URL(new URL(pinterestSaveUrl(details)).searchParams.get('media'))
+  assert.equal(media.searchParams.get('w'), '1200')
+  assert.equal(media.searchParams.get('ixid'), 'keep-me')
+  assert.equal(media.searchParams.get('q'), '80')
+  assert.match(details.description, /Photo Person/)
+  assert.equal(pinterestImageAttributes(details)['data-pin-media'], media.href)
+  const pexels = new URL(pinterestMediaUrl('https://images.pexels.com/photos/123/photo.jpeg?w=600&h=400&auto=compress'))
+  assert.equal(pexels.searchParams.get('w'), '1200')
+  assert.equal(pexels.searchParams.get('h'), '800')
+  assert.equal(pexels.searchParams.get('auto'), 'compress')
+  for (const unchanged of [
+    'https://images.unsplash.com/photo-test?w=2000&q=80',
+    'https://images.pexels.com/photos/123/photo.jpeg?h=650',
+    'https://example.org/photo.jpg?w=400',
+    'https://images.unsplash.com.evil.example/photo-test?w=400',
+    'https://getsavor.recipes/images/recipes/photo.webp',
+  ]) assert.equal(pinterestMediaUrl(unchanged), unchanged)
+  assert.equal(pinterestMediaUrl(null), '')
 })

@@ -34,12 +34,30 @@ export function recipePinterestDetails(recipe, url) {
   const description = `${limit(text(context || `Find the ingredients and method for ${text(recipe.name)} on Savor.`), 500 - attribution.length)}${attribution}`
   return createPinterestDetails({ title: recipe.name, description, altText: recipe.imageAlt || `Photo of ${text(recipe.name)}`, image: recipe.image, url })
 }
+// Share-only variants: never fetch larger images during an ordinary page visit.
+export function pinterestMediaUrl(image) {
+  const original = webUrl(image)
+  if (!original) return ''
+  const url = new URL(original)
+  const supported = url.protocol === 'https:' && (
+    (url.hostname === 'images.unsplash.com' && url.pathname.startsWith('/photo-')) ||
+    (url.hostname === 'images.pexels.com' && url.pathname.startsWith('/photos/'))
+  )
+  if (!supported) return original
+  const width = Number(url.searchParams.get('w'))
+  const height = Number(url.searchParams.get('h'))
+  if (width >= 1200 || (!width && height)) return original
+  if (width > 0 && height > 0) url.searchParams.set('h', String(Math.round(height * 1200 / width)))
+  url.searchParams.set('w', '1200')
+  return url.href
+}
+
 export function pinterestSaveUrl(details) {
   const params = new URLSearchParams({ url: details.url, description: details.description })
-  if (details.image) params.set('media', details.image)
+  if (details.image) params.set('media', pinterestMediaUrl(details.image))
   // The Save endpoint documents url/media/description, not title or alt_text.
   return `https://www.pinterest.com/pin/create/button/?${params}`
 }
 export function pinterestImageAttributes(details) {
-  return { 'data-pin-description': details.description, 'data-pin-url': details.url, ...(details.image ? { 'data-pin-media': details.image } : {}) }
+  return { 'data-pin-description': details.description, 'data-pin-url': details.url, ...(details.image ? { 'data-pin-media': pinterestMediaUrl(details.image) } : {}) }
 }
