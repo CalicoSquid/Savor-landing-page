@@ -22,7 +22,9 @@ const SEARCH_CRAWLERS = [
 ]
 const SOCIAL_CRAWLERS = [
   'whatsapp', 'facebookexternalhit', 'twitterbot', 'slackbot',
-  'telegrambot', 'linkedinbot', 'discordbot', 'pinterest', 'iframely',
+  // Pinterest's Android in-app browser also includes "Pinterest" in its UA.
+  // Only the preview crawler should bypass the usable public recipe page.
+  'telegrambot', 'linkedinbot', 'discordbot', 'pinterestbot', 'iframely',
 ]
 
 const APOLLO_URI = 'https://savor-app-server-gql-production.up.railway.app/graphql'
@@ -273,7 +275,7 @@ export default async function handler(request, context) {
     } else {
       html = thinStub({
         metaTitle, displayTitle, desc, image, pageUrl, pin, canonicalUrl: pageUrl,
-        recipe: userAgent.includes('pinterest') ? recipe : undefined,
+        recipe: userAgent.includes('pinterestbot') ? recipe : undefined,
       })
     }
 

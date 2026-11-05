@@ -140,9 +140,27 @@ try {
   assert.equal(unavailable.status, 503)
   assert.equal(unavailable.headers.get('retry-after'), '300')
 
-  const human = await call({ recipe: original, userAgent: 'Mozilla/5.0' })
-  assert.equal(human.status, 599)
-  assert.equal(await human.text(), 'NEXT')
+  // Real Pinterest browsers must reach the same SPA as Chrome, without an
+  // edge GraphQL fetch or a crawler-only stub, including imported recipes.
+  for (const userAgent of [
+    'Mozilla/5.0',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'Mozilla/5.0 (Linux; Android 14; Pixel 8; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.0.0 Mobile Safari/537.36 [Pinterest/Android]',
+    'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36 Pinterest/12.0.0',
+  ]) {
+    let crawlerFetches = 0
+    const human = await call({
+      userAgent,
+      fetchImpl: async () => {
+        crawlerFetches += 1
+        return gqlResponse(original)
+      },
+    })
+    assert.equal(crawlerFetches, 0, 'Human navigation must not fetch crawler data')
+    assert.equal(human.status, 599, `${userAgent} must pass through to the public recipe SPA`)
+    assert.equal(await human.text(), 'NEXT')
+  }
 
   console.log('✓ recipe edge validation passed: Google Inspection/Googlebot and Ahrefs index/noindex parity, internal links, 404, 503 and human passthrough')
 } finally {
