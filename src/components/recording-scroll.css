@@ -1,0 +1,6 @@
+.recording-scroll { position: fixed; bottom: 20px; right: 20px; z-index: 10000; max-width: min(360px, calc(100vw - 40px)); padding: 18px; border: 1px solid var(--primary); border-radius: 14px; background: var(--surface-2); color: var(--text-primary); box-shadow: 0 8px 30px #0003; }
+.recording-scroll[hidden] { display: none; }
+.recording-scroll p { margin: 10px 0; font-size: .85rem; line-height: 1.5; }
+.recording-scroll button { padding: 10px 14px; margin: 4px 8px 0 0; border: 1px solid var(--primary); border-radius: 8px; background: var(--surface-2); color: var(--text-primary); cursor: pointer; }
+.recording-scroll button:disabled { opacity: .6; cursor: wait; }
+.recording-scroll-active, .recording-scroll-active * { cursor: none !important; }

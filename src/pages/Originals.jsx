@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { trackWebsiteEvent } from '../lib/websiteAnalytics'
 import Footer from '../components/Footer'
@@ -12,6 +12,10 @@ const SERIES = [
   { id: 'cupboard', name: 'Back of the Cupboard', tagline: "You’ve got what? Let’s cook it.", description: 'The forgotten, unusual or awkward ingredient gets its moment. A little curiosity, a few practical swaps and something worth making again. Take the time it needs.' },
 ]
 const PAGE_SIZE = 12
+// Recording tools are available locally and removed from production bundles.
+const RecordingScroll = import.meta.env.DEV
+  ? lazy(() => import('../components/RecordingScroll'))
+  : null
 
 export default function Originals() {
   const [params] = useSearchParams()
@@ -104,6 +108,7 @@ export default function Originals() {
         </div>
       </main>
       <Footer />
+      {import.meta.env.DEV && ready && params.get('record') === '1' && <Suspense fallback={null}><RecordingScroll /></Suspense>}
     </>
   )
 }

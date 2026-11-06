@@ -3,6 +3,15 @@ import { BLOG_POSTS } from './blogPosts.js'
 // One collection entry per authored recipe; articles retain their existing URLs.
 export const SAVOR_ORIGINALS = [
   {
+  "slug": "tequila-lime-chicken-soup",
+  "series": "Signature Recipes",
+  "number": 3,
+  "name": "Tequila & Lime Chicken Soup",
+  "description": "A hearty, smoky chicken soup with black beans, sweetcorn and chipotle, brightened with lime, coriander and a little tequila. Crispy tortilla strips on top.",
+  "effort": "20 minutes prep · 40–45 minutes cooking · Serves 6",
+  "mood": "For big flavours and an entirely legitimate excuse to buy tequila."
+},
+  {
   "slug": "lemon-brownies-strawberry-tree-jam",
   "series": "Signature Recipes",
   "number": 2,

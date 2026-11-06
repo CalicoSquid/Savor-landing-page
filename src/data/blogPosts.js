@@ -13,6 +13,20 @@
 
 export const BLOG_POSTS = [
   {
+  "slug": "tequila-lime-chicken-soup",
+  "title": "Tequila & Lime Chicken Soup",
+  "dek": "Big flavours, questionable authenticity, and an entirely legitimate excuse to buy tequila.",
+  "metaTitle": "Tequila & Lime Chicken Soup | Savor Originals",
+  "metaDesc": "Smoky chicken soup with black beans, sweetcorn, chipotle and fresh lime. Finished with coriander, a splash of tequila and crispy tortilla strips.",
+  "date": "2026-11-06",
+  "readTime": "8 min read",
+  "ogImage": "https://getsavor.recipes/blog/tequila-lime-chicken-soup.webp",
+  "ogImageWidth": 1440,
+  "ogImageHeight": 2580,
+  "ogImageAlt": "Chicken soup with black beans, sweetcorn and vegetables, topped with crispy tortilla strips, fresh coriander and a lime wedge.",
+  "author": "Caleb"
+},
+  {
   "slug": "lemon-brownies-strawberry-tree-jam",
   "title": "Lemon Brownies with Optional Strawberry Tree Jam",
   "dek": "Bright, buttery lemon brownies from my first summer in Montenegro. Raspberry works beautifully, but there’s a little strawberry tree jam adventure if you fancy it.",

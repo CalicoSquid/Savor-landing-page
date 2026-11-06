@@ -69,6 +69,8 @@ try {
     await fs.writeFile(path.join(root, `${name}.local.png`), Buffer.from(shot.data, 'base64'))
   }
   await command('Runtime.enable')
+  await navigate('/originals/?record=1');
+  assert.equal(await evaluate('!!document.querySelector(".recording-scroll")'),false,'Recording controls must never appear in production');
   await navigate('/originals/');
   await evaluate('Promise.all([...document.querySelectorAll(".originals-card img")].map(async i=>{i.src=new URL(i.src).pathname;i.loading="eager";await i.decode()}))');
   assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.length);
@@ -92,6 +94,23 @@ try {
   assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.length);
   await navigate('/originals/?series=invalid&page=-1');
   assert.equal(await evaluate('document.querySelectorAll(".originals-card").length'),SAVOR_ORIGINALS.length);
+  await navigate('/originals/?series=signature');
+  assert.ok(await evaluate('!!document.querySelector(\'.originals-card a[href="/blog/tequila-lime-chicken-soup/"]\')'));
+  await navigate('/blog/tequila-lime-chicken-soup/');
+  assert.equal(await evaluate('document.querySelectorAll("#recipe ol li").length'),8);
+  assert.equal(await evaluate('document.querySelectorAll("#recipe h4").length'),3);
+  assert.ok(await evaluate('document.body.textContent.includes("some alcohol will remain")'));
+  assert.ok(await evaluate('!document.body.textContent.includes("proposed measurements")'));
+  const soupSchema = await evaluate(`JSON.parse([...document.querySelectorAll('script[type="application/ld+json"]')].find(s=>JSON.parse(s.textContent)["@type"]==="Recipe").textContent)`);
+  assert.equal(soupSchema.recipeInstructions.length,8);
+  assert.equal(soupSchema.recipeIngredient.length,24);
+  for (const width of [1440,390,320]) {
+    await command('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<500});
+    await delay(100);
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'),'Soup article has no overflow at '+width);
+    assert.ok(await evaluate('document.querySelector("#recipe img").naturalWidth > 0'));
+    if(width!==320) await screenshot('tequila-lime-chicken-soup-'+width);
+  }
   await navigate('/blog/smash-burgers-pickle-mustard-sauce/');
   assert.equal(await evaluate('document.querySelectorAll("#recipe ol li").length'),6);
   assert.equal(await evaluate('document.querySelector(".smash-recipe-figure img").naturalWidth'),1440);
