@@ -194,7 +194,7 @@ export default function MeasurementConverter() {
                   <span className="converter-answer-label">Result</span>
                   <strong>{formatConvertedValue(quickResult.value, toUnit)} <small>{unitShortLabel(toUnit)}</small></strong>
                   {quickResult.approximate && quickResult.ingredient ? (
-                    <p>Approximate — using Savor’s conversion value for {quickResult.ingredient.name}.</p>
+                    <p>Approximate — {quickResult.ingredient.canonicalName || quickResult.ingredient.name}{quickResult.ingredient.preparation ? ` (${quickResult.ingredient.preparation})` : ''}. {quickResult.ingredient.source && <a href={quickResult.ingredient.source} target="_blank" rel="noreferrer">Reference</a>}</p>
                   ) : (
                     <p>Direct unit conversion.</p>
                   )}
@@ -251,7 +251,7 @@ export default function MeasurementConverter() {
                 spellCheck="false"
                 placeholder={'2 cups flour\n8 oz cream cheese\n1 tbsp butter'}
               />
-              <p className="scaler-hint">Start each ingredient line with its quantity and unit. “c” means cups when followed by an ingredient; use °C or °F for temperatures.</p>
+              <p className="scaler-hint">Ranges and package weights are supported. Counts and ingredient descriptions are preserved. Use °C or °F for temperatures.</p>
             </div>
 
             <div className="scaler-output-card" aria-live="polite">
@@ -263,10 +263,10 @@ export default function MeasurementConverter() {
                 <>
                   <pre className="scaled-list">{recipeResult.output}</pre>
                   {recipeResult.reviewLines.length > 0 && (
-                    <p className="scaler-review-note">Check lines {recipeResult.reviewLines.join(', ')}: compound amounts, bracketed equivalents or numbered lists may need separate conversion.</p>
+                    <p className="scaler-review-note">Review lines {recipeResult.reviewLines.join(', ')}: an ingredient form, unsupported measurement or compound amount needs checking. Unknown cup and spoon quantities stay in their original units.</p>
                   )}
                   {!conversionData && (
-                    <p className="scaler-hint">Using direct conversions: cups become millilitres and grams become ounces. Ingredient estimates {dataStatus === 'error' ? 'are unavailable right now' : 'will appear when loaded'}.</p>
+                    <p className="scaler-hint">Direct weight and temperature conversions work now. Ingredient cup and spoon amounts stay unchanged until their conversion data is available{dataStatus === 'error' ? '.' : ' and will update when loaded.'}</p>
                   )}
                   <div className="scaler-result-meta">
                     {recipeResult.approximateCount > 0 && (
@@ -295,6 +295,7 @@ export default function MeasurementConverter() {
             <p>
               For precise baking, use a scale and the recipe’s original weights where available.
             </p>
+            <p>Unqualified cooking volumes use 1 cup = 240 ml, 1 tablespoon = 15 ml and 1 teaspoon = 5 ml. Choose US customary cups, metric cups, Australian tablespoons or Imperial volumes explicitly when your recipe uses those measures.</p>
           </div>
         </section>
 

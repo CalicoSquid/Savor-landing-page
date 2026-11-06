@@ -91,7 +91,7 @@ const conversionData = normaliseConversionDataset({
   count: 11,
   cookingCupMl: 240,
   entries: [
-    { name: 'flour', cupToGrams: 120 },
+    { name: 'flour', cupToGrams: 120, reviewStatus: 'reference' },
     { name: 'plain flour', cupToGrams: 120 },
     { name: 'all-purpose flour', cupToGrams: 120 },
     { name: 'bread flour', cupToGrams: 130 },
@@ -102,7 +102,7 @@ const conversionData = normaliseConversionDataset({
     { name: 'oil', cupToMl: 240 },
     { name: 'vanilla', cupToMl: 240 },
     { name: 'tahini', cupToGrams: 240 },
-  ],
+  ].map((entry) => ({ ...entry, reviewStatus: entry.cupToGrams ? 'reference' : 'direct', preparation: entry.name.includes('brown sugar') ? 'packed' : 'unsifted' })),
 })
 
 assert.ok(conversionData)
@@ -168,7 +168,7 @@ const us = convertRecipeText(`125 g plain flour
 120 ml milk
 30 g butter
 Bake at 180°C`, 'us', conversionData)
-assert.equal(us.output, `1 cup plain flour
+assert.equal(us.output, `1 1/16 cup plain flour
 1/2 cup milk
 2 1/8 tbsp butter
 Bake at 356°F`)
@@ -190,7 +190,7 @@ for (const system of ['metric', 'us']) {
 assert.equal(convertRecipeText('Bake at 180 C\n180°C\n180 Celsius\n180 degrees C', 'us', conversionData).output, 'Bake at 356°F\n356°F\n356°F\n356°F')
 
 // Direct conversions must remain useful before ingredient data arrives.
-assert.equal(convertRecipeText('8 oz cream cheese\n1 cup milk\nBake at 350°F', 'metric', null).output, '227 g cream cheese\n237 ml milk\nBake at 176.7°C')
+assert.equal(convertRecipeText('8 oz cream cheese\n1 cup milk\nBake at 350°F', 'metric', null).output, '227 g cream cheese\n1 cup milk\nBake at 176.7°C')
 assert.equal(convertRecipeText('120 ml milk\n100 g flour', 'us', null).output, '1/2 cup milk\n3.53 oz flour')
 
 

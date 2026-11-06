@@ -19,6 +19,14 @@ export function normaliseConversionDataset(raw) {
         const value = Number(entry[field])
         if (Number.isFinite(value) && value > 0) clean[field] = value
       }
+      for (const field of ['canonicalName', 'aliasOf', 'preparation', 'reviewStatus', 'source', 'reviewedAt', 'sourceDescription', 'referenceUnit', 'referencePortion']) {
+        if (typeof entry[field] === 'string') clean[field] = entry[field];
+      }
+      for (const field of ['sourceFdcId', 'sourcePortionId', 'referenceAmount', 'referenceGrams']) {
+        if (Number.isFinite(entry[field]) && entry[field] > 0) clean[field] = entry[field];
+      }
+      // Missing source metadata never disables established cooking conversions.
+      if (!clean.reviewStatus || clean.reviewStatus === 'unverified') clean.reviewStatus = clean.cupToGrams ? 'established' : 'direct';
       return clean
     })
     .filter((entry) => Object.keys(entry).length > 1)
@@ -30,6 +38,7 @@ export function normaliseConversionDataset(raw) {
     version: typeof raw.version === 'string' ? raw.version : '',
     count: entries.length,
     cookingCupMl: Number(raw.cookingCupMl) > 0 ? Number(raw.cookingCupMl) : 240,
+    engineVersion: typeof raw.engineVersion === 'string' ? raw.engineVersion : '',
     entries,
   }
 }
