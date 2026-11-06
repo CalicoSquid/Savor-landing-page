@@ -97,31 +97,6 @@ export default function Savor() {
                 </div>
             </section>
 
-            <section className="home-tools" aria-labelledby="home-tools-title">
-                <div className="container home-tools-inner">
-                    <div className="home-tools-heading">
-                        <div>
-                            <p className="home-tools-eyebrow">Free kitchen tools</p>
-                            <h2 id="home-tools-title">The annoying kitchen problems drawer.</h2>
-                        </div>
-                        <p>
-                            Scale a recipe, convert cups and grams, fit a bake to another pan — or let Potluck decide what you should cook tonight. No account, no ads — just useful answers and enough chef context to use them sensibly.
-                        </p>
-                    </div>
-                    <div className="home-tools-grid">
-                        {FEATURED_TOOLS.map((tool) => (
-                            <a href={tool.href} className="home-tool-card" key={tool.id}>
-                                <span>{tool.category}</span>
-                                <strong>{tool.title}</strong>
-                                <p>{tool.description}</p>
-                                <em>{tool.action} →</em>
-                            </a>
-                        ))}
-                    </div>
-                    <a href="/tools/" className="home-tools-all">See all eight free kitchen tools →</a>
-                </div>
-            </section>
-
             <section className="same-kitchen" id="kitchen" aria-labelledby="same-kitchen-title">
                 <div className="container same-kitchen-inner">
                     <p className="same-kitchen-eyebrow">From the same kitchen</p>
@@ -152,7 +127,7 @@ export default function Savor() {
                         <div className="same-kitchen-app">
                             <img src="/blog/smoky-tomato-rice-rustic.jpg" alt="Crisp fried egg over tomato rice and chickpeas" className="same-kitchen-app-icon" width="1200" height="1200" loading="lazy" decoding="async" />
                             <h3>Savor Originals</h3>
-                            <p>Original recipes from Caleb&rsquo;s kitchen. Dinner on Autopilot for an ordinary weeknight; Back of the Cupboard for the day you fancy cooking something different.</p>
+                            <p>Original recipes from Caleb&rsquo;s kitchen. Signature Recipes worth making your own, Dinner on Autopilot for an ordinary weeknight, and Back of the Cupboard for something different.</p>
                             <div className="same-kitchen-app-links">
                                 <a href="/originals/" className="same-kitchen-app-link">Find something to cook &rarr;</a>
                             </div>
@@ -170,6 +145,31 @@ export default function Savor() {
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section className="home-tools" aria-labelledby="home-tools-title">
+                <div className="container home-tools-inner">
+                    <div className="home-tools-heading">
+                        <div>
+                            <p className="home-tools-eyebrow">Free kitchen tools</p>
+                            <h2 id="home-tools-title">The annoying kitchen problems drawer.</h2>
+                        </div>
+                        <p>
+                            Scale a recipe, convert cups and grams, fit a bake to another pan — or let Potluck decide what you should cook tonight. No account, no ads — just useful answers and enough chef context to use them sensibly.
+                        </p>
+                    </div>
+                    <div className="home-tools-grid">
+                        {FEATURED_TOOLS.map((tool) => (
+                            <a href={tool.href} className="home-tool-card" key={tool.id}>
+                                <span>{tool.category}</span>
+                                <strong>{tool.title}</strong>
+                                <p>{tool.description}</p>
+                                <em>{tool.action} →</em>
+                            </a>
+                        ))}
+                    </div>
+                    <a href="/tools/" className="home-tools-all">See all eight free kitchen tools →</a>
                 </div>
             </section>
 
