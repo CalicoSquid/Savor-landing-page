@@ -61,3 +61,24 @@ test('reviewed form restrictions protect the public recipe and quick converters 
   assert.equal(convertRecipeText('1 cup fresh coriander', 'metric', cached).output, '20 g fresh coriander')
   assert.equal(convertRecipeText('1 cup raspberry jelly spread', 'metric', cached).output, '320 g raspberry jelly spread')
 })
+
+test('expanded forms and strict owner-tested aliases survive dataset normalisation', () => {
+  const data=normaliseConversionDataset({schemaVersion:1,entries:[
+    {name:'whole psyllium husks',cupToGrams:80,reviewStatus:'reference',preparation:'whole dry seed husks'},
+    {name:'psyllium husk powder',cupToGrams:140,reviewStatus:'established'},
+    {name:'miniature marshmallows',cupToGrams:50,reviewStatus:'reference',preparation:'whole miniature marshmallows, loose cup'},
+    {name:'ricotta cheese',cupToGrams:250,reviewStatus:'established',strictPreparation:true,preparation:'ordinary moist ricotta cheese'},
+    {name:'salt',cupToGrams:288,reviewStatus:'established'},
+  ]})
+  assert.equal(data.entries.find(e=>e.name==='ricotta cheese').strictPreparation,true)
+  for(const [input,output] of [
+    ['1 tbsp whole psyllium husks','5 g whole psyllium husks'],
+    ['1 tbsp psyllium husk powder','8.75 g psyllium husk powder'],
+    ['1/4 tsp salt (for filling)','1.5 g salt (for filling)'],
+  ]) assert.equal(convertRecipeText(input,'metric',data).output,output)
+  for(const name of ['dried ricotta cheese','packed miniature marshmallows','melted miniature marshmallows','whole psyllium husk powder']) {
+    const input=`1 cup ${name}`
+    assert.equal(convertRecipeText(input,'metric',data).output,input)
+    assert.equal(convertMeasurement(1,'cup','g',name,data).ok,false)
+  }
+})

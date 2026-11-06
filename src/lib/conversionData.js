@@ -15,6 +15,7 @@ export function normaliseConversionDataset(raw) {
     .filter((entry) => entry && typeof entry.name === 'string' && entry.name.trim())
     .map((entry) => {
       const clean = { name: entry.name.trim().toLowerCase() }
+      if (typeof entry.strictPreparation === 'boolean') clean.strictPreparation = entry.strictPreparation
       for (const field of ['cupToGrams', 'cupToMl', 'gramToPounds', 'gramToOunces', 'quartsToLiters', 'poundToGrams', 'ozToGrams', 'stickToGrams']) {
         const value = Number(entry[field])
         if (Number.isFinite(value) && value > 0) clean[field] = value
