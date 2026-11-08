@@ -13,11 +13,25 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'vegan-pizza-toppings',
+    title: 'Vegan Pizza Toppings: 7 Combinations That Work',
+    dek: 'Smoky courgette pepperoni, browned mushrooms and more vegetable topping ideas, with practical tips for avoiding a soggy base.',
+    metaTitle: 'Vegan Pizza Toppings: 7 Ideas With or Without Cheese | Savor',
+    metaDesc: 'Explore vegan pizza toppings, from courgette pepperoni to garlic mushrooms. Seven combinations, ideas without cheese and tips to avoid a soggy base.',
+    date: '2026-11-08',
+    readTime: '6 min read',
+    ogImage: 'https://getsavor.recipes/blog/vegan-pepperoni.webp',
+    ogImageWidth: 1254,
+    ogImageHeight: 1254,
+    ogImageAlt: 'Pizza with paprika-coated courgette pepperoni, fennel seeds and herbs; use dairy-free cheese for a vegan version.',
+    author: 'Caleb',
+  },
+  {
   "slug": "vegan-pepperoni",
   "title": "Vegan Pepperoni",
   "dek": "An unlikely love story involving a courgette.",
-  "metaTitle": "Vegan Pepperoni | Savor Originals",
-  "metaDesc": "Thin courgette slices marinated with paprika, fennel, garlic and chilli. A smoky vegan pepperoni topping that roasts straight on your pizza.",
+  "metaTitle": "Vegan Pepperoni Recipe – Courgette Pizza Topping | Savor",
+  "metaDesc": "Make vegan pepperoni from courgette (zucchini), paprika, fennel and chilli. A smoky, spicy vegan pizza topping that bakes straight on your pizza.",
   "date": "2026-11-08",
   "readTime": "6 min read",
   "ogImage": "https://getsavor.recipes/blog/vegan-pepperoni.webp",

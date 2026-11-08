@@ -19,6 +19,7 @@ import WhatShouldICookTonight from './pages/blog/WhatShouldICookTonight'
 import SaltPorkBlaff from './pages/blog/SaltPorkBlaff'
 import LemonBrownies from './pages/blog/LemonBrownies'
 import VeganPepperoni from './pages/blog/VeganPepperoni'
+import VeganPizzaToppings from './pages/blog/VeganPizzaToppings'
 import TequilaLimeChickenSoup from './pages/blog/TequilaLimeChickenSoup'
 import HotSmokedSalmon from './pages/blog/HotSmokedSalmon'
 import StickySoyPork from './pages/blog/StickySoyPork'
@@ -76,6 +77,7 @@ export default function AppRoutes() {
         <Route path="/blog/how-to-scale-a-recipe" element={<ScaleARecipe />} />
         <Route path="/blog/what-should-i-cook-tonight" element={<WhatShouldICookTonight />} />
         <Route path="/blog/lemon-brownies-strawberry-tree-jam" element={<LemonBrownies />} />
+        <Route path="/blog/vegan-pizza-toppings" element={<VeganPizzaToppings />} />
         <Route path="/blog/vegan-pepperoni" element={<VeganPepperoni />} />
         <Route path="/blog/tequila-lime-chicken-soup" element={<TequilaLimeChickenSoup />} />
         <Route path="/blog/hot-smoked-salmon-fennel-dill-vodka" element={<HotSmokedSalmon />} />

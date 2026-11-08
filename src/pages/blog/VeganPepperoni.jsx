@@ -14,7 +14,7 @@ const metadata = {
   author: { '@type': 'Person', name: 'Caleb' }, datePublished: post.date,
   prepTime: 'PT15M',
   recipeYield: recipe.serves, recipeCategory: 'Pizza topping', suitableForDiet: 'https://schema.org/VeganDiet',
-  keywords: 'vegan pepperoni, courgette pizza topping, Signature Recipes',
+  keywords: 'vegan pepperoni recipe, courgette pepperoni, zucchini pepperoni, vegan pizza topping, vegan pepperoni without seitan',
   recipeIngredient: recipe.ingredients.filter(item => !item.startsWith('## ')),
   recipeInstructions: recipe.steps.map(([name, text], i) => ({ '@type': 'HowToStep', name, text, position: i + 1, url: `${pageUrl}#step-${i + 1}` })),
   url: pageUrl, mainEntityOfPage: pageUrl,
@@ -34,6 +34,7 @@ export default function VeganPepperoni() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata).replace(/</g, '\\u003c') }} />
       <p><a href="/originals/?series=signature#recipes">Savor Originals</a> · <strong>Signature Recipes · No. 4</strong></p>
       <p><a href="#recipe">Straight to the recipe ↓</a></p>
+      <p>This homemade vegan pepperoni turns courgette (zucchini) into a smoky, spicy pizza topping—without seitan, tofu or meat substitutes.</p>
       {recipe.intro.map(text => <p key={text}>{text}</p>)}
       <section id="recipe" className="blaff-recipe-card" aria-labelledby="pepperoni-recipe-title">
         <img className="blaff-recipe-image" src="/blog/vegan-pepperoni.webp" width={post.ogImageWidth} height={post.ogImageHeight} style={{ aspectRatio: '4 / 3', objectPosition: 'center 55%' }} alt={pin.altText} {...pinterestImageAttributes(pin)} decoding="async" />
@@ -56,6 +57,8 @@ export default function VeganPepperoni() {
       {recipe.notes.map(([name, text]) => <section key={name}><h3>{name}</h3>{paragraphs(text)}</section>)}
       <h2>Keeping &amp; Preparing Ahead</h2>
       {paragraphs(recipe.ahead)}
+      <h2>Making a vegan pizza?</h2>
+      <p>The courgette pepperoni is vegan; use a vegan pizza base, sauce and dairy-free cheese (or leave the cheese off) for a fully vegan pizza. For more combinations, see our <a href="/blog/vegan-pizza-toppings/">vegan pizza toppings guide</a>.</p>
       <p>More from <a href="/originals/?series=signature#recipes">Signature Recipes</a>: <a href="/blog/hot-smoked-salmon-fennel-dill-vodka/">oven-smoked salmon</a> and <a href="/blog/lemon-brownies-strawberry-tree-jam/">lemon brownies</a>.</p>
     </BlogPostLayout>
   )
