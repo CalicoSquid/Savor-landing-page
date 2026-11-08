@@ -66,6 +66,7 @@ export default function LemonBrownies() {
       {recipe.notes.map(note => <p key={note.name}><strong>{note.name}.</strong> {note.text}</p>)}
 
       <section id="strawberry-tree-jam" className="blaff-recipe-card" aria-labelledby="jam-recipe-title">
+        <img className="blaff-recipe-image" src="/blog/strawberry-tree-fruit.webp" width="1200" height="1600" style={{ aspectRatio: '3 / 4' }} alt="Red, orange and yellow strawberry tree fruit (Arbutus unedo) growing among green leaves." loading="lazy" decoding="async" />
         <div className="blaff-recipe-content">
           <span className="doc-eyebrow">To go with the brownies · Optional accompaniment</span>
           <h2 id="jam-recipe-title">{jam.title}</h2>
