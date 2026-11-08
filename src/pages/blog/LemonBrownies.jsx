@@ -10,7 +10,7 @@ const pin = originalPinterestDetails(post)
 const pageUrl = `https://getsavor.recipes/blog/${post.slug}/`
 const recipeMetadata = {
   '@context': 'https://schema.org', '@type': 'Recipe',
-  name: 'Lemon Brownies', description: post.metaDesc, image: post.ogImage,
+  name: 'Lemon Brownies with Strawberry Tree Jam', description: post.metaDesc, image: post.ogImage,
   author: { '@type': 'Person', name: 'Caleb' }, datePublished: post.date,
   prepTime: 'PT15M', cookTime: 'PT28M', totalTime: 'PT43M',
   recipeYield: recipe.serves, recipeCategory: 'Dessert',
@@ -47,7 +47,7 @@ export default function LemonBrownies() {
         <div className="blaff-recipe-content">
           {recipe.imageCaption && <p><em>{recipe.imageCaption}</em></p>}
           <span className="doc-eyebrow">Signature Recipes · Recipe No. 2</span>
-          <h2 id="brownies-recipe-title">Lemon Brownies</h2>
+          <h2 id="brownies-recipe-title">Lemon Brownies with Strawberry Tree Jam</h2>
           <p><em>{recipe.subtitle}</em></p>
           <p><strong>Makes:</strong> {recipe.serves}<br /><strong>Prep:</strong> {recipe.prep} · <strong>Bake:</strong> 22–28 minutes<br /><strong>Tin:</strong> {recipe.equipment}<br /><strong>Allow:</strong> 37–43 minutes, plus time to cool completely and let the glaze set.</p>
           <div className="blaff-recipe-actions">

@@ -28,9 +28,9 @@ export const BLOG_POSTS = [
 },
   {
   "slug": "lemon-brownies-strawberry-tree-jam",
-  "title": "Lemon Brownies with Optional Strawberry Tree Jam",
+  "title": "Lemon Brownies with Strawberry Tree Jam",
   "dek": "Bright, buttery lemon brownies from my first summer in Montenegro. Raspberry works beautifully, but there’s a little strawberry tree jam adventure if you fancy it.",
-  "metaTitle": "Lemon Brownies & Optional Strawberry Tree Jam | Savor",
+  "metaTitle": "Lemon Brownies with Strawberry Tree Jam | Savor",
   "metaDesc": "Bright, buttery lemon brownies with a sharp lemon glaze. Makes 9 large or 16 small squares, with an optional strawberry tree jam recipe from Montenegro.",
   "date": "2026-11-02",
   "readTime": "8 min read",
