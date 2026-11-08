@@ -7,6 +7,7 @@
 //   - social preview bots: thin noindex OG card (Pinterest includes Recipe data)
 
 import { applyRecipeImageOverride } from '../../src/data/recipeImageOverrides.js'
+import { resolveRecipeCanonical } from '../../src/lib/recipeCanonical.js'
 import { recipePinterestDetails, pinterestImageAttributes } from '../../src/lib/pinterest.js'
 
 const SEARCH_CRAWLERS = [
@@ -44,6 +45,8 @@ const QUERY = `
       category
       cuisine
       sourceUrl
+      sourceRecipeId
+      sharedVersionId
       times { prep { hours minutes } cook { hours minutes } total { hours minutes } }
       recipeYield
       user { name username }
@@ -255,7 +258,18 @@ export default async function handler(request, context) {
     let image = DEFAULT_IMAGE
     try { image = new URL(recipe.image || DEFAULT_IMAGE, SITE_URL).href } catch { image = DEFAULT_IMAGE }
     image = escapeHtml(image)
-    const pageUrl = escapeHtml(`${SITE_URL}/r/${encodeURIComponent(id)}`)
+    const canonicalId = await resolveRecipeCanonical(id, recipe, async targetId => {
+      const response = await fetch(APOLLO_URI, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'x-internal-crawler-fetch': '1' },
+        body: JSON.stringify({ query: QUERY, variables: { id: targetId } }),
+        signal: AbortSignal.timeout(5000),
+      })
+      if (!response.ok) throw new Error('Canonical recipe unavailable')
+      const data = await response.json()
+      if (data.errors?.length) throw new Error('Canonical recipe unavailable')
+      return data.data?.publicRecipe
+    })
+    const pageUrl = escapeHtml(`${SITE_URL}/r/${encodeURIComponent(canonicalId)}`)
     const pin = recipePinterestDetails(recipe, `${SITE_URL}/r/${encodeURIComponent(id)}`)
     const isOriginal = !recipe.sourceUrl
 

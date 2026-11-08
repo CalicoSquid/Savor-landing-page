@@ -1,4 +1,5 @@
 import { applyRecipeImageOverride } from '../data/recipeImageOverrides.js'
+import { resolveRecipeCanonical } from './recipeCanonical.js'
 
 const APOLLO_URI = import.meta.env?.VITE_APOLLO_URI || 'https://savor-production.up.railway.app/graphql'
 
@@ -15,6 +16,8 @@ const QUERY = `
       category
       cuisine
       sourceUrl
+      sourceRecipeId
+      sharedVersionId
       imageCredit { photographer photographerUrl }
       times { prep { hours minutes } cook { hours minutes } total { hours minutes } }
       recipeYield
@@ -41,7 +44,20 @@ export function loadPublicRecipe(id, { early = false } = {}) {
       if (!response.ok) throw new Error('Unable to load recipe')
       const { data, errors } = await response.json()
       if (errors?.length || !data || data.publicRecipe === undefined) throw new Error('Unable to load recipe')
-      return applyRecipeImageOverride(data.publicRecipe, id)
+      const recipe = applyRecipeImageOverride(data.publicRecipe, id)
+      if (!recipe) return recipe
+      const canonicalRecipeId = await resolveRecipeCanonical(id, recipe, async targetId => {
+        const response = await fetch(APOLLO_URI, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: QUERY, variables: { id: targetId } }),
+          signal: AbortSignal.timeout(5000),
+        })
+        if (!response.ok) throw new Error('Canonical recipe unavailable')
+        const payload = await response.json()
+        if (payload.errors?.length) throw new Error('Canonical recipe unavailable')
+        return payload.data?.publicRecipe
+      })
+      return { ...recipe, canonicalRecipeId }
     }).catch(error => {
       if (requests.get(id) === entry) requests.delete(id)
       throw error

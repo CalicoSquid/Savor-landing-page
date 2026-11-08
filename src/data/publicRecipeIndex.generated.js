@@ -50,11 +50,25 @@ export const PUBLIC_RECIPE_INDEX = [
     "updatedAt": "2026-05-14T17:09:45.030Z"
   },
   {
+    "id": "6a0b63a36adf56093b9e94a5",
+    "name": "Green Harissa Eggs",
+    "description": "Breakfast or dinner. I make this when there's not much in the fridge and I need it to feel like something.",
+    "image": "https://images.pexels.com/photos/6979894/pexels-photo-6979894.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "updatedAt": "2026-05-18T19:08:19.930Z"
+  },
+  {
     "id": "6a0fb11e6adf56093b9ea04d",
     "name": "Cilantro Lime Chicken and Lentil Rice Bowls",
     "description": "Instant Pot Cilantro Lime Chicken and Lentil Bowls! The BEST easy protein powerhouse meal prep. Just 15 mins of prep and totally hands-off cooking!",
     "image": "https://images.pexels.com/photos/26180135/pexels-photo-26180135.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
     "updatedAt": "2026-05-22T01:27:58.797Z"
+  },
+  {
+    "id": "6a1c8bc56adf56093b9edd26",
+    "name": "Mushroom and spinach lasagne",
+    "description": "This classic vegetarian lasagne is layered with a rich tomato and mushroom sauce, wilted spinach and a creamy cheese sauce. Soaking the lasagne sheets before assembling helps them cook evenly in the oven. Ideal for batch cooking or a hearty family dinner.",
+    "image": "https://images.pexels.com/photos/31119111/pexels-photo-31119111.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "updatedAt": "2026-05-31T19:28:05.055Z"
   },
   {
     "id": "6a20739e0c56359486696473",
@@ -120,11 +134,11 @@ export const PUBLIC_RECIPE_INDEX = [
     "updatedAt": "2026-07-12T22:06:53.907Z"
   },
   {
-    "id": "6a64d346d73f69ae6d182e70",
+    "id": "6a64d261d73f69ae6d182e35",
     "name": "White Bean Stew",
     "description": "A rich and satisfying 35-minute white bean stew inspired by traditional Mediterranean recipes, designed to be as nourishing as it is comforting.",
     "image": "https://images.pexels.com/photos/38431288/pexels-photo-38431288.jpeg?auto=compress&cs=tinysrgb&h=350",
-    "updatedAt": "2026-07-25T15:16:22.834Z"
+    "updatedAt": "2026-07-25T15:12:33.050Z"
   },
   {
     "id": "6a65a81e48d379e4c757d756",
@@ -132,6 +146,13 @@ export const PUBLIC_RECIPE_INDEX = [
     "description": "When I was growing up, my mum used to make aloo tikki once a week for me and my friends. She would make it in many different ways, sometimes filled with paneer or squashed peas, and served with chickpeas or on their own. Each serving provides 345 kcal, 8g protein, 46g carbohydrates (of which 3g sugars), 13.5g fat (of which 2g saturates), 6g fibre and 3.3g salt.",
     "image": "https://images.pexels.com/photos/20702563/pexels-photo-20702563.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
     "updatedAt": "2026-07-26T06:24:30.598Z"
+  },
+  {
+    "id": "6a68690d52f5f0af4a90f2ff",
+    "name": "Roasted Tomato Soup",
+    "description": "A rich and creamy homemade tomato soup made by roasting fresh vegetables for depth of flavor.",
+    "image": "https://images.unsplash.com/photo-1620791144170-8a443bf37a33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MDA1MDV8MHwxfHNlYXJjaHwxfHxjcmVhbXklMjByb2FzdGVkJTIwdG9tYXRvJTIwc291cHxlbnwwfHx8fDE3ODUyMjc1MTl8MA&ixlib=rb-4.1.0&q=80&w=400",
+    "updatedAt": "2026-07-28T08:32:13.543Z"
   },
   {
     "id": "6a68957d48d379e4c757de5b",
@@ -153,6 +174,13 @@ export const PUBLIC_RECIPE_INDEX = [
     "description": "Soft and chewy bakery-worthy cookies with brown butter and pumpkin flavors.",
     "image": "https://images.unsplash.com/photo-1571165841024-2ce92069301d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MDA1MDV8MHwxfHNlYXJjaHwxfHxwdW1wa2luJTIwY2hvY29sYXRlJTIwY2hpcCUyMGNvb2tpZXN8ZW58MHx8fHwxNzg2NzM5Nzc1fDA&ixlib=rb-4.1.0&q=80&w=400",
     "updatedAt": "2026-08-14T20:36:22.627Z"
+  },
+  {
+    "id": "6a98394b9262720e79407bc4",
+    "name": "Pumpkin French Toast with Spiced Pecan Syrup",
+    "description": "Pumpkin French Toast with Spiced Pecan Syrup is what fall breakfast dreams are made of! Perfectly spiced and full of flavor, it’s like having dessert for breakfast!",
+    "image": "https://images.pexels.com/photos/12326412/pexels-photo-12326412.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "updatedAt": "2026-09-02T14:57:15.468Z"
   },
   {
     "id": "6a9b9fda02818e56c16fe741",

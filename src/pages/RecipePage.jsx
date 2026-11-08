@@ -39,10 +39,10 @@ function buildJsonLd(recipe, id) {
       '@type': 'HowToStep',
       position: i + 1,
       name: decode(typeof step === 'string' ? step : step.text || step.instruction || '').replace(/\s+/g, ' ').trim().split(/(?<=[.!?])\s/)[0],
-      url: `${SITE_URL}/r/${encodeURIComponent(id)}#step-${i + 1}`,
+      url: `${SITE_URL}/r/${encodeURIComponent(recipe.canonicalRecipeId || id)}#step-${i + 1}`,
       text: typeof step === 'string' ? step : step.text || step.instruction || '',
     })),
-    url: recipe.sourceUrl || `${SITE_URL}/r/${encodeURIComponent(id)}`,
+    url: recipe.sourceUrl || `${SITE_URL}/r/${encodeURIComponent(recipe.canonicalRecipeId || id)}`,
   }
   if (recipe.times?.prep) ld.prepTime = `PT${recipe.times.prep.hours || 0}H${recipe.times.prep.minutes || 0}M`
   if (recipe.times?.cook) ld.cookTime = `PT${recipe.times.cook.hours || 0}H${recipe.times.cook.minutes || 0}M`
@@ -131,7 +131,7 @@ function RecipeContent({ id, onRetry }) {
     }
     const desc = (recipe.description || `${recipe.cuisine || recipe.category || 'A'} recipe saved on Savor`).replace(/\s+/g, ' ').trim()
     const metaDesc = desc.length > 180 ? `${desc.slice(0, 177).trimEnd()}…` : desc
-    const pageUrl = `${SITE_URL}/r/${encodeURIComponent(id)}`
+    const pageUrl = `${SITE_URL}/r/${encodeURIComponent(recipe.canonicalRecipeId || id)}`
     const pin = recipePinterestDetails(recipe, pageUrl)
     let socialImage = DEFAULT_SOCIAL_IMAGE
     try { socialImage = new URL(recipe.image || DEFAULT_SOCIAL_IMAGE, SITE_URL).href } catch { /* use default */ }

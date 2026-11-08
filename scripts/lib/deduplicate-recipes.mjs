@@ -2,7 +2,7 @@
 // Preserve case in measurements: "T" and "t" can mean tablespoon and teaspoon.
 const text = value => String(value ?? '').normalize('NFKC').replace(/\s+/g, ' ').trim()
 
-function fingerprint(recipe) {
+export function fingerprint(recipe) {
   const ingredients = recipe.ingredients?.map(text)
   const instructions = recipe.instructions?.map(text)
   if (!text(recipe.name) || !ingredients?.length || !instructions?.length ||
@@ -24,7 +24,7 @@ function preference(a, b) {
     a.id.localeCompare(b.id)
 }
 
-export function deduplicateRecipes(candidates) {
+export function recipeGroups(candidates) {
   const groups = new Map()
   for (const candidate of candidates) {
     const key = fingerprint(candidate.recipe) ?? `id:${candidate.id}`
@@ -32,5 +32,9 @@ export function deduplicateRecipes(candidates) {
     group.push(candidate)
     groups.set(key, group)
   }
-  return [...groups.values()].map(group => [...group].sort(preference)[0])
+  return [...groups.values()].map(group => [...group].sort(preference))
+}
+
+export function deduplicateRecipes(candidates) {
+  return recipeGroups(candidates).map(group => group[0])
 }
