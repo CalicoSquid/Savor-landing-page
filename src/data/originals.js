@@ -3,6 +3,15 @@ import { BLOG_POSTS } from './blogPosts.js'
 // One collection entry per authored recipe; articles retain their existing URLs.
 export const SAVOR_ORIGINALS = [
   {
+  "slug": "vegan-pepperoni",
+  "series": "Signature Recipes",
+  "number": 4,
+  "name": "Vegan Pepperoni",
+  "description": "Thin courgette slices marinated with paprika, fennel, garlic and chilli. A smoky vegan pepperoni topping that roasts straight on your pizza.",
+  "effort": "15 minutes prep · 20–30 minutes salting · 15–30 minutes marinating · Enough for 2–3 large pizzas",
+  "mood": "An unlikely love story involving a courgette."
+},
+  {
   "slug": "tequila-lime-chicken-soup",
   "series": "Signature Recipes",
   "number": 3,

@@ -13,6 +13,20 @@
 
 export const BLOG_POSTS = [
   {
+  "slug": "vegan-pepperoni",
+  "title": "Vegan Pepperoni",
+  "dek": "An unlikely love story involving a courgette.",
+  "metaTitle": "Vegan Pepperoni | Savor Originals",
+  "metaDesc": "Thin courgette slices marinated with paprika, fennel, garlic and chilli. A smoky vegan pepperoni topping that roasts straight on your pizza.",
+  "date": "2026-11-08",
+  "readTime": "6 min read",
+  "ogImage": "https://getsavor.recipes/blog/vegan-pepperoni.webp",
+  "ogImageWidth": 1254,
+  "ogImageHeight": 1254,
+  "ogImageAlt": "Pizza topped with paprika-red courgette rounds, including a heart-shaped slice, fennel seeds and herbs.",
+  "author": "Caleb"
+},
+  {
   "slug": "tequila-lime-chicken-soup",
   "title": "Tequila & Lime Chicken Soup",
   "dek": "Big flavours, questionable authenticity, and an entirely legitimate excuse to buy tequila.",
